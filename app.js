@@ -22,7 +22,7 @@ const sharp = require('sharp');
 const locals=require("./middleware/locals");
 
 const error = require("./controllers/errors");
-
+const port = process.env.PORT || 8000;
 var store=new mongoDbStore({
     uri:connectionString,
     collection:"mySessions"
@@ -112,7 +112,9 @@ app.use((error,req,res,next)=>{
 mongoose.connect(process.env.MONGODB_URI || connectionString,{ useNewUrlParser: true,useUnifiedTopology: true })
     .then(()=>{
         console.log("connected to mongodb");
-        app.listen(1000);
+        server.listen(port, () => {
+            console.log("App is running on port " + port);
+        });
     })
     .catch(err=>{
         
