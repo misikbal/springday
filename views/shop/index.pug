@@ -1,0 +1,105 @@
+extends ../layouts/main-layout.pug
+include ../mixins/createSlide.pug
+//- include ../mixins/services.pug
+include ../mixins/productcard.pug
+include ../mixins/client.pug
+include ../mixins/category.pug
+include ../mixins/project.pug
+include ../mixins/aboutservices.pug
+
+
+include ../mixins/shortservices.pug
+
+block styles    
+  link(href='/plugins/aos/aos.css' rel='stylesheet')
+  link(href='/plugins/bootstrap-icons/bootstrap-icons.css' rel='stylesheet')
+  link(href='/plugins/boxicons/css/boxicons.min.css' rel='stylesheet')
+  link(href='/plugins/glightbox/css/glightbox.min.css' rel='stylesheet')
+  link(href='/plugins/remixicon/remixicon.css' rel='stylesheet')
+  link(href='https://unpkg.com/swiper@7/swiper-bundle.min.css' rel='stylesheet')
+  link(rel="stylesheet" href="/css/otherproduct.css")
+  link(href='/css/themes/slide/style.css' rel='stylesheet')
+  link(href='/css/category.css' rel='stylesheet')
+  link(href='/css/project.css' rel='stylesheet')
+  link(href='/css/aboutservices.css' rel='stylesheet')
+block content
+    .w-auto
+      #carouselExampleIndicators.carousel.slide(data-ride='carousel',data-interval="5000")
+          ol.carousel-indicators
+            -var slideIndex=0;
+            if slides.length>0
+              each slide in slides
+                li.li-white(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
+                -slideIndex++;
+          .carousel-inner.w-100            
+            if slides.length>0
+                each slide in slides
+                      +createSlide(slide)
+            else
+                h1 No Slide     
+            a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev')
+              span.carousel-control-prev-icon(aria-hidden='true')
+              span.sr-only Previous
+          a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next')
+            span.carousel-control-next-icon(aria-hidden='true')
+            span.sr-only Next
+    +category(categories)
+    section#portfolio.portfolio
+      .container(data-aos='fade-up')
+          .section-title
+              p Ürünlerimiz
+          .row(data-aos='fade-up' data-aos-delay='100')
+              .col-lg-12.d-flex.justify-content-center
+                  ul#portfolio-flters
+                      li.filter-active(data-filter='*') Hepsi
+                      if categories.length>0
+                          each category in categories
+                              li(data-filter=`.${category._id}` class=category._id==selectedCategory?"active":"") #{category.name}
+          .row.portfolio-container(data-aos='fade-up' data-aos-delay='200')
+            each product in products
+              +productcard(product)
+    +shortservices(services)
+    br
+    +project(projectinfo)
+    
+    br
+    +aboutservices(aboutservices)
+    br
+    +client(client) 
+    br
+
+block script
+    script(src='/plugins/purecounter/purecounter.js')
+    script(src='/plugins/aos/aos.js')
+    script(src='/plugins/glightbox/js/glightbox.min.js')
+    script(src='/plugins/isotope-layout/isotope.pkgd.min.js')
+    script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
+    script(src="/js/otherproduct.js")
+    script(src="/js/slide.js")
+    script(src="/js/card.js")
+    //- script.
+    //-   $(document).ready(function() {
+
+    //-       $.ajax({
+
+    //-       url: '/api/logo',
+
+    //-       type: 'GET',
+
+    //-       data: { format: 'json' },
+
+    //-       success: function(data) {
+    //-       $(':root').css('--bodyLight',bodylightcolor)
+    //-       $(':root').css('--bodyDark',bodydarkcolor)
+
+    //-       cardLight=JSON.stringify(data.themes.cardLight);
+    //-       cardlightcolor=JSON.parse(cardLight);
+    //-       cardDark=JSON.stringify(data.themes.cardDark);
+    //-       carddarkcolor=JSON.parse(cardDark);
+          
+    //-       $(':root').css('--cardLight',cardlightcolor)
+    //-       $(':root').css('--cardDark',carddarkcolor)
+    //-       },
+    //-       });
+
+    //-   });

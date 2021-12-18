@@ -1,0 +1,75 @@
+extends ../layouts/admin-layout.pug
+block styles
+    link(rel="stylesheet" href="/css/themes/image.css")
+    script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+block content
+    
+    //- if(action!=="undefined" && action==="create")
+    //-     .alert.alert-info.alert-dismissible.fade.show(role='alert')
+    //-         strong Referanslar Başarılı Bir Şekilde Güncellendi
+    //-     script.
+    //-         window.setTimeout(function() {
+    //-             $(".alert").fadeTo(500, 0).slideUp(500, function(){
+    //-                 $(this).remove(); 
+    //-             });
+    //-         }, 2000);
+
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .card
+                .header
+                    h2
+                        | Referans Ekle
+                .body
+                    .demo-masked-input
+                        form(action="/admin/add-client" method="POST" enctype="multipart/form-data")
+                            input(type="hidden" name="_csrf" value=`${csrfToken}`)
+                            .col-sm-12
+                                    .form-group                                    
+                                        b Active
+                                        .input-group
+                                            .form-line
+                                                input.form-control#isActive(type='text' name="isActive")  
+                            .row.clearfix
+                                .col-sm-6
+                                    .form-group
+                                        b Name
+                                        .input-group
+                                            .form-line
+                                                input.form-control#name(type='text' name="name" placeholder='Name')
+                                .col-sm-6
+                                    .form-group                                    
+                                        b Link
+                                        .input-group
+                                            .form-line
+                                                input.form-control#link(type='text' name="link" placeholder='Web Link')
+                            .row.clearfix
+                                .col-sm-6
+                                    .form-group.row
+                                    
+                                        .card
+                                            .header.bg-grey
+                                                h2.text-center
+                                                    | Logo
+                                                    small.text-center
+                                                        .fileupload.fileupload-new(data-provides='fileupload')
+                                                            span.btn.btn-warning.btn-file
+                                                                span.fileupload-new Yeni
+                                                                span.fileupload-exists Değiştir
+                                                                input#image(type="file" name="image")
+                                                            span.fileupload-preview
+                                                            a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+                                .col-sm-6
+                                    .form-group
+                                        b Açıklama
+                                        .input-group
+                                            .form-line
+                                                textarea.form-control#description(name="description"  rows="3")                           
+                            .col-sm-12
+                                .form-group
+                                    input(type="submit" value="Kaydet").btn.btn-info.col-sm-12
+
+block script
+    include ../admin/includes/formscript.pug
+    script(src='/js/image.js')
+

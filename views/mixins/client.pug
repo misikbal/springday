@@ -1,0 +1,10 @@
+mixin client(client)
+    section#clients.clients(style="margin-top:10rem;")
+        h2.mb-4.text-center Referanslar
+        .container(data-aos='zoom-in')
+            .clients-slider.swiper
+                .swiper-wrapper.align-items-center.mb-5
+                    each clients in client
+                            .swiper-slide
+                                img.img-fluid(src= `/img/${clients.clientlogo}` alt='')
+                .swiper-pagination

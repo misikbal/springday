@@ -1,0 +1,17 @@
+mixin category(category)
+    .content
+        .site-section-half.mb-1.bg-light
+            .section-title.pt-2
+                p KATEGORİLER
+            .container.owl-2-style.text-center
+                .owl-carousel.owl-2.pt-3
+                    if category.length>0
+                        each categories in category
+                            .media-29101(style="width: 5rem; margin-left:130px;")
+                                a(href=`/categories/${categories._id}` target="_blank" )
+                                    img.img-fluid(src=`/img/${categories.categoryImg}` alt=`${categories.name}`)
+                                h3
+                                    a(href=`/categories/${categories._id}` target="_blank" style="text-decoration: none;") #{categories.name}
+                    else
+                        .media-29101(style="width: 5rem; margin-left:25rem;")
+                            h3 Kategori İsmi

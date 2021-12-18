@@ -1,0 +1,45 @@
+extends ../layouts/admin-layout.pug
+
+block content
+    .block-header
+        h2 DASHBOARD
+    .row.clearfix
+        .col-lg-3.col-md-3.col-sm-6.col-xs-12
+            a(href="/admin/products" style="text-decoration: none;")
+
+                .info-box.bg-pink.hover-expand-effect
+                    .icon
+                        i.material-icons shopping_cart
+                    .content
+                        .text Ürün Sayısı
+                        .number.count-to(data-from='0' data-to=`${products.length}` data-speed='1000' data-fresh-interval='20')
+                    
+        .col-lg-3.col-md-3.col-sm-6.col-xs-12
+            .info-box.bg-cyan.hover-expand-effect
+                .icon
+                    i.material-icons help
+                .content
+                    .text NEW TICKETS
+                    .number.count-to(data-from='0' data-to='257' data-speed='1000' data-fresh-interval='20')
+        .col-lg-3.col-md-3.col-sm-6.col-xs-12
+            .info-box.bg-light-green.hover-expand-effect
+                .icon
+                    i.material-icons forum
+                .content
+                    .text NEW COMMENTS
+                    .number.count-to(data-from='0' data-to='243' data-speed='1000' data-fresh-interval='20')
+        .col-lg-3.col-md-3.col-sm-6.col-xs-12
+            .info-box.bg-orange.hover-expand-effect
+                .icon
+                    i.material-icons person_add
+                .content
+                    .text Üye Sayısı
+                        .number.count-to(data-from='0' data-to=`${!user.isAdmin? user.length: "0"}` data-speed='1000' data-fresh-interval='20')
+        .col-lg-3.col-md-3.col-sm-6.col-xs-12
+            a(href="/admin/contact" style="text-decoration: none;")
+                .info-box.bg-blue-grey.hover-zoom-effect
+                    .icon
+                        i.material-icons email
+                    .content
+                        .text Mesajlar
+                        .number.count-to(data-from='0' data-to=`${contact.length}` data-speed='1000' data-fresh-interval='20')

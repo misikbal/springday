@@ -1,0 +1,42 @@
+extends ../layouts/main-layout.pug
+block styles
+    link(rel="stylesheet" href="/css/form.css")
+    link(rel="stylesheet" href="/css/login.css")
+block content
+    body
+            
+            
+            form(action="/login" method="POST")        
+                input(type="hidden" name="_csrf" value=`${csrfToken}`)   
+                .section
+                    .container
+                        .row.full-height.justify-content-center
+                            .col-12.text-center.align-self-center.py-5
+                                .section.pb-5.pt-5.pt-sm-2.text-center
+                                    .card-3d-wrap.mx-auto
+                                        .card-3d-wrapper
+                                            .card-front
+                                                .center-wrap
+                                                    .section.text-center
+                                                        
+                                                        h4.mb-4.pb-3 Giriş
+                                                        if errorMessage
+                                                            div.alert.alert-danger.w-auto !{errorMessage}
+
+                                                        .form-group
+                                                            //- input(type="text" name="email").form-control.form-style#email
+                                                            i.fas.fa-envelope
+                                                            .mb-2
+                                                            input#email.form-style(type='email' name='email' placeholder='Email' required oninvalid="this.setCustomValidity('Lüften Email Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')").form-control
+                                                        .form-group.mt-2
+                                                            i.fas.fa-lock
+                                                            .mb-2
+                                                            input#password.form-style(type='password' name='password' placeholder='Şifre' required oninvalid="this.setCustomValidity('Lüften Şifre Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')").form-control
+                                                        .form-group
+                                                            .row
+                                                                .col-md-6
+                                                                    input(type="submit" value="Giriş").btn.btn-primary.mt-4
+                                                                .col-md-6 
+                                                                    a(href="/register").btn.btn-primary.mt-4.mb-3 Kaydol
+                                                        .form-group.row
+                                                                a(href="/reset-password" style="text-decoration: none").text-dark.p-0.mt-5 Şifremi Unuttum

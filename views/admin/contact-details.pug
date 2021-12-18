@@ -1,0 +1,28 @@
+extends ../layouts/admin-layout.pug
+block styles 
+    link(rel="stylesheet" href="/css/contact-details.css")
+
+
+block content
+    .container
+        .row            
+            .col-sm-12
+                form.form-horizontal
+                    .panel.mail-wrapper.rounded.shadow.text-center
+                        .panel-heading
+                            .pull-left
+                                h3.panel-title #{contact.name +"  -  "+ contact.mail}
+                                p #{contact.date.getDate()+"/"+contact.date.getMonth()+"/"+contact.date.getFullYear()}
+                                    br
+                                    |#{contact.date.getHours()+":"+ contact.date.getMinutes()}
+                            .panel-sub-heading.inner-all
+                                h3.lead.no-margin #{contact.subject}
+                            .panel-sub-heading.inner-all
+                                .row
+                                    .col-md-8.col-sm-8.col-xs-7
+                                        span.mr-4 
+                                    .col-md-4.col-sm-4.col-xs-5
+
+                            .panel-body.p-3
+                                .view-mail
+                                    p #{contact.message}

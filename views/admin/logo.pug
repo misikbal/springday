@@ -1,0 +1,88 @@
+extends ../layouts/admin-layout.pug
+block styles
+    link(rel="stylesheet" href="/css/form.css")
+    link(rel="stylesheet" href="/css/themes/image.css")
+    script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+
+block content
+        form(action="/admin/logo" method="POST" enctype="multipart/form-data")
+            input(type="hidden" name="_csrf" value=`${csrfToken}`)    
+            .row.clearfix
+                .col-lg-3.col-md-3.col-sm-6.col-xs-12
+                    .form-group.row
+                        .card
+                            .body
+                                .text-center
+                                    img.card-image(src=`/img/${logo.logo}` width="200")
+
+                            .header.bg-grey
+                                h2.text-center
+                                    | Navbar Logo
+                                    small.text-center
+                                        .fileupload.fileupload-new(data-provides='fileupload')
+                                            span.btn.btn-warning.btn-file
+                                                span.fileupload-new Yeni
+                                                span.fileupload-exists Değiştir
+                                                input#logo(type="file" name="logo")
+                                            span.fileupload-preview
+                                            a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+                .col-lg-3.col-md-3.col-sm-6.col-xs-12
+                    .form-group.row
+                        .card
+                            .body
+                                .text-center
+                                    img.card-image(src=`/img/${logo.favico}` width="200")
+
+                            .header.bg-grey
+                                h2.text-center
+                                    | Favico Logo
+                                    small.text-center
+                                        .fileupload.fileupload-new(data-provides='fileupload')
+                                            span.btn.btn-warning.btn-file
+                                                span.fileupload-new Yeni
+                                                span.fileupload-exists Değiştir
+                                                input#favico(type="file" name="favico")
+                                            span.fileupload-preview
+                                            a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+                .col-lg-3.col-md-3.col-sm-6.col-xs-12
+                    .form-group.row
+                        .card
+                            .body
+                                .text-center
+                                    img.card-image(src=`/img/${logo.footerLogo}` width="200")
+
+                            .header.bg-grey
+                                h2.text-center
+                                    | Footer Logo
+                                    small.text-center
+                                        .fileupload.fileupload-new(data-provides='fileupload')
+                                            span.btn.btn-warning.btn-file
+                                                span.fileupload-new Yeni
+                                                span.fileupload-exists Değiştir
+                                                input#footerLogo(type="file" name="footerLogo")
+                                            span.fileupload-preview
+                                            a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+                .col-lg-3.col-md-3.col-sm-6.col-xs-12
+                    .form-group.row
+                        .card
+                            .body
+                                .text-center
+                                    img.card-image(src=`/img/${logo.logo}` width="200")
+
+                            .header.bg-grey
+                                h2.text-center
+                                    | Loading Logo
+                                    small.text-center
+                                        .fileupload.fileupload-new(data-provides='fileupload')
+                                            span.btn.btn-warning.btn-file
+                                                span.fileupload-new Yeni
+                                                span.fileupload-exists Değiştir
+                                                input#logo(type="file" name="")
+                                            span.fileupload-preview
+                                            a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+            .form-group.row
+                .col-sm-12.offset-sm-2
+                    input(type="submit" value="Kaydet").btn.btn-warning.col-md-12                  
+
+block script
+    script(src='/js/image.js')

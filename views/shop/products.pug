@@ -1,0 +1,44 @@
+extends ../layouts/main-layout.pug
+include ../mixins/productcard.pug
+include ../mixins/popularproduct.pug
+include ../mixins/tag.pug
+block content
+  .container.p-100.mb-5
+    .row
+        
+        .col-md-9   
+          .row
+            if products.length>0
+              each product in products
+                +productcard(product)
+            else
+              h1 No Producsts
+        .col-md-3.pt-2
+          .card.bg-light
+            .header.p-2
+                h2.h5.text-center
+                    | KATEGORİLER
+            .body
+              include ../includes/menu.pug
+          if products.length > 0
+            .card.mt-4.bg-light
+              .header.p-2
+                  h2.h5.text-center
+                      | POPÜLER ÜRÜNLER
+              .body
+                  each product in products
+                    +popularproduct(product)
+          if products.length > 0          
+            .card.mt-4.bg-light
+              .header.p-2
+                  h2.h5.text-center
+                      | TAG
+              .body.ml-1
+                .d-flex.align-content-stretch.flex-wrap
+                  each product in products
+                    if product.isActive
+                      -var tag=product.tags[0].toString().split(",")
+                      -for (var i=0; i<tag.length; i++){
+                          button(type=button style="border-radius:30px; padding: 2px 5px;" ).btn.btn-info.btn-sm.mt-1.ml-1
+                            a(href=`/products/${product._id}` style="text-decoration: none;").text-light #{tag[i]}
+                      -}

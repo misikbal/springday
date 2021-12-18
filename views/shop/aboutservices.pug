@@ -1,0 +1,36 @@
+extends ../layouts/main-layout.pug
+include ../mixins/client.pug
+
+block styles
+
+    link(href='/css/project.css' rel='stylesheet')
+    link(href='/css/aboutservices.css' rel='stylesheet')
+
+
+block content
+    if aboutservices.length>0
+        br
+        br
+        br
+        br
+        br
+        br
+
+        header
+            h1 HİZMETLERİMİZ
+        .container.text-center
+            .row
+                each aboutservice in aboutservices
+                    .col-md-4
+                        .item-1(style="height:26rem;")
+                            a.card(href=`/aboutservices/${aboutservice._id}`).bg-light
+                                .thumb(style=`background-image: url(/img/${aboutservice.imageUrl});`)
+                                article
+                                    h1 #{aboutservice.name}
+                                    p !{aboutservice.description.substring(0, 300)+"..."}
+                                    span
+                                        button.btn.btn-dark(style="text-decoration: none") İncele
+    +client(client) 
+block script
+
+    script(src="/js/card.js")

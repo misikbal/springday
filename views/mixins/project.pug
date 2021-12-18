@@ -1,0 +1,15 @@
+mixin project(projectinfo)
+    if projectinfo.length>0
+        header
+            h1 PROJELERİMİZ
+        .container.owl-2-style.text-center
+                .owl-carousel.owl-2.pt-3
+                    each projects in projectinfo
+                        .media-29101
+                            .item-4(style="height:18rem;")
+                                a.card(href=`/aboutservices/${projects._id}`).bg-light
+                                    .thumb(style=`background-image: url(/img/${projects.imageUrl});`)
+                                    article
+                                        h1 #{projects.name}
+                                        span
+                                            button.btn.btn-dark(style="text-decoration: none") İncele

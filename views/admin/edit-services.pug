@@ -1,0 +1,46 @@
+extends ../layouts/admin-layout.pug
+block styles
+    link(rel="stylesheet" href="/css/themes/image.css")
+    script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+block content    
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .card
+                .header
+                    h2
+                        | Hizmet Güncelleme
+                .body
+                    .demo-masked-input
+                        form(action="/admin/services" method="POST" enctype="multipart/form-data")
+                            input(type="hidden" name="_csrf" value=`${csrfToken}`)    
+                            input(type="hidden" name="serviceid" value=`${services._id}`)
+                            .row.clearfix          
+                                .col-sm-6
+                                        .form-group                                    
+                                            b İcon
+                                            .input-group
+                                                .form-line
+                                                    input.form-control#icon(type='text' name="icon" value=`${services.icon}`)  
+                                .col-sm-6
+                                    .form-group
+                                        b Başlık
+                                        .input-group
+                                            .form-line
+                                                input.form-control#name(type='text' name="name" placeholder='Hizmet Adı' value=`${services.name}`)
+                            .row.clearfix 
+                                .col-sm-6
+                                    .form-group
+                                        label(for='description') Açıklama:
+                                        .input-group
+                                            .form-line
+                                                textarea#description.form-control(rows='5' value=`${services.description}`)      
+                                .col-sm-6
+                                    .form-group                                    
+                                        b Aktif
+                                        .input-group
+                                            .form-line
+                                                input.form-control#isActive(type='text' name="isActive" placeholder='isActive' value=`${services.isActive}`)
+                            .col-sm-12
+                                .form-group
+                                    input(type="submit" value="Kaydet").btn.btn-info.col-sm-12                  
+

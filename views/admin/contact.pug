@@ -1,0 +1,64 @@
+extends ../layouts/admin-layout.pug
+block styles 
+    link(rel="stylesheet" href="/css/mailbox.css")   
+
+
+block content
+    if(action!=="undefined" && action==="delete")
+        .alert.alert-warning.alert-dismissible.fade.show(role='alert')
+            strong Mail Başarılı Bir Şekilde Silindi
+        
+    script.
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove(); 
+            });
+        }, 2000);
+    .container    
+        .row
+            .col-md-12
+                .card
+                    .card-body.bg-secondary.text-white.mailbox-widget.pb-0
+                        h2.text-white.pb-3.text-center Mailbox
+                    #myTabContent.tab-content
+                        #inbox.tab-pane.fade.active.show(aria-labelledby='inbox-tab' role='tabpanel')
+                            div
+                                .row.p-4.no-gutters.align-items-center
+                                    .col-sm-12.col-md-6
+                                        h3.font-light.mb-0
+                                            i.ti-email.mr-2
+                                            | Toplam Mail Sayısı: #{contact.length}
+                                    .col-sm-12.col-md-6
+                                        ul.list-inline.dl.mb-0.float-left.float-md-right
+                                            li.list-inline-item.text-info.mr-3
+                                                a(href='#')
+                                                    button.btn.btn-circle.btn-success.text-white(href='javascript:void(0)')
+                                                        i.fa.fa-plus
+                                                    span.ml-2.font-normal.text-dark Yeni Mail
+                                // Mail list
+                                .table-responsive
+                                    table.table.email-table.no-wrap.table-hover.v-middle.mb-0.font-14
+                                        tbody
+                                            if contact.length > 0
+                                                each contactus in contact
+                                                        tr.mr-5
+                                                            td.pl-3.align-middle
+                                                                .custom-control.custom-checkbox
+
+                                                            td.align-middle
+                                                                span.mb-0.text-muted #{contactus.name}
+                                                            td.align-middle
+                                                                a.link(href=`/admin/contact/${contactus._id}`)
+                                                                    span.text-dark #{contactus.subject}
+                                                            td.text-muted.text-center #{contactus.date.getHours()+":"+ contactus.date.getMinutes()}
+                                                                br
+                                                                | #{contactus.date.getDate()+"/"+contactus.date.getMonth()+"/"+contactus.date.getFullYear()}
+                                                            td.align-middle
+                                                                form(action="/admin/delete-contact" method="POST")
+                                                                    input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                                                                    input(type="hidden" name="contactid" value=`${contactus._id}`)
+                                                                    button(type="submit" style="height:40px; width:40px;").btn.btn-danger.btn-sm
+                                                                        span 
+                                                                            i.fas.fa-trash-alt.fa-xs
+                                            else
+                                                p.text-center.text-warning

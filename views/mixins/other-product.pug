@@ -1,0 +1,12 @@
+mixin otherproduct(other)
+    .content
+        .site-section-half.mb-1.bg-light
+            .container.owl-2-style.text-center
+                h2.py-5 Benzer Ürünler
+                .owl-carousel.owl-2
+                    each others in other
+                        .media-29101
+                            a(href=`/products/${others._id}` target="_blank" )
+                                img.img-fluid(src=`/img/${others.imageUrl}` alt='Image')
+                            h3
+                                a(href=`/products/${others._id}` target="_blank" style="text-decoration:none;") #{others.name}

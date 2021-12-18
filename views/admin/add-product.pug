@@ -1,0 +1,121 @@
+extends ../layouts/admin-layout.pug
+
+block styles
+    link(rel="stylesheet" href="/css/forms.css")
+    link(rel="stylesheet" href="/css/themes/image.css")
+    link(href='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' rel='stylesheet')
+    link(href='/css/editable.css' rel='stylesheet')
+    script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+    
+
+
+block content
+    
+    if errorMessage
+        div.alert.alert-danger.col-sm-7 !{errorMessage}
+    form(action="/admin/add-product" method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+        .form-group.row
+            .form-check.form-switch
+                input.form-check-input#popular(type="checkbox" name="isActive")
+                label.form-check-label Aktif
+        .form-group.row
+            .form-check.form-switch
+                input.form-check-input#popular(type="checkbox" name="popular")
+                label.form-check-label Popüler Ürün
+        .row.clearfix
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card
+                            .header
+                                h2
+                                    | ÜRÜN İSMİ
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#name(type="text" name="name" value=`${inputs.name}` placeholder="springday s400 sulu klima")  
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card
+                            .header
+                                h2
+                                    | ÜRÜN FİYATI
+                                    small.text-info
+                                        | İsteğe Bağlı
+                            .body
+                                .form-line
+                                    input.form-control#price(type="text" name="price" value=`${inputs.price}` placeholder="1000") 
+        .row
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card
+                            .header
+                                h2
+                                    | ÜRÜNÜN KATEGORİSİ
+                                    small.text-info
+                                        | Birden Fazla Seçilebilir
+                            .body
+                                    each category in categories
+                                        .mt-2
+                                            .form-check.form-switch
+                                                input.form-check-input(id=`${category._id}` type="checkbox" name="categoryids" 
+                                                    value=`${category._id}` checked=category.selected)
+                                                label.form-check-label(for=`${category._id}`) #{category.name}
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card
+                            .header
+                                h2
+                                    | ÜRÜNÜN RESMİ
+                                    small.text-info
+                                        | Birden Fazla Seçilebilir
+                            .body.bg-grey
+                                .fileupload.fileupload-new(data-provides='fileupload')
+                                    span.btn.btn-warning.btn-file
+                                        span.fileupload-new Yeni
+                                        span.fileupload-exists Değiştir
+                                        input#image(type="file" name="image")
+                                    span.fileupload-preview
+                                    a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+        .form-group.row
+            .col-sm-12
+                .card
+                    .header
+                        h2
+                            | AÇIKLAMA                            
+                            small.text-danger
+                                | Gerekli
+                            small.text-info
+                                | Resim Konulabilir
+                    .body
+                        .form-line
+                        textarea.form-control(id="editor" name="description" cols="30" rows="10") #{inputs.description}
+        .form-group.row.demo-tagsinput-area
+            .col-sm-12
+                .card
+                    .header
+                        h2
+                            | #TAG
+                            small.text-danger
+                                | Gerekli
+                            small.text-info
+                                | Tag Öneri için 
+                                a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
+                        .body
+                            .form-line
+                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value='' placeholder="Taglerinizi Buraya Giriniz")
+
+        .form-group.row
+            input(type="submit" value="Save Product")#export-btn.col-md-12.btn.btn-primary
+
+
+block script
+    script(src='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')
+    script(src='/js/image.js')
+    script(src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js")
+    script(src="/js/script.js") 

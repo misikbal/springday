@@ -1,0 +1,93 @@
+extends ../layouts/admin-layout.pug
+block styles
+    include ../admin/includes/formhead.pug
+
+block content
+    
+    if(action!=="undefined" && action==="edit")
+        .alert.alert-info.alert-dismissible.fade.show(role='alert')
+            strong Sosyal Media Ayarları Başarılı Bir Şekilde Güncellendi
+        script.
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+            }, 2000);
+
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .card
+                .header
+                    h2
+                        | Sosyal Medya
+                .body
+                    .demo-masked-input
+                        form(action="/admin/social" method="POST")  
+                            input(type="hidden" name="_csrf" value=`${csrfToken}`) 
+                            .row.clearfix
+                                .col-sm-6
+                                    .form-group
+                                        b Facebook
+                                        .input-group
+                                            span.input-group-addon
+                                                i.material-icons facebook
+                                            .form-line
+                                                input.form-control#facebook(type='text' name="facebook" placeholder='Facebook Url' value=`${social.facebook}`)
+                                .col-sm-6
+                                    .form-group                                    
+                                        b Instagram
+                                        .input-group
+                                            span.input-group-addon
+                                                i.fab.fa-instagram
+                                            .form-line
+                                                input.form-control#instagram(type='text' name="instagram" placeholder='Instagram Url' value=`${social.instagram}`)
+                            .row.clearfix
+                                .col-sm-6
+                                    .form-group 
+                                        b Youtube
+                                        .input-group
+                                            span.input-group-addon
+                                                i.fab.fa-youtube
+                                            .form-line
+                                                input.form-control#youtube(type='text' name="youtube" placeholder='Youtube Url' value=`${social.youtube}`)
+                                .col-sm-6
+                                    .form-group
+                                        b Twitter
+                                        .input-group
+                                            span.input-group-addon
+                                                i.fab.fa-twitter
+                                            .form-line
+                                                input.form-control#twitter(type='text' name="twitter" placeholder='Twitter Url' value=`${social.twitter}`)
+                            .row.clearfix
+                                .col-sm-6
+                                    .form-group
+                                        b Linkedin
+                                        .input-group
+                                            span.input-group-addon
+                                                i.fab.fa-linkedin
+                                            .form-line
+                                                input.form-control#linkedin(type='text' name="linkedin" placeholder='Linkedin Url' value=`${social.linkedin}`)
+                                .col-sm-6
+                                    .form-group
+                                        b İletişim Telefon Numarası
+                                        .input-group
+                                            span.input-group-addon
+                                                i.material-icons phone
+                                            .form-line
+                                                input.form-control.mobile-phone-number#phone(type='text' name="phone" placeholder='Ex: +90 (000) 000-00-00' value=`${social.phone}`)
+                            .row.clearfix       
+                                .col-sm-6
+                                    .form-group
+                                        b Mail Adresi
+                                        .input-group
+                                            span.input-group-addon
+                                                i.material-icons email
+                                            .form-line
+                                                input.form-control.email#mail(type='text' name="mail" placeholder='Ex: example@example.com' value=`${social.mail}`)
+                                .col-sm-6
+                                    .form-group
+                                        input(type="submit" value="Kaydet").btn.btn-info.col-sm-12.mt-5
+
+block script
+    include ../admin/includes/formscript.pug
+

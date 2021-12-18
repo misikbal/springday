@@ -1,0 +1,56 @@
+extends ../layouts/admin-layout.pug
+block styles
+    link(rel="stylesheet" href="/css/form.css")
+block content
+    .col-lg-9
+        form(action="/admin/products" method="POST" enctype="multipart/form-data")
+            input(type="hidden" name="_csrf" value=`${csrfToken}`)    
+            input(type="hidden" name="id" value=`${product._id}`)
+            .form-group.row
+                .form-check.form-switch
+                    input.form-check-input#isActive(type="checkbox" name="isActive" 
+                        value=`${product.isActive}` checked=product.isActive)
+                    label.form-check-label Aktif
+            .form-group.row
+                .form-check.form-switch
+                    input.form-check-input#popular(type="checkbox" name="popular" 
+                        value=`${product.popular}` checked=product.popular)
+                    label.form-check-label Popüler
+            .form-group.row
+                label(for="name").col-sm-2.col-form-label Name
+                .col-sm-10
+                    input(type="text" name="name" value=`${product.name}`).form-control#name               
+            .form-group.row
+                label(for="price").col-sm-2.col-form-label Price
+                .col-sm-10
+                    input(type="text" name="price" value=`${product.price}`).form-control#price          
+            .form-group.row
+                label(for="imageUrl").col-sm-2.col-form-label Image
+                .col-sm-10
+                    img(src=`/img/${product.imageUrl}` width="100")
+                    input#image(type="file" name="image" ) 
+                    //-multiple
+            .form-group.row
+                label(for="categoryid").col-sm-2.col-form-label Category
+                .col-sm-10
+                    each category in categories
+                        .mt-2
+                            .form-check.form-switch
+                                input.form-check-input(id=`${category._id}` type="checkbox" name="categoryids" 
+                                    value=`${category._id}` checked=category.selected)
+                                label.form-check-label(for=`${category._id}`) #{category.name}
+                            
+            .form-group.row
+                label(for="description").col-sm-2.col-form-label Description
+                .col-sm-10
+                    textarea.form-control(id="editor" name="description" cols="30" rows="10") #{product.description}
+            
+            .form-group.row
+                .col-sm-10.offset-sm-2
+                    input(type="submit" value="Save Product").btn.btn-primary                     
+
+
+
+block script  
+    script(src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js")
+    script(src="/js/script.js") 

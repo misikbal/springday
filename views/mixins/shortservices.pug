@@ -1,0 +1,14 @@
+mixin shortservices(services)
+    section#services.services
+        .container(data-aos='fade-up')
+            .section-title
+                p Servislerimiz
+            .row
+                each service in services
+                    .col-lg-2.col-md-3.col-xs-6.p-1(data-aos='zoom-in' data-aos-delay='100')
+                        .icon-box.bg-light
+                            .icon
+                                | !{service.icon}
+                            h3.text-light
+                                a(href='' style="text-decoration:none;") #{service.name}
+                            p #{service.description}

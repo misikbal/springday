@@ -1,0 +1,120 @@
+extends ../layouts/main-layout.pug
+include ../mixins/other-product.pug
+include ../mixins/client.pug
+
+
+
+block styles
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css')
+    link(rel="stylesheet" href="/css/product-details.css")
+    link(rel="stylesheet" href="/css/otherproduct.css")
+    link(href='/plugins/aos/aos.css' rel='stylesheet')
+    link(href='/plugins/bootstrap-icons/bootstrap-icons.css' rel='stylesheet')
+    link(href='/plugins/boxicons/css/boxicons.min.css' rel='stylesheet')
+    link(href='/plugins/glightbox/css/glightbox.min.css' rel='stylesheet')
+    link(href='/plugins/remixicon/remixicon.css' rel='stylesheet')
+    link(href='https://unpkg.com/swiper@7/swiper-bundle.min.css' rel='stylesheet')
+    meta(property="og:image" content=`${product.imageUrl}`)
+    meta(property="og:title" content=`${product.name}`)  
+    //- meta(property="og:description" content=`${categories.name}`)  
+block content
+    style.
+        .whatsapp{
+        position:absolute;
+        width:50px;
+        height:50px;
+        background-color:#25d366;
+        color:#FFF;
+        border-radius:50px;
+        text-align:center;
+        font-size:20px;
+        box-shadow: 2px 2px 3px #999;
+        }
+        .my-float{
+        margin-top:16px;
+        }
+        
+    section
+        .container.p-100.p-100-bottom
+            #content-wrapper
+                .card.bg-transparent
+                    .column.text-center
+                        .row
+                            .col-xs-12
+                                .geeks
+                                    img#featured(src=`/img/${product.imageUrl}` alt=`${product.name}`)
+                                #slide-wrapper
+                                    img#slideLeft.arrow(src='/img/arrow-left.png')
+                                    #slider
+                                        img(src=`/img/${product.imageUrl}` alt=`${product.name}`).thumbnail.active
+                                        img(src=`/img/image-1638469308195.jpg` alt=`${product.name}`).thumbnail
+                                        img(src=`/img/${product.imageUrl}` alt=`${product.name}`).thumbnail
+                                        img(src=`/img/${product.imageUrl}` alt=`${product.name}`).thumbnail
+                                        img(src=`/img/${product.imageUrl}` alt=`${product.name}`).thumbnail
+                                        img(src=`/img/${product.imageUrl}` alt=`${product.name}`).thumbnail
+                                        img(src=`/img/${product.imageUrl}` alt=`${product.name}`).thumbnail
+
+
+                                    img#slideRight.arrow(src='/img/arrow-right.png')
+
+                    .product-content#card-wrapper.bg-light.text-center
+                        h1.product-title #{product.name}
+                        button.btn-info.btn-xs
+                            a.text-white(href=`/categories/${product.categories[0]._id}` style="text-decoration: none;") #{product.categories[0].name}
+                        .product-price
+                                span #{product.price} TL
+                            
+                        .purchase-info
+                            button.btn.bg-info(type='button')
+                                | Add to Cart 
+                                i.fas.fa-shopping-cart
+                            a.whatsapp(href=`https://api.whatsapp.com/send?phone=905372522327&text=http://localhost:1000/products/${product.id}%20Merhaba%20Bu%20%C3%9Cr%C3%BCn%20Hakk%C4%B1nda%20Bilgi%20Almak%20%C4%B0stiyorum` target='_blank')
+                                i.fa.fa-whatsapp.my-float
+                        .social-links.d-flex.justify-content-center
+                            p.pb-2 Paylaş: 
+                            a(href=`https://t.me/share/url?url=http://localhost:1000/products/${product.id}&text=${product.name}` target="_blank")
+                                i.fab.fa-telegram
+                            a(href=`whatsapp://send?text=${product.name}: http://localhost:1000/products/${product.id}` target="_blank")
+                                i.fab.fa-whatsapp
+            #card-wrapper
+                .product-detail.bg-light
+                    h2.m-1.p-1.text-center Açıklama
+                    p.p-3.text-center !{product.description}
+            #card-wrapper.mt-3.pr-3.pl-3
+                +otherproduct(other)
+        +client(client)
+        script(type='text/javascript').
+            let thumbnails = document.getElementsByClassName('thumbnail')
+            let activeImages = document.getElementsByClassName('active')
+            for (var i=0; i < thumbnails.length; i++){
+            thumbnails[i].addEventListener('mouseover', function(){
+            console.log(activeImages)
+            if (activeImages.length > 0){
+            activeImages[0].classList.remove('active')
+            }
+            this.classList.add('active')
+            document.getElementById('featured').src = this.src
+            })
+            }
+            let buttonRight = document.getElementById('slideRight');
+            let buttonLeft = document.getElementById('slideLeft');
+            buttonLeft.addEventListener('click', function(){
+            document.getElementById('slider').scrollLeft -= 180
+            })
+            buttonRight.addEventListener('click', function(){
+            document.getElementById('slider').scrollLeft += 180
+            })
+        
+
+
+
+block script
+    script(src='/plugins/purecounter/purecounter.js')
+    script(src='/plugins/aos/aos.js')
+    script(src='/plugins/glightbox/js/glightbox.min.js')
+    script(src='/plugins/isotope-layout/isotope.pkgd.min.js')
+    script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
+    
+
+    script(src="/js/product-details.min.js")
+    script(src="/js/otherproduct.js")

@@ -1,0 +1,24 @@
+extends ../layouts/admin-layout.pug
+block styles
+    link(rel="stylesheet" href="/css/form.css")
+block content
+    .col-lg-9
+        form(action="/admin/categories" method="POST" enctype="multipart/form-data")
+            input(type="hidden" name="_csrf" value=`${csrfToken}`)    
+            input(type="hidden" name="id" value=`${category._id}`)
+            .form-group.row
+                label(for="name").col-sm-2.col-form-label Category Name
+                .col-sm-10
+                    input(type="text" name="name" value=`${category.name}`).form-control#name               
+            
+            .form-group.row
+                label(for="categoryImg").col-sm-2.col-form-label categoryImg
+                .col-sm-10
+                    img(src=`/img/${category.categoryImg}` width="100")
+                    input#cimage(type="file" name="cimage" ) 
+            
+            .form-group.row
+                .col-sm-10.offset-sm-2
+                    input(type="submit" value="Save Category").btn.btn-primary                     
+
+

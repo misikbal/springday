@@ -1,0 +1,77 @@
+extends ../layouts/main-layout.pug
+
+block styles    
+    link(href='/css/cart.css' rel='stylesheet')
+
+block content
+    if(action!=="undefined" && action==="delete")
+        div.alert.alert-danger The  product has been deleted.
+
+    if(action!=="undefined" && action==="edit")
+        div.alert.alert-success The  product has been update.
+
+
+    .cart_section
+        .container-fluid
+            .row
+                .col-lg-10.offset-lg-1
+                    if products.length>0
+                        .cart_container
+                            .cart_title.mt-3
+                                | Sepetim
+                                small  (1 item in your cart) 
+                                small  (#{products.length})
+
+                            .cart_items
+                                ul.cart_list.bg-light
+                                    each product in products 
+                                        li.cart_item.clearfix.text-center
+                                            .cart_item_image
+                                                img(src=`/img/${product.productId.imageUrl}` width='200')
+                                            .cart_item_info.d-flex.flex-md-row.flex-column.justify-content-between
+                                                .cart_item_name.cart_info_col(style="width:10rem;")
+                                                    p Name
+                                                    .cart_item_text #{product.productId.name}
+                                                .cart_item_quantity.cart_info_col
+                                                    p Quantity
+                                                    .cart_item_text #{product.quantity}
+                                                .cart_item_price.cart_info_col
+                                                    p Price
+                                                    .cart_item_text #{product.productId.price} TL
+                                                .cart_item_total.cart_info_col
+                                                    p Total
+                                                    .cart_item_text #{(product.productId.price)*(product.quantity)} TL
+                                                .cart_item_total.cart_info_col
+                                                    p Sil
+                                                    form(action="/delete-cartItem" method="POST")
+                                                        input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                                                        input(type="hidden" name="productid" value=`${product.productId._id}`)
+                                                        button(type="submit").btn.btn-danger.btn-sm.mt-4
+                                                            span
+                                                                i.fas.fa-trash-alt.fa-xs
+                            .order_total.bg-light
+                                .order_total_content.text-md-right
+                                    p.order_total_title Order Total:
+                                    .order_total_amount 
+                                        - var total = 0;
+                                        each product in products
+                                            - total +=(product.productId.price * product.quantity);
+                                        | #{total} TL
+                            .cart_buttons
+                                a(href="/").btn.btn-secondary.text-light Alişverişe Devam Et
+                                form(action="/create-order" method="POST")
+                                    input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                                    button(type="submit").btn.ml-2.text-light.btn-warning Alişverişi Tamamla
+                    else
+                        .row
+                            .col-md-12
+                                .card.bg-transparent
+                                    .card-body.cart
+                                        .col-sm-12.empty-cart-cls.text-center
+                                            img.img-fluid.mb-4.mr-3(src='https://i.imgur.com/dCdflKN.png' width='130' height='130')
+                                            h3
+                                                strong Sepetiniz Boş
+                                            h4  Beni mutlu edecek bir şey ekle :)
+                                            a.btn.btn-primary.cart-btn-transform.m-3(href='/' data-abc='true') Alışverişe Devam Et
+
+

@@ -1,0 +1,33 @@
+
+.megamenu-li {
+position: static;
+}
+
+.megamenu {
+position: absolute;
+width: 100%;
+left: 0;
+right: 0;
+padding: 0;
+background: transparent;
+border: none;
+}
+
+.megamenu .dropdown-menu {
+  background: none;
+  border: none;
+  width: 100%
+}
+
+
+
+.text-uppercase {
+  letter-spacing: 0.08em
+}
+
+@media all and (min-width: 992px) {
+	.navbar .nav-item .dropdown-menu{ display: none; }
+	.navbar .nav-item:hover .nav-link{   }
+	.navbar .nav-item:hover .dropdown-menu{ display: block; }
+	.navbar .nav-item .dropdown-menu{ margin-top:0; }
+}	

@@ -1,0 +1,12 @@
+mixin popularproduct(product)
+    if(product.isActive && product.popular)
+        a(href=`products/${product._id}` style="text-decoration: none;").text-dark
+            .card.mt-1.bg-light#card-hover
+                .row
+                    .col-md-4
+                        img.card-img-top(src=`/img/${product.imageUrl}` alt=`${product.name}` style="width:100px;").d-flex.justify-content-start
+                    .col-md-8    
+                        p.card-text.align-self-center #{product.name}
+                        p.card-text
+                            small.text-muted 
+                                i.fas.fa-lira-sign  #{product.price}

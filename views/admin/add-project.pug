@@ -1,0 +1,73 @@
+extends ../layouts/admin-layout.pug
+
+block styles
+    link(rel="stylesheet" href="/css/forms.css")
+    link(rel="stylesheet" href="/css/themes/image.css")
+    link(href='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' rel='stylesheet')
+    script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+    
+
+
+block content
+    
+    if errorMessage
+        div.alert.alert-danger.col-sm-7 !{errorMessage}
+    form(action="/admin/add-project" method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+        .form-group.row
+            .form-check.form-switch
+                input.form-check-input#isActive(type="checkbox" name="isActive")
+                label.form-check-label Aktif
+        .row.clearfix
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card
+                            .header
+                                h2
+                                    | PROJE İSMİ
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#name(type="text" name="name" placeholder="Fabrika Montajı")  
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card
+                            .header
+                                h2
+                                    | PROJE RESMİ
+                                    small.text-info
+                                        | Sadece Bir Tane Resim Seçilebilir
+                            .body.bg-grey
+                                .fileupload.fileupload-new(data-provides='fileupload')
+                                    span.btn.btn-warning.btn-file
+                                        span.fileupload-new Yeni
+                                        span.fileupload-exists Değiştir
+                                        input#image(type="file" name="projectImg")
+                                    span.fileupload-preview
+                                    a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+        .form-group.row
+            .col-sm-12
+                .card
+                    .header
+                        h2
+                            | AÇIKLAMA                            
+                            small.text-danger
+                                | Gerekli
+                            small.text-info
+                                | Resim Konulabilir
+                    .body
+                        .form-line
+                        textarea.form-control(id="editor" name="description" cols="30" rows="10")
+        .form-group.row
+            input(type="submit" value="Kaydet").col-md-12.btn.btn-primary
+
+
+block script
+    script(src='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')
+    script(src='/js/image.js')
+
+    script(src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js")
+    script(src="/js/script.js") 

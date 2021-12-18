@@ -1,0 +1,56 @@
+extends ../layouts/main-layout.pug
+block styles 
+    link(rel="stylesheet" href="/css/contactstyle.css")
+    link(rel="stylesheet" href="/css/style2.css")
+
+block content
+    section#contact.contact
+        .container(data-aos='fade-up')
+            .section-title
+                h2(style="margin-top:100px;") 
+                    p İLETİŞİM
+            if system.googlemaps!="undefined"           
+                div
+                    each systems in system
+                        iframe(style='border:0; width: 100%; height: 270px;' src=`${systems.googlemaps}` frameborder='0' allowfullscreen='')
+            .row.mt-5
+                .col-lg-4
+                    .info.bg-light.p-3(style="height:16rem;")
+                        each systems in system
+                            i.fas.fa-thumbtack
+                            h4 Adres
+                            p.text-start #{systems.address}
+                            br
+                            i.fas.fa-envelope
+                            h4 Email
+                            p.text-start #{systems.mail}
+                            br
+                            i.fas.fa-phone
+                            h4 Telefon
+                            p.text-start #{systems.phone}
+
+                .col-lg-8.mt-5.mt-lg-0                    
+                        if(action!=="undefined" && action==="send")
+                            .alert.alert-success.alert-dismissible.fade.show(role='alert')
+                                strong Mesajınız Başarılı Bir Şekilde Gönderildi
+                                
+                        script.
+                            window.setTimeout(function() {
+                                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                                    $(this).remove(); 
+                                });
+                            }, 2000);
+
+                        form(action="/contactus" method="POST")
+                            input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                            .row
+                                .col-md-6.form-group
+                                    input#name.form-control(type='text' name='name' placeholder='Ad Soyad' required oninvalid="this.setCustomValidity('Lüften Ad Soyad Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')").bg-light
+                                .col-md-6.form-group.mt-3.mt-md-0
+                                    input#email.form-control(type='email' name='mail' placeholder='Mail' required oninvalid="this.setCustomValidity('Lüften Mail Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')").bg-light
+                            .form-group.mt-3
+                                input#subject.form-control(type='text' name='subject' placeholder='Konu'  required oninvalid="this.setCustomValidity('Lüften Konu Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')").bg-light
+                            .form-group.mt-3
+                                textarea.form-control(name='message' rows='5' placeholder='Mesaj' required oninvalid="this.setCustomValidity('Lüften Mesaj Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')").bg-light
+                            .text-center
+                                button(type='submit' style="background-color:#FFC451").btn.col-md-12 Mesajı Gönder

@@ -1,0 +1,73 @@
+extends ../layouts/admin-layout.pug
+block styles
+    link(href="/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet")
+
+block content
+    if(action!=="undefined" && action==="delete")
+        div.alert.alert-danger The  product has been deleted.
+
+    if(action!=="undefined" && action==="edit")
+        div.alert.alert-success The  product has been update.
+
+
+    
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .card
+                .header
+                    h2
+                    | EXPORTABLE TABLE
+                    ul.header-dropdown.m-r--5
+                        li.dropdown
+                            a.dropdown-toggle(href='javascript:void(0);' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false')
+                                i.material-icons more_vert
+                            ul.dropdown-menu.pull-right
+                                li
+                                    a(href='javascript:void(0);') Action
+                                li
+                                    a(href='javascript:void(0);') Another action
+                                li
+                                    a(href='javascript:void(0);') Something else here
+                .body
+                    .table-responsive
+                        table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable
+                            thead
+                                tr
+                                    th Image
+                                    th Title
+                                    th Active
+                                    th Author
+                                    th
+                            tfoot
+                                tr
+                                    th Image
+                                    th Title
+                                    th Active
+                                    th Author
+                                    th
+                            tbody
+                                each slides in slide                
+                                    tr
+                                        td 
+                                            img(src=`/img/${slides.image}` width='80')
+                                        td #{slides.title}
+                                        td #{slides.isActive}
+                                        td
+                                        //- td #{slides.userId.name}
+                                        td.position-sticky
+                                            a.btn.btn-primary.btn-sm.mr-2(href=`/admin/slide/${slides._id}`) Edit
+                                            form(action="/admin/delete-slide" method="POST")
+                                                input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                                                input(type="hidden" name="slideid" value=`${slides._id}`)
+                                                button(type="submit").btn.btn-danger.btn-sm Delete                
+block script
+    script(src="/plugins/jquery-datatable/jquery.dataTables.js")
+    script(src="/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")
+    script(src="/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js")
+    script(src="/plugins/jquery-datatable/extensions/export/buttons.flash.min.js")
+    script(src="/plugins/jquery-datatable/extensions/export/jszip.min.js")
+    script(src="/plugins/jquery-datatable/extensions/export/pdfmake.min.js")
+    script(src="/plugins/jquery-datatable/extensions/export/vfs_fonts.js")
+    script(src="/plugins/jquery-datatable/extensions/export/buttons.html5.min.js")
+    script(src="/plugins/jquery-datatable/extensions/export/buttons.print.min.js")
+    script(src='/js/pages/tables/jquery-datatable.js')

@@ -1,0 +1,63 @@
+extends ../layouts/admin-layout.pug
+block styles
+    link(rel="stylesheet" href="/css/themes/image.css")
+    script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+block content    
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .card
+                .header
+                    h2
+                        | Referans Güncelleme
+                .body
+                    .demo-masked-input
+                        form(action="/admin/client" method="POST" enctype="multipart/form-data")
+                            input(type="hidden" name="_csrf" value=`${csrfToken}`)    
+                            input(type="hidden" name="clientid" value=`${client._id}`)
+                            .col-sm-12
+                                    .form-group                                    
+                                        b Active
+                                        .input-group
+                                            .form-line
+                                                input.form-control#isActive(type='text' name="isActive" value=`${client.isActive}`)  
+                            .row.clearfix
+                                .col-sm-6
+                                    .form-group
+                                        b Name
+                                        .input-group
+                                            .form-line
+                                                input.form-control#name(type='text' name="name" placeholder='Name' value=`${client.name}`)
+                                .col-sm-6
+                                    .form-group                                    
+                                        b Link
+                                        .input-group
+                                            .form-line
+                                                input.form-control#link(type='text' name="link" placeholder='Web Link' value=`${client.link}`)
+                            .row.clearfix
+                                .col-sm-6
+                                    .form-group.row
+                                        .card            
+                                            .body
+                                                .text-center
+                                                    img.card-image(src=`/img/${client.clientlogo}` width="200")
+                                            .header.bg-grey
+                                                h2.text-center
+                                                    | Logo
+                                                    small.text-center
+                                                        .fileupload.fileupload-new(data-provides='fileupload')
+                                                            span.btn.btn-warning.btn-file
+                                                                span.fileupload-new Yeni
+                                                                span.fileupload-exists Değiştir
+                                                                input#clientlogo(type="file" name="image")
+                                                            span.fileupload-preview
+                                                            a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+                                .col-sm-6
+                                    .form-group
+                                        label(for='description') Açıklama:
+                                        .input-group
+                                            .form-line
+                                                textarea#description.form-control(rows='5' value=`${client.description}`)                         
+                            .col-sm-12
+                                .form-group
+                                    input(type="submit" value="Kaydet").btn.btn-info.col-sm-12                  
+

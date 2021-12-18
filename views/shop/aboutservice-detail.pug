@@ -1,0 +1,32 @@
+extends ../layouts/main-layout.pug
+include ../mixins/client.pug
+
+block styles 
+    link(href='/css/aboutservicesdetails.css' rel='stylesheet')
+block content
+    br
+    br
+    br
+    br
+    .row
+        .leftcolumn
+            .card.bg-light(style="border-top: 10px solid #0b5aa2;")
+                h2.text-center.itemss-head #{aboutservice.name}
+                img.fakeimg(src=`/img/${aboutservice.imageUrl}` style='height:500px; width:auto;')
+                p !{aboutservice.description}
+
+        .rightcolumn
+            br
+            .itemss.bg-light
+                .itemss-head
+                    h2.text-center Diğer Hizmetler
+                    hr
+                .itemss-body
+                    if allservices.length>0
+                        each services in allservices
+                            .itemss-body-content                        
+                                #card-hover
+                                    a(href=`/aboutservices/${services._id}` class=services._id==selectedCategory?"list-group-item active":"list-group-item" style="text-decoration: none").bg-light
+                                        |#{services.name}
+                                        i.fa.fa-angle-right
+    +client(client)

@@ -1,0 +1,16 @@
+<!doctype html>
+html(lang="en")
+
+    include ../admin/includes/head.pug
+
+    body.theme-red
+        .overlay
+        include ../admin/includes/navbar.pug
+        section
+            include ../admin/includes/leftnavbar.pug   
+        section.content
+            .container-fluid
+                block content
+
+    include ../admin/includes/script.pug
+

@@ -1,0 +1,91 @@
+extends ../layouts/admin-layout.pug
+
+block styles
+    include ../admin/includes/formhead.pug
+    
+
+block content
+    if(action!=="undefined" && action==="edit")
+        .alert.alert-info.alert-dismissible.fade.show(role='alert')
+            strong Genel Ayarlar Başarılı Bir Şekilde Güncellendi
+        script.
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+            }, 2000);
+    .col-lg-12
+    
+        .demo-masked-input
+            form(action="/admin/system" method="POST")  
+                input(type="hidden" name="_csrf" value=`${csrfToken}`)         
+                .row.clearfix
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                            .card
+                                .body
+                                    h2.card-inside-title Sistem Ayarları
+                                    .row.clearfix
+                                        .col-sm-6
+                                            .form-group.form-float.form-group-lg
+                                                .form-line
+                                                    label(for="siteUrl").form-label.col-form-label Site Url
+                                                    input(type="text" name="siteUrl" value=`${system.siteUrl}`).form-control#siteUrl
+                                        .col-sm-6
+                                            .form-group.form-float.form-group-lg
+                                                .form-line
+                                                    label(for="language").form-label.col-form-label Varsayılan Dil
+                                                    input(type="text" name="language" value=`${system.language}`).form-control#language          
+                                    .row.clearfix
+                                        .col-sm-6
+                                            .form-group
+                                                .form-line
+                                                    p Bakım Modu
+                                                    select.form-control(type="checkbox" name="mainMode" value=`${system.mainMode}`)#mainMode 
+                                                        if system.mainMode==false
+                                                            option(value="false" selected) Hayır
+                                                        else if system.mainMode!=false
+                                                            option(value="false") Hayır
+                                                        if system.mainMode==true
+                                                            option(value="true" selected) Evet
+                                                        else if system.mainMode!=true
+                                                            option(value="true") Evet
+                                                        
+                                        .col-sm-6
+                                            .form-group.form-float.form-group-lg
+                                                .form-line
+                                                    label(for="address").form-label.col-form-label Adres
+                                                    input(type="text" name="address" value=`${system.address}`).form-control#address
+                                        
+                                    .row.clearfix
+                                        .col-sm-6
+                                            .form-group.form-float.form-group-lg
+                                                .form-line
+                                                    label(for="mail").form-label.col-form-label Telefon
+                                                    input.form-control.mobile-phone-number(type='text' placeholder='Ex: +00 (000) 000-00-00' name="phone" value=`${system.phone}`)#phone
+                                        .col-sm-6
+                                            .form-group.form-float.form-group-lg
+                                                .form-line
+                                                    label(for="mail").form-label.col-form-label Mail 
+                                                    input.form-control.email#mail(type='text' name="mail" placeholder='Ex: example@example.com' value=`${system.mail}`)
+                                    .row
+                                        .col-sm-6
+                                            .form-group.form-float.form-group-lg
+                                                .form-line
+                                                    label(for="googlemaps").form-label.col-form-label Google Maps Adresi
+                                                    input(type="text" name="googlemaps" value=`${system.googlemaps}`).form-control#googlemaps
+                                        .col-sm-6
+                                            .form-group.form-float.form-group-lg
+                                                .form-line
+                                                    label(for="sgMail").form-label.col-form-label SgMail Api KEY
+                                                    input(type="text" name="sgMail" value=`${system.sgMail}`).form-control#sgMail
+                                    .row
+                                        .col-sm-12
+                                            .form-group.form-float.form-group-lg
+                                                .form-line
+                                                    label(for="tawktoscript").form-label.col-form-label Tawk.to Script
+                                                    textarea(type="text" name="tawktoscript" cols="10" rows="5").form-control#tawktoscript #{system.tawktoscript}
+                .form-group.row
+                    .col-sm-12
+                        input(type="submit" value="Kaydet").btn.btn-primary.col-md-12   
+block script  
+    include ../admin/includes/formscript.pug

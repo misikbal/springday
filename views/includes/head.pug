@@ -1,0 +1,106 @@
+head
+      meta(charset="utf-8")
+      meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+      link(rel='shortcut icon' href='/favicon.ico')
+
+
+      style(type='text/css').
+            a.gflag {vertical-align:middle;font-size:32px;padding:1px 0;background-repeat:no-repeat;background-image:url(//gtranslate.net/flags/32.png);}
+            a.gflag img {border:0;}
+            a.gflag:hover {background-image:url(//gtranslate.net/flags/32a.png);}
+            #goog-gt-tt {display:none !important;}
+            .goog-te-banner-frame {display:none !important;}
+            .goog-te-menu-value:hover {text-decoration:none !important;}
+            body {top:0 !important;}
+            #google_translate_element2 {display:none!important;}
+      link(href='/plugins/aos/aos.css' rel='stylesheet')
+      link(href='/plugins/bootstrap-icons/bootstrap-icons.css' rel='stylesheet')
+      link(href='/plugins/boxicons/css/boxicons.min.css' rel='stylesheet')
+      link(href='/plugins/glightbox/css/glightbox.min.css' rel='stylesheet')
+      link(href='/plugins/remixicon/remixicon.css' rel='stylesheet')
+      link(href='https://unpkg.com/swiper@7/swiper-bundle.min.css' rel='stylesheet')
+      link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet')
+      //- link(rel='icon' sizes='16x16 32x32 64x64' href='/favicon.ico')
+      //- link(rel='icon' type='image/png' sizes='196x196' href='/favicon-192.png')
+      //- link(rel='icon' type='image/png' sizes='160x160' href='/favicon-160.png')
+      //- link(rel='icon' type='image/png' sizes='96x96' href='/favicon-96.png')
+      //- link(rel='icon' type='image/png' sizes='64x64' href='/favicon-64.png')
+      //- //- link(rel='icon' type='image/png' sizes='32x32' href='/favicon-32.png')
+      //- link(rel='icon' type='image/png' sizes='96x96' href='/favicon-16.png')
+      //- link(rel='apple-touch-icon' href='/favicon-57.png')
+      //- link(rel='apple-touch-icon' sizes='114x114' href='/favicon-114.png')
+      //- link(rel='apple-touch-icon' sizes='72x72' href='/favicon-72.png')
+      //- link(rel='apple-touch-icon' sizes='144x144' href='/favicon-144.png')
+      //- link(rel='apple-touch-icon' sizes='60x60' href='/favicon-60.png')
+      //- link(rel='apple-touch-icon' sizes='120x120' href='/favicon-120.png')
+      //- link(rel='apple-touch-icon' sizes='76x76' href='/favicon-76.png')
+      //- link(rel='apple-touch-icon' sizes='152x152' href='/favicon-152.png')
+      //- link(rel='apple-touch-icon' sizes='180x180' href='/favicon-180.png')
+
+      link(href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet")
+      link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css")
+      link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous")
+      link(href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css' rel='stylesheet')
+      link(rel="stylesheet" href="/css/style.min.css")
+
+      link(rel='stylesheet' href='/css/themes/nav/owl.carousel.min.css')
+      link(rel='stylesheet' href='/css/themes/footer/style.css')
+
+      link(rel="stylesheet" href="/css/forms.css")
+      link(rel="stylesheet" href="/css/style2.css")
+      link(rel='stylesheet' href='/css/themes/nav/style.css')
+
+      link(rel='stylesheet' href='/css/product.css')
+      link(rel='stylesheet' href='/css/card.css')
+      link(href='/css/themes/services/style.css' rel='stylesheet')
+      script(src='https://global.localizecdn.com/localize.js')
+      div(style='heigth:23px;')
+
+
+
+      script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js')
+
+      script.
+            $(document).ready(function() {
+                  
+                  $.ajax({
+                  
+                  url: '/api/logo',
+
+                  type: 'GET',
+                  async:false,
+                  
+                  data: { format: 'json' },
+                  
+                  success: function(data) {
+                  
+
+                  result=JSON.stringify(data.system[0].tawktoscript);
+                  tawkto=JSON.parse(result);
+                  $('head').append(tawkto)
+                  revizeverim=JSON.stringify(data.logo.favico);
+                  logo=JSON.parse(revizeverim);
+                  
+                  },
+                  
+                  });
+                  var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+
+                  link.type = 'image/x-icon';
+                  link.rel = 'shortcut icon';
+                  link.href = `/img/${logo}`;
+                  document.getElementsByTagName('head')[0].appendChild(link);
+            });
+      block styles
+      #google_translate_element
+      script.
+            function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+            {pageLanguage: 'en'},
+            'google_translate_element'
+            );
+            }
+      script(src='http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit')
+
+      
+      title #{title}
