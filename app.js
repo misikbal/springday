@@ -112,7 +112,7 @@ app.use((error,req,res,next)=>{
 mongoose.connect(process.env.MONGODB_URI || connectionString,{ useNewUrlParser: true,useUnifiedTopology: true })
     .then(()=>{
         console.log("connected to mongodb");
-        server.listen(port, () => {
+        app.listen(port, () => {
             console.log("App is running on port " + port);
         });
     })
