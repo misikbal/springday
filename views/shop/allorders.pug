@@ -1,0 +1,73 @@
+extends ../layouts/main-layout.pug
+
+block styles
+
+block content
+    
+    .container.px-1.px-md-4.py-5.mx-auto
+        br
+        br
+        br
+        br
+        h2 SİPARİŞLERİM        
+        .row
+            if orders.length>0
+                each order in orders
+                        .col-8
+                            .table-responsive
+                                table.table.table-hover.text-center
+                                    thead.thead-dark
+                                        tr         
+                                            th.align-middle
+                                            th.align-middle Sipariş Edilen Ürün Sayısı 
+                                            th.align-middle Sipariş Tarihi
+                                            th.align-middle Sipariş Toplamı
+
+
+
+                                    tbody
+                                        each item in order.items
+
+                                            tr.bg-dark.text-white
+                                                td.align-middle.text-center
+                                                    img(src="/img/puff.svg" data-src=`/img/resized/${item.product.imageUrl}` width='100').deneme
+
+                                            
+                                                td.align-middle.text-center #{item.product.name}
+                                                td.align-middle.text-center
+                                                    .cart_item_quantity.cart_info_col
+                                                        .cart_item_text #{item.quantity}
+                                                td.align-middle.text-center #{(item.product.price)*(item.quantity)} TL
+                                                    
+                                        tr.bg-secondary.text-white
+                                            td(colspan=2).align-middle Tarih-Saat:  #{"   "+order.date.getDate()+"/"+order.date.getMonth()+"/"+order.date.getFullYear() +"   " }
+                                                |#{order.date.getHours()+":"+ order.date.getMinutes()}
+                                            td(colspan=1).align-middle
+                                                |Sipariş Toplamı:
+                                                - var total = 0;
+                                                each item in order.items
+                                                    - total +=(item.product.price * item.quantity);
+                                                |#{"  "+total} TL
+                                            td(colspan=1).align-middle
+                                                button.btn(class=(order.done? "btn-success":order.cargo ? "btn-info":order.approval ? "btn-warning":!order.approval ? "btn-danger"  :"") style="border-radius:10px; font-size: 12px;") 
+                                                    |#{order.done? "Ürün Teslim Edildi":order.cargo ? "Ürün Kargoya Verildi":order.approval ? "Sipariş Onaylandı": !order.approval ? "Ödeme Yapılmadı":""}
+
+                                            
+                        .col-2.mt-5
+                        
+                            a.btn.bg-white.btn-sm(href=`/orders/${order._id}`)
+                                span
+                                    i.fas.fa-external-link-alt
+
+            else
+                .row
+                    .col-md-12
+                        .card.bg-transparent
+                            .card-body.cart
+                                .col-sm-12.empty-cart-cls.text-center
+                                    img.img-fluid.mb-4.mr-3(src='/img/empty.png' width='300' height='300')
+                                    h3
+                                        strong Siparişiniz Yoktur
+                                    h4  Herhangi Bir Siparişiniz Bulunmamaktadır
+                                    a.btn.btn-primary.cart-btn-transform.m-3(href='/' data-abc='true') Alışverişe Devam Et
+block script

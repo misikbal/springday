@@ -1,0 +1,75 @@
+extends ../layouts/admin-layout.pug
+block styles
+    script(src="/plugins/ckeditor/ckeditor.js")
+
+block content
+    form(action="/admin/about" method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)    
+        input(type="hidden" name="aboutid" value=`${about._id}`)
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | "#{about.name}" BAŞLIKLI BİLGİYİ GÜNCELLEME SAYFASI
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | İŞLEMLER
+                            .body.d-flex.justify-content-center
+                                .row
+                                    .col
+                                        .card.bg-light
+                                            .body
+                                                .form-group
+                                                    label.form-check-label.mb-3 Aktif
+                                                    .form-check.form-switch.d-flex.justify-content-center
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive" value=`${about.isActive}` checked=about.isActive)
+                                    .col
+                                        .card.bg-light
+                                            .body                                   
+                                                .form-group
+                                                    label.form-check-label Birincil Bilgi (Sayfada çıkacak ilk bilgi)
+                                                    .form-check.form-switch.d-flex.justify-content-center
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#popular(type="checkbox" name="popular" value=`${about.isHome}` checked=about.isHome)
+
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | BİLGİ BAŞLIĞI
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#name(type="text" name="name" value=`${about.name}` placeholder="Neden Tasarruf") 
+        .form-group.row
+            .col-sm-12
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
+                        h2
+                            | AÇIKLAMA                            
+                            small.text-danger
+                                | Gerekli
+                            small.text-info
+                                | Resim Konulabilir (Resim Ekleme Simgesine Tıklayın > Sunucuya Gözat )
+                    .body
+                        .form-line
+                        textarea.form-control(id="editor" name="description" cols="30" rows="10") #{about.description}
+        
+        .form-group.row
+            input(type="submit" value="Bilgiyi Güncelle").btn.btn-warning.col-md-12                 
+
+
+
+block script  
+    script(src="/js/script.js") 

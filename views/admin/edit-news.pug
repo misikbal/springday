@@ -1,0 +1,93 @@
+extends ../layouts/admin-layout.pug
+block styles
+    link(rel="stylesheet" href="/css/themes/image.css")
+    script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+    script(src="/plugins/ckeditor/ckeditor.js")
+block content
+    form(action="/admin/news" method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)    
+        input(type="hidden" name="newsid" value=`${news._id}`)
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | "#{news.title}" BAŞLIKLI GÖNDERİYİ GÜNCELLEME SAYFASI
+        .row.clearfix
+            .col-md-2
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-5 Aktif
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive" value=`${news.isActive}` checked=news.isActive)
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | REFERANSIN ADI
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#title(type="text" name="title" value=`${news.title}` placeholder="Basında Biz")            
+        .row
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | GÖNDERİ RESMİ
+                                    small.text-danger
+                                        | Gerekli
+                                    small.text-info
+                                        | Bir Tane Resim Seçilebilir
+                            .text-center
+                                img(src=`/img/${news.imageUrl}` style="width:400px;").card-img-top.mt-3                            
+                            .body.bg-blue-grey
+                                .fileupload.fileupload-new(data-provides='fileupload')
+                                    span.btn.btn-warning.btn-file
+                                        span.fileupload-new Yeni
+                                        span.fileupload-exists Değiştir
+                                        input#imageUrl(type="file" name="newsImg" accept="image/*")
+                                    span.fileupload-preview
+                                    a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+
+        .form-group.row
+            .col-sm-12
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
+                        h2
+                            | AÇIKLAMA                            
+                            small.text-danger
+                                | Gerekli
+                            small.text-info
+                                | Resim Konulabilir (Resim Ekleme Simgesine Tıklayın > Sunucuya Gözat )
+                    .body
+                        .form-line
+                        textarea.form-control(id="editor" name="description" cols="30" rows="10") #{news.description}
+        .form-group.row
+            .col-sm-12
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
+                        h2
+                            | ETKİNLİK TARİHİ                            
+                            small.text-danger
+                                | Gerekli
+                    .body
+                        .form-group.row
+                            input.form-control#newsdate(type="date" name="newsdate" value=`${news.newsdate}`)        
+            
+        .form-group.row
+            input(type="submit" value="Gönderiyi Güncelle").btn.btn-warning.col-md-12                                          
+
+
+
+block script
+    script(src='/js/image.js')
+    script(src="/js/script.js") 

@@ -1,0 +1,86 @@
+extends ../layouts/admin-layout.pug
+
+
+
+
+block content
+    
+    if errorMessage
+        div.alert.alert-danger.col-sm-7 !{errorMessage}
+    form(action="/admin/activemodule" method="POST")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`) 
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | MODÜLLER
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | İŞLEMLER
+                            .body.d-flex.justify-content-center
+                                .row
+                                    .col
+                                        .card.bg-light
+                                            .body
+                                                .form-group
+                                                    label.form-check-label.mb-3 İletişim Navbarı
+                                                    .form-check.form-switch.d-flex.justify-content-center
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#contactnavbar_isActive(type="checkbox" name="contactnavbar_isActive" value=`${active.contactnavbar_isActive}` checked=active.contactnavbar_isActive)
+                                    .col
+                                        .card.bg-light
+                                            .body                                   
+                                                .form-group
+                                                    label.form-check-label Whatsapp Buttonu
+                                                    .form-check.form-switch.d-flex.justify-content-center
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#whatsapp_isActive(type="checkbox" name="whatsapp_isActive" value=`${active.whatsapp_isActive}` checked=active.whatsapp_isActive)
+                                    .col
+                                        .card.bg-light
+                                            .body                          
+                                                .form-group
+                                                    label.form-check-label Tawk.to Sohbet Balonu  
+                                                    .form-check.form-switch.d-flex.justify-content-center
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#tawkto_isActive(type="checkbox" name="tawkto_isActive" value=`${active.tawkto_isActive}` checked=active.tawkto_isActive) 
+                            .body.d-flex.justify-content-center
+                                
+                                .row
+                                    .col
+                                        .card.bg-light
+                                            .body                          
+                                                .form-group
+                                                    label.form-check-label Dark - Light Mod Butonu   
+                                                    .form-check.form-switch.d-flex.justify-content-center
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#darkmode_isActive(type="checkbox" name="darkmode_isActive" value=`${active.darkmode_isActive}` checked=active.darkmode_isActive)
+                                    .col
+                                        .card.bg-light
+                                            .body                          
+                                                .form-group
+                                                    label.form-check-label Çeviri Çubuğu   
+                                                    .form-check.form-switch.d-flex.justify-content-center
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#translate_isActive(type="checkbox" name="translate_isActive" value=`${active.translate_isActive}` checked=active.translate_isActive) 
+                                    .col
+                                        .card.bg-light
+                                            .body                          
+                                                .form-group
+                                                    label.form-check-label E-Ticaret Modülü
+                                                    .form-check.form-switch.d-flex.justify-content-center
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#ecommarce_isActive(type="checkbox" name="ecommarce_isActive" value=`${active.ecommarce_isActive}` checked=active.ecommarce_isActive) 
+                            .body.d-flex.justify-content-center                            
+                                .row
+                                    .col
+                                        .card.bg-light.text-center
+                                            .body
+                                                .form-group
+                                                    label.form-check-label.mb-5 Anasayfa Navbara Arka Plan Rengi (Açık>Renkli | Kapalı>Transparant)
+                                                    .form-check.form-switch.d-flex.justify-content-center
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#isNavbar(type="checkbox" name="isNavbar" value=`${active.isNavbar}` checked=active.isNavbar)
+        if isAdmin
+            .form-group.row
+                input(type="submit" value="Modülleri Kaydet")#export-btn.col-md-12.btn.btn-warning

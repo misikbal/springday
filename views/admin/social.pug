@@ -13,7 +13,13 @@ block content
                     $(this).remove(); 
                 });
             }, 2000);
-
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .form-group.row
+                .card.text-center.bg-blue-grey
+                    .header
+                        h2.text-white
+                            | SOSYAL MEDYA AYARLARI
     .row.clearfix
         .col-lg-12.col-md-12.col-sm-12.col-xs-12
             .card
@@ -84,9 +90,10 @@ block content
                                                 i.material-icons email
                                             .form-line
                                                 input.form-control.email#mail(type='text' name="mail" placeholder='Ex: example@example.com' value=`${social.mail}`)
-                                .col-sm-6
-                                    .form-group
-                                        input(type="submit" value="Kaydet").btn.btn-info.col-sm-12.mt-5
+                                if isAdmin
+                                    .col-sm-6
+                                        .form-group
+                                            input(type="submit" value="Kaydet").btn.btn-info.col-sm-12.mt-5
 
 block script
     include ../admin/includes/formscript.pug

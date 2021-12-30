@@ -1,0 +1,77 @@
+extends ../layouts/admin-layout.pug
+
+block content
+    if errorMessage
+        div.alert.alert-danger.col-sm-12 !{errorMessage}
+    form(action="/admin/add-admin" method="POST")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | ADMİN EKLEME SAYFASI
+        .row.clearfix
+            
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | ADMİN AD SOYAD
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#name(type="text" name="name" placeholder="Muhammed İkabl SIRDAŞ")  
+
+            .col-sm-6
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
+                        h2
+                            | ADMİN EMAİL
+                            small.text-danger
+                                | Gerekli
+                    .body
+                        .form-line
+                            input.form-control#email(type="text" name="email" placeholder="test@mail.com")
+        .row.clearfix        
+            .col-sm-6
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
+                        h2
+                            | ADMİN ŞİFRE
+                            small.text-danger
+                                | Gerekli
+                    .body
+                        .form-line
+                            input.form-control#password(type="password" name="password" placeholder="***********")  
+            .col-sm-6
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
+                        h2
+                            | STATÜ
+                            small.text-danger
+                                | Gerekli
+                            small.text-info
+                                | Kısıtlı Admin Sadece Oluşturulan Listeleri Görebilir. Ekleme Güncelleme ve Silme İşlemi Yapamaz. Site Bakım Modunda Giriş Yapamaz.
+                            small.text-info
+                                | Admin İçin Herhangi Bir Kısıt Bulunmamaktadır.
+                    .body
+                        .form-line
+
+                            .form-check
+                                input#isAdmin.form-check-input(type='radio' value="true" name='isAdmin')
+                                label.form-check-label(for='isAdmin')
+                                    | Admin
+                            .form-check
+                                input#isLimited.form-check-input(type='radio' name='isLimited' value="true" checked='')
+                                label.form-check-label(for='isLimited')
+                                    | Kısıtlı Admin
+
+        .form-group.row
+            input(type="submit" value="Admini Kaydet").btn.btn-warning.col-md-12 
+

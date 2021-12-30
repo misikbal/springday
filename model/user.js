@@ -20,6 +20,14 @@ const userSchema=mongoose.Schema({
         type:Boolean,
         default:false
     },
+    isLimited:{
+        type:Boolean,
+        default:false
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    },
     cart:{
         items:[
             {

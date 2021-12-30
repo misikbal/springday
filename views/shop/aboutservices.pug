@@ -24,7 +24,7 @@ block content
                     .col-md-4
                         .item-1(style="height:26rem;")
                             a.card(href=`/aboutservices/${aboutservice._id}`).bg-light
-                                .thumb(style=`background-image: url(/img/${aboutservice.imageUrl});`)
+                                .thumb.deneme(style=`background-image: url(/img/${aboutservice.imageUrl});`)
                                 article
                                     h1 #{aboutservice.name}
                                     p !{aboutservice.description.substring(0, 300)+"..."}

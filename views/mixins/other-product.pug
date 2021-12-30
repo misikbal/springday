@@ -7,6 +7,6 @@ mixin otherproduct(other)
                     each others in other
                         .media-29101
                             a(href=`/products/${others._id}` target="_blank" )
-                                img.img-fluid(src=`/img/${others.imageUrl}` alt='Image')
+                                img.img-fluid(src=`/img/resized/${others.imageUrl}` alt='Image')
                             h3
                                 a(href=`/products/${others._id}` target="_blank" style="text-decoration:none;") #{others.name}

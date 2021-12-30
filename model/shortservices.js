@@ -9,8 +9,12 @@ const shortServicesSchema = mongoose.Schema({
         type:String,
         required:true["Hizmet ismini yazınız"]
     },
-    decription:{
+    description:{
         type:String,
+    },
+    date: {
+        type: Date,
+        default: Date.now
     },
     isActive: Boolean,
     userId:{

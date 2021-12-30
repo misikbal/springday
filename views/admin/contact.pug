@@ -28,31 +28,25 @@ block content
                                         h3.font-light.mb-0
                                             i.ti-email.mr-2
                                             | Toplam Mail Sayısı: #{contact.length}
-                                    .col-sm-12.col-md-6
-                                        ul.list-inline.dl.mb-0.float-left.float-md-right
-                                            li.list-inline-item.text-info.mr-3
-                                                a(href='#')
-                                                    button.btn.btn-circle.btn-success.text-white(href='javascript:void(0)')
-                                                        i.fa.fa-plus
-                                                    span.ml-2.font-normal.text-dark Yeni Mail
-                                // Mail list
-                                .table-responsive
-                                    table.table.email-table.no-wrap.table-hover.v-middle.mb-0.font-14
-                                        tbody
-                                            if contact.length > 0
+                                if contact.length > 0
+                                
+                                    .table-responsive
+                                        table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
+                                            tbody
                                                 each contactus in contact
-                                                        tr.mr-5
-                                                            td.pl-3.align-middle
-                                                                .custom-control.custom-checkbox
+                                                    tr.mr-5
+                                                        td.pl-3.align-middle
+                                                            .custom-control.custom-checkbox
 
-                                                            td.align-middle
-                                                                span.mb-0.text-muted #{contactus.name}
-                                                            td.align-middle
-                                                                a.link(href=`/admin/contact/${contactus._id}`)
-                                                                    span.text-dark #{contactus.subject}
-                                                            td.text-muted.text-center #{contactus.date.getHours()+":"+ contactus.date.getMinutes()}
-                                                                br
-                                                                | #{contactus.date.getDate()+"/"+contactus.date.getMonth()+"/"+contactus.date.getFullYear()}
+                                                        td.align-middle
+                                                            span.mb-0.text-muted #{contactus.name}
+                                                        td.align-middle
+                                                            a.link(href=`/admin/contact/${contactus._id}`)
+                                                                span.text-dark #{contactus.subject}
+                                                        td.align-middle #{contactus.date.getHours()+":"+ contactus.date.getMinutes()}
+                                                            br                                            
+                                                            | #{contactus.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
+                                                        if isAdmin
                                                             td.align-middle
                                                                 form(action="/admin/delete-contact" method="POST")
                                                                     input(type="hidden" name="_csrf" value=`${csrfToken}`)  
@@ -60,5 +54,7 @@ block content
                                                                     button(type="submit" style="height:40px; width:40px;").btn.btn-danger.btn-sm
                                                                         span 
                                                                             i.fas.fa-trash-alt.fa-xs
-                                            else
-                                                p.text-center.text-warning
+                                else
+                                    p.text-center.align-middle Herhangi Bir Mesajınız Mevcut Değil
+block script    
+    include ../admin/includes/tablescript.pug

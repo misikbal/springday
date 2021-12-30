@@ -16,6 +16,7 @@ const slideSchema = mongoose.Schema({
     buttonName: String,
     buttonLink: String,
     animate:String,
+    
     isActive:Boolean,
     
     userId:{

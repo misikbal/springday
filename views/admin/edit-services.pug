@@ -3,44 +3,70 @@ block styles
     link(rel="stylesheet" href="/css/themes/image.css")
     script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
 block content    
-    .row.clearfix
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-            .card
-                .header
-                    h2
-                        | Hizmet Güncelleme
-                .body
-                    .demo-masked-input
-                        form(action="/admin/services" method="POST" enctype="multipart/form-data")
-                            input(type="hidden" name="_csrf" value=`${csrfToken}`)    
-                            input(type="hidden" name="serviceid" value=`${services._id}`)
-                            .row.clearfix          
-                                .col-sm-6
-                                        .form-group                                    
-                                            b İcon
-                                            .input-group
-                                                .form-line
-                                                    input.form-control#icon(type='text' name="icon" value=`${services.icon}`)  
-                                .col-sm-6
-                                    .form-group
-                                        b Başlık
-                                        .input-group
-                                            .form-line
-                                                input.form-control#name(type='text' name="name" placeholder='Hizmet Adı' value=`${services.name}`)
-                            .row.clearfix 
-                                .col-sm-6
-                                    .form-group
-                                        label(for='description') Açıklama:
-                                        .input-group
-                                            .form-line
-                                                textarea#description.form-control(rows='5' value=`${services.description}`)      
-                                .col-sm-6
-                                    .form-group                                    
-                                        b Aktif
-                                        .input-group
-                                            .form-line
-                                                input.form-control#isActive(type='text' name="isActive" placeholder='isActive' value=`${services.isActive}`)
-                            .col-sm-12
-                                .form-group
-                                    input(type="submit" value="Kaydet").btn.btn-info.col-sm-12                  
+    if errorMessage
+        div.alert.alert-danger.col-sm-12 !{errorMessage}
+    form(action="/admin/services" method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)    
+        input(type="hidden" name="serviceid" value=`${services._id}`)
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | "#{services.name}" SERVİSİNİN GÜNCELLEME SAYFASI
+        
+        .row.clearfix
+            .col-md-2
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-5 Aktif
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive" value=`${services.isActive}` checked=services.isActive)
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | SERVİS BAŞLIĞI
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#title(type="text" name="name" value=`${services.name}` placeholder="Danışmanlık")            
+        .row
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | SERVİS İCONU
+                                    small.text-danger
+                                        | Gerekli
+                                    small.text-info
+                                        a(href="https://fontawesome.com/v5.15/icons/") https://fontawesome.com/v5.15/icons/ site üzerinden istediğiniz iconu seçip yapıştırın
+                            .text-center
+                                span.card-img-top.mt-3.fa-5x
+                                    | !{services.icon}
+                            .body.bg-blue-grey
+                                input.form-control#icon(type='text' name="icon" value=`${services.icon}`)  
+
+            .col-sm-6
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
+                        h2
+                            | AÇIKLAMA                            
+                            small.text-info
+                                | İsteğe Bağlı
+                    .body
+                        .form-line
+                            textarea.form-control(type="text" name="description" cols="5" rows="1") #{services.description}
+
+        .col-sm-12
+            .form-group
+                input(type="submit" value="Kaydet").btn.btn-warning.col-sm-12                  
 

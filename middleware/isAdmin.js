@@ -4,7 +4,7 @@ module.exports=(req,res,next)=>{
         return res.redirect("/login");
     }
     if(!req.user.isAdmin){
-        return res.redirect("/");
+        return res.redirect("/admin");
     }
     next();
 }

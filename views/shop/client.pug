@@ -1,0 +1,37 @@
+extends ../layouts/main-layout.pug
+include ../mixins/client.pug
+
+block styles
+
+    link(href='/css/project.css' rel='stylesheet')
+    link(href='/css/aboutservices.css' rel='stylesheet')
+
+
+block content
+    if client.length>0
+        br
+        br
+        br
+        br
+        br
+        br
+
+        header
+            h1 REFERANLARIMIZ
+        .container
+            .row
+                each clients in client
+                    .col-md-4
+                        .item-1(style="height:20rem;").d-flex.justify-content-center
+                            a.card(href=`${clients.link}` target="_blank").bg-light
+                                img.deneme(src=`/img/${clients.clientlogo}` style="margin-left: auto; margin-right: auto; width: 50%;").w-75.mt-3.mb-3
+                                article
+                                    h1 #{clients.name}
+                                    p #{clients.description}
+    br
+    br
+    br
+    +client(client)
+block script
+
+    script(src="/js/card.js")

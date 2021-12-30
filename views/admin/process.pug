@@ -1,0 +1,53 @@
+extends ../layouts/admin-layout.pug
+
+block content
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .form-group.row
+                .card.text-center.bg-blue-grey
+                    .header
+                        h2.text-white
+                            | YAPILAN İŞLEMLER
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            
+            .card
+                if process.length > 0
+                        
+                    .body.justify-content-between
+                        .table-responsive
+                            table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
+                                thead.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th(scope="col").align-middle Yapılan İşlem
+                                        th(scope="col").align-middle İşlem 
+                                        th(scope="col").align-middle İşlemi Gerçekleştiren
+                                        th(scope="col").align-middle Tarih
+                                            
+
+                                tfoot.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th(scope="col").align-middle Yapılan İşlem
+                                        th(scope="col").align-middle İşlem 
+                                        th(scope="col").align-middle İşlemi Gerçekleştiren
+                                        th(scope="col").align-middle Tarih
+                                tbody
+                                    -var index=1;
+                                    each processes in process
+                                        tr                                        
+                                            td(scope="row").align-middle #{index++}
+                                            td.align-middle #{processes.name}
+                                            td.align-middle 
+                                                button.btn(class=(`${processes.type}`==="delete" ? "btn-outline-danger" : `${processes.type}`==="edit" ? "btn-outline-warning" : `${processes.type}`==="insert" ? "btn-outline-success":"") style="border-radius:50px;") #{processes.type}
+                                            td.align-middle #{processes.userId.name}
+                                            
+                                            td.align-middle #{processes.date.getHours()+":"+ processes.date.getMinutes()+" "}
+                                                br
+                                                | #{" "+processes.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
+                else
+                    p.text-center.align-middle Herhangi Bir İşlem Yapılmadı
+
+block script    
+    include ../admin/includes/tablescript.pug

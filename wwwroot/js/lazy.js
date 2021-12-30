@@ -1,17 +1,10 @@
-// const {Bound} = require('../../node_modules/bounds.js/dist/bounds');
-import * as Bound from "./bounds.js";
-const boundary=Bound({
-    margins:{bottom:-100}
+$(document).ready(function(){
+	$(window).scroll(function(){
+  		$('.deneme').each(function(){
+					if( $(this).offset().top < ($(window).scrollTop() + $(window).height() + 100) )
+          {          		   
+              $(this).attr('src', $(this).attr('data-src')).removeClass("w-50").removeAttr('data-src');
+          }
+			});
+  })
 })
-const image=document.querySelectorAll("img")
-const whenImageEnters=()=>{
-    return()=>{
-        image.src=image.dataset.src
-        boundary.unWatch(image)
-    }
-
-}
-image.forEach(img=>{
-    boundary.watch(img,whenImageEnters(img))
-
-});

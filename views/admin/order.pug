@@ -1,0 +1,180 @@
+extends ../layouts/admin-layout.pug
+
+block styles
+    link(href='/css/order.css' rel='stylesheet')
+    link(href='/css/cart.css' rel='stylesheet')
+    link(rel="stylesheet" href="/css/contactstyle.css")
+    link(rel="stylesheet" href="/css/style2.css")
+
+block content
+    .container
+        if !orders.approval
+        
+            .text-center
+                span.reversed.reversedRight
+                    span
+                        | ⚠
+                span.reversed.ml-3
+                    | Ödeme Yapılmadı
+                    |Lütfen İlgili 
+                    a(href="/" style="text-decoration: none" target="_blank").text-dark Banka Hesaplarına 
+                    br
+                    |Gerekli Ödemeyi Yapınız
+
+        .card.bg-light
+            .row.d-flex.justify-content-between.px-3.top
+                .text-center
+                    h5
+                        | SİPARİŞ 
+                    br
+                    span.text-primary.font-weight-bold Sipariş Id: ##{orders._id}
+                .d-flex.flex-column.text-sm-right.text-center
+                    p
+                        | #{orders.cargocompany===null ?"":orders.cargocompany==="undefined" ? "":orders.cargocompany}
+                        span.font-weight-bold #{orders.cargonumber===null ?"":orders.cargonumber==="undefined" ? "":orders.cargonumber}
+            .row.d-flex.justify-content-center.text-center
+                .col-md-12.text-center
+                    ul#progressbar.text-center
+                        li.active.step0
+                            p.font-weight-bold
+                                | Sipariş İsteği
+                                br
+                                | Gönderildi
+                        li(class=orders.approval?"active":"").step0
+                            p.font-weight-bold
+                                | Sipariş 
+                                br
+                                | Onaylandı
+                        li(class=orders.cargo?"active":"").step0
+                            p.font-weight-bold
+                                | Ürün Kargoya
+                                br
+                                | Verildi
+                        li(class=orders.done?"active":"").step0
+                            p.font-weight-bold
+                                | Ürün Teslim
+                                br
+                                | Edildi
+
+        .table-responsive
+            table.table.table-hover.text-center
+                thead.thead-dark
+                    tr
+                        th.align-middle 
+
+                        th(scope="col").align-middle Ürün Adı 
+                        th(scope="col").align-middle Adet
+                        th(scope="col").align-middle Toplam
+                tbody
+                    each item in orders.items
+                        tr
+                                td.align-middle
+                                    .cart_item_image.mt-3
+                                        img(src=`/img/resized/${item.product.imageUrl}` width='100')
+                                
+                                td.align-middle
+                                    .cart_item_name.cart_info_col
+                                        .cart_item_text #{item.product.name}
+                                td.align-middle
+                                    .cart_item_quantity.cart_info_col
+                                        .cart_item_text #{item.quantity}
+                                td.align-middle
+                                    .cart_item_total.cart_info_col
+                                        .cart_item_text #{(item.product.price)*(item.quantity)} TL
+                    tr.bg-secondary.text-white
+                        td(colspan=2).align-middle Tarih-Saat:  #{"   "+orders.date.getDate()+"/"+orders.date.getMonth()+"/"+orders.date.getFullYear() +"   " }
+                            |#{orders.date.getHours()+":"+ orders.date.getMinutes()}
+                        td(colspan=2).align-middle
+                            |Sipariş Toplamı:
+                            - var total = 0;
+                            each item in orders.items
+                                - total +=(item.product.price * item.quantity);
+                            |#{"  "+total} TL
+            
+            section#contact.contact
+                .container(data-aos='fade-up')
+                        h3.text-center Adres Bilgisi
+
+                        .info.bg-light.p-1(style="height:15rem;")
+                            .row.mb-1
+
+                                .col
+                                    i.fas.fa-user
+                                    h4 Ad Soyad
+                                    p.text-start #{orders.name}
+                                br
+                                .col
+                                    i.fas.fa-envelope
+                                    h4 Email
+                                    p.text-start #{orders.mail}
+                                br
+                                .col
+                                    i.fas.fa-phone
+                                    h4 Telefon
+                                    p.text-start #{orders.phone}
+                                .col
+                                    
+                                    i.fas.fa-city
+                                    h4 İl-İlçe
+                                    p.text-start #{orders.city+" - "+orders.district}
+                                .col
+                                    i.fas.fa-map-marker-alt
+                                    h4 Detaylı Adres Bilgisi
+                                    p.text-start #{orders.adress}
+        form(action="/admin/orders" method="POST")
+            input(type="hidden" name="_csrf" value=`${csrfToken}`)    
+            input(type="hidden" name="orderid" value=`${orders._id}`)
+            .row.clearfix
+                .col-md-12
+                    .form-group.row
+                        .col-sm-12
+                            .card.text-center.bg-blue-grey
+                                .header.bg-white
+                                    h2
+                                        | İŞLEMLER
+                                .body.d-flex.justify-content-center
+                                    .row
+                                        .col
+                                            .card.bg-light
+                                                .body
+                                                    .form-group
+                                                        label.form-check-label.mb-3 Ödemeyi Onayla
+                                                        .form-check.form-switch.d-flex.justify-content-center
+                                                            input.form-check-input.mt-auto.p-2.bd-highlight#approval(type="checkbox" name="approval" value=`${orders.approval}` checked=orders.approval)
+                                        .col
+                                            .card.bg-light
+                                                .body                                   
+                                                    .form-group
+                                                        label.form-check-label Ürün Kargoya Verildi
+                                                        .form-check.form-switch.d-flex.justify-content-center
+                                                            input.form-check-input.mt-auto.p-2.bd-highlight#cargo(type="checkbox" name="cargo" value=`${orders.cargo}` checked=orders.cargo)
+                                        .col
+                                            .card.bg-light
+                                                .body                          
+                                                    .form-group
+                                                        label.form-check-label Ürün Teslim Edildi   
+                                                        .form-check.form-switch.d-flex.justify-content-center
+                                                            input.form-check-input.mt-auto.p-2.bd-highlight#done(type="checkbox" name="done" value=`${orders.done}` checked=orders.done)
+            .row.clearfix
+                .col-md-6
+                    .form-group.row
+                        .col-sm-12
+                            .card.text-center.bg-blue-grey
+                                .header.bg-white
+                                    h2
+                                        | KARGO FİRMASI
+                                .body
+                                    .form-line
+                                        input.form-control#cargocompany(type="text" name="cargocompany" value=`${orders.cargocompany===null ?"":orders.cargocompany==="undefined" ? "":orders.cargocompany}` placeholder="Aras Kargo")
+                .col-md-6
+                    .form-group.row
+                        .col-sm-12
+                            .card.text-center.bg-blue-grey
+                                .header.bg-white
+                                    h2
+                                        | KARGO TAKİP NUMARASI
+                                .body
+                                    .form-line
+                                        input.form-control#cargonumber(type="text" name="cargonumber" value=`${orders.cargonumber===null ?"":orders.cargocompan==="undefined" ? "":orders.cargonumber}` placeholder="1622603546123") 
+            .form-group.row
+                input(type="submit" value="Kaydet").btn.btn-warning.col-md-12     

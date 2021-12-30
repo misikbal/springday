@@ -20,48 +20,61 @@ block content
                 $(this).remove(); 
             });
         }, 2000);
-    
 
-    if categories.length>0
-        .row.clearfix
-                .col-lg-12.col-md-12.col-sm-12.col-xs-12
-                    
-                    .card
-                        
-                        a(href="/admin/add-category").btn.btn-primary.btn-sm
-                            span 
-                                i.fas.fa-plus.fa-xs.mr-2
-                            | Yeni Kategori Ekleme
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .form-group.row
+                .card.text-center.bg-blue-grey
+                    .header
+                        h2.text-white
+                            | KATEGORİLER
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            
+            .card
+                if isAdmin
+                    a(href="/admin/add-category").btn.bg-blue-grey.btn-sm
+                        span 
+                            i.fas.fa-plus.fa-xs.mr-2
+                        | Yeni Kategori Ekleme
 
-                            
-                        .body
-                            .table-responsive
-                                table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
-                                    thead
-                                        tr
-                                            th Resim
-                                            th İsim
-                                            th Yazar
-                                            th Tarih
-
+                if categories.length>0
+                    .body
+                        .table-responsive
+                            table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
+                                thead.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th Kategori Resmi
+                                        th Kategori Adı
+                                        th Yazar
+                                        th Tarih
+                                        if isAdmin
                                             th
-                                    tfoot
-                                        tr
-                                            th Resim
-                                            th İsim
-                                            th Yazar
-                                            th Tarih
+                                tfoot.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th Resim
+                                        th Kategori Adı
+                                        th Yazar
+                                        th Tarih
+                                        if isAdmin
                                             th
-                                    tbody
-                                        each category in categories                
-                                            tr
-                                                td
-                                                    img(src=`/img/${category.categoryImg}` width='80')
-                                                td.align-middle #{category.name}
-                                                td.align-middle #{category.userId.name}
-                                                td.align-middle #{category.date.getDate()+"/"+category.date.getMonth()+"/"+category.date.getFullYear()}
-                                                    br
-                                                    | #{category.date.getHours()+":"+ category.date.getMinutes()}
+                                tbody
+                                    -var index=1;
+                                    each category in categories                
+                                        tr
+                                            td(scope="row").align-middle #{index++}
+                                            td
+                                                img(src=`/img/resized/${category.categoryImg}` width='80')
+                                            td.align-middle #{category.name}
+                                            td.align-middle #{category.userId.name}
+                                            td.align-middle #{category.date.getHours()+":"+ category.date.getMinutes()+" "}
+                                                br                                            
+                                                | #{category.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
+                                            //- td.align-middle 
+                                            //-     i(class=(product.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
+                                            if isAdmin
                                                 td.align-middle.position-relative
                                                     a.btn.btn-warning.btn-sm(href=`/admin/categories/${category._id}`) 
                                                         span 
@@ -72,18 +85,7 @@ block content
                                                         button(type="submit" style="height:40px; width:40px;").btn.btn-danger.btn-sm
                                                             span
                                                                 i.fas.fa-trash-alt.fa-xs
-
-    else                                        
-        h1 No Categories                            
-
+                else
+                    p.text-center.align-middle Herhangi Bir Kategori Mevcut Değil
 block script    
-    script(src="/plugins/jquery-datatable/jquery.dataTables.js")
-    script(src="/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")
-    script(src="/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js")
-    script(src="/plugins/jquery-datatable/extensions/export/buttons.flash.min.js")
-    script(src="/plugins/jquery-datatable/extensions/export/jszip.min.js")
-    script(src="/plugins/jquery-datatable/extensions/export/pdfmake.min.js")
-    script(src="/plugins/jquery-datatable/extensions/export/vfs_fonts.js")
-    script(src="/plugins/jquery-datatable/extensions/export/buttons.html5.min.js")
-    script(src="/plugins/jquery-datatable/extensions/export/buttons.print.min.js")
-    script(src='/js/pages/tables/jquery-datatable.js')
+    include ../admin/includes/tablescript.pug

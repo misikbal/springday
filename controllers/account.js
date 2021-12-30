@@ -7,6 +7,11 @@ const crypto = require('crypto');
 const Mail = require("../model/mail");
 const Contact = require("../model/contactus");
 const System = require("../model/system");
+const Advanced = require("../model/advanced");
+const Page = require("../model/page");
+
+const ip = require("ip");
+
 //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
 
 System.find()
@@ -18,11 +23,16 @@ System.find()
 exports.getLogin=(req,res,next)=>{
     var errorMessage=req.session.errorMessage;
     delete req.session.errorMessage;
-    res.render("account/login",{
-        path:"/login",
-        title:"Login",
-        errorMessage:errorMessage
-    });
+    Page.findOne()
+    .then(page=>{
+        res.render("account/login",{
+            path:"/login",
+            title:"Login",
+            page:page,
+            errorMessage:errorMessage
+        });
+    }).catch(err =>console.log(err))
+
 }
 
 exports.postLogin =(req,res,next)=> {
@@ -43,26 +53,52 @@ exports.postLogin =(req,res,next)=> {
                         return res.redirect("/login");
                     })                    
                 }
-                bcrypt.compare(password,user.password)
+                if(user.isAdmin){
+                    const advanced=new Advanced(
+                        {
+                            userId:user._id,
+                            status:"admin",
+                            ip:ip.address()
+                        }
+                    )
+                    advanced.save()
+                }
+                else if(user.isLimited){
+                    const advanced=new Advanced(
+                        {
+                            userId:user._id,
+                            status:"Kısıtlı Admin",
+                            ip:ip.address()
+                        }
+                    )
+                    advanced.save()
+                }
+                    bcrypt.compare(password,user.password)
                     .then(isSuccess=>{
                         if(isSuccess){
                             if(res.locals.isAdmin){
-                                req.session.user=user;
-                                req.session.isAuthenticated=true;
-                                return req.session.save(function(err) {
-                                var url="/admin/" || req.session.redirectTo;
-                                delete req.session.redirectTo
-                                return res.redirect(url); 
-                            })
+                                
+                                
+
+                                    req.session.user=user;
+                                    req.session.isAuthenticated=true;
+                                    return req.session.save(function(err) {
+                                    var url="/admin/" || req.session.redirectTo;                                    
+                                    delete req.session.redirectTo                                    
+                                    return res.redirect(url); 
+
+                                })
                             }
                             else{
+                                
                                 req.session.user=user;
                                 req.session.isAuthenticated=true;
                                 return req.session.save(function(err) {
-                                    var url=req.session.redirectTo || "/";
-                                    delete req.session.redirectTo
+                                    var url="/" || req.session.redirectTo  ;
+                                    delete req.session.redirectTo;
                                     return res.redirect(url); 
                                 })
+
                             }
                             
                         }
@@ -78,6 +114,10 @@ exports.postLogin =(req,res,next)=> {
                     })
                         console.log(err);
                     })
+                .catch(err=>{
+                    console.log(err);
+                });
+                
             })
             .catch(err=>{
                 console.log(err);
@@ -163,18 +203,16 @@ exports.postRegister=(req,res,next)=>{
     const email=req.body.email;
     const password=req.body.password;
     User.findOne({email:email})
-        .then(user=>{
-            if(user){
-                req.session.errorMessage="Bu mail adresi ile daha önce kayıt olunmuş.";
-                req.session.save(function(err) {
-                    console.log(err);
-                    return res.redirect("/register");
-                })
-            }
-            return bcrypt.hash(password,12);            
-        })
+    .then(user=>{
+        if(user){
+            req.session.errorMessage="Bu mail adresi ile daha önce kayıt olunmuş.";
+            req.session.save(function(err) {
+                return res.redirect("/register");
+            })
+        }
+        bcrypt.hash(password,12)
         .then(hashedPassword=>{
-            
+        
             const newUser=new User({                
                 name:name,
                 email:email,
@@ -183,44 +221,60 @@ exports.postRegister=(req,res,next)=>{
             });
             return newUser.save();
         })
-        .then(()=>{
-            Mail.findOne()
-                .select("title from html properties")
-                .then((mail)=>{
-                    System.find()
-                    .select("sgMail")
-                    .then(apikey=>{
-                        res.redirect("/");
-                        const msg = {                
-                            to: email,
-                            from: mail.from,
-                            subject: mail.title,
-                            html: mail.html,
-                            }
-
-                            sgMail
-                        .send(msg)
-                    }).catch(err => next(err));  
-            
-                }).catch(err => next(err));          
-
-        })
-        .catch(err=>{
-            if(err.name=="ValidationError"){
-                let message="";
-                for(field in err.errors){
-                    message+=err.errors[field].message+"<br/>";
+            .then(()=>{
+                Mail.findOne()
+                    .select("title from html properties")
+                    .then((mail)=>{
+                        System.find()
+                        .select("sgMail")
+                        .then(apikey=>{
+                            const msg = {                
+                                to: email,
+                                from: mail.from,
+                                subject: mail.title,
+                                html: mail.html,
+                                }
+    
+                                sgMail
+                            .send(msg)
+                            res.redirect("/login");
+    
+                        }).catch(err => next(err));  
+                
+                    }).catch(err => next(err));          
+    
+            })
+            .catch(err=>{
+                if(err.name=="ValidationError"){
+                    let message="";
+                    for(field in err.errors){
+                        message+=err.errors[field].message+"<br/>";
+                    }
+                    res.render("account/register",{
+                        path:"/register",
+                        title:"Register",
+                        errorMessage:message
+                    })
+                }else{
+                    next(err);
                 }
-                res.render("account/register",{
-                    path:"/register",
-                    title:"Register",
-                    errorMessage:message
-                })
-            }else{
-                next(err);
+            })
+    }).catch(err=>{
+        if(err.name=="ValidationError"){
+            let message="";
+            for(field in err.errors){
+                message+=err.errors[field].message+"<br/>";
             }
-        })
-
+            res.render("account/register",{
+                path:"/register",
+                title:"Register",
+                errorMessage:message
+            })
+        }else{
+            next(err);
+        }
+    })
+    
 }
 
 
@@ -262,7 +316,7 @@ exports.postReset=(req,res,next)=>{
 
                     <p>Parolanızu güncellemek için aşağıdaki linke tıklayınız.</p>
                     <p>
-                        <a href="http://localhost:1000/reset-password/${token}"> Reset Password </a>
+                        <a href="${system.siteUrl}/reset-password/${token}"> Reset Password </a>
                     </p>
                 `,
                 }
@@ -278,7 +332,6 @@ exports.postReset=(req,res,next)=>{
 }
 exports.getLogout=(req,res,next)=>{
     req.session.destroy(err=>{
-        console.log(err);
         res.redirect("/");        
     })
 }

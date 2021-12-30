@@ -1,47 +1,131 @@
 extends ../layouts/main-layout.pug
 
+block styles
+    link(href='/css/order.css' rel='stylesheet')
+    link(href='/css/cart.css' rel='stylesheet')
+    link(rel="stylesheet" href="/css/contactstyle.css")
+    link(rel="stylesheet" href="/css/style2.css")
+
 block content
-    .container.p-100.mb-5
+    br
+    br
+    br
+    if !orders.approval
+        
+            .text-center
+                span.reversed.reversedRight
+                    span
+                        | ⚠
+                span.reversed.ml-3
+                    | Ödeme Yapılmadı
+                    |Lütfen İlgili 
+                    a(href="/" style="text-decoration: none" target="_blank").text-dark Banka Hesaplarına 
+                    br
+                    |Gerekli Ödemeyi Yapınız
+    .container.px-1.px-md-4.py-5.mx-auto
+            
 
-        if orders.length>0
-            each order in orders
-                .card.mb-5.bg-light.text-center
-                    .card-header
-                        h3 order id: ##{order._id}
-                    table.table
-                        thead 
-                            tr 
-                                th 
-                                    p Image 
-                                th 
-                                    p Product Name
-                                th 
-                                    p Price
-                                th 
-                                    p Quantity
-                        tbody
-                            each item in order.items 
-                                tr 
-                                    td 
-                                        img(src=`/img/${item.product.imageUrl}` width="80")
-                                    td 
-                                        p #{item.product.name}
-                                    td 
-                                        p #{item.product.price}
-                                    td 
-                                        p #{item.quantity}
-                        tfoot
-                            tr 
-                                td(colspan="2").text-start
-                                    p Saat: #{order.date.getHours()+":"+ order.date.getMinutes()}
-                                    p Tarih: #{order.date.getDate()+"/"+order.date.getMonth()+"/"+order.date.getFullYear() }
+
+            .card.bg-light
+                .row.d-flex.justify-content-between.px-3.top
+                    .text-center
+                        h5
+                            | SİPARİŞ 
+                        br
+                        span.text-primary.font-weight-bold Sipariş Id: ##{orders._id}
+                    .d-flex.flex-column.text-sm-right.text-center
+                        p
+                        | #{orders.cargocompany===null ?"":orders.cargocompany==="undefined" ? "":orders.cargocompany}
+                        span.font-weight-bold #{orders.cargonumber===null ?"":orders.cargonumber==="undefined" ? "":orders.cargonumber}
+                // Add class 'active' to progress
+                .row.d-flex.justify-content-center.text-center
+                    .col-md-12.text-center
+                        ul#progressbar.text-center
+                            li.active.step0
+                                p.font-weight-bold
+                                    | Sipariş İsteği
+                                    br
+                                    | Gönderildi
+                            li(class=orders.approval?"active":"").step0
+                                p.font-weight-bold
+                                    | Siparişiniz 
+                                    br
+                                    | Onayladı
+                            li(class=orders.cargo?"active":"").step0
+                                p.font-weight-bold
+                                    | Ürün Kargoya
+                                    br
+                                    | Verildi
+                            li(class=orders.done?"active":"").step0
+                                p.font-weight-bold
+                                    | Ürün Teslim
+                                    br
+                                    | Edildi
+
+            .table-responsive
+                table.table.table-hover.text-center
+                    thead.thead-dark
+                        tr
+                            th.align-middle 
+
+                            th(scope="col").align-middle Ürün Adı 
+                            th(scope="col").align-middle Adet
+                            th(scope="col").align-middle Toplam
+                    tbody
+                        each item in orders.items
+                            tr.bg-dark.text-white
+                                    td.align-middle
+                                        .cart_item_image.mt-3
+                                            img(src=`/img/resized/${item.product.imageUrl}` width='100')
+                                    
+                                    td.align-middle
+                                        .cart_item_name.cart_info_col
+                                            .cart_item_text #{item.product.name}
+                                    td.align-middle
+                                        .cart_item_quantity.cart_info_col
+                                            .cart_item_text #{item.quantity}
+                                    td.align-middle
+                                        .cart_item_total.cart_info_col
+                                            .cart_item_text #{(item.product.price)*(item.quantity)} TL
+                        
+                        tr.bg-secondary.text-white
+                            td(colspan=2).align-middle Tarih-Saat:  #{"   "+orders.date.getDate()+"/"+orders.date.getMonth()+"/"+orders.date.getFullYear() +"   " }
+                                |#{orders.date.getHours()+":"+ orders.date.getMinutes()}
+                            td(colspan=2).align-middle
+                                |Sipariş Toplamı:
                                 - var total = 0;
-                                each item in order.items
+                                each item in orders.items
                                     - total +=(item.product.price * item.quantity);
-                                td 
-                                    p #{total} TL
+                                |#{"  "+total} TL
+                
+                section#contact.contact
+                    .container(data-aos='fade-up')
+                            h3.text-center Adres Bilgisi
 
+                            .info.bg-light.p-1(style="height:15rem;")
+                                .row.mb-1
 
-
-        else
-            h1 No Orders
+                                    .col
+                                        i.fas.fa-user
+                                        h4 Ad Soyad
+                                        p.text-start #{orders.name}
+                                    br
+                                    .col
+                                        i.fas.fa-envelope
+                                        h4 Email
+                                        p.text-start #{orders.mail}
+                                    br
+                                    .col
+                                        i.fas.fa-phone
+                                        h4 Telefon
+                                        p.text-start #{orders.phone}
+                                    .col
+                                        
+                                        i.fas.fa-city
+                                        h4 İl-İlçe
+                                        p.text-start #{orders.city+" - "+orders.district}
+                                    .col
+                                        i.fas.fa-map-marker-alt
+                                        h4 Detaylı Adres Bilgisi
+                                        p.text-start #{orders.adress}
+                                    

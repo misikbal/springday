@@ -1,6 +1,6 @@
 extends ../layouts/main-layout.pug
 include ../mixins/createSlide.pug
-//- include ../mixins/services.pug
+include ../mixins/services.pug
 include ../mixins/productcard.pug
 include ../mixins/client.pug
 include ../mixins/category.pug
@@ -22,27 +22,39 @@ block styles
   link(href='/css/category.css' rel='stylesheet')
   link(href='/css/project.css' rel='stylesheet')
   link(href='/css/aboutservices.css' rel='stylesheet')
+
+
 block content
-    .w-auto
-      #carouselExampleIndicators.carousel.slide(data-ride='carousel',data-interval="5000")
-          ol.carousel-indicators
-            -var slideIndex=0;
-            if slides.length>0
-              each slide in slides
-                li.li-white(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
-                -slideIndex++;
-          .carousel-inner.w-100            
-            if slides.length>0
+    if slides.length>0
+
+      .w-auto
+        #carouselExampleIndicators.carousel.slide.lazy-load(data-ride='carousel',data-interval="2500")
+            ol.carousel-indicators
+              -var slideIndex=0;
                 each slide in slides
-                      +createSlide(slide)
-            else
-                h1 No Slide     
+                  li.li-white.li-slide(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
+                  -slideIndex++;
+              script.
+                $(".carousel-indicators .li-slide").first().addClass("active");
+            #bigCarousel.carousel.slide
+            .carousel-inner.w-100            
+                  each slide in slides
+                        +createSlide(slide)
             a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev')
               span.carousel-control-prev-icon(aria-hidden='true')
               span.sr-only Previous
-          a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next')
-            span.carousel-control-next-icon(aria-hidden='true')
-            span.sr-only Next
+            a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next')
+              span.carousel-control-next-icon(aria-hidden='true')
+              span.sr-only Next
+        //- script.
+        //-     $(".carousel-item .item").first().addClass("active").attr('src', $(".carousel-item .item").first().attr('lazy-load-src')).removeAttr('lazy-load-src')
+        //- script.
+        //-     $(function() {
+        //-         $('.carousel-item').on('slid', function() {
+        //-             var $nextImage = $('.active', this).next('.carousel-item .item').find('img');
+        //-             $nextImage.attr('src', $nextImage.data('data-lazy-load-src'));
+        //-         });
+        //-     });
     +category(categories)
     section#portfolio.portfolio
       .container(data-aos='fade-up')
@@ -51,13 +63,15 @@ block content
           .row(data-aos='fade-up' data-aos-delay='100')
               .col-lg-12.d-flex.justify-content-center
                   ul#portfolio-flters
-                      li.filter-active(data-filter='*') Hepsi
+                      li.text-dark.filter-active(data-filter='*') Hepsi
                       if categories.length>0
-                          each category in categories
-                              li(data-filter=`.${category._id}` class=category._id==selectedCategory?"active":"") #{category.name}
+                          each category,products in categories
+                              li.text-dark(data-filter=`.${category._id}` class=category._id==selectedCategory?"active":"") #{category.name}
           .row.portfolio-container(data-aos='fade-up' data-aos-delay='200')
             each product in products
               +productcard(product)
+          button.btn.btn-warning.col-md-12 
+            a(href="/products" style="text-decoration: none;").text-dark  Daha Fazla Ürün Göster
     +shortservices(services)
     br
     +project(projectinfo)
@@ -77,29 +91,3 @@ block script
     script(src="/js/otherproduct.js")
     script(src="/js/slide.js")
     script(src="/js/card.js")
-    //- script.
-    //-   $(document).ready(function() {
-
-    //-       $.ajax({
-
-    //-       url: '/api/logo',
-
-    //-       type: 'GET',
-
-    //-       data: { format: 'json' },
-
-    //-       success: function(data) {
-    //-       $(':root').css('--bodyLight',bodylightcolor)
-    //-       $(':root').css('--bodyDark',bodydarkcolor)
-
-    //-       cardLight=JSON.stringify(data.themes.cardLight);
-    //-       cardlightcolor=JSON.parse(cardLight);
-    //-       cardDark=JSON.stringify(data.themes.cardDark);
-    //-       carddarkcolor=JSON.parse(cardDark);
-          
-    //-       $(':root').css('--cardLight',cardlightcolor)
-    //-       $(':root').css('--cardDark',carddarkcolor)
-    //-       },
-    //-       });
-
-    //-   });

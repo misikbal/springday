@@ -1,0 +1,101 @@
+extends ../layouts/admin-layout.pug
+block styles
+    link(href='/plugins/nestable/jquery-nestable.css' rel='stylesheet')
+    link(href='/css/formicon.css' rel='stylesheet')
+
+
+
+block content
+    if(action!=="undefined" && action==="edit")
+        .alert.alert-info.alert-dismissible.fade.show(role='alert')
+            strong Genel Ayarlar Başarılı Bir Şekilde Güncellendi
+        script.
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+            }, 2000);
+    form(action="/admin/page" method="POST")  
+        input(type="hidden" name="_csrf" value=`${csrfToken}`) 
+        .row.clearfix
+            .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                .form-group.row
+                    .card.text-center.bg-blue-grey
+                        .header
+                            h2.text-white
+                                | SAYFA AYARI
+        .row.clearfix.text-center.d-flex.justify-content-center
+            .col-lg-6.col-md-6.col-sm-12.col-xs-12
+                .card
+                    .header
+                        h2
+                            | Navbar Ayarları
+                            small Sadece sayfaların isimlerini değiştirebilir ve aktif/pasif yapabilirsiniz
+                    .body
+                        .clearfix.m-b-20
+                            .dd
+                                ol.dd-list(data-id)
+                                    
+                                        li.dd-item(data-home='home')
+                                            .input-container
+                                                span.text-center.dd-handle
+                                                    i.fas.fa-align-justify
+                                                input(type="text" name="home" value=`${page.home}`)#home.form-control.text-center.input-field
+                                    
+                                        li.dd-item(data-products='products')
+                                            .input-container
+                                                span.text-center.dd-handle
+                                                    i.fas.fa-align-justify
+                                                input(type="text" name="products" value=`${page.products}`)#products.form-control.text-center.input-field
+                                                                            
+                                        li.dd-item(data-services='services')
+                                            .input-container
+                                                span.text-center.dd-handle
+                                                    i.fas.fa-align-justify
+                                                input(type="text" name="services" value=`${page.services}`)#services.form-control.text-center.input-field
+                                    
+                                        li.dd-item(data-about='about')
+                                            .input-container
+                                                span.text-center.dd-handle
+                                                    i.fas.fa-align-justify
+                                                input(type="text" name="about" value=`${page.about}`)#about.form-control.text-center.input-field
+                                    
+                                        li.dd-item(data-project='project')
+                                            .input-container
+                                                span.text-center.dd-handle
+                                                    i.fas.fa-align-justify
+                                                input(type="text" name="project" value=`${page.project}`)#project.form-control.text-center.input-field
+                                    
+                                        li.dd-item(data-client='client')
+                                            .input-container                                        
+                                                span.text-center.dd-handle
+                                                    i.fas.fa-align-justify
+                                                input(type="text" name="client" value=`${page.client}`)#client.form-control.text-center.input-field
+                                                                    
+                                        li.dd-item(data-contact='contact')
+                                            .input-container                                        
+                                                span.text-center.dd-handle
+                                                    i.fas.fa-align-justify
+                                                input(type="text" name="contact" value=`${page.contact}`)#contact.form-control.text-center.input-field
+                                    
+                                        li.dd-item(data-cart='cart')
+                                            .input-container
+                                                span.text-center.dd-handle
+                                                    | !{page.cart}
+                                                input(type="text" name="cart" value=`${page.cart}`)#cart.form-control.text-center.input-field
+                                    
+                                        li.dd-item(data-user='user')
+                                            .input-container
+                                                span.text-center.dd-handle
+                                                    | !{page.user}
+                                                input(type="text" name="user" value=`${page.user}`)#user.form-control.text-center.input-field
+                            
+                        if isAdmin
+                            .form-group.row.d-flex.justify-content-center
+                                
+                                    input(type="submit" value="Kaydet").btn.btn-primary.col-lg-12.col-md-12.col-sm-12.col-xs-12
+block script
+    include ../admin/includes/formscript.pug
+    script(src='/plugins/jquery/jquery.min.js')
+    script(src='/plugins/nestable/jquery.nestable.js')
+    script(src='/js/pages/ui/sortable-nestable.js')

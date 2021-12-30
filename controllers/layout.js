@@ -4,6 +4,8 @@ const Themes=require('../model/themes');
 const Social=require('../model/socialmedia');
 const Client=require('../model/client');
 const System=require('../model/system');
+const Page=require('../model/page');
+
 
 
 
@@ -21,7 +23,10 @@ exports.getLayout=(req, res, next) =>{
                     System.find()
                     .select("phone tawktoscript")
                     .then(system=>{
-                        res.json({logo:logo,themes:themes,system:system});          
+                        Page.find()
+                        .then(page=>{
+                            res.json({logo:logo,themes:themes,system:system,page:page});
+                        })
                     })
                 })
     }).catch((err)=>{

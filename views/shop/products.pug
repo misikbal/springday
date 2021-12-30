@@ -2,10 +2,10 @@ extends ../layouts/main-layout.pug
 include ../mixins/productcard.pug
 include ../mixins/popularproduct.pug
 include ../mixins/tag.pug
+
 block content
   .container.p-100.mb-5
     .row
-        
         .col-md-9   
           .row
             if products.length>0
@@ -42,3 +42,4 @@ block content
                           button(type=button style="border-radius:30px; padding: 2px 5px;" ).btn.btn-info.btn-sm.mt-1.ml-1
                             a(href=`/products/${product._id}` style="text-decoration: none;").text-light #{tag[i]}
                       -}
+block script  

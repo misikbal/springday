@@ -42,17 +42,11 @@ block content
                         .row
                             .col-xs-12
                                 .geeks
-                                    img#featured(src=`/img/${product.imageUrl}` alt=`${product.name}`)
+                                    img#featured(src=`/img/resized/${product.imageUrl}` alt=`${product.name}`)
                                 #slide-wrapper
                                     img#slideLeft.arrow(src='/img/arrow-left.png')
                                     #slider
-                                        img(src=`/img/${product.imageUrl}` alt=`${product.name}`).thumbnail.active
-                                        img(src=`/img/image-1638469308195.jpg` alt=`${product.name}`).thumbnail
-                                        img(src=`/img/${product.imageUrl}` alt=`${product.name}`).thumbnail
-                                        img(src=`/img/${product.imageUrl}` alt=`${product.name}`).thumbnail
-                                        img(src=`/img/${product.imageUrl}` alt=`${product.name}`).thumbnail
-                                        img(src=`/img/${product.imageUrl}` alt=`${product.name}`).thumbnail
-                                        img(src=`/img/${product.imageUrl}` alt=`${product.name}`).thumbnail
+                                        img(src=`/img/resized/${product.imageUrl}` alt=`${product.name}`).thumbnail.active
 
 
                                     img#slideRight.arrow(src='/img/arrow-right.png')
@@ -60,21 +54,25 @@ block content
                     .product-content#card-wrapper.bg-light.text-center
                         h1.product-title #{product.name}
                         button.btn-info.btn-xs
-                            a.text-white(href=`/categories/${product.categories[0]._id}` style="text-decoration: none;") #{product.categories[0].name}
+                            button.btn.btn-info
+                                a.text-white(href=`/categories/${product.categories[0]._id}` style="text-decoration: none;") #{product.categories[0].name}
                         .product-price
                                 span #{product.price} TL
                             
                         .purchase-info
-                            button.btn.bg-info(type='button')
-                                | Add to Cart 
-                                i.fas.fa-shopping-cart
-                            a.whatsapp(href=`https://api.whatsapp.com/send?phone=905372522327&text=http://localhost:1000/products/${product.id}%20Merhaba%20Bu%20%C3%9Cr%C3%BCn%20Hakk%C4%B1nda%20Bilgi%20Almak%20%C4%B0stiyorum` target='_blank')
+                            if active.ecommarce_isActive
+                                form(action="/cart" method="POST")
+                                    input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                                    input(type="hidden" name="productId" value=`${product._id}`)
+                                    button(type="submit" style="background-color:#FFC451;").btn.btn-sm.ml-3 Add to Cart 
+                                        i.fas.fa-cart-plus
+                            a.whatsapp(href=`https://api.whatsapp.com/send?phone=905372522327&text=${system.siteUrl}/products/${product.id}%20Merhaba%20Bu%20%C3%9Cr%C3%BCn%20Hakk%C4%B1nda%20Bilgi%20Almak%20%C4%B0stiyorum` target='_blank')
                                 i.fa.fa-whatsapp.my-float
                         .social-links.d-flex.justify-content-center
                             p.pb-2 Paylaş: 
-                            a(href=`https://t.me/share/url?url=http://localhost:1000/products/${product.id}&text=${product.name}` target="_blank")
+                            a(href=`https://t.me/share/url?url=${system.siteUrl}/products/${product.id}&text=${product.name}` target="_blank")
                                 i.fab.fa-telegram
-                            a(href=`whatsapp://send?text=${product.name}: http://localhost:1000/products/${product.id}` target="_blank")
+                            a(href=`whatsapp://send?text=${product.name}: ${system.siteUrl}/products/${product.id}` target="_blank")
                                 i.fab.fa-whatsapp
             #card-wrapper
                 .product-detail.bg-light

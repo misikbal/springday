@@ -4,7 +4,7 @@ mixin popularproduct(product)
             .card.mt-1.bg-light#card-hover
                 .row
                     .col-md-4
-                        img.card-img-top(src=`/img/${product.imageUrl}` alt=`${product.name}` style="width:100px;").d-flex.justify-content-start
+                        img.card-img-top.deneme.center(data-src=`/img/resized/${product.imageUrl}` src="/img/three-dots.svg" alt=`${product.name}` style="width:100px; background-color:#9E9E9E").d-flex.justify-content-center
                     .col-md-8    
                         p.card-text.align-self-center #{product.name}
                         p.card-text

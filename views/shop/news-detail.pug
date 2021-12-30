@@ -1,0 +1,36 @@
+extends ../layouts/main-layout.pug
+include ../mixins/client.pug
+
+block styles
+    link(href='/css/aboutservicesdetails.css' rel='stylesheet')
+
+
+
+block content
+    br
+    br
+    br
+    img.d-block.w-100.animated(alt=`${news.imageUrl}` src=`/img/${news.imageUrl}`)
+
+    .container
+        .row
+            .leftcolumn
+                .card.bg-light(style="border-top: 10px solid #0b5aa2;")
+                    h2.text-center.itemss-head #{news.title}
+                    p !{news.description}
+
+            .rightcolumn
+                br
+                .itemss.bg-light
+                    .itemss-head
+                        h2.text-center Diğer Projeler
+                        hr
+                    .itemss-body
+                        if allnews.length>0
+                            each newes in allnews
+                                .itemss-body-content                        
+                                    #card-hover
+                                        a(href=`/news/${newes._id}` class=newes._id==selectedCategory?"list-group-item active":"list-group-item" style="text-decoration: none").bg-light
+                                            |#{newes.title}
+                                            i.fa.fa-angle-right
+    +client(client)

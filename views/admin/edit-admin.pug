@@ -1,0 +1,84 @@
+extends ../layouts/admin-layout.pug
+
+block content
+    if errorMessage
+        div.alert.alert-danger.col-sm-12 !{errorMessage}
+    form(action="/admin/alladmin" method="POST")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)
+        input(type="hidden" name="adminid" value=`${user._id}`)
+
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | ADMİN EKLEME SAYFASI
+        .row.clearfix
+            
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | ADMİN AD SOYAD
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#name(type="text" name="name" value=`${user.name}` placeholder="Muhammed İkabl SIRDAŞ")  
+
+            .col-sm-6
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
+                        h2
+                            | ADMİN EMAİL
+                            small.text-danger
+                                | Gerekli
+                    .body
+                        .form-line
+                            input.form-control#email(type="text" name="email" value=`${user.email}` placeholder="test@mail.com")
+        .row.clearfix        
+            .col-sm-6
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
+                        h2
+                            | ADMİN ŞİFRE
+                            small.text-danger
+                                | Gerekli
+                    .body
+                        .form-line
+                            input.form-control#password(type="password" name="password" value=`${user.password}` placeholder="***********")  
+            .col-sm-6
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
+                        h2
+                            | STATÜ
+                            small.text-danger
+                                | Gerekli Lüften Sadece Bir Tanesini Seçiniz
+                            small.text-info
+                                | Kısıtlı Admin Sadece Oluşturulan Listeleri Görebilir. Ekleme Güncelleme ve Silme İşlemi Yapamaz. Site Bakım Modunda Giriş Yapamaz.
+                            small.text-info
+                                | Admin İçin Herhangi Bir Kısıt Bulunmamaktadır.
+                    .body
+                        .row
+                            .col
+                                .card.bg-light
+                                    .body
+                                        .form-group
+                                            label.form-check-label.mb-3 Admin
+                                            .form-check.form-switch.d-flex.justify-content-center
+                                                input.form-check-input.mt-auto.p-2.bd-highlight#isAdmin(type="checkbox" name="isAdmin" value=`${user.isAdmin}` checked=user.isAdmin)
+                            .col
+                                .card.bg-light
+                                    .body
+                                        .form-group
+                                            label.form-check-label.mb-3 Kısıtlı Admin
+                                            .form-check.form-switch.d-flex.justify-content-center
+                                                input.form-check-input.mt-auto.p-2.bd-highlight#isLimited(type="checkbox" name="isLimited" value=`${user.isLimited}` checked=user.isLimited)
+
+        .form-group.row
+            input(type="submit" value="Admini Kaydet").btn.btn-warning.col-md-12 
+

@@ -1,0 +1,91 @@
+extends ../layouts/admin-layout.pug
+block content
+    if(action!=="undefined" && action==="create")
+        .alert.alert-success.alert-dismissible.fade.show(role='alert')
+            strong Hizmet Başarılı Bir Şekilde Eklendi
+    if(action!=="undefined" && action==="delete")
+        .alert.alert-warning.alert-dismissible.fade.show(role='alert')
+            strong Hizmet Başarılı Bir Şekilde Silindi
+    if(action!=="undefined" && action==="edit")
+        .alert.alert-info.alert-dismissible.fade.show(role='alert')
+            strong Hizmet Ayarları Başarılı Bir Şekilde Güncellendi
+
+        
+    script.
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove(); 
+            });
+        }, 2000);
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .form-group.row
+                .card.text-center.bg-blue-grey
+                    .header
+                        h2.text-white
+                            | HAKKIMIZDA
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            
+            .card
+                if isAdmin
+                    a(href="/admin/add-about").btn.bg-blue-grey.btn-sm
+                        span 
+                            i.fas.fa-plus.fa-xs.mr-2
+                        | Hakkımızda Sayfası İçin Bilgi Ekle
+
+                if about.length > 0
+                    .body
+                        .table-responsive
+                            table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
+                                thead.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th Bilginin Başlığı
+                                        th Yazar
+                                        th Tarih
+                                        th Aktif
+                                        th Birincil
+                                        if isAdmin
+                                            th
+                                            
+
+                                tfoot.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th Bilginin Başlığı
+                                        th Yazar
+                                        th Tarih
+                                        th Aktif
+                                        th Birincil
+                                        if isAdmin
+                                            th
+                                tbody
+                                    -var index=1;
+                                    each abouts in about                
+                                        tr           
+                                            td(scope="row").align-middle #{index++}                                            
+                                            td.align-middle #{abouts.name}
+                                            td.align-middle #{abouts.userId.name}
+                                            td.align-middle #{abouts.date.getDate()+"/"+abouts.date.getMonth()+"/"+abouts.date.getFullYear()+" "}
+                                                br
+                                                |#{abouts.date.getHours()+":"+ abouts.date.getMinutes()}
+                                            td.align-middle 
+                                                i(class=(abouts.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
+                                            td.align-middle 
+                                                i(class=(abouts.isHome ? "fas fa-eye text-success" : "fas fa-eye-slash text-danger")).fa-2x
+                                            if isAdmin
+                                                td.align-middle.position-relative
+                                                    a.btn.btn-warning.btn-sm(href=`/admin/about/${abouts._id}`) 
+                                                        span 
+                                                            i.fas.fa-edit.fa-xs
+                                                    form(action="/admin/delete-about" method="POST")
+                                                        input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                                                        input(type="hidden" name="aboutid" value=`${abouts._id}`)
+                                                        button(type="submit" style="height:40px; width:40px;").btn.btn-danger.btn-sm
+                                                            span 
+                                                                i.fas.fa-trash-alt.fa-xs
+                else
+                    p.text-center.align-middle Herhangi Bir Bilgi Mevcut Değil
+block script    
+    include ../admin/includes/tablescript.pug

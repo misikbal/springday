@@ -16,6 +16,10 @@ const clientSchema = mongoose.Schema({
         type:String,
     },
     isActive: Boolean,
+    date: {
+        type: Date,
+        default: Date.now
+    },
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"

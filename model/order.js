@@ -27,10 +27,28 @@ const orderSchema=mongoose.Schema({
             }
         }
     ],
+    cargonumber:String,
+    cargocompany:String,
+    city:String,
+    district:String,
+    adress:String,
+    name:String,
+    phone:String,
+    postcode:String,
+    mail:String,
+    approval:{
+        type:Boolean, default:false
+    },
+    cargo:{
+        type:Boolean, default:false
+    },
+    done:{
+        type:Boolean, default:false
+    },
     date:{
         type:Date,
         default:Date.now
-    }
+    },
 
 })
 module.exports=mongoose.model("Order",orderSchema) 

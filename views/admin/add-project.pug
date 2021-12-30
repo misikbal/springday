@@ -1,11 +1,10 @@
 extends ../layouts/admin-layout.pug
 
 block styles
-    link(rel="stylesheet" href="/css/forms.css")
     link(rel="stylesheet" href="/css/themes/image.css")
     link(href='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' rel='stylesheet')
     script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
-    
+    script(src="/plugins/ckeditor/ckeditor.js")
 
 
 block content
@@ -13,17 +12,29 @@ block content
     if errorMessage
         div.alert.alert-danger.col-sm-7 !{errorMessage}
     form(action="/admin/add-project" method="POST" enctype="multipart/form-data")
-        input(type="hidden" name="_csrf" value=`${csrfToken}`)  
-        .form-group.row
-            .form-check.form-switch
-                input.form-check-input#isActive(type="checkbox" name="isActive")
-                label.form-check-label Aktif
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)
         .row.clearfix
-            .col-md-6
+            .col-md-12
                 .form-group.row
                     .col-sm-12
-                        .card
+                        .card.text-center.bg-blue-grey
                             .header
+                                h2.text-white
+                                    | PROJE EKLEME SAYFASI 
+        .row.clearfix
+            .col-md-2
+
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-5 Aktif
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive")
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
                                 h2
                                     | PROJE İSMİ
                                     small.text-danger
@@ -31,16 +42,24 @@ block content
                             .body
                                 .form-line
                                     input.form-control#name(type="text" name="name" placeholder="Fabrika Montajı")  
-            .col-md-6
+        .row.clearfix
+            .col-md-2
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-4 Ana Sayfada Göster
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isHome(type="checkbox" name="isHome")
+            .col-md-10
                 .form-group.row
                     .col-sm-12
-                        .card
-                            .header
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
                                 h2
                                     | PROJE RESMİ
                                     small.text-info
                                         | Sadece Bir Tane Resim Seçilebilir
-                            .body.bg-grey
+                            .body.bg-blue-grey
                                 .fileupload.fileupload-new(data-provides='fileupload')
                                     span.btn.btn-warning.btn-file
                                         span.fileupload-new Yeni
@@ -50,8 +69,8 @@ block content
                                     a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
         .form-group.row
             .col-sm-12
-                .card
-                    .header
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
                         h2
                             | AÇIKLAMA                            
                             small.text-danger
@@ -60,14 +79,26 @@ block content
                                 | Resim Konulabilir
                     .body
                         .form-line
-                        textarea.form-control(id="editor" name="description" cols="30" rows="10")
+                            textarea.form-control(id="editor" name="description" cols="30" rows="10")
+        .form-group.row.demo-tagsinput-area
+            .col-sm-12.bg-blue-grey
+                .card.text-center
+                    .header.bg-white
+                        h2
+                            | #TAG
+                            small.text-danger
+                                | Gerekli
+                            small.text-info
+                                | Tag Öneri için 
+                                a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
+                        .body
+                            .form-line
+                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value='' placeholder="Taglerinizi Buraya Giriniz")
         .form-group.row
-            input(type="submit" value="Kaydet").col-md-12.btn.btn-primary
+            input(type="submit" value="Projeyi Kaydet").col-md-12.btn.btn-warning
 
 
 block script
     script(src='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')
     script(src='/js/image.js')
-
-    script(src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js")
     script(src="/js/script.js") 

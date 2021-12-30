@@ -2,11 +2,10 @@ mixin productcard(product)
     if product.isActive    
         .col-lg-4.col-md-6.portfolio-item(class=`${product.categories[0]._id}`)
                 .wsk-cp-product
-                    .wsk-cp-img
+                    .wsk-cp-img.text-center
                         form(action="/product/details" method="POST")
                             input(type="hidden" name="categoryid" value=`${product.categories[0]._id}`)
-                        a.portfolio-lightbox(href=`/img/${product.imageUrl}` data-gallery='portfolioGallery' title=`${product.name}`)
-                            img.img-fluid(src=`/img/${product.imageUrl}` alt=`${product.name}` ).card-img-top
+                            img.img-fluid.deneme(src="/img/puff.svg" data-src=`/img/resized/${product.imageUrl}` alt=`${product.name}`).w-50.card-img-top
                     .portfolio-info.wsk-cp-text
                         .category
                             span
@@ -19,10 +18,12 @@ mixin productcard(product)
                         .card-footer
                             .wcf-left
                                 span.price 
-                                    i.fas.fa-lira-sign #{product.price}   
-                            .wcf-right
-                                form(action="/cart" method="POST")
-                                    input(type="hidden" name="_csrf" value=`${csrfToken}`)  
-                                    input(type="hidden" name="productId" value=`${product._id}`)
-                                    button(type="submit" style="background-color:#FFC451;").btn.btn-sm.ml-3 
-                                        i.fas.fa-cart-plus
+                                    i.fas.fa-lira-sign #{product.price}
+                            if active.ecommarce_isActive
+                            
+                                .wcf-right
+                                    form(action="/cart" method="POST")
+                                        input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                                        input(type="hidden" name="productId" value=`${product._id}`)
+                                        button(type="submit" style="background-color:#FFC451;").btn.btn-sm.ml-3 
+                                            i.fas.fa-cart-plus

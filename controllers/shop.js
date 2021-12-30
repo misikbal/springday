@@ -1,20 +1,24 @@
 const Product = require("../model/product");
 const Category=require("../model/category");
 const Order=require("../model/order");
-const mongodb=require("mongodb");
 const Slide=require('../model/slide');
-const Logo=require('../model/logo');
 const Client=require('../model/client');
 const Services=require('../model/shortservices');
-const Social=require('../model/socialmedia');
 const System=require('../model/system');
 const Contact=require('../model/contactus');
 const AboutServices = require('../model/aboutservices');
 const Project = require('../model/project');
+const Page = require('../model/page');
+const About = require('../model/about');
+const News = require('../model/news');
+
+
+
 
 exports.getIndex = (req, res, next) => {
     
-    Product.find()
+    Product.find({isHome:true})
+        .where({isActive:true})
         .sort({date:-1})
         .populate("categories.0",{"_id":{"$slice":1}})
 
@@ -39,17 +43,20 @@ exports.getIndex = (req, res, next) => {
                                     .then(aboutservices=>{
                                         Project.find()
                                         .then(projectinfo=>{
-                                            res.render("shop/index", {
-                                                title: "Springday", 
-                                                products: products,
-                                                slides:slides,
-                                                path: '/',
-                                                categories:categories,
-                                                client:client,
-                                                services:services,
-                                                aboutservices:aboutservices,
-                                                projectinfo:projectinfo
+                                            
+                                                res.render("shop/index", {
+                                                    title: "Springday", 
+                                                    products: products,
+                                                    slides:slides,
+                                                    path: '/',
+                                                    categories:categories,
+                                                    client:client,
+                                                    services:services,
+                                                    aboutservices:aboutservices,
+                                                    projectinfo:projectinfo,
+                                                    action: req.query.action
                                             })
+                                            
                                         })
                                         
                                     })
@@ -72,17 +79,6 @@ exports.getIndex = (req, res, next) => {
         });
 }
 
-exports.getNavbar=(req, res, next) =>{
-    Logo.find()
-    .select("logo favico footerLogo")
-    .then((logo)=>{
-        res.json({
-        logo: logo[0]["logo"]});
-
-    }).catch((err)=>{
-        next(err);
-    });
-}
 
 exports.getProducts = (req, res, next) => {    
     
@@ -214,12 +210,31 @@ exports.postCartItemDelete = (req, res, next) => {
         });
 }
 
+exports.getOrder = (req, res, next) => {
+    const id =req.params.orderid;
+    Order
+    .findOne({"user.userId":req.user._id,_id:id})
+    .sort({date:-1})
 
+    .then(orders=>{
+            res.render("shop/orders", {
+                title: "Order",
+                path: '/orders',
+                orders:orders
+            });
+        
+    })
+    .catch(err=>{next(err)})
+
+    
+}
 exports.getOrders = (req, res, next) => {
     Order
     .find({"user.userId":req.user._id})
+    .sort({date:-1})
+
     .then(orders=>{
-            res.render("shop/orders", {
+            res.render("shop/allorders", {
                 title: "Ordrers",
                 path: '/orders',
                 orders:orders
@@ -230,7 +245,33 @@ exports.getOrders = (req, res, next) => {
 
     
 }
+exports.getAdress = (req, res, next) => {    
+    req.user
+            .populate("cart.items.productId")
+            .execPopulate()
+            .then(user=>{
+                            res.render("shop/adress", {
+                                title: "Adress",
+                                path: '/create-order',
+                                products:user.cart.items,
+                                isAuthenticated:req.session.isAuthenticated,
+                                action: req.query.action
+                            });
+
+            }).catch((err)=>{
+                next(err);
+            })    
+    }
 exports.postOrder = (req, res, next) => {
+    const city=req.body.city;
+    const district=req.body.district;
+    const adress=req.body.adress;
+    const name=req.body.name;
+    const mail=req.body.mail;
+
+    const phone=req.body.phone;
+    const postcode=req.body.postcode;
+    
     req.user
         .populate("cart.items.productId")
         .execPopulate()
@@ -241,6 +282,13 @@ exports.postOrder = (req, res, next) => {
                     name:req.user.name,
                     email:req.user.email
                 },
+                city:city,
+                district:district,
+                adress:adress,
+                name:name,
+                phone:phone,
+                postcode:postcode,
+                mail:mail,
                 items:user.cart.items.map(p=>{
                     return{
                         product:{
@@ -251,7 +299,9 @@ exports.postOrder = (req, res, next) => {
                         },
                         quantity:p.quantity
                     }
-                })
+                    
+                }),
+                
             });
             return order.save();            
         }).then(()=>{
@@ -419,6 +469,148 @@ exports.getProjects = (req, res, next) => {
                     path: '/',
                     isAuthenticated:req.session.isAuthenticated
                 }) 
+            })
+    })
+    .catch((err)=>{
+        next(err);
+    });
+    
+}
+
+
+exports.getAbout = (req, res, next) => {
+    const aboutid=req.params.aboutid
+    About.findById(aboutid)
+
+    .then(about=>{
+        Client.find()
+        .select("clientlogo")
+
+
+        .then(client=>{
+            About.find()
+            .where({isActive:true})
+            .then(allabout=>{
+                res.render("shop/about-detail",{
+                    title:about.name,
+                    about:about,
+                    allabout:allabout,
+                    client:client,
+                    selectedCategory:aboutid,
+                    path:"/about",
+                });
+            })
+        })
+    }).catch((err)=>{
+        next(err);
+    });
+}
+
+exports.getAbouts = (req, res, next) => {    
+    
+    About.findOne({isHome:true})
+    .where({isActive:true})
+    .then(viewabout=>{
+        return viewabout; 
+    })
+    .then(viewabout=>{
+        Client.find()
+            .select("clientlogo")
+            .then(client=>{
+                About.find()
+                .select("_id name")                
+                .where({isActive:true})
+                .then(info=>{
+                    res.render("shop/about", {
+                        title: "About", 
+                        viewabout: viewabout,
+                        info:info,
+                        client:client,
+                        path: '/',
+                        isAuthenticated:req.session.isAuthenticated
+                    })
+                })
+            })
+    })
+    .catch((err)=>{
+        next(err);
+    });
+    
+}
+
+
+
+exports.getClient = (req, res, next) => {    
+    
+    Client.find()
+    .where({isActive:true})
+    .then(client=>{
+        return client; 
+    })
+    .then(client=>{
+        res.render("shop/client", {
+            title: "About", 
+            client:client,
+            path: '/client',
+            isAuthenticated:req.session.isAuthenticated
+        })
+    })
+    .catch((err)=>{
+        next(err);
+    });
+    
+}
+
+
+
+
+
+exports.getNews = (req, res, next) => {
+    const newsid=req.params.newsid
+    News.findById(newsid)
+
+    .then(news=>{
+        Client.find()
+        .select("clientlogo")
+
+
+        .then(client=>{
+            News.find()
+            .where({isActive:true})
+            .then(allnews=>{
+                res.render("shop/news-detail",{
+                    title:news.name,
+                    news:news,
+                    allnews:allnews,
+                    client:client,
+                    selectedCategory:newsid,
+                    path:"/about",
+                });
+            })
+        })
+    }).catch((err)=>{
+        next(err);
+    });
+}
+
+exports.getAllNews = (req, res, next) => {    
+    
+    News.find()
+    .where({isActive:true})
+    .then(news=>{
+        return news; 
+    })
+    .then(news=>{
+        Client.find()
+            .select("clientlogo")
+            .then(client=>{
+                    res.render("shop/news", {
+                        title: "News", 
+                        news: news,
+                        client:client,
+                        path: '/',
+                        isAuthenticated:req.session.isAuthenticated
+                    })
             })
     })
     .catch((err)=>{

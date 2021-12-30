@@ -1,0 +1,29 @@
+extends ../layouts/main-layout.pug
+include ../mixins/client.pug
+
+block styles 
+    link(href='/css/aboutservicesdetails.css' rel='stylesheet')
+block content
+    br
+    br
+    br
+    br
+    .container
+        .row
+            .leftcolumn
+                .card.bg-light(style="border-top: 10px solid #0b5aa2;")
+                    h2.text-center.itemss-head #{viewabout.name}
+                    p !{viewabout.description}
+
+            .rightcolumn
+                br
+                .itemss.bg-light
+                    .itemss-body
+                        if info.length>0
+                            each abouts in info
+                                .itemss-body-content                        
+                                    #card-hover
+                                        a(href=`/about/${abouts._id}` class=abouts._id==selectedCategory?"list-group-item active":"list-group-item" style="text-decoration: none").bg-light
+                                            |#{abouts.name}
+                                            i.fa.fa-angle-right
+    +client(client)

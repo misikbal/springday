@@ -1,10 +1,8 @@
-
-//- #blurredbackground
-//- #content
 mixin createSlide(slide)  
     .carousel-item
         #blurredbackground
-            img.d-block.w-100.animated(alt=`${slide.title}` src=`/img/${slide.image}` class=`${slide.animate}`)
+            
+                img.d-block.w-100.animated.item(alt=`${slide.title}` src=`/img/resized/${slide.image}` class=`${slide.animate}`)
         #content
             .carousel-caption.d-none.d-md-block
                     if slide.title!=""
@@ -18,4 +16,3 @@ mixin createSlide(slide)
                         
                             a(href=`${slide.buttonLink.toString().split(",")[0]}`)
                                 button#button.btn.btn-warning.m-2(style="font-size: 16px;") #{slide.buttonName}
-

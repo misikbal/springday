@@ -99,13 +99,14 @@ DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, bu
 
 				if ( btnDisplay ) {
 					node = $('<li>', {
-							'class': classes.sPageButton+' '+btnClass,
+							'class': classes.sPageButton+' '+btnClass+" "+"page-item",
 							'id': idx === 0 && typeof button === 'string' ?
 								settings.sTableId +'_'+ button :
 								null
 						} )
 						.append( $('<a>', {
 								'href': '#',
+								"class":"page-link",
 								'aria-controls': settings.sTableId,
 								'data-dt-idx': counter,
 								'tabindex': settings.iTabIndex
@@ -138,7 +139,7 @@ DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, bu
 	catch (e) {}
 
 	attach(
-		$(host).empty().html('<ul class="pagination"/>').children('ul'),
+		$(host).empty().html('<ul class="pagination d-flex justify-content-end"/>').children('ul'),
 		buttons
 	);
 

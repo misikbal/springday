@@ -1,0 +1,107 @@
+extends ../layouts/admin-layout.pug
+block styles
+    link(href="/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer")
+
+block content
+    if(action!=="undefined" && action==="create")
+        .alert.alert-success.alert-dismissible.fade.show(role='alert')
+            strong Gönderi Başarılı Bir Şekilde Eklendi
+    if(action!=="undefined" && action==="delete")
+        .alert.alert-warning.alert-dismissible.fade.show(role='alert')
+            strong Gönderi Başarılı Bir Şekilde Silindi
+    if(action!=="undefined" && action==="edit")
+        .alert.alert-info.alert-dismissible.fade.show(role='alert')
+            strong Gönderi Ayarları Başarılı Bir Şekilde Güncellendi
+
+        
+    script.
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove(); 
+            });
+        }, 2000);
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .form-group.row
+                .card.text-center.bg-blue-grey
+                    .header
+                        h2.text-white
+                            | GÖNDERİLER
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            
+            .card
+                if isAdmin
+                    a(href="/admin/add-news").btn.bg-blue-grey.btn-sm
+                        span 
+                            i.fas.fa-plus.fa-xs.mr-2
+                        | Yeni Gönderi Ekleme
+
+                if news.length > 0
+                    .body
+                        .table-responsive
+                            table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
+                                thead.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th Gönderi Resmi
+                                        th Gönderi Başlığı
+                                        th Etkinlik Tarihi
+                                        th Yazar
+                                        th Tarih
+                                        th Aktif
+                                        if isAdmin
+                                            th
+                                            
+
+                                tfoot.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th Gönderi Resmi
+                                        th Gönderi Başlığı
+                                        th Etkinlik Tarihi
+                                        th Yazar
+                                        th Tarih
+                                        th Aktif
+                                        if isAdmin
+                                            th
+                                tbody
+                                    -var index=1;
+                                    each newes in news                
+                                        tr
+                                            td(scope="row").align-middle #{index++}
+                                            td 
+                                                img(src=`/img/${newes.imageUrl}` width='180')
+                                            td.align-middle #{newes.title}
+                                            td.align-middle #{newes.newsdate}
+                                            td.align-middle #{newes.userId.name}
+                                            td.align-middle #{newes.date.getDate()+"/"+newes.date.getMonth()+"/"+newes.date.getFullYear()+" "}
+                                                br
+                                                |#{newes.date.getHours()+":"+ newes.date.getMinutes()}
+                                            td.align-middle 
+                                                i(class=(newes.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
+                                            if isAdmin
+                                                td.align-middle.position-relative
+                                                    a.btn.btn-warning.btn-sm(href=`/admin/news/${newes._id}`) 
+                                                        span 
+                                                            i.fas.fa-edit.fa-xs
+                                                    form(action="/admin/delete-news" method="POST")
+                                                        input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                                                        input(type="hidden" name="newsid" value=`${newes._id}`)
+                                                        button(type="submit" style="height:40px; width:40px;").btn.btn-danger.btn-sm
+                                                            span 
+                                                                i.fas.fa-trash-alt.fa-xs
+                else
+                    p.text-center.align-middle Herhangi Bir Gönderi Mevcut Değil
+block script    
+    script(src="/plugins/jquery-datatable/jquery.dataTables.js")
+    script(src="/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")
+    script(src="/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js")
+    script(src="/plugins/jquery-datatable/extensions/export/buttons.flash.min.js")
+    script(src="/plugins/jquery-datatable/extensions/export/jszip.min.js")
+    script(src="/plugins/jquery-datatable/extensions/export/pdfmake.min.js")
+    script(src="/plugins/jquery-datatable/extensions/export/vfs_fonts.js")
+    script(src="/plugins/jquery-datatable/extensions/export/buttons.html5.min.js")
+    script(src="/plugins/jquery-datatable/extensions/export/buttons.print.min.js")
+    script(src='/js/pages/tables/jquery-datatable.js')

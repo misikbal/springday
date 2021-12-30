@@ -1,64 +1,88 @@
 extends ../layouts/admin-layout.pug
 block styles
     link(rel="stylesheet" href="/css/themes/image.css")
+    link(href='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' rel='stylesheet')
     script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
-block content
-    
-    //- if(action!=="undefined" && action==="create")
-    //-     .alert.alert-info.alert-dismissible.fade.show(role='alert')
-    //-         strong Referanslar Başarılı Bir Şekilde Güncellendi
-    //-     script.
-    //-         window.setTimeout(function() {
-    //-             $(".alert").fadeTo(500, 0).slideUp(500, function(){
-    //-                 $(this).remove(); 
-    //-             });
-    //-         }, 2000);
+block content    
+    if errorMessage
+        div.alert.alert-danger.col-sm-7 !{errorMessage}
+    form(action="/admin/add-services" method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | SERVİS EKLEME SAYFASI 
+        .row.clearfix
+            .col-md-2
 
-    .row.clearfix
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-            .card
-                .header
-                    h2
-                        | Hizmet Ekle
-                .body
-                    .demo-masked-input
-                        form(action="/admin/add-services" method="POST" enctype="multipart/form-data")
-                            input(type="hidden" name="_csrf" value=`${csrfToken}`)
-                            .row
-                                .col-sm-12
-                                        .form-group                                    
-                                            b İcon
-                                            .input-group
-                                                .form-line
-                                                        
-                                                    input.form-control#icon(type='text' name="icon" placeholder="fas fa-user")
-                            .row.clearfix
-                                .col-sm-6
-                                    .form-group
-                                        b Başlık
-                                        .input-group
-                                            .form-line
-                                                input.form-control#name(type='text' name="name" placeholder='Name')
-                                .col-sm-6
-                                    .form-group
-                                        b Active
-                                        .input-group
-                                            .form-line
-                                                input.form-control#isActive(type='text' name="isActive" )
-                            .row.clearfix
-                                .col-sm-6
-                                    .form-group                                    
-                                        b Açıklama
-                                        .input-group
-                                            .form-line
-                                                textarea.form-control#description(name="description"  rows="3")
-                                
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-5 Aktif
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive")
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | SERVİS İCONU
+                                    small.text-danger
+                                        | Gerekli
+                                    small.text-danger
+                                        a(href="https://fontawesome.com/v5.15/icons/" target="_blank") https://fontawesome.com/v5.15/icons/ site üzerinden istediğiniz iconu seçip yapıştırın
+                            .body
+                                .form-line
+                                    input.form-control#icon(type="text" name="icon" placeholder="<i class='fas fa-user'></i>")  
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | SERVİS ADI
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#icon(type="text" name="name" placeholder="Danışmanlık")
+
+        .form-group.row
+            .col-sm-12
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
+                        h2
+                            | AÇIKLAMA                            
+                            small.text-info
+                                | İsteğe Bağlı
+                    .body
+                        .form-line
+                            textarea.form-control#description(type="text" name="description"  rows="3" placeholder="Kısa Açıklama")
+
+        .form-group.row.demo-tagsinput-area
+            .col-sm-12.bg-blue-grey
+                .card.text-center
+                    .header.bg-white
+                        h2
+                            | #TAG
+                            small.text-danger
+                                | Gerekli
+                            small.text-info
+                                | Tag Öneri için 
+                                a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
+                        .body
+                            .form-line
+                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value='' placeholder="Taglerinizi Buraya Giriniz")
+        .form-group.row
+            input(type="submit" value="Servisi Kaydet").col-md-12.btn.btn-warning
                             
-                            .col-sm-12
-                                .form-group
-                                    input(type="submit" value="Kaydet").btn.btn-info.col-sm-12
-
 block script
-    include ../admin/includes/formscript.pug
+    script(src='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')
     script(src='/js/image.js')
 

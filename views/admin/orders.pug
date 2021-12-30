@@ -1,0 +1,90 @@
+extends ../layouts/admin-layout.pug
+
+block content
+    if(action!=="undefined" && action==="create")
+        .alert.alert-success.alert-dismissible.fade.show(role='alert')
+            strong Ürün Başarılı Bir Şekilde Eklendi
+    if(action!=="undefined" && action==="delete")
+        .alert.alert-warning.alert-dismissible.fade.show(role='alert')
+            strong Ürün Başarılı Bir Şekilde Silindi
+    if(action!=="undefined" && action==="edit")
+        .alert.alert-info.alert-dismissible.fade.show(role='alert')
+            strong Ürün Ayarları Başarılı Bir Şekilde Güncellendi
+
+        
+    script.
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove(); 
+            });
+        }, 2000);
+
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .form-group.row
+                .card.text-center.bg-blue-grey
+                    .header
+                        h2.text-white
+                            | ÜRÜNLER
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            
+            .card
+                if orders.length > 0
+                        
+                    .body.justify-content-between
+                        .table-responsive
+                            table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
+                                thead.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th Sipariş ID
+                                        th Siparişi Veren 
+                                        th Toplam Fiyat
+                                        th Sipariş Tarihi
+                                        th Siparişin Durumu
+
+                                        
+                                        if isAdmin
+                                            th Detaylar
+                                tfoot.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th Sipariş ID
+                                        th Siparişi Veren 
+                                        th Toplam Fiyat
+                                        th Sipariş Tarihi
+                                        th Siparişin Durumu
+                                        if isAdmin
+                                            th Detaylar
+                                tbody
+                                    -var index=1;
+                                    -var total=0;
+                                    each order in orders
+                                        each item in order.items
+                                            - total +=(item.product.price * item.quantity);
+                                        tr
+                                            td(scope="row").align-middle #{index++}
+                                            td.align-middle #{order._id}
+                                            td.align-middle #{order.user.name}
+                                            td.align-middle #{total} TL
+                                            td.align-middle #{order.date.getHours()+":"+ order.date.getMinutes()+" "}
+                                                br                                            
+                                                | #{order.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
+                                            td.align-middle 
+                                                    button.btn(class=(order.done? "btn-outline-success":order.cargo ? "btn-outline-info":order.approval ? "btn-outline-warning":!order.approval ? "btn-outline-danger"  :"") style="border-radius:50px;") 
+                                                        |#{order.done? "Ürün Teslim Edildi":order.cargo ? "Ürün Kargoya Verildi":order.approval ? "Sipariş Onaylandı": !order.approval ? "Ödeme Yapılmadı":""}
+                                            
+                                            
+                                            
+                                            
+                                            if isAdmin
+                                            
+                                                td.align-middle.position-relative
+                                                    a.btn.bg-blue-grey.btn-sm(href=`/admin/orders/${order._id}` target="_blank") 
+                                                        span 
+                                                            i.fas.fa-external-link-alt.fa-xs
+                else
+                    p.text-center.align-middle Herhangi Bir Ürün Mevcut Değil
+block script    
+    include ../admin/includes/tablescript.pug

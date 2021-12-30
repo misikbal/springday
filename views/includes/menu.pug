@@ -4,6 +4,6 @@
         each category in categories
             #card-hover
                 a(href=`/categories/${category._id}` class=category._id==selectedCategory?"list-group-item active":"list-group-item" style="text-decoration: none").bg-light
-                    img(src=`/img/${category.categoryImg}` width=30).mr-2
+                    img.deneme(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${category.categoryImg}` width=30).mr-2
                     |#{category.name}
         

@@ -1,24 +1,62 @@
 extends ../layouts/admin-layout.pug
 block styles
-    link(rel="stylesheet" href="/css/form.css")
+    link(rel="stylesheet" href="/css/themes/image.css")
+
 block content
-    .col-lg-9
-        form(action="/admin/categories" method="POST" enctype="multipart/form-data")
-            input(type="hidden" name="_csrf" value=`${csrfToken}`)    
-            input(type="hidden" name="id" value=`${category._id}`)
-            .form-group.row
-                label(for="name").col-sm-2.col-form-label Category Name
-                .col-sm-10
-                    input(type="text" name="name" value=`${category.name}`).form-control#name               
-            
-            .form-group.row
-                label(for="categoryImg").col-sm-2.col-form-label categoryImg
-                .col-sm-10
-                    img(src=`/img/${category.categoryImg}` width="100")
-                    input#cimage(type="file" name="cimage" ) 
-            
-            .form-group.row
-                .col-sm-10.offset-sm-2
-                    input(type="submit" value="Save Category").btn.btn-primary                     
-
-
+    if errorMessage
+        div.alert.alert-danger.col-sm-12 !{errorMessage}
+    form(action="/admin/categories" method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)    
+        input(type="hidden" name="id" value=`${category._id}`)
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | "#{category.name}" KATEGORİSİNİN GÜNCELLEME SAYFASI
+        .row.clearfix
+            .col-md-2
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-5 Aktif
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive")
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | KATEGORİNİN İSMİ
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#name(type="text" name="name" value=`${category.name}` placeholder="Sulu Klima")            
+        .row
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | KATEGORİNİN RESMİ
+                                    small.text-info
+                                        | Bir Tane Resim Seçilebilir
+                            .text-center
+                                img(src=`/img/${category.categoryImg}` style="width:200px;").card-img-top.mt-3                            
+                            .body.bg-blue-grey
+                                .fileupload.fileupload-new(data-provides='fileupload')
+                                    span.btn.btn-warning.btn-file
+                                        span.fileupload-new Yeni
+                                        span.fileupload-exists Değiştir
+                                        input#categoryImg(type="file" name="categoryImg" accept="image/*")
+                                    span.fileupload-preview
+                                    a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+        .form-group.row
+            input(type="submit" value="Kategoriyi Güncelle").btn.btn-warning.col-md-12         
+block script
+    script(src='/js/image.js')

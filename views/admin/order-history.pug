@@ -1,0 +1,54 @@
+extends ../layouts/admin-layout.pug
+
+block content
+    .container.p-100.mb-5
+
+        if orders.length>0
+            each order in orders
+                .card.mb-5.bg-light.text-center
+                    .card-header
+                        h3 order id: ##{order._id}
+                    table.table
+                        thead 
+                            tr 
+                                th 
+                                    p Ürünün Fotoğrafı 
+                                th 
+                                    p Ürünün Adı
+                                th 
+                                    p Ürünün Fıyatı
+                                th 
+                                    p Sipariş Edilen Adet
+                        tbody
+                            each item in order.items 
+                                tr 
+                                    td 
+                                        img(src=`/img/resized/${item.product.imageUrl}` width="80")
+                                    td 
+                                        p #{item.product.name}
+                                    td 
+                                        p #{item.product.price}
+                                    td 
+                                        p #{item.quantity}
+                        tfoot
+                            tr 
+                                td(colspan="2").text-start
+                                    p Saat: #{order.date.getHours()+":"+ order.date.getMinutes()}
+                                    p Tarih: #{order.date.getDate()+"/"+order.date.getMonth()+"/"+order.date.getFullYear() }
+                                - var total = 0;
+                                each item in order.items
+                                    - total +=(item.product.price * item.quantity);
+                                td 
+                                    p #{total} TL
+
+
+
+        else
+            .row
+                .col-md-12
+                    .card.bg-transparent
+                        .card-body.cart
+                            .col-sm-12.empty-cart-cls.text-center
+                                img.img-fluid.mb-4.mr-3(src='/img/empty.png' width='300' height='300')
+                                h3
+                                    strong Bu Kullanıcının Sipariş Geçmişi Yoktur

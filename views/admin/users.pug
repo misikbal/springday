@@ -1,0 +1,53 @@
+extends ../layouts/admin-layout.pug
+
+block content
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .form-group.row
+                .card.text-center.bg-blue-grey
+                    .header
+                        h2.text-white
+                            | ÜYELER
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            
+            .card
+                if users.length > 0
+                        
+                    .body.justify-content-between
+                        .table-responsive
+                            table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
+                                thead.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th(scope="col").align-middle Ad Soyad
+                                        th(scope="col").align-middle Mail Adresi
+                                        th(scope="col").align-middle Kaydolma Tarihi
+                                        th(scope="col").align-middle Sipariş Geçmişi
+                                            
+
+                                tfoot.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th(scope="col").align-middle Ad Soyad
+                                        th(scope="col").align-middle Mail Adresi
+                                        th(scope="col").align-middle Kaydolma Tarihi
+                                        th(scope="col").align-middle Sipariş Geçmişi
+                                        
+                                tbody
+                                    -var index=1;
+                                    each user in users
+                                        tr                                        
+                                            td(scope="row").align-middle #{index++}
+                                            td.align-middle #{user.name}                                                
+                                            td.align-middle #{user.email} 
+                                            td.align-middle #{user.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}                                            
+                                            td.align-middle.position-relative
+                                                a.btn.btn-outline-warning.btn-sm(href=`/admin/users/${user._id}` target="_blank") 
+                                                    span 
+                                                        i.fas.fa-history.fa-xs
+                else
+                    p.text-center.align-middle Herhangi Bir Kullanıcı Kaydolmadı
+
+block script    
+    include ../admin/includes/tablescript.pug

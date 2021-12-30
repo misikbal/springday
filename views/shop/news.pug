@@ -1,0 +1,43 @@
+extends ../layouts/main-layout.pug
+include ../mixins/client.pug
+
+block styles
+
+    link(href='/css/project.css' rel='stylesheet')
+    link(href='/css/aboutservices.css' rel='stylesheet')
+    link(href='/css/news.css' rel='stylesheet')
+
+
+
+block content
+    br
+    br
+    br
+    br
+    .container-fluid.pb-4.pt-4.paddding
+        .container.paddding
+            .row.mx-0
+                .col-md-8.animate-box(data-animate-effect='fadeInLeft')
+                    div
+                        .fh5co_heading.fh5co_heading_border_bottom.py-2.mb-4 News
+                    each newes in news
+                        .row.pb-4
+                            .col-md-5
+                                .fh5co_hover_news_img
+                                    .fh5co_news_img
+                                        a(href=`/news/${newes._id}` style="text-decoration: none")
+                                        img(src=`/img/${newes.imageUrl}` alt=`${newes.title}`)
+                                    div
+                            .col-md-7.animate-box
+                                a.fh5co_magna.py-2(href=`/news/${newes._id}` style="text-decoration: none")
+                                    | #{newes.title}
+                                    br
+                                a.fh5co_mini_time.py-3(href=`/news/${news._id}` style="text-decoration: none")
+                                    | #{newes.newsdate}
+                                .fh5co_consectetur
+                                    | !{newes.description.toString().substr(0,250)+"..."}
+                .col-md-3.animate-box(data-animate-effect='fadeInRight')
+                    div
+                        .fh5co_heading.fh5co_heading_border_bottom.py-2.mb-4 Tags
+
+    +client(client)

@@ -1,37 +1,81 @@
 extends ../layouts/admin-layout.pug
 block styles
-    link(rel="stylesheet" href="/css/form.css")
+    link(rel="stylesheet" href="/css/themes/image.css")
+    script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+    script(src="/plugins/ckeditor/ckeditor.js")
 block content
-    .col-lg-9
-        form(action="/admin/project" method="POST" enctype="multipart/form-data")
-            input(type="hidden" name="_csrf" value=`${csrfToken}`)    
-            input(type="hidden" name="projectid" value=`${project._id}`)
-            .form-group.row
-                .form-check.form-switch
-                    input.form-check-input#isActive(type="checkbox" name="isActive" 
-                        value=`${project.isActive}` checked=project.isActive)
-                    label.form-check-label Aktif
-            .form-group.row
-                label(for="name").col-sm-2.col-form-label Name
-                .col-sm-10
-                    input(type="text" name="name" value=`${project.name}`).form-control#name              
-            .form-group.row
-                label(for="imageUrl").col-sm-2.col-form-label Image
-                .col-sm-10
-                    img(src=`/img/${project.imageUrl}` width="100")
-                    input#project(type="file" name="projectImg" ) 
-                            
-            .form-group.row
-                label(for="description").col-sm-2.col-form-label Description
-                .col-sm-10
-                    textarea.form-control(id="editor" name="description" cols="30" rows="10") #{project.description}
-            
-            .form-group.row
-                .col-sm-10.offset-sm-2
-                    input(type="submit" value="Kaydet").btn.btn-primary                     
+    form(action="/admin/project" method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)    
+        input(type="hidden" name="projectid" value=`${project._id}`)
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | "#{project.name}" BAŞLIKLI PROJE GÜNCELLEME SAYFASI
+        .row.clearfix
+            .col-md-2
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-5 Aktif
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive" value=`${project.isActive}` checked=project.isActive)
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | PROJE BAŞLIĞI
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#title(type="text" name="name" value=`${project.name}` placeholder="Dora ayakkabı Firması")            
+        .row
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | PROJE RESMİ
+                                    small.text-danger
+                                        | Gerekli
+                                    small.text-info
+                                        | Bir Tane Resim Seçilebilir
+                            .text-center
+                                img(src=`/img/${project.imageUrl}` style="width:400px;").card-img-top.mt-3                            
+                            .body.bg-blue-grey
+                                .fileupload.fileupload-new(data-provides='fileupload')
+                                    span.btn.btn-warning.btn-file
+                                        span.fileupload-new Yeni
+                                        span.fileupload-exists Değiştir
+                                        input#imageUrl(type="file" name="projectImg" accept="image/*")
+                                    span.fileupload-preview
+                                    a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+        .form-group.row
+            .col-sm-12
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
+                        h2
+                            | AÇIKLAMA                            
+                            small.text-danger
+                                | Gerekli
+                            small.text-info
+                                | Resim Konulabilir (Resim Ekleme Simgesine Tıklayın > Sunucuya Gözat )
+                    .body
+                        .form-line
+                        textarea.form-control(id="editor" name="description" cols="30" rows="10") #{project.description}                
+
+        .form-group.row
+            input(type="submit" value="Projeyi Güncelle").btn.btn-warning.col-md-12                                          
 
 
 
-block script  
-    script(src="/js/ckeditor/ckeditor.js")
+block script
+    script(src='/js/image.js')
     script(src="/js/script.js") 

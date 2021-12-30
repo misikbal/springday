@@ -8,25 +8,26 @@ block content
     br
     br
     br
-    .row
-        .leftcolumn
-            .card.bg-light(style="border-top: 10px solid #0b5aa2;")
-                h2.text-center.itemss-head #{project.name}
-                img.fakeimg(src=`/img/${project.imageUrl}` style='height:500px; width:auto;')
-                p !{project.description}
+    .container
+        .row
+            .leftcolumn
+                .card.bg-light(style="border-top: 10px solid #0b5aa2;")
+                    h2.text-center.itemss-head #{project.name}
+                    img.fakeimg(src=`/img/${project.imageUrl}` style='height:500px; width:auto;')
+                    p !{project.description}
 
-        .rightcolumn
-            br
-            .itemss.bg-light
-                .itemss-head
-                    h2.text-center Diğer Hizmetler
-                    hr
-                .itemss-body
-                    if allproject.length>0
-                        each projects in allproject
-                            .itemss-body-content                        
-                                #card-hover
-                                    a(href=`/project/${projects._id}` class=projects._id==selectedCategory?"list-group-item active":"list-group-item" style="text-decoration: none").bg-light
-                                        |#{projects.name}
-                                        i.fa.fa-angle-right
+            .rightcolumn
+                br
+                .itemss.bg-light
+                    .itemss-head
+                        h2.text-center Diğer Projeler
+                        hr
+                    .itemss-body
+                        if allproject.length>0
+                            each projects in allproject
+                                .itemss-body-content                        
+                                    #card-hover
+                                        a(href=`/project/${projects._id}` class=projects._id==selectedCategory?"list-group-item active":"list-group-item" style="text-decoration: none").bg-light
+                                            |#{projects.name}
+                                            i.fa.fa-angle-right
     +client(client)

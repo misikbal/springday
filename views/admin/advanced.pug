@@ -1,0 +1,54 @@
+extends ../layouts/admin-layout.pug
+
+block content
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .form-group.row
+                .card.text-center.bg-blue-grey
+                    .header
+                        h2.text-white
+                            | YAPILAN İŞLEMLER
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            
+            .card
+                if advanced.length > 0
+                        
+                    .body.justify-content-between
+                        .table-responsive
+                            table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
+                                thead.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th(scope="col").align-middle Ad Soyad
+                                        th(scope="col").align-middle Statü
+                                        if isAdmin
+                                            th(scope="col").align-middle İp
+                                        th(scope="col").align-middle Tarih
+                                            
+
+                                tfoot.bg-blue-grey
+                                    tr
+                                        th(scope="col").align-middle #
+                                        th(scope="col").align-middle Ad Soyad
+                                        th(scope="col").align-middle Statü
+                                        if isAdmin
+                                            th(scope="col").align-middle İp
+                                        th(scope="col").align-middle Tarih
+                                tbody
+                                    -var index=1;
+                                    each advanceds in advanced
+                                        tr                                        
+                                            td(scope="row").align-middle #{index++}
+                                            td.align-middle #{advanceds.userId.name}                                                
+                                            td.align-middle #{advanceds.status}
+                                            if isAdmin
+                                                td.align-middle #{advanceds.ip}                                               
+                                            td.align-middle #{advanceds.date.getHours()+":"+ advanceds.date.getMinutes()+" "}
+                                                br
+                                                |#{advanceds.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
+                else
+                    p.text-center.align-middle Herhangi Bir Giriş Yapılmadı (Eğer Bu Mesajı Görüyorsanız Bir Sıkıntı Vardır Lütfen Geliştirici İle İletişime Geçiniz)
+
+block script    
+    include ../admin/includes/tablescript.pug

@@ -5,6 +5,7 @@ block styles
 
 
 
+
 block content
     
     if(action!=="undefined" && action==="edit")
@@ -23,336 +24,172 @@ block content
             .card.text-center
                 .card-body
                     form(action="/admin/themes" method="POST")  
-                        input(type="hidden" name="_csrf" value=`${csrfToken}`) 
+                        input(type="hidden" name="_csrf" value=`${csrfToken}`)
                         .row.clearfix
-                            .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                .form-group
-                                    #cp3a.input-group.colorpicker
-                                        input.form-control.input-lg#navbarLight(type='hidden' name="navbarLight" value=`${themes.navbarLight}`)
-                                        .row.clearfix
-                                            .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                                label(for="navbarLight").text-card.mt-2 Navbar
-                                            .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                                span.input-group-addon
-                                                    span.input-group-text.colorpicker-input-addon
-                                                        i(style="width: 16rem; height:1.5rem;")
-                                                            p.text-dark Light Mode
-                            .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                .form-group
-                                    #cp3a.input-group.colorpicker
-                                        input.form-control.input-lg#navbarDark(type='hidden' name="navbarDark" value=`${themes.navbarDark}`)
-                                        .row.clearfix
-                                            .col-sm-6 
-                                                label(for="navbarDark").text-card.mt-2 Navbar
-                                            .col-sm-6
-                                                span.input-group-addon
-                                                    span.input-group-text.colorpicker-input-addon
-                                                        i(style="width: 16rem; height:1.5rem;")
-                                                            p.text-light Dark Mode
+                            .col-md-12
+                                .form-group.row
+                                    .col-sm-12
+                                        .card.text-center.bg-blue-grey
+                                            .header
+                                                h2.text-white
+                                                    | WEB SİTESİ RENK AYARLARI
                         .row.clearfix
-                            .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                .form-group
-                                    #cp3a.input-group.colorpicker
-                                        input.form-control.input-lg#infoLight(type='hidden' name="infoLight" value=`${themes.infoLight}`)
-                                        .row.clearfix
-                                            .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                                label(for="infoLight").text-card.mt-2 Contact Navbar
-                                            .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                                span.input-group-addon
-                                                    span.input-group-text.colorpicker-input-addon
-                                                        i(style="width: 12rem; height:1.5rem;")
-                                                            p.text-dark Light Mode
-                            .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                .form-group
-                                    #cp3a.input-group.colorpicker
-                                        input.form-control.input-lg#infoDark(type='hidden' name="infoDark" value=`${themes.infoDark}`)
-                                        .row.clearfix
-                                            .col-sm-6 
-                                                label(for="infoDark").text-card.mt-2 Contact Navbar
-                                            .col-sm-6
-                                                span.input-group-addon
-                                                    span.input-group-text.colorpicker-input-addon
-                                                        i(style="width: 12rem; height:1.5rem;")
-                                                            p.text-light Dark Mode
+                            .col-md-6
+                                .form-group.row
+                                    .col-sm-12
+                                        .card
+                                            .header
+                                                h2
+                                                    | NAVBAR
+                                                    small.text-danger
+                                                        | Gerekli
+                                            .body
+                                                .row.clearfix
+                                                    .col-md-6
+                                                        .form-group
+                                                            #cp3a.input-group.colorpicker
+                                                                input.form-control.input-lg#navbarLight(type='hidden' name="navbarLight" value=`${themes.navbarLight}`)
+                                                                
+                                                                span.input-group-addon
+                                                                    span.input-group-text.colorpicker-input-addon
+                                                                        i(style="width: 12rem; height:1.5rem;")
+                                                                            p.text-dark Light Mode
+                                                    .col-md-6
+                                                        .form-group
+                                                            #cp3a.input-group.colorpicker
+                                                                input.form-control.input-lg#navbarDark(type='hidden' name="navbarDark" value=`${themes.navbarDark}`)
+                                                                
+                                                                span.input-group-addon
+                                                                    span.input-group-text.colorpicker-input-addon
+                                                                        i(style="width: 12rem; height:1.5rem;")
+                                                                            p.text-light Dark Mode
+                            .col-md-6
+                                .form-group.row
+                                        .col-sm-12
+                                            .card
+                                                .header
+                                                    h2
+                                                        | CONTACT NAVBAR
+                                                        small.text-danger
+                                                            | Gerekli
+                                                .body
+                                                    .row.clearfix
+                                                        .col-md-6
+                                                            .form-group
+                                                                #cp3a.input-group.colorpicker
+                                                                    input.form-control.input-lg#infoLight(type='hidden' name="infoLight" value=`${themes.infoLight}`)
+                                                                    
+                                                                    span.input-group-addon
+                                                                        span.input-group-text.colorpicker-input-addon
+                                                                            i(style="width: 12rem; height:1.5rem;")
+                                                                                p.text-dark Light Mode
+                                                        .col-md-6
+                                                            .form-group
+                                                                #cp3a.input-group.colorpicker
+                                                                    input.form-control.input-lg#infoDark(type='hidden' name="infoDark" value=`${themes.infoDark}`)
+                                                                    
+                                                                    span.input-group-addon
+                                                                        span.input-group-text.colorpicker-input-addon
+                                                                            i(style="width: 12rem; height:1.5rem;")
+                                                                                p.text-light Dark Mode
                         .row.clearfix
-                                .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                    .form-group
-                                        #cp3a.input-group.colorpicker
-                                            input.form-control.input-lg#bodyLight(type='hidden' name="bodyLight" value=`${themes.bodyLight}`)
-                                            .row.clearfix
-                                                .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                                    label(for="bodyLight").text-card.mt-2 Body
-                                                .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                                    span.input-group-addon
-                                                        span.input-group-text.colorpicker-input-addon
-                                                            i(style="width: 16rem; height:1.5rem;")
-                                                                p.text-dark Light Mode
-                                .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                    .form-group
-                                        #cp3a.input-group.colorpicker
-                                            input.form-control.input-lg#bodyDark(type='hidden' name="bodyDark" value=`${themes.bodyDark}`)
-                                            .row.clearfix
-                                                .col-sm-6 
-                                                    label(for="bodyDark").text-card.mt-2 Body
-                                                .col-sm-6
-                                                    span.input-group-addon
-                                                        span.input-group-text.colorpicker-input-addon
-                                                            i(style="width: 16rem; height:1.5rem;")
-                                                                p.text-light Dark Mode
+                            .col-md-6
+                                .form-group.row
+                                        .col-sm-12
+                                            .card
+                                                .header
+                                                    h2
+                                                        | BODY
+                                                        small.text-danger
+                                                            | Gerekli
+                                                .body
+                                                    .row.clearfix
+                                                        .col-md-6
+                                                            .form-group
+                                                                #cp3a.input-group.colorpicker
+                                                                    input.form-control.input-lg#bodyLight(type='hidden' name="bodyLight" value=`${themes.bodyLight}`)
+                                                                    
+                                                                    span.input-group-addon
+                                                                        span.input-group-text.colorpicker-input-addon
+                                                                            i(style="width: 12rem; height:1.5rem;")
+                                                                                p.text-dark Light Mode
+                                                        .col-md-6
+                                                            .form-group
+                                                                #cp3a.input-group.colorpicker
+                                                                    input.form-control.input-lg#bodyDark(type='hidden' name="bodyDark" value=`${themes.bodyDark}`)
+                                                                    
+                                                                    span.input-group-addon
+                                                                        span.input-group-text.colorpicker-input-addon
+                                                                            i(style="width: 12rem; height:1.5rem;")
+                                                                                p.text-light Dark Mode
+                            .col-md-6
+                                    .form-group.row
+                                            .col-sm-12
+                                                .card
+                                                    .header
+                                                        h2
+                                                            | CARD
+                                                            small.text-danger
+                                                                | Gerekli
+                                                    .body
+                                                        .row.clearfix
+                                                                .col-md-6
+                                                                    .form-group
+                                                                        #cp3a.input-group.colorpicker
+                                                                            input.form-control.input-lg#cardLight(type='hidden' name="cardLight" value=`${themes.cardLight}`)
+                                                                            
+                                                                            span.input-group-addon
+                                                                                span.input-group-text.colorpicker-input-addon
+                                                                                    i(style="width: 12rem; height:1.5rem;")
+                                                                                        p.text-dark Light Mode
+                                                                .col-md-6
+                                                                    .form-group
+                                                                        #cp3a.input-group.colorpicker
+                                                                            input.form-control.input-lg#cardrDark(type='hidden' name="cardrDark" value=`${themes.cardrDark}`)
+                                                                            
+                                                                            span.input-group-addon
+                                                                                span.input-group-text.colorpicker-input-addon
+                                                                                    i(style="width: 12rem; height:1.5rem;")
+                                                                                        p.text-light Dark Mode
                         .row.clearfix
-                                .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                    .form-group
-                                        #cp3a.input-group.colorpicker
-                                            input.form-control.input-lg#cardLight(type='hidden' name="cardLight" value=`${themes.cardLight}`)
-                                            .row.clearfix
-                                                .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                                    label(for="cardLight").text-card.mt-2 Card
-                                                .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                                    span.input-group-addon
-                                                        span.input-group-text.colorpicker-input-addon
-                                                            i(style="width: 16rem; height:1.5rem;")
-                                                                p.text-dark Light Mode
-                                .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                    .form-group
-                                        #cp3a.input-group.colorpicker
-                                            input.form-control.input-lg#cardrDark(type='hidden' name="cardrDark" value=`${themes.cardrDark}`)
-                                            .row.clearfix
-                                                .col-sm-6 
-                                                    label(for="cardrDark").text-card.mt-2 Card
-                                                .col-sm-6
-                                                    span.input-group-addon
-                                                        span.input-group-text.colorpicker-input-addon
-                                                            i(style="width: 16rem; height:1.5rem;")
-                                                                p.text-light Dark Mode
-                        .row.clearfix
-                                .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                    .form-group
-                                        #cp3a.input-group.colorpicker
-                                            input.form-control.input-lg#footerLight(type='hidden' name="footerLight" value=`${themes.footerLight}`)
-                                            .row.clearfix
-                                                .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                                    label(for="footerLight").text-card.mt-2 Footer
-                                                .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                                    span.input-group-addon
-                                                        span.input-group-text.colorpicker-input-addon
-                                                            i(style="width: 16rem; height:1.5rem;")
-                                                                p.text-dark Light Mode
-                                .col-lg-6.col-md-6.col-sm-6.col-xs-6
-                                    .form-group
-                                        #cp3a.input-group.colorpicker
-                                            input.form-control.input-lg#footerDark(type='hidden' name="footerDark" value=`${themes.footerDark}`)
-                                            .row.clearfix
-                                                .col-sm-6 
-                                                    label(for="footerDark").text-card.mt-2 Footer
-                                                .col-sm-6
-                                                    span.input-group-addon
-                                                        span.input-group-text.colorpicker-input-addon
-                                                            i(style="width: 16rem; height:1.5rem;")
-                                                                p.text-light Dark Mode
-                                    script.
-                                        $(function () {
-                                        $('#cp3b').colorpicker();
-                                        });                
-                        .form-group.row
-                            .col-sm-12
-                                input(type="submit" value="Save Settings").btn.btn-info.col-sm-12
-
-    .row.clearfix
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-            .card
-                .header
-                    h2
-                        | MASKED INPUT
-                        small
-                            | Taken from 
-                            a(href='https://github.com/RobinHerbots/jquery.inputmask' target='_blank') github.com/RobinHerbots/jquery.inputmask
-                    ul.header-dropdown.m-r--5
-                        li.dropdown
-                            a.dropdown-toggle(href='javascript:void(0);' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false')
-                                i.material-icons more_vert
-                            ul.dropdown-menu.pull-right
-                                li
-                                    a(href='javascript:void(0);') Action
-                                li
-                                    a(href='javascript:void(0);') Another action
-                                li
-                                    a(href='javascript:void(0);') Something else here
-                .body
-                    .demo-masked-input
-                        .row.clearfix
-                            .col-sm-3
-                                b Date
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons date_range
-                                    .form-line
-                                        input.form-control.date(type='text' placeholder='Ex: 30/07/2016')
-                            .col-md-3
-                                b Time (24 hour)
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons access_time
-                                    .form-line
-                                        input.form-control.time24(type='text' placeholder='Ex: 23:59')
-                            .col-md-3
-                                b Time (12 hour)
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons access_time
-                                    .form-line
-                                        input.form-control.time12(type='text' placeholder='Ex: 11:59 pm')
-                            .col-md-3
-                                b Date Time
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons date_range
-                                    .form-line
-                                        input.form-control.datetime(type='text' placeholder='Ex: 30/07/2016 23:59')
-                            .col-md-3
-                                b Mobile Phone Number
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons phone_iphone
-                                    .form-line
-                                        input.form-control.mobile-phone-number(type='text' placeholder='Ex: +00 (000) 000-00-00')
-                            .col-md-3
-                                b Phone Number
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons phone
-                                    .form-line
-                                        input.form-control.mobile-phone-number(type='text' placeholder='Ex: +00 (000) 000-00-00')
-                            .col-md-3
-                                b Money (Dollar)
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons attach_money
-                                    .form-line
-                                        input.form-control.money-dollar(type='text' placeholder='Ex: 99,99 $')
-                            .col-md-3
-                                b Money (Euro)
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons euro_symbol
-                                    .form-line
-                                        input.form-control.money-euro(type='text' placeholder='Ex: 99,99 €')
-                            .col-md-3
-                                b IP Address
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons computer
-                                    .form-line
-                                        input.form-control.ip(type='text' placeholder='Ex: 255.255.255.255')
-                            .col-md-3
-                                b Credit Card
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons credit_card
-                                    .form-line
-                                        input.form-control.credit-card(type='text' placeholder='Ex: 0000 0000 0000 0000')
-                            .col-md-3
-                                b Email Address
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons email
-                                    .form-line
-                                        input.form-control.email(type='text' placeholder='Ex: example@example.com')
-                            .col-md-3
-                                b Serial Key
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons vpn_key
-                                    .form-line
-                                        input.form-control.key(type='text' placeholder='Ex: XXX0-XXXX-XX00-0XXX')
-    .row.clearfix
-        .col-lg-6.col-md-6.col-sm-12.col-xs-12
-            .card
-                .header
-                    h2
-                        | DEFAULT EXAMPLE
-                        small Drag & drop hierarchical list with mouse and touch compatibility
-                    ul.header-dropdown.m-r--5
-                        li.dropdown
-                            a.dropdown-toggle(href='javascript:void(0);' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false')
-                                i.material-icons more_vert
-                            ul.dropdown-menu.pull-right
-                                li
-                                    a(href='javascript:void(0);') Action
-                                li
-                                    a(href='javascript:void(0);') Another action
-                                li
-                                    a(href='javascript:void(0);') Something else here
-                .body
-                    .clearfix.m-b-20
-                        .dd
-                            ol.dd-list(data-id)                             
-
-                                li.dd-item(data-home='home')
-                                    .dd-handle home
-                                li.dd-item(data-about='about')
-                                    .dd-handle about
-                                li.dd-item(data-client='client')
-                                    .dd-handle client
-                                li.dd-item(data-contact='contact')
-                                    .dd-handle contact
-                    b Output JSON
-                    textarea.form-control.no-resize(cols='30' rows='3' readonly='')
-                        | [{"home":"home"},{"about":"about"},{"client":"client"},{"contact":"contact"}]
-        .col-lg-6.col-md-6.col-sm-12.col-xs-12
-            .card
-                .header
-                    h2
-                        | DEFAULT EXAMPLE
-                        small Drag & drop hierarchical list with mouse and touch compatibility
-                    ul.header-dropdown.m-r--5
-                        li.dropdown
-                            a.dropdown-toggle(href='javascript:void(0);' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false')
-                                i.material-icons more_vert
-                            ul.dropdown-menu.pull-right
-                                li
-                                    a(href='javascript:void(0);') Action
-                                li
-                                    a(href='javascript:void(0);') Another action
-                                li
-                                    a(href='javascript:void(0);') Something else here
-                .body
-                    .clearfix.m-b-20
-                        .dd.nestable-dark-theme
-                            ol.dd-list
-                                li.dd-item(data-id='1')
-                                    .dd-handle Item 1
-                                li.dd-item(data-id='2')
-                                    .dd-handle Item 2
-                                    ol.dd-list
-                                        li.dd-item(data-id='3')
-                                            .dd-handle Item 3
-                                        li.dd-item(data-id='4')
-                                            .dd-handle Item 4
-                                        li.dd-item(data-id='5')
-                                            .dd-handle Item 5
-                                            ol.dd-list
-                                                li.dd-item(data-id='6')
-                                                    .dd-handle Item 6
-                                                li.dd-item(data-id='7')
-                                                    .dd-handle Item 7
-                                                li.dd-item(data-id='8')
-                                                    .dd-handle Item 8
-                                        li.dd-item(data-id='9')
-                                            .dd-handle Item 9
-                                        li.dd-item(data-id='10')
-                                            .dd-handle Item 10
-                                li.dd-item(data-id='11')
-                                    .dd-handle Item 11
-                                li.dd-item(data-id='12')
-                                    .dd-handle Item 12
-                    b Output JSON
-                    textarea.form-control.no-resize(cols='30' rows='3' readonly='')
-                        | [{"id":1},{"id":2,"children":[{"id":3},{"id":4},{"id":5,"children":[{"id":6},{"id":7},{"id":8}]},{"id":9},{"id":10}]},{"id":11},{"id":12}]
-
+                            .col-md-6
+                                .form-group.row
+                                        .col-sm-12
+                                            .card
+                                                .header
+                                                    h2
+                                                        | FOOTER
+                                                        small.text-danger
+                                                            | Gerekli
+                                                .body
+                                                    .row.clearfix
+                                                        .col-md-6
+                                                            .form-group
+                                                                #cp3a.input-group.colorpicker
+                                                                    input.form-control.input-lg#footerLight(type='hidden' name="footerLight" value=`${themes.footerLight}`)
+                                                                    
+                                                                    span.input-group-addon
+                                                                        span.input-group-text.colorpicker-input-addon
+                                                                            i(style="width: 12rem; height:1.5rem;")
+                                                                                p.text-dark Light Mode
+                                                        .col-md-6
+                                                            .form-group
+                                                                #cp3a.input-group.colorpicker
+                                                                    input.form-control.input-lg#footerDark(type='hidden' name="footerDark" value=`${themes.footerDark}`)
+                                                                    
+                                                                    span.input-group-addon
+                                                                        span.input-group-text.colorpicker-input-addon
+                                                                            i(style="width: 12rem; height:1.5rem;")
+                                                                                p.text-light Dark Mode
+                        script.
+                            $(function () {
+                            $('#cp3b').colorpicker();
+                            });                
+                        if isAdmin
+                            .form-group.row
+                                .col-sm-12
+                                    input(type="submit" value="Renk Ayarlarını Kaydet").btn.bg-blue-grey.col-sm-12
 
 
 block script
     include ../admin/includes/formscript.pug
-    script(src='/plugins/jquery/jquery.min.js')
-    script(src='/plugins/nestable/jquery.nestable.js')
-    script(src='/js/pages/ui/sortable-nestable.js')

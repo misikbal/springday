@@ -1,5 +1,8 @@
 const Slide=require('../model/slide');
 const Product=require('../model/product');
+const Process=require('../model/process');
+const sharp = require('sharp');
+const path = require('path');
 
 const mongoose =require("mongoose");
 const fs=require("fs");
@@ -7,7 +10,7 @@ const fs=require("fs");
 exports.getSlide = (req, res, next) => {
     Slide.find()
         .sort({date:-1})
-        .select("image title description buttonName buttonLink animate isActive")
+        .populate("userId","name -_id")
         .then(slide => {
             Product.find()
             .select("name")
@@ -28,33 +31,48 @@ exports.getSlide = (req, res, next) => {
 }
 
 exports.getAddSlide = (req, res, next) => {
-    
-    res.render('admin/add-slide', {
-        title: 'New Slide',
-        path: '/admin/add-slide',
-        inputs:{
-            image:"",
-            title:"",
-            description:"",
-            buttonName:"",
-            buttonLink:"",
-            animate:"",
-            isActive:"",
-        }      
+    Product.find()
+    .select("name")
+    .then(product=>{
+        res.render('admin/add-slide', {
+            title: 'New Slide',
+            path: '/admin/add-slide',
+            product:product,
+            inputs:{
+                image:"",
+                title:"",
+                description:"",
+                buttonName:"",
+                buttonLink:"",
+                animate:"",
+                isActive:"",
+            }      
     });
+});
+
 }
 
 exports.postAddSlide = async(req, res, next) => {
-    const image=req.files;
+    
+    // const image=sharp(req.files.slideimg[0].path)
+    // .webp({quality:10,alphaQuality:10,lossless:true,progressive:true})
+    // .jpeg({quality:10,alphaQuality:10,lossless:true,progressive:true})
+    // .png({quality:10,alphaQuality:10,lossless:true,progressive:true})
+    // .toFile("/img/"+req.files.slideimg[0].filename,(err,info)=>{
+    //     fs.unlinkSync(req.files.slideimg[0].path)
+    //     console.log("byrada")
+    // });
+    const {filename:image}=req.files.slideimg[0];
+
+    
     const title = req.body.title;
     const description = req.body.description;
     const buttonName = req.body.buttonName;
     const buttonLink=req.body.buttonLink;
     const animate=req.body.animate;
-    const isActive = req.body.isActive;
-
-    console.log(image.slideimg[0]);
-    if(!image.slideimg[0]){
+    const isActive = Boolean(req.body.isActive);
+    console.log(image)
+    if(!image){
         return res.render('admin/add-slide', {
             title: 'New Slide',
             path: '/admin/add-slide',
@@ -64,15 +82,25 @@ exports.postAddSlide = async(req, res, next) => {
                 title:title,
                 description:description,
                 buttonName:buttonName,
-                buttonLink:buttonLink,
                 animate:animate,
                 isActive:isActive,
             }      
         });
     }
+    
+    await sharp(req.files.slideimg[0].path)
+    .resize(960)
+    .webp({quality:10,alphaQuality:10,lossless:true,progressive:true})
+    .jpeg({quality:10,alphaQuality:10,lossless:true,progressive:true})
+    .png({quality:10,alphaQuality:10,lossless:true,progressive:true})
+    .toFile(
+        path.resolve(req.files.slideimg[0].destination,'resized',image)
+    )
+    fs.unlinkSync(req.files.slideimg[0].path)
+    console.log("burada")
     const slide = new Slide(
         {   
-            image: image.slideimg[0].filename,
+            image: image,
             title:title,
             description:description,
             buttonName:buttonName,
@@ -82,10 +110,17 @@ exports.postAddSlide = async(req, res, next) => {
             userId:req.user,
         }
     );
-
-    slide.save()
+    const progress=new Process(
+        { 
+            userId:req.user,
+            type:"insert",
+            name:slide.title+" başlıklı slaytı ekledi"
+        }
+    )
+    progress.save().then(() => {
+        slide.save()
         .then(() => {
-            res.redirect('/admin/slide');
+            res.redirect('/admin/slide?action=create');
         })
         .catch(err => {
             if(err.name=="ValidationError"){
@@ -102,7 +137,6 @@ exports.postAddSlide = async(req, res, next) => {
                         image:image,
                         description:description,
                         buttonName:buttonName,
-                        buttonLink:buttonLink,
                         animate:animate,
                         isActive:isActive,
                     }
@@ -113,7 +147,7 @@ exports.postAddSlide = async(req, res, next) => {
             }
         
     });
-
+    })
 
 }
 
@@ -145,7 +179,7 @@ exports.getEditSlide = (req, res, next) => {
         .catch(err => { next(err); });
 }
 
-exports.postEditSlide = (req, res, next) => {
+exports.postEditSlide = async (req, res, next) => {
 
 
     const id = req.body.slideid;
@@ -154,9 +188,19 @@ exports.postEditSlide = (req, res, next) => {
     const buttonName = req.body.buttonName;
     const buttonLink = req.body.buttonLink;
     const animate = req.body.animate;
-    const isActive = req.body.isActive;
-    const image = req.files;
-
+    const isActive = Boolean(req.body.isActive);
+    const image=req.files.slideimg;
+    if(image){
+        await sharp(req.files.slideimg[0].path)
+        .resize(1280)
+        .webp({quality:10,alphaQuality:10,lossless:true,progressive:true})
+        .jpeg({quality:10,alphaQuality:10,lossless:true,progressive:true})
+        .png({quality:10,alphaQuality:10,lossless:true,progressive:true})
+        .toFile(
+            path.resolve(req.files.slideimg[0].destination,'resized',image[0].filename)
+        )
+        fs.unlinkSync(req.files.slideimg[0].path)
+    }
     Slide.findOne({_id:id})
         .then(slide=>{
             if(!slide){
@@ -168,14 +212,22 @@ exports.postEditSlide = (req, res, next) => {
             slide.buttonLink=buttonLink,
             slide.animate=animate,
             slide.isActive=isActive
-            if (image.slideimg) {
-                fs.unlink("wwwroot/img/"+slide.image,err=>{
+            if (image) {
+                fs.unlink("wwwroot/img/resized/"+slide.image,err=>{
                     if(err){
                     console.log(err);
                     }
                 });
-                slide.image = image.slideimg[0].filename;
+                slide.image = image[0].filename;
             }
+            const progress=new Process(
+                { 
+                    userId:req.user,
+                    type:"edit",
+                    name:slide.title+" başlıklı slaytı güncelledi."
+                });
+
+            progress.save()
             return slide.save();
         }).then(result=>{
             res.redirect('/admin/slide?action=edit');
@@ -193,12 +245,20 @@ exports.postDeleteSlide = (req, res, next) => {
             if(!slide){
                 return next(new Error("Silinmek istenen slide bulumadı."));
             }
-            fs.unlink("wwwroot/img/"+slide.image,err=>{
+            fs.unlink("wwwroot/img/resized/"+slide.image,err=>{
                 if(err){
                 console.log(err);
                 }
             });
+            const progress=new Process(
+                { 
+                    userId:req.user,
+                    type:"delete",
+                    name:slide.title+" başlıklı slaytı sildi."
+                });
+            progress.save()
             return Slide.deleteOne({_id:id,userId:req.user._id})
+
         }).then((result) => {
             if(result.deletedCount===0){
                 return next(new Error("Silinmek istenen slide bulumadı."));

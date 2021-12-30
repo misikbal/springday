@@ -40,6 +40,8 @@ const productSchema = mongoose.Schema({
         }
     },
     isActive:Boolean,
+    isHome:Boolean,
+
     categories:{
         type:Array,
         type:[mongoose.Schema.Types.ObjectId],

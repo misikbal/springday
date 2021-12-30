@@ -19,7 +19,6 @@ block content
                         .cart_container
                             .cart_title.mt-3
                                 | Sepetim
-                                small  (1 item in your cart) 
                                 small  (#{products.length})
 
                             .cart_items
@@ -27,19 +26,19 @@ block content
                                     each product in products 
                                         li.cart_item.clearfix.text-center
                                             .cart_item_image
-                                                img(src=`/img/${product.productId.imageUrl}` width='200')
+                                                img(src=`/img/resized/${product.productId.imageUrl}` width='200')
                                             .cart_item_info.d-flex.flex-md-row.flex-column.justify-content-between
                                                 .cart_item_name.cart_info_col(style="width:10rem;")
-                                                    p Name
+                                                    p Ürün Adı
                                                     .cart_item_text #{product.productId.name}
                                                 .cart_item_quantity.cart_info_col
-                                                    p Quantity
+                                                    p Adet
                                                     .cart_item_text #{product.quantity}
                                                 .cart_item_price.cart_info_col
-                                                    p Price
+                                                    p Fiyat
                                                     .cart_item_text #{product.productId.price} TL
                                                 .cart_item_total.cart_info_col
-                                                    p Total
+                                                    p Toplam
                                                     .cart_item_text #{(product.productId.price)*(product.quantity)} TL
                                                 .cart_item_total.cart_info_col
                                                     p Sil
@@ -51,7 +50,7 @@ block content
                                                                 i.fas.fa-trash-alt.fa-xs
                             .order_total.bg-light
                                 .order_total_content.text-md-right
-                                    p.order_total_title Order Total:
+                                    p.order_total_title Sipariş Toplamı
                                     .order_total_amount 
                                         - var total = 0;
                                         each product in products
@@ -59,9 +58,8 @@ block content
                                         | #{total} TL
                             .cart_buttons
                                 a(href="/").btn.btn-secondary.text-light Alişverişe Devam Et
-                                form(action="/create-order" method="POST")
-                                    input(type="hidden" name="_csrf" value=`${csrfToken}`)  
-                                    button(type="submit").btn.ml-2.text-light.btn-warning Alişverişi Tamamla
+                                a(href="/adress").btn.btn-secondary.text-light Alişverişe Tamamla
+
                     else
                         .row
                             .col-md-12

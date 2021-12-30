@@ -1,0 +1,111 @@
+extends ../layouts/admin-layout.pug
+
+block styles
+    link(rel="stylesheet" href="/css/themes/image.css")
+    link(href='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' rel='stylesheet')
+    script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+    script(src="/plugins/ckeditor/ckeditor.js")
+
+
+block content
+    
+    if errorMessage
+        div.alert.alert-danger.col-sm-7 !{errorMessage}
+    form(action="/admin/add-news" method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | GÖNDERİ EKLEME SAYFASI 
+        .row.clearfix
+            .col-md-2
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-5 Aktif
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive")
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | GÖNDERİ BAŞLIĞI
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#name(type="text" name="title" placeholder="Basında Biz" required oninvalid="this.setCustomValidity('Lüften Gönderi Başlığı Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')") 
+        .row.clearfix
+            .col-md-6 
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center
+                            .header.bg-white
+                                h2
+                                    | GÖNDERİ RESMİ
+                                    small.text-info
+                                        | Sadece Bir Tane Resim Seçilebilir
+                            .body.bg-blue-grey
+                                .fileupload.fileupload-new(data-provides='fileupload')
+                                    span.btn.btn-warning.btn-file
+                                        span.fileupload-new Yeni
+                                        span.fileupload-exists Değiştir
+                                        input#image(type="file" name="newsImg")
+                                    span.fileupload-preview
+                                    a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | ETKİNLİK TARİHİ
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#newsdate(type="date" name="newsdate" placeholder="18.08.2020")  
+    .row.clearfix    
+        .form-group.row
+            .col-sm-12
+                .card.text-center.bg-blue-grey
+                    .header.bg-white
+                        h2
+                            | AÇIKLAMA                            
+                            small.text-danger
+                                | Gerekli
+                            small.text-info
+                                | Resim Konulabilir (Resim Ekleme Simgesine Tıklayın > Sunucuya Gözat )
+                    .body
+                        .form-line
+                        textarea.form-control(id="editor" name="description" cols="30" rows="10")
+    .row.clearfix
+        .form-group.row.demo-tagsinput-area
+            .col-sm-12.bg-blue-grey
+                .card.text-center
+                    .header.bg-white
+                        h2
+                            | #TAG
+                            small.text-danger
+                                | Gerekli
+                            small.text-info
+                                | Tag Öneri için 
+                                a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
+                        .body
+                            .form-line
+                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value='' placeholder="Taglerinizi Buraya Giriniz")
+    .form-group.row
+        input(type="submit" value="Kaydet").col-md-12.btn.btn-primary
+
+
+block script
+    script(src='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')
+    script(src='/js/image.js')
+    script(src="/js/script.js") 

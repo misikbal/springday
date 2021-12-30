@@ -1,61 +1,59 @@
 extends ../layouts/admin-layout.pug
-block styles
+block styles 
     link(rel="stylesheet" href="/css/themes/image.css")
-    link(href='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' rel='stylesheet')
-    script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
 block content
     if errorMessage
-        .alert.alert-danger.alert-dismissible.fade.show(role='alert')
-            strong !{errorMessage}
-        
-    script.
-        window.setTimeout(function() {
-            $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                $(this).remove(); 
-            });
-        }, 2000);
-    form(action="/admin/add-category" method="POST" enctype="multipart/form-data")
-
-        input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+        div.alert.alert-danger.col-sm-12 !{errorMessage}
+    form(action="/admin/add-category"  method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)               
         .row.clearfix
-            .col-md-6
+            .col-md-12
                 .form-group.row
                     .col-sm-12
-                        .card
-                            .header.text-center
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | KATEGORİ EKLEME SAYFASI 
+        .row.clearfix
+            //- .col-md-2
+
+            //-     .card.bg-light.text-center
+            //-         .body
+            //-             .form-group
+            //-                 label.form-check-label.mb-5 Aktif
+            //-                 .form-check.form-switch.d-flex.justify-content-center
+            //-                     input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive")
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
                                 h2
                                     | KATEGORİ İSMİ
                                     small.text-danger
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.form-control#name(type="text" name="name" placeholder="Sulu Klima")  
-            .col-md-6
+                                    input.form-control#name(type="text" name="name" placeholder="Sulu Klima" required oninvalid="this.setCustomValidity('Lüften Kategori İsmi Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')")  
+        .row
+            .col-md-12
                 .form-group.row
                     .col-sm-12
-                        .card
-                            .header.text-center
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
                                 h2
                                     | KATEGORİ RESMİ
-                                    small.text-danger
-                                        | Gereklidir
                                     small.text-info
-                                        | Bir Tane Resim Seçilebilirsiniz
-                            .body.bg-grey.text-center
+                                        | Bir Tane Resim Seçilebilir
+                            .body.bg-blue-grey
                                 .fileupload.fileupload-new(data-provides='fileupload')
                                     span.btn.btn-warning.btn-file
                                         span.fileupload-new Yeni
                                         span.fileupload-exists Değiştir
-                                        input#categoryImg(type="file" name="categoryImg")
+                                        input#image(type="file" name="categoryImg" accept="image/*")
                                     span.fileupload-preview
                                     a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
-            
         .form-group.row
-                input(type="submit" value="Save Category").btn.btn-primary.col-md-12               
-
+            input(type="submit" value="Kategoriyi Kaydet")#export-btn.col-md-12.btn.btn-warning
 block script
-    script(src='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')
     script(src='/js/image.js')
-
-    script(src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js")
-    script(src="/js/script.js") 
