@@ -2,10 +2,9 @@ extends ../layouts/admin-layout.pug
 
 block styles
     link(rel="stylesheet" href="/css/forms.css")
-    link(rel="stylesheet" href="/css/themes/image.css")
     link(href='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' rel='stylesheet')
     script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
-    
+    script(src="/plugins/ckeditor/ckeditor.js")
 
 
 block content
@@ -14,20 +13,27 @@ block content
         div.alert.alert-danger.col-sm-7 !{errorMessage}
     form(action="/admin/add-about" method="POST" enctype="multipart/form-data")
         input(type="hidden" name="_csrf" value=`${csrfToken}`)  
-        .form-group.row
-            .form-check.form-switch
-                input.form-check-input#isActive(type="checkbox" name="isActive")
-                label.form-check-label Aktif
-        .form-group.row
-            .form-check.form-switch
-                input.form-check-input#isHome(type="checkbox" name="isHome")
-                label.form-check-label Birincil Bilgi (Sayfada çıkacak ilk bilgi)
         .row.clearfix
             .col-md-12
                 .form-group.row
                     .col-sm-12
-                        .card
+                        .card.text-center.bg-blue-grey
                             .header
+                                h2.text-white
+                                    | BİLGİ EKLEME SAYFASI 
+        .row.clearfix
+            .col-md-2
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-5 Aktif
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive")
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
                                 h2
                                     | BİLGİ BAŞLIĞI
                                     small.text-danger
@@ -35,27 +41,30 @@ block content
                             .body
                                 .form-line
                                     input.form-control#name(type="text" name="name" placeholder="Hakkımızda")  
-            
-        .form-group.row
-            .col-sm-12
-                .card
-                    .header
-                        h2
-                            | AÇIKLAMA                            
-                            small.text-danger
-                                | Gerekli
-                            small.text-info
-                                | Resim Konulabilir
+        .row.clearfix
+            .col-md-2
+                .card.bg-light.text-center
                     .body
-                        .form-line
-                        textarea.form-control(id="editor" name="description" cols="30" rows="10")
+                        .form-group
+                            label.form-check-label.mb-5 Birincil Bilgi (Sayfada çıkacak ilk bilgi)
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isHome(type="checkbox" name="isHome")
+            .col-sm-10
+                .col-sm-12
+                    .card.text-center.bg-blue-grey
+                        .header.bg-white
+                            h2
+                                | AÇIKLAMA                            
+                                small.text-danger
+                                    | Gerekli
+                                small.text-info
+                                    | Resim Konulabilir (Resim Ekleme Simgesine Tıklayın > Sunucuya Gözat )
+                        .body
+                            .form-line
+                            textarea.form-control(id="editor" name="description" cols="30" rows="10")
         .form-group.row
-            input(type="submit" value="Kaydet").col-md-12.btn.btn-primary
+            input(type="submit" value="Bilgiyi Kaydet").col-md-12.btn.btn-warning
 
 
 block script
-    script(src='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')
-    script(src='/js/image.js')
-
-    script(src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js")
     script(src="/js/script.js") 

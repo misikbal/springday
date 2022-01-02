@@ -75,7 +75,7 @@ block content
                                             td 
                                                 img(src=`/img/resized/${product.imageUrl}` width='80')
                                             td.align-middle #{product.name}
-                                            td.align-middle #{product.price} TL
+                                            td.align-middle #{product.price===null ? "Fiyat Biligisi Yok":product.price+" TL" } 
                                             td.align-middle #{product.userId.name}
                                             td.align-middle #{product.date.getHours()+":"+ product.date.getMinutes()+" "}
                                                 br                                            

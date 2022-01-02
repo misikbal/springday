@@ -2,6 +2,20 @@ extends ../layouts/main-layout.pug
 include ../mixins/client.pug
 
 block styles 
+    meta(name='keywords' content=aboutservice.tags[0])
+    meta(property='og:locale' content='tr_TR')
+    meta(property='og:type' content='article')
+    meta(property='og:url' content=`${system.siteUrl}/aboutservices/${aboutservice._id}`)
+    meta(property='og:site_name' content=`${title}`)
+
+    meta(property='article:section' content='Shop')
+    meta(property='og:updated_time' content=`${aboutservice.date}`)
+    meta(property='og:image:width' content='400')
+    meta(property='og:image:height' content='400')
+    meta(property='og:image:type' content='image/webp')
+
+    meta(property="og:image" content=`${aboutservice.imageUrl}`)
+    meta(property="og:title" content=`${aboutservice.name}`) 
     link(href='/css/aboutservicesdetails.css' rel='stylesheet')
 block content
     br
@@ -12,7 +26,7 @@ block content
         .leftcolumn
             .card.bg-light(style="border-top: 10px solid #0b5aa2;")
                 h2.text-center.itemss-head #{aboutservice.name}
-                img.fakeimg(src=`/img/${aboutservice.imageUrl}` style='height:500px; width:auto;')
+                img.fakeimg(src=`/img/resized/${aboutservice.imageUrl}` style='height:500px; width:auto;')
                 p !{aboutservice.description}
 
         .rightcolumn

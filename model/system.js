@@ -27,7 +27,20 @@ const settingsSchema = mongoose.Schema({
     },
     tawktoscript:{
         type:String,
-    }
+    },
+    googleAnalitcs:{
+        type:String,
+    },
+    tags:{
+        type:String,
+    },
+    description:{
+        type:String,
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    },
 });
 
 module.exports = mongoose.model('Settings', settingsSchema);

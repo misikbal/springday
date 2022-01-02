@@ -131,7 +131,7 @@ a {
             border-width: 10px;
             margin-left: -10px; }
         .site-navbar .site-navigation .site-menu .has-children .dropdown a {
-          font-size: 14px;
+          font-size: 3rem;
           text-transform: none;
           letter-spacing: normal;
           -webkit-transition: 0s all;

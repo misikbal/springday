@@ -10,7 +10,7 @@ const categorySchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    // isActive: Boolean,    
+    isActive: Boolean,    
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",

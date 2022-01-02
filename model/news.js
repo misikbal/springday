@@ -6,6 +6,15 @@ const newsSchema = mongoose.Schema({
     tags: String,
     imageUrl: String,
     isActive:Boolean,
+    tags:{
+        type:Array,
+        validate:{
+            validator:function(value) {
+                return value && value.length>0;
+            },
+            message:"ürün için en az bir etikten giriniz."
+        }
+    },
 
     userId:{
         type:mongoose.Schema.Types.ObjectId,

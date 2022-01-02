@@ -13,6 +13,14 @@ const logoSchema = mongoose.Schema({
         type:String,
         required:true["Lütfen Bir Logo Seçiniz"]
     },
+    loadingLogo:{
+        type:String,
+        required:true["Lütfen Bir Logo Seçiniz"]
+    },
+    isActive:{
+        type:Boolean
+    },
+    loadingtext:String,
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"

@@ -1,17 +1,17 @@
 
 
 
-.site-mobile-menu.site-navbar-target
-    .site-mobile-menu-header
-        .site-mobile-menu-close.mt-3
-            span.icon-close2.js-menu-toggle
-    .site-mobile-menu-body
+//- .site-mobile-menu.site-navbar-target
+//-     .site-mobile-menu-header
+//-         .site-mobile-menu-close.mt-3
+//-             span.icon-close2.js-menu-toggle
+//-     .site-mobile-menu-body
 
 
-.site-navbar-wrap(class=(active.isNavbar ? "sticky-wrapper is-sticky" : ""))
+.site-navbar-wrap(class=(active.isNavbar ? "sticky-wrapper is-sticky" : "")).translate
     if active.contactnavbar_isActive
 
-        #top.site-navbar-top
+        #top.site-navbar-top(style="font-size:13px;")
             .container
                 .row.align-items-center
                     .col-6
@@ -54,81 +54,95 @@
                     .row
                         .col-12             
 
-                            nav.navbar.navbar-expand-md.site-Navigation
+                            nav.navbar.navbar-expand-lg.site-navigation
                                 a(href='/')
-                                    img.card-image(src=`/img/${logo.logo}` width="150px" )
+                                    img.card-image(src=`/img/resized/${logo.logo}` width="150px" )
                                 button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
                                     span.navbar-toggler-icon
                                 
                                 #navbarSupportedContent.collapse.navbar-collapse
                                     ul.navbar-nav.ml-auto.py-4.py-md-0
-                                        li.nav-item.pl-4.pl-md-0.ml-0.ml-md-4
-                                            a(href="/",class=(path==='/'?'active nav-link':'nav-link')) !{page.home}
-                                        li.nav-item.pl-4.pl-md-0.ml-0.ml-md-4
-                                            a(href="/contactus",class=(path==='/contactus'?'active nav-link':'nav-link')) !{page.contact}
-                                        li.nav-item.pl-4.pl-md-0.ml-0.ml-md-4
-                                            a(href="/products",class=(path==='/products'?'active nav-link':'nav-link')) !{page.products}
+                                        li.pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                            a(href="/",class=(path=='/'?'active nav-link':'nav-link') ) !{page.home}
+
                                                 
-                                        li.nav-item.dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4
-                                            a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' delay=1000)
-                                                | mega dropdown
-                                            .dropdown-menu.megamenu.bg-light(aria-labelledby='navbarDropdown' style="opacity:0.95; height:auto;")
-                                                .row(style="overflow-y: auto; overflow-x: hidden;")                                           
+                                        li(class=(path=='/products'?'active':'')).dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4
+                                            a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true' delay=5000)
+                                                | !{page.products}
+                                            .dropdown-menu.megamenu.bg-light(aria-labelledby='navbarDropdown' style="opacity:0.95; height:auto; overflow:auto;")
+                                                .row.mb-3
+                                                    .col-12
+                                                        a.dropdown-item(href='/products')
+                                                            p Tüm Ürünler
+                                                        hr
+                                                .row
+                                                    p.h3 Kategoriler
+                                                    hr
                                                     each menucategories in menucategory
-                                                        .col.text-center
-                                                            a.dropdown-item(href='#')
+                                                        .col-4.text-center
+                                                            a.dropdown-item(href=`/categories/${menucategories._id}`)
 
                                                                 img(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${menucategories.categoryImg}` alt="").w-25.deneme.card-img-top
                                                                 
                                                                 p #{menucategories.name}
-
-                                        //- li.nav-item.pl-4.pl-md-0.ml-0.ml-md-4.active
-                                        //-   a.nav-link.dropdown-toggle(data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') Home
-                                        //-   .dropdown-menu
-                                        //-     a.dropdown-item(href='#') Action
-                                        //-     a.dropdown-item(href='#') Another action
-                                        //-     a.dropdown-item(href='#') Something else here
-                                        //-     a.dropdown-item(href='#') Another action
+                                        //- li(class=(path==='/admin/categories' ? 'active':''))
+                                        li(class=(path===('/aboutservices') ? 'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                            a(href="/aboutservices").nav-link !{page.services}
+                                        li(class=(path==='/about'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                            a(href="/about").nav-link !{page.about}
+                                        li(class=(path==='/project'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                            a(href="/project").nav-link !{page.project}
+                                        li(class=(path==='/project'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                            a(href="/client",class=(path==='/client'?'active nav-link':'nav-link')).nav-link !{page.client}
+                                        li(class=(path==='/project'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                            a(href="/contactus",class=(path==='/contactus'?'active nav-link':'nav-link')).nav-link !{page.contact}
                                         if isAuthenticated
-                                                li.nav-item.pl-4.pl-md-0.ml-0.ml-md-4.me-3.me-lg-0.dropdown
-                                                    a#navbarDropdown.user.nav-link.dropdown-toggle(role='button' data-mdb-toggle='dropdown' aria-expanded='false')
+                                                li.pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                    a.nav-link.dropdown-toggle(data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') 
                                                         span
                                                             | !{page.user}
-                                                        ul.dropdown-menu(aria-labelledby='navbarDropdown')
-                                                            if active.ecommarce_isActive
-
-                                                                li
-                                                                    a(href="/orders",class=(path==='/orders'?'active nav-link':'nav-link')) SİPARİŞLERİM
-
-                                                            li
-                                                                a.dropdown-item(href='#') AYARLAR
-
-                                                            li
-                                                                hr.dropdown-divider
-                                                            li
-                                                                a.dropdown-item(href='/logout') ÇIKIŞ
+                                                    .dropdown-menu.bg-light
+                                                        if active.ecommarce_isActive
+                                                            a.dropdown-item(href='/orders') SİPARİŞLERİM
+                                                        a.dropdown-item(href='#') AYARLAR
+                                                        hr.dropdown-divider
+                                                        a.dropdown-item(href='/logout') ÇIKIŞ
                                                 if active.ecommarce_isActive
                                                 
-                                                    li.nav-item.pl-4.pl-md-0.ml-0.ml-md-4
-                                                        a.cart.position-relative.d-inline-flex(href="/cart",class=(path==='/cart'?'active nav-link':'nav-link') aria-label='View your shopping cart')
+                                                    li.pl-4.pl-md-0.ml-0.ml-md-4
+                                                        a.nav-link.cart.position-relative.d-inline-flex(href="/cart",class=(path==='/cart'?'active nav-link':'nav-link') aria-label='View your shopping cart')
                                                             span
                                                                 | !{page.cart}
 
                                         else if !isAuthenticated
-                                            li.nav-item.pl-4.pl-md-0.ml-0.ml-md-4.bg-light(style="width: 4rem; height: 2rem; border-radius: 5px 25px;")
+                                            li.pl-4.pl-md-0.ml-0.ml-md-4
                                                 a.nav-link(href="/login") GİRİŞ
                                         if isAdmin || isLimited
-                                            li.nav-item.pl-4.pl-md-0.ml-0.ml-md-4
-                                                a(href="/admin/",class=(path==='/admin/'?'active nav-link':'nav-link'))
+                                            li.pl-4.pl-md-0.ml-0.ml-md-4
+                                                a(href="/admin/").nav-link
                                                     i.fas.fa-tachometer-alt
+                                        if active.translate_isActive
+                                            li.pl-4.pl-md-0.ml-0.ml-md-4.pt-1
+                                                .dropdown.show
+                                                    button#link.btn.btn-outline-info.btn-sm.dropdown-toggle(role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                                                        | DİL
+                                                    .dropdown-menu(aria-labelledby='link' style="overflow:scrollLeft").bg-light.text-center
+                                                        .row
+                                                            each langs in lang
+                                                                .col
+                                                                    a.dropdown-item.gflag.nturl(onclick=`doGTranslate('${system.language}|${langs.value}');return false;` title=`${langs.lang}` )
+                                                                    
+                                                                        img(src=`/img/resized/${langs.imageUrl}` height='30' width='30' alt='Turkish').text-start
+                                                                        p(stlye="font-size:10px;") #{langs.lang}
                                         if active.darkmode_isActive
-                                            li.nav-item.pl-4.pl-md-0.ml-0.ml-md-4.pt-1
+                                            li.pl-4.pl-md-0.ml-0.ml-md-4.pt-1.text-center
                                                 .switch
                                                     i.fas.fa-adjust
                                                     div
                                                         input(type="checkbox")
                                                         span.slider.round.bg-light
                                         
+
 
         if action!=="undefined" && action==="insert"
             .row.d-flex.justify-content-center

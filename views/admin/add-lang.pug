@@ -1,0 +1,75 @@
+extends ../layouts/admin-layout.pug
+block styles 
+    link(rel="stylesheet" href="/css/themes/image.css")
+block content
+    if errorMessage
+        div.alert.alert-danger.col-sm-12 !{errorMessage}
+    form(action="/admin/add-lang"  method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)               
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | DİL EKLEME SAYFASI
+        .row.clearfix
+            .col-md-2
+
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-5 Aktif
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive")
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | DİLİN ADI
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#lang(type="text" name="lang" placeholder="English" required oninvalid="this.setCustomValidity('Lüften Dil Adı Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')")  
+        .row
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | DİLİN BAYRAĞI
+                                    small.text-info
+                                        | Bir Tane Resim Seçilebilir
+                            .body.bg-blue-grey
+                                .fileupload.fileupload-new(data-provides='fileupload')
+                                    span.btn.btn-warning.btn-file
+                                        span.fileupload-new Yeni
+                                        span.fileupload-exists Değiştir
+                                        input#imageUrl(type="file" name="image" accept="image/*")
+                                    span.fileupload-preview
+                                    a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | DİLİN KODU
+                                    small.text-danger
+                                        | Gerekli
+                                    small.text-info
+                                        | Dil Kodunu Öğrenin
+                                        br
+                                        a(href="https://tr.wiktionary.org/wiki/Vikis%C3%B6zl%C3%BCk:Diller_listesi" style="text-decoration: none") https://tr.wiktionary.org/wiki/Vikis%C3%B6zl%C3%BCk:Diller_listesi
+                            .body
+                                .form-line
+                                    input.form-control#value(type="text" name="value" placeholder="en" required oninvalid="this.setCustomValidity('Lüften Dilin Kodu Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')")  
+        .form-group.row
+            input(type="submit" value="Dili Kaydet")#export-btn.col-md-12.btn.btn-warning
+block script
+    script(src='/js/image.js')

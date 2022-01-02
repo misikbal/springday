@@ -23,7 +23,7 @@ block content
                         .form-group
                             label.form-check-label.mb-5 Aktif
                             .form-check.form-switch.d-flex.justify-content-center
-                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive")
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive" value=`${category.isActive}` checked=category.isActive)
             .col-md-10
                 .form-group.row
                     .col-sm-12
@@ -47,7 +47,7 @@ block content
                                     small.text-info
                                         | Bir Tane Resim Seçilebilir
                             .text-center
-                                img(src=`/img/${category.categoryImg}` style="width:200px;").card-img-top.mt-3                            
+                                img(src=`/img/resized/${category.categoryImg}` style="width:200px;").card-img-top.mt-3                            
                             .body.bg-blue-grey
                                 .fileupload.fileupload-new(data-provides='fileupload')
                                     span.btn.btn-warning.btn-file

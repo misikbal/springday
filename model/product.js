@@ -11,10 +11,6 @@ const productSchema = mongoose.Schema({
     },
     price: {
         type: Number,
-        required: function() {
-            return this.isActive;
-        },
-        min:0
     },
     description: {
         type: String,

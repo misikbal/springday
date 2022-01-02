@@ -1,5 +1,7 @@
 extends ../layouts/main-layout.pug
 block styles
+    meta(name='robots' content='noindex')
+    meta(name='google' content='nositelinkssearchbox')
     link(rel="stylesheet" href="/css/form.css")
     link(rel="stylesheet" href="/css/login.css")
 block content
@@ -18,7 +20,13 @@ block content
                                             .card-front
                                                 .center-wrap
                                                     .section.text-center
-                                                        
+                                                        if(action!=="undefined" && action==="registered")
+                                                            .alert.alert-success.info-dismissible.fade.show(role='alert')
+                                                                strong Kayıt İşlemi Başarılı Bir Şekilde Yapılmıştır. Şimdi Giriş Yapabilirsiniz.
+                                                        if(action!=="undefined" && action==="success")
+                                                            .alert.alert-success.info-dismissible.fade.show(role='alert')
+                                                                strong Parolanız Başarılı Bir Şekilde Güncellenmiştir. Giriş Yapabilirsiniz.
+                                                                
                                                         h4.mb-4.pb-3 Giriş
                                                         if errorMessage
                                                             div.alert.alert-danger.w-auto !{errorMessage}
@@ -35,8 +43,8 @@ block content
                                                         .form-group
                                                             .row
                                                                 .col-md-6
-                                                                    input(type="submit" value="Giriş").btn.btn-primary.mt-4
+                                                                    input(type="submit" value="Giriş").btn-login.btn-primary.mt-4
                                                                 .col-md-6 
-                                                                    a(href="/register").btn.btn-primary.mt-4.mb-3 Kaydol
+                                                                    a(href="/register").btn-login.btn-primary.mt-4.mb-3 Kaydol
                                                         .form-group.row
                                                                 a(href="/reset-password" style="text-decoration: none").text-dark.p-0.mt-5 Şifremi Unuttum

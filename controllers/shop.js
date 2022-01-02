@@ -8,9 +8,11 @@ const System=require('../model/system');
 const Contact=require('../model/contactus');
 const AboutServices = require('../model/aboutservices');
 const Project = require('../model/project');
-const Page = require('../model/page');
 const About = require('../model/about');
 const News = require('../model/news');
+const Bank = require('../model/bank');
+
+
 
 
 
@@ -28,20 +30,31 @@ exports.getIndex = (req, res, next) => {
         .then(products=>{
             return products;
         }).then(products=>{
-            Category.find().sort({date:-1})
+            Category.find()
+            .where({isActive:true})
+            .sort({date:-1})
             .then(categories=>{
                 return categories;
             }).then(categories=>{
-                Slide.find().sort({date:-1})     
+                Slide.find()
+                .where({isActive:true})
+
+                .sort({date:-1})
                 .then(slides=>{      
                     Client.find()
+                        .where({isActive:true})
                         .select("clientlogo")
                         .then(client=>{
                             Services.find()
+                            .where({isActive:true})
+                            
                             .then(services=>{
-                                AboutServices.find()
+                                AboutServices.find({isHome:true})
+                                    .where({isActive:true})
+
                                     .then(aboutservices=>{
-                                        Project.find()
+                                        Project.find({isActive:true})
+                                        .where({isHome:true})
                                         .then(projectinfo=>{
                                             
                                                 res.render("shop/index", {
@@ -83,6 +96,7 @@ exports.getIndex = (req, res, next) => {
 exports.getProducts = (req, res, next) => {    
     
     Product.find()
+    .where({isActive:true})
     .populate("categories.0",{"_id":{"$slice":1}})
     .select("name price imageUrl categories description isActive popular tags")
 
@@ -91,6 +105,7 @@ exports.getProducts = (req, res, next) => {
     })
     .then(products=>{
         Category.find()
+        .where({isActive:true})
             .then(categories=>{
                 res.render("shop/products", {
                     title: "Products", 
@@ -115,6 +130,9 @@ exports.getProduct = (req, res, next) => {
                 .select("clientlogo")
                 .then(client=>{
                     Product.find()
+                    .where({isActive:true})
+                    .where({isHome:true})
+
                     .then(other=>{
                         res.render("shop/product-detail",{
                             title:products.name,
@@ -148,6 +166,7 @@ exports.getProductsByCategoryId = (req, res, next) => {
     const categoryid=req.params.categoryid;
     const model=[];
     Category.find()
+        .where({isActive:true})
         .then(categories=>{
             model.categories=categories;
             return Product.find({
@@ -195,7 +214,7 @@ exports.addToCart = (req, res, next) => {
                 return req.user.addToCart(product);
             })
             .then(()=>{
-                res.redirect("/?action=insert");
+                res.send("/?action=insert");
             })
             .catch((err)=>{
                 next(err);
@@ -217,11 +236,18 @@ exports.getOrder = (req, res, next) => {
     .sort({date:-1})
 
     .then(orders=>{
-            res.render("shop/orders", {
-                title: "Order",
-                path: '/orders',
-                orders:orders
-            });
+            Bank.find()
+            .where({isActive:true})
+            .then(bank=>{
+                res.render("shop/orders", {
+                    title: "Order",
+                    path: '/orders',
+                    orders:orders,
+                    bank:bank,
+                    action: req.query.action
+                });
+            })
+            
         
     })
     .catch(err=>{next(err)})
@@ -234,11 +260,17 @@ exports.getOrders = (req, res, next) => {
     .sort({date:-1})
 
     .then(orders=>{
+        Bank.find()
+        .where({isActive:true})
+        .then(allbank=>{
             res.render("shop/allorders", {
                 title: "Ordrers",
                 path: '/orders',
-                orders:orders
+                orders:orders,
+                allbank:allbank
             });
+        });
+
         
     })
     .catch(err=>{next(err)})
@@ -262,6 +294,7 @@ exports.getAdress = (req, res, next) => {
                 next(err);
             })    
     }
+    
 exports.postOrder = (req, res, next) => {
     const city=req.body.city;
     const district=req.body.district;
@@ -308,13 +341,23 @@ exports.postOrder = (req, res, next) => {
             return req.user.clearCart();
         })
         .then(()=>{
-            res.redirect("/orders")
+            res.redirect(`/orders/${order._id}`)
         })
         .catch(err=>{next(err)});
 
         
 }
-
+exports.postPayment = (req, res, next) => {
+    const id=req.body.orderid;
+    const payment=req.body.payment;
+    Order.findOne({_id:id})
+    .updateOne({payment:payment})
+        .then(()=>{
+            res.redirect(`/orders/${id}?action=send`)
+        })
+        .catch(err=>{next(err)});
+        
+}
 
 
 
@@ -386,6 +429,8 @@ exports.getAboutServices = (req, res, next) => {
     })
     .then(aboutservices=>{
         Client.find()
+            .where({isActive:true})
+
             .select("clientlogo")
             .then(client=>{
                 res.render("shop/aboutservices", {
@@ -408,9 +453,13 @@ exports.getAboutService = (req, res, next) => {
 
     .then(aboutservice=>{
         Client.find()
+        .where({isActive:true})
+
         .select("clientlogo")
         .then(client=>{
             AboutServices.find()
+            .where({isActive:true})
+            
             .then(allservices=>{
                 res.render("shop/aboutservice-detail",{
                     title:aboutservice.name,
@@ -429,9 +478,11 @@ exports.getAboutService = (req, res, next) => {
 exports.getProject = (req, res, next) => {
     const projectid=req.params.projectid
     Project.findById(req.params.projectid)
-
+    
     .then(project=>{
         Client.find()
+        .where({isActive:true})
+
         .select("clientlogo")
         .then(client=>{
             Project.find()
@@ -454,12 +505,15 @@ exports.getProject = (req, res, next) => {
 exports.getProjects = (req, res, next) => {    
     
     Project.find()
+    .where({isActive:true})
 
     .then(project=>{
         return project; 
     })
     .then(project=>{
         Client.find()
+            .where({isActive:true})
+
             .select("clientlogo")
             .then(client=>{
                 res.render("shop/project", {
@@ -579,7 +633,7 @@ exports.getNews = (req, res, next) => {
             .where({isActive:true})
             .then(allnews=>{
                 res.render("shop/news-detail",{
-                    title:news.name,
+                    title:news.title,
                     news:news,
                     allnews:allnews,
                     client:client,

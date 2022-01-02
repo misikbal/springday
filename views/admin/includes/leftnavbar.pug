@@ -6,219 +6,114 @@ aside#leftsidebar.sidebar
         // User Info
         .user-info
             .image
-                img(src='/img/user.png' width='48' height='48' alt='User')
-            .info-container
-                .name(data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') John Doe
-                .email john.doe@example.com
-                .btn-group.user-helper-dropdown
-                    i.material-icons(data-toggle='dropdown' aria-haspopup='true' aria-expanded='true') keyboard_arrow_down
-                    ul.dropdown-menu.pull-right
-                        li
-                            a(href='javascript:void(0);')
-                                i.material-icons person
-                                | Profile
-                        li.divider(role='separator')
-                        li
-                            a(href='javascript:void(0);')
-                                i.material-icons group
-                                | Followers
-                        li
-                            a(href='javascript:void(0);')
-                                i.material-icons shopping_cart
-                                | Sales
-                        li
-                            a(href='javascript:void(0);')
-                                i.material-icons favorite
-                                | Likes
-                        li.divider(role='separator')
-                        li
-                            a(href="/logout")
-                                i.material-icons input
-                                | Sign Out
-        // #User Info
-        // Menu
-        
+                if isAdmin
+                    img(src='/img/admin.png' width='100' height='100' alt='Admin')
+                else if isLimited
+                    img(src='/img/limited.jpg' width='100' height='100' alt='Limited Admin')
         .menu
         
             ul.list
                 li.header 
-                    a(href="/admin/").navbar-brand SprindDay Admin Dashboard
-                li(class=(path==='/admin/'? 'active':''))
-                    a(href="/admin/")
+                    a(href="/admin/").navbar-brand Sprinday Admin Dashboard
+                li(class=(path==='/admin/'? 'active ':''))
+                    a(href="/admin/").nav-link
                         i.material-icons home
-                        span Home
-                li(class=(path===("/admin/add-product") || path===("/admin/products") || path===('/admin/categories') || path===('/admin/add-category') || path===("/admin/slide") || path===("/admin/add-slide") ? 'active':''))
-                    a.menu-toggle(href='javascript:void(0);')
+                        span Anasayfa
+                li(class=(path===('/admin/system') || path===('/admin/logo') || path===('/admin/mail') || path===('/admin/themes') || path===('/admin/activemodule') ? 'active ':''))
+                    a.menu-toggle(href='javascript:void(0);').nav-link
+                        i.material-icons  build
+                        span Genel Ayarlar
+                    ul.ml-menu 
+                        if isAdmin
+                            li(class=(path==='/admin/system' ? 'active':''))
+                                a(href='/admin/system').nav-link Sistem Ayarları
+                                    
+                        li(class=(path==='/admin/logo' ? 'active ':''))
+                            a(href='/admin/logo').nav-link Logo Ayarları
+                        li(class=(path==='/admin/mail' ? 'active':''))
+                            a(href='/admin/mail').nav-link E-Posta Ayarları
+                        li(class=(path==='/admin/themes' ? 'active':''))
+                            a(href='/admin/themes').nav-link Tema Ayarları
+                        li(class=(path==='/admin/activemodule' ? 'active':''))
+                            a(href='/admin/activemodule').nav-link Modül Ayarları
+                li(class=((path==='/admin/orders') ? 'active':''))
+                    a(href='/admin/orders').nav-link
+                    
+                        i.material-icons shopping_cart
+                        span Siparişler
+                        
+                li(class=(path===("/admin/add-product") || path===("/admin/products") || path===('/admin/categories') || path===('/admin/add-category') || path===("/admin/slide") || path===("/admin/add-slide") ? 'active ':''))
+                    a.menu-toggle(href='javascript:void(0);').nav-link
                         i.material-icons widgets
                         span İşlemler
                     ul.ml-menu
-                        li(class=(path===('/admin/products') || path===('/admin/add-product') ? 'active':''))
-                            a.menu-toggle(href='javascript:void(0);')
-                                span Ürünler
-                            ul.ml-menu
-                                li(class=(path==='/admin/products' ? 'active':''))
-                                    a(href="/admin/products") Ürün Listesi
+                        li(class=(path==='/admin/products' ? 'active':''))
+                            a(href="/admin/products").nav-link Ürünler
                                     
-                                li(class=(path==='/admin/add-product' ? 'active':''))
-                                    
-                        li(class=(path===('/admin/categories') || path===('/admin/add-category') ? 'active':''))
-                            a.menu-toggle(href='javascript:void(0);')
-                                span Kategoriler
-                            ul.ml-menu
-                                li(class=(path==='/admin/categories' ? 'active':''))
-                                    a(href="/admin/categories") Kategori Listeleme
-                                li(class=(path==='/admin/add-category' ? 'active':''))
-                                    a(href="/admin/add-category")  Kategori Ekleme
-                        li(class=(path===('/admin/slide') || path===('/admin/add-slide') ? 'active':''))
-                            a.menu-toggle(href='javascript:void(0);')
-                                span Slider
-                            ul.ml-menu
-                                li(class=(path==='/admin/slide' ? 'active':''))
-                                    a(href="/admin/slide") Sliderler
-                                li(class=(path==='/admin/add-slide' ? 'active':''))
-                                    a(href="/admin/add-slide")  Slide Ekleme
-                li
-                    a.menu-toggle(href='javascript:void(0);')
-                        i.material-icons settings
-                        span Genel Ayarlar
-                    ul.ml-menu
-                        li
-                            a(href='/admin/system') Sistem Ayarları
-                        li
-                            a(href='/admin/logo') Logo Ayarları
-                        li
-                            a(href='/admin/mail') E-Posta Ayarları
-                        li
-                            a(href='pages/ui/breadcrumbs.html') Google Analystic 
-                li
-                    a.menu-toggle(href='javascript:void(0);')
-                        i.material-icons dashboard
+                        li(class=(path==='/admin/categories' ? 'active ':''))
+                            a(href="/admin/categories").nav-link Kategoriler
+                        li(class=(path==='/admin/slide' ? 'active':''))
+                            a(href="/admin/slide").nav-link Sliderler             
+                li(class=((path==='/admin/page') ? 'active':''))
+                    a(href='/admin/page').nav-link
+                    
+                        i.material-icons menu
+                        span Menü Yönetimi
+                li(class=(path===("/admin/add-lang") || path===("/admin/lang")  || path===("/admin/users") || path===("/admin/edit-lang") || (path==='/admin/contact') ? 'active ':''))
+                    a.menu-toggle(href='javascript:void(0);').nav-link
+                        i.material-icons assignment_turned_in
                         span Site Yönetimi
                     ul.ml-menu
-                        li
-                            a(href='pages/forms/basic-form-elements.html') Dil Yönetimi
-                        li
-                            a(href='pages/forms/advanced-form-elements.html') Menü Yönetimi
-                        li
-                            a(href='/admin/themes') Tema Ayarları
-                li
-                    a.menu-toggle(href='javascript:void(0);')
-                        i.material-icons view_list
-                        span Modüller
-                    ul.ml-menu
-                        li
-                            a(href='/admin/client') Referanslar
-                        li
-                            a(href='/admin/social') Sosyal Medya
-                        li
-                            a(href='/admin/services') Kısa Hizmetler ile Bilgi
-                li
-                    a.menu-toggle(href='javascript:void(0);')
-                        i.material-icons perm_media
-                        span Medias
-                    ul.ml-menu
-                        li
-                            a(href='pages/medias/image-gallery.html') Image Gallery
-                        li
-                            a(href='pages/medias/carousel.html') Carousel
-                li
-                    a.menu-toggle(href='javascript:void(0);')
-                        i.material-icons pie_chart
-                        span Charts
-                    ul.ml-menu
-                        li
-                            a(href='pages/charts/morris.html') Morris
-                        li
-                            a(href='pages/charts/flot.html') Flot
-                        li
-                            a(href='pages/charts/chartjs.html') ChartJS
-                        li
-                            a(href='pages/charts/sparkline.html') Sparkline
-                        li
-                            a(href='pages/charts/jquery-knob.html') Jquery Knob
-                li
-                    a.menu-toggle(href='javascript:void(0);')
+                        li(class=(path==='/admin/lang' ? 'active':''))
+                            a(href='/admin/lang').nav-link Dil Yönetimi
+                        li(class=((path==='/admin/users') ? 'active':''))
+                            a(href='/admin/users').nav-link Üyeler
+                        li(class=((path==='/admin/contact') ? 'active':''))
+                            a(href='/admin/contact').nav-link Mesajlar
+                li(class=(path===("/admin/project") || path===("/admin/aboutservices")  || path===("/admin/client") || path===("/admin/services") || (path==='/admin/about') || (path==='/admin/news')? 'active ':''))
+                    a.menu-toggle(href='javascript:void(0);').nav-link
                         i.material-icons content_copy
-                        span Example Pages
+                        span Sayfalar
                     ul.ml-menu
-                        li
-                            a(href='pages/examples/profile.html') Profile
-                        li
-                            a(href='pages/examples/sign-in.html') Sign In
-                        li
-                            a(href='pages/examples/sign-up.html') Sign Up
-                        li
-                            a(href='pages/examples/forgot-password.html') Forgot Password
-                        li
-                            a(href='pages/examples/blank.html') Blank Page
-                        li
-                            a(href='pages/examples/404.html') 404 - Not Found
-                        li
-                            a(href='pages/examples/500.html') 500 - Server Error
-                li
-                    a.menu-toggle(href='javascript:void(0);')
-                        i.material-icons map
-                        span Maps
+
+                        li(class=((path==='/admin/project') ? 'active':''))
+                            a(href='/admin/project').nav-link Projeler
+                        li(class=((path==='/admin/aboutservices') ? 'active':''))
+                            a(href='/admin/aboutservices').nav-link Hizmetler
+                        li(class=((path==='/admin/client') ? 'active':''))
+                            a(href='/admin/client').nav-link Referanslar                        
+                        li(class=((path==='/admin/services') ? 'active':''))
+                            a(href='/admin/services').nav-link Servisler
+                        li(class=((path==='/admin/about') ? 'active':''))
+                            a(href='/admin/about').nav-link Hakkımızda (S.S.S)
+                        li(class=((path==='/admin/news') ? 'active':''))
+                            a(href='/admin/news').nav-link Gönderiler
+                li(class=(path===("/admin/social")  || path===("/admin/bank") || path===("/admin/edit-bank") || (path==='/admin/add-bank') ? 'active ':''))
+                    a.menu-toggle(href='javascript:void(0);').nav-link
+                        i.material-icons info
+                        span Bilgiler
                     ul.ml-menu
-                        li
-                            a(href='pages/maps/google.html') Google Map
-                        li
-                            a(href='pages/maps/yandex.html') YandexMap
-                        li
-                            a(href='pages/maps/jvectormap.html') jVectorMap
-                li
-                    a.menu-toggle(href='javascript:void(0);')
-                        i.material-icons trending_down
-                        span Multi Level Menu
+                        li(class=((path==='/admin/social') ? 'active':''))
+                            a(href='/admin/social').nav-link Sosyal Medya 
+                        li(class=((path==='/admin/bank') ? 'active':''))
+                            a(href='/admin/bank').nav-link Banka
+                li(class=(path===("/admin/advanced") || path===("/admin/process")  || path===("/admin/alladmin") || path===("/admin/password") ? 'active ':''))
+                    a.menu-toggle(href='javascript:void(0);').nav-link
+                        i.material-icons lock
+                        span Güvenlik
                     ul.ml-menu
-                        li
-                            a(href='javascript:void(0);')
-                                span Menu Item
-                        li
-                            a(href='javascript:void(0);')
-                                span Menu Item - 2
-                        li
-                            a.menu-toggle(href='javascript:void(0);')
-                                span Level - 2
-                            ul.ml-menu
-                                li
-                                    a(href='javascript:void(0);')
-                                        span Menu Item
-                                li
-                                    a.menu-toggle(href='javascript:void(0);')
-                                        span Level - 3
-                                    ul.ml-menu
-                                        li
-                                            a(href='javascript:void(0);')
-                                                span Level - 4
-                li
-                    a(href='pages/changelogs.html')
-                        i.material-icons update
-                        span Changelogs
-                li.header LABELS
-                li
-                    a(href='javascript:void(0);')
-                        i.material-icons.col-red donut_large
-                        span Important
-                li
-                    a(href='javascript:void(0);')
-                        i.material-icons.col-amber donut_large
-                        span Warning
-                li
-                    a(href='javascript:void(0);')
-                        i.material-icons.col-light-blue donut_large
-                        span Information
-        // #Menu
-        // Footer
+                        li(class=((path==='/admin/advanced') ? 'active':''))
+                            a(href='/admin/advanced').nav-link Giriş İşlemleri
+                        li(class=((path==='/admin/process') ? 'active':''))
+                            a(href='/admin/process').nav-link Yapılan İşlemler
+                        li(class=((path==='/admin/alladmin') ? 'active':''))
+                            a(href='/admin/alladmin').nav-link Admin
+                        li(class=((path==='/admin/password') ? 'active':''))
+                            a(href='/admin/password').nav-link Parola Yenileme
         .legal
             .copyright
-                | &copy; 2016 - 2017
-                a(href='javascript:void(0);') AdminBSB - Material Design
+                | &copy; 2021-2022 Springday 
+                a(href='http://www.misikbal.com' target='_blank') misikbal.com
                 | .
-            .version
-                b Version: 
-                | 1.0.5
-        // #Footer
-        // #END# Left Sidebar
 
 

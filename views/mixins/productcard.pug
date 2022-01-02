@@ -15,15 +15,16 @@ mixin productcard(product)
                             h3.card-title #{product.name}
                         .description-product.text-center
                                 a(href=`/categories/${product.categories[0]._id}` style="text-decoration: none;").p-1.text-dark #{product.categories[0].name}
-                        .card-footer
-                            .wcf-left
-                                span.price 
-                                    i.fas.fa-lira-sign #{product.price}
-                            if active.ecommarce_isActive
-                            
-                                .wcf-right
-                                    form(action="/cart" method="POST")
-                                        input(type="hidden" name="_csrf" value=`${csrfToken}`)  
-                                        input(type="hidden" name="productId" value=`${product._id}`)
-                                        button(type="submit" style="background-color:#FFC451;").btn.btn-sm.ml-3 
-                                            i.fas.fa-cart-plus
+                        if product.price!=null
+                            .card-footer
+                                .wcf-left
+                                    span.price 
+                                        i.fas.fa-lira-sign #{product.price}
+                                if active.ecommarce_isActive
+                                
+                                    .wcf-right
+                                        form(action="/cart" method="POST")
+                                            input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                                            input(type="hidden" name="productId" value=`${product._id}`)
+                                            button(type="submit" style="background-color:#FFC451;").btn.btn-sm.ml-3 
+                                                i.fas.fa-cart-plus

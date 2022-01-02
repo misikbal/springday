@@ -26,14 +26,14 @@ block content
                                         | LOGO AYARLARI
             
             .row.clearfix
-                .col-lg-3.col-md-3.col-sm-6.col-xs-12
+                .col-lg-4.col-md-4.col-sm-4.col-xs-12
                     .form-group.row
-                        .card
-                            .body
+                        .card(style="height:19rem;")
+                            .card-header
                                 .text-center
-                                    img.card-image(src=`/img/${logo.logo}` width="200")
+                                    img.card-image(src=`/img/resized/${logo.logo}` width="200")
 
-                            .header.bg-blue-grey
+                            .card-footer.bg-blue-grey
                                 h2.text-center
                                     | Navbar Logo
                                     if isAdmin
@@ -45,14 +45,14 @@ block content
                                                     input#logo(type="file" name="logo")
                                                 span.fileupload-preview
                                                 a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
-                .col-lg-3.col-md-3.col-sm-6.col-xs-12
+                .col-lg-4.col-md-4.col-sm-6.col-xs-12
                     .form-group.row
-                        .card
-                            .body
+                        .card(style="height:19rem;")
+                            .card-header
                                 .text-center
-                                    img.card-image(src=`/img/${logo.favico}` width="200")
+                                    img.card-image(src=`/img/resized/${logo.favico}` width="50")
 
-                            .header.bg-grey
+                            .card-footer.bg-blue-grey
                                 h2.text-center
                                     | Favico Logo
                                     if isAdmin
@@ -64,14 +64,15 @@ block content
                                                     input#favico(type="file" name="favico")
                                                 span.fileupload-preview
                                                 a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
-                .col-lg-3.col-md-3.col-sm-6.col-xs-12
+        
+                .col-lg-4.col-md-4.col-sm-6.col-xs-12
                     .form-group.row
-                        .card
-                            .body
+                        .card(style="height:19rem;")
+                            .card-header
                                 .text-center
-                                    img.card-image(src=`/img/${logo.footerLogo}` width="200")
+                                    img.card-image(src=`/img/resized/${logo.footerLogo}` width="200")
 
-                            .header.bg-grey
+                            .card-footer.bg-blue-grey
                                 h2.text-center
                                     | Footer Logo
                                     if isAdmin
@@ -83,25 +84,130 @@ block content
                                                     input#footerLogo(type="file" name="footerLogo")
                                                 span.fileupload-preview
                                                 a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
-                .col-lg-3.col-md-3.col-sm-6.col-xs-12
+            .row.clearfix
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
                     .form-group.row
-                        .card
-                            .body
+                        if !logo.isActive
+                            .alert-warning.text-center
+                                h5.text-white Loading Logosu Aktif Değildir. Sitede Yüklenme Logosu Çıkmayacaktır.
+                        .card(style="height:auto;")
+                            .card-header
                                 .text-center
-                                    img.card-image(src=`/img/${logo.logo}` width="200")
+                                    h5 Seçilen Logo
+                                    img.card-image(src=`/img/${logo.loadingLogo}` width="100")
 
-                            .header.bg-grey
-                                h2.text-center
-                                    | Loading Logo
-                                    if isAdmin
-                                        small.text-center
-                                            .fileupload.fileupload-new(data-provides='fileupload')
-                                                span.btn.btn-warning.btn-file
-                                                    span.fileupload-new Yeni
-                                                    span.fileupload-exists Değiştir
-                                                    input#logo(type="file" name="")
-                                                span.fileupload-preview
-                                                a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+                        .card-footer.bg-blue-grey
+                            h2.text-center
+                                | Loading Logo
+                                if isAdmin
+                                    small.text-center
+                                        .fileupload.fileupload-new(data-provides='fileupload')
+                                            span.btn.btn-warning.btn-file
+                                                span.fileupload-new Yeni
+                                                span.fileupload-exists Değiştir
+                                                input#loadingLogo(type="file" name="loadingLogo")
+                                            span.fileupload-preview
+                                            a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+                                    .card.bg-light.text-center(style="height:4rem;")
+                                        .body
+                                            .form-group
+                                                label.form-check-label Aktif
+                                                .form-check.form-switch.d-flex.justify-content-center
+                                                    input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive" value=`${logo.isActive}` checked=logo.isActive)
+                                    if logo.isActive
+                                        .card.text-center.bg-blue-grey
+                                            .header.bg-white
+                                                h6
+                                                    | Yükleme Yazısı
+                                                h6.text-info
+                                                    | İsteğe Bağlı
+                                            .body(style="background-color: #FF9600")
+                                                input.form-control#loadingtext(type="text" name="loadingtext" value=`${logo.loadingtext==undefined ? "" : logo.loadingtext}` placeholder="Sayfa Yükleniyor...") 
+                                .card
+                                    .card-header.bg-blue-grey
+                                        h6
+                                            | İster Kendiniz Loading Gif Yükleyin İstersenizde Aşağıdaki Hazır Loading Giflerden Birini Seçin
+                                        h6.text-info
+                                            | Hem resim yükleyip hem de aşağıdan gif seçtiyseniz sadece yükelenen dosya kaydedilecektir.
+                                    .card-body
+                                        .row.mt-5
+
+                                            .col
+                                                .card.bg-blue-grey.text-center(style="height:auto;")
+                                                    img.card-img-top(src="/img/2.webp" for='btnradio1'  width="100").bg-white
+                                                    .card-body
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="2.webp" ? true:false value="2.webp")
+                                                        
+                                            .col
+                                                .card.bg-blue-grey.text-center(style="height:auto;")
+                                                    img.card-img-top(src="/img/3.webp" for='btnradio1' width="100").bg-white
+                                                    .card-body
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="3.webp" ? true:false value="3.webp")
+                                            .col
+                                                .card.bg-blue-grey.text-center(style="height:auto;")
+                                                    img.card-img-top(src="/img/4.webp" for='btnradio1' width="100").bg-white
+                                                    .card-body
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="4.webp" ? true:false value="4.webp")
+                                                        
+                                            .col
+                                                .card.bg-blue-grey.text-center(style="height:auto;")
+                                                    img.card-img-top(src="/img/5.webp" for='btnradio1' width="100").bg-white
+                                                    .card-body
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="5.webp" ? true:false  value="5.webp")
+                                            .col
+                                                .card.bg-blue-grey.text-center(style="height:auto;")
+                                                    img.card-img-top(src="/img/6.webp" for='btnradio1' width="100").bg-white
+                                                    .card-body
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="6.webp" ? true:false  value="6.webp")
+                                                        
+                                            .col
+                                                .card.bg-blue-grey.text-center(style="height:auto;")
+                                                    img.card-img-top(src="/img/7.webp" for='btnradio1' width="100").bg-white
+                                                    .card-body
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="7.webp" ? true:false  value="7.webp")
+                                            .col
+                                                .card.bg-blue-grey.text-center(style="height:auto;")
+                                                    img.card-img-top(src="/img/8.webp" for='btnradio1' width="100").bg-white
+                                                    .card-body
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="8.webp" ? true:false  value="8.webp")
+                                            .col
+                                                .card.bg-blue-grey.text-center(style="height:auto;")
+                                                    img.card-img-top(src="/img/9.webp" for='btnradio1' width="100").bg-white
+                                                    .card-body
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="9.webp" ? true:false  value="9.webp")
+                                            .col
+                                                .card.bg-blue-grey.text-center(style="height:auto;")
+                                                    img.card-img-top(src="/img/10.webp" for='btnradio1' width="100").bg-white
+                                                    .card-body
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="10.webp" ? true:false  value="10.webp")
+
             if isAdmin
                 .form-group.row
                     input(type="submit" value="Kaydet").btn.btn-warning.col-md-12                  

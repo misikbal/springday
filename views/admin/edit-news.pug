@@ -1,8 +1,10 @@
 extends ../layouts/admin-layout.pug
 block styles
     link(rel="stylesheet" href="/css/themes/image.css")
+    link(href='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' rel='stylesheet')
     script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
     script(src="/plugins/ckeditor/ckeditor.js")
+
 block content
     form(action="/admin/news" method="POST" enctype="multipart/form-data")
         input(type="hidden" name="_csrf" value=`${csrfToken}`)    
@@ -48,7 +50,7 @@ block content
                                     small.text-info
                                         | Bir Tane Resim Seçilebilir
                             .text-center
-                                img(src=`/img/${news.imageUrl}` style="width:400px;").card-img-top.mt-3                            
+                                img(src=`/img/resized/${news.imageUrl}` style="width:400px;").card-img-top.mt-3                            
                             .body.bg-blue-grey
                                 .fileupload.fileupload-new(data-provides='fileupload')
                                     span.btn.btn-warning.btn-file
@@ -81,7 +83,21 @@ block content
                                 | Gerekli
                     .body
                         .form-group.row
-                            input.form-control#newsdate(type="date" name="newsdate" value=`${news.newsdate}`)        
+                            input.form-control#newsdate(type="date" name="newsdate" value=`${news.newsdate}`)
+        .form-group.row.demo-tagsinput-area
+            .col-sm-12.bg-blue-grey
+                .card.text-center
+                    .header.bg-white
+                        h2
+                            | #TAG
+                            small.text-danger
+                                | Gerekli
+                            small.text-info
+                                | Tag Öneri için 
+                                a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
+                        .body
+                            .form-line
+                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value=`${news.tags}` placeholder="Taglerinizi Buraya Giriniz")
             
         .form-group.row
             input(type="submit" value="Gönderiyi Güncelle").btn.btn-warning.col-md-12                                          
@@ -89,5 +105,6 @@ block content
 
 
 block script
+    script(src='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')
     script(src='/js/image.js')
     script(src="/js/script.js") 

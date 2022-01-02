@@ -1,7 +1,12 @@
 extends ../layouts/main-layout.pug
 
 block styles
-
+    meta(name='robots' content='noindex')
+    meta(name='google' content='nositelinkssearchbox')
+    link(href='/css/order.css' rel='stylesheet')
+    link(href='/css/cart.css' rel='stylesheet')
+    link(rel="stylesheet" href="/css/contactstyle.css")
+    link(rel="stylesheet" href="/css/style2.css")
 block content
     
     .container.px-1.px-md-4.py-5.mx-auto
@@ -9,18 +14,31 @@ block content
         br
         br
         br
-        h2 SİPARİŞLERİM        
+        h2 SİPARİŞLERİM
+        br
+        br     
         .row
             if orders.length>0
                 each order in orders
                         .col-8
+                            if !order.approval
+                                
+                                .text-center
+                                    span.reversed.reversedRight
+                                        span
+                                            | ⚠
+                                    span.reversed.ml-3
+                                        | Ödeme Yapılmadı
+                                        |Lütfen İlgili Banka Hesaplarına 
+                                        br
+                                        |Gerekli Ödemeyi Yapınız
                             .table-responsive
                                 table.table.table-hover.text-center
                                     thead.thead-dark
                                         tr         
                                             th.align-middle
                                             th.align-middle Sipariş Edilen Ürün Sayısı 
-                                            th.align-middle Sipariş Tarihi
+                                            th.align-middle Sipariş Adeti
                                             th.align-middle Sipariş Toplamı
 
 
@@ -28,16 +46,17 @@ block content
                                     tbody
                                         each item in order.items
 
-                                            tr.bg-dark.text-white
+                                            tr.bg-dark.text-white.text-center
                                                 td.align-middle.text-center
-                                                    img(src="/img/puff.svg" data-src=`/img/resized/${item.product.imageUrl}` width='100').deneme
+                                                    a(href=`/products/${item.product._id}` target="_blank")
+                                                        img(src="/img/puff.svg" data-src=`/img/resized/${item.product.imageUrl}` width='100').deneme
 
                                             
                                                 td.align-middle.text-center #{item.product.name}
                                                 td.align-middle.text-center
                                                     .cart_item_quantity.cart_info_col
                                                         .cart_item_text #{item.quantity}
-                                                td.align-middle.text-center #{(item.product.price)*(item.quantity)} TL
+                                                td.align-middle #{(item.product.price)*(item.quantity)} TL
                                                     
                                         tr.bg-secondary.text-white
                                             td(colspan=2).align-middle Tarih-Saat:  #{"   "+order.date.getDate()+"/"+order.date.getMonth()+"/"+order.date.getFullYear() +"   " }

@@ -2,7 +2,7 @@ $(function() {
 
 	if ( $('.owl-2').length > 0 ) {
         $('.owl-2').owlCarousel({
-            center: false,
+            center: true,
             items:1,
             loop: true,
             stagePadding: 0,

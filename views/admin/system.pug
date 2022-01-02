@@ -3,6 +3,7 @@ extends ../layouts/admin-layout.pug
 block styles
     include ../admin/includes/formhead.pug
     
+    
 
 block content
     if(action!=="undefined" && action==="edit")
@@ -64,13 +65,13 @@ block content
                                                 .form-line
                                                     select(name="language").js-animations.form-control#language
                                                         optgroup(label='Seçilen Dil')
-                                                            option(value=`${system.language}`) Türkçe
+                                                            option(value=`${system.language}`) #{system.language=="tr" ? "Türkçe" : system.language=="en" ? "İngilizce" :system.language=="ru" ? "Rusça" : system.language=="de" ? "Almanca" : system.language=="ar" ? "Arapça":""}
 
                                                         optgroup(label='Diğer Diller')
                                                             option(value="tr") Türkçe
                                                             option(value="en") İngilizce
                                                             option(value="ru") Rusça
-                                                            option(value="al") Almanca
+                                                            option(value="de") Almanca
                                                             option(value="ar") Arapça
                         .col-md-6
                             .form-group.row
@@ -123,7 +124,7 @@ block content
                                                 small.text-danger
                                                     | Gerekli (Lütfen Sadece Link Alanını Yazınız)
                                                 small.text-info
-                                                    a(href="https://www.google.com/maps") Google Maps
+                                                    a(href="https://www.google.com/maps" target="_blank") Google Maps
                                                     br
                                                     | İstenilen Yeri Seçip Paylaş Butonuna Tıklayın > Harita Yerleştirme Kısmındaki Linki Yazınız
 
@@ -140,15 +141,15 @@ block content
                                                 small.text-danger
                                                     | Gerekli
                                                 small.text-info
-                                                    a(href="https://sendgrid.com/") SendGrid
+                                                    a(href="https://sendgrid.com/" target="_blank") SendGrid
                                                     br
-                                                    a(href="https://app.sendgrid.com/settings/api_keys") SendGrid Create Api Key
+                                                    a(href="https://app.sendgrid.com/settings/api_keys" target="_blank") SendGrid Create Api Key
                                                     br
                                                     | SendGrid Api Key Oluşturup Yazınız
 
                                         .body
                                             .form-line
-                                                input(type="text" name="sgMail" value=`${system.sgMail}` placeholder="SG.pfldpsgrkoFKOKIGJMIGl.....").form-control#googlemaps
+                                                input(type="text" name="sgMail" value=`${system.sgMail}` placeholder="SG.pfldpsgrkoFKOKIGJMIGl.....").form-control#sgMail
 
                     .row
                         .col-md-12
@@ -161,15 +162,60 @@ block content
                                                 small.text-danger
                                                     | Gerekli
                                                 small.text-info
-                                                    a(href="https://dashboard.tawk.to/login") Tawk To
+                                                    a(href="https://dashboard.tawk.to/login" target="_blank") Tawk To
                                                     br
                                                     | Tawk To Dasboard Alanına Bulunan Script'i Buraya Yazınız
 
                                         .body
                                             .form-line
                                                 textarea(type="text" name="tawktoscript" cols="10" rows="5" placeholder='<script type="text/javascript">var Tawk_API=Tawk_API||{}</script>').form-control#tawktoscript #{system.tawktoscript}
+                    
+                    .row
+                        .col-md-12
+                            .form-group.row
+                                .col-sm-12
+                                    .card.text-center.bg-blue-grey
+                                        .header.bg-white
+                                            h2
+                                                | Google Analytics Script
+                                                small.text-info
+                                                    | İsteğe Bağlı
+                                        .body
+                                            .form-line
+                                                textarea(type="text" name="googleAnalitcs" cols="10" rows="14" placeholder="<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){}</script>").form-control#tawktoscript #{system.googleAnalitcs}
+                    .form-group.row
+                        .col-md-12
+                            .form-group.row
+                                .col-sm-12
+                                    .card.text-center.bg-blue-grey
+                                        .header.bg-white
+                                            h2
+                                                | Web Sitesi Açıklama
+                                                small.text-danger
+                                                    | Gerekli
+                                                small.text-info
+                                                    | Web Siteyi Bir Cümle İle Açıklayınız
+
+                                        .body
+                                            .form-line
+                                                input(type="text" name="description" value=`${system.description}` placeholder="Springday soğutma ve ısıtma sistemleri").form-control#sgMail
+                    .form-group.row.demo-tagsinput-area
+                        .col-sm-12.bg-blue-grey
+                            .card.text-center
+                                .header.bg-white
+                                    h2
+                                        | WEB SİTESİ META #TAGLERİ
+                                        small.text-danger
+                                            | Gerekli
+                                        small.text-info
+                                            | Tag Öneri için 
+                                            a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
+                                .body
+                                    .form-line
+                                        input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value=`${system.tags}` placeholder="Taglerinizi Buraya Giriniz")
                     .form-group.row
                         .col-sm-12
-                            input(type="submit" value="Genel Ayarları Kaydet").btn.btn-primary.col-md-12   
+                            input(type="submit" value="Genel Ayarları Kaydet").btn.btn-warning.col-md-12
+                
 block script  
     include ../admin/includes/formscript.pug

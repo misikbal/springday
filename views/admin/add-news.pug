@@ -40,7 +40,7 @@ block content
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.form-control#name(type="text" name="title" placeholder="Basında Biz" required oninvalid="this.setCustomValidity('Lüften Gönderi Başlığı Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')") 
+                                    input.form-control#name(type="text" name="title" placeholder="Basında Biz") 
         .row.clearfix
             .col-md-6 
                 .form-group.row
@@ -72,37 +72,37 @@ block content
                             .body
                                 .form-line
                                     input.form-control#newsdate(type="date" name="newsdate" placeholder="18.08.2020")  
-    .row.clearfix    
-        .form-group.row
-            .col-sm-12
-                .card.text-center.bg-blue-grey
-                    .header.bg-white
-                        h2
-                            | AÇIKLAMA                            
-                            small.text-danger
-                                | Gerekli
-                            small.text-info
-                                | Resim Konulabilir (Resim Ekleme Simgesine Tıklayın > Sunucuya Gözat )
-                    .body
-                        .form-line
-                        textarea.form-control(id="editor" name="description" cols="30" rows="10")
-    .row.clearfix
-        .form-group.row.demo-tagsinput-area
-            .col-sm-12.bg-blue-grey
-                .card.text-center
-                    .header.bg-white
-                        h2
-                            | #TAG
-                            small.text-danger
-                                | Gerekli
-                            small.text-info
-                                | Tag Öneri için 
-                                a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
+        .row.clearfix    
+            .form-group.row
+                .col-sm-12
+                    .card.text-center.bg-blue-grey
+                        .header.bg-white
+                            h2
+                                | AÇIKLAMA                            
+                                small.text-danger
+                                    | Gerekli
+                                small.text-info
+                                    | Resim Konulabilir (Resim Ekleme Simgesine Tıklayın > Sunucuya Gözat )
                         .body
                             .form-line
-                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value='' placeholder="Taglerinizi Buraya Giriniz")
-    .form-group.row
-        input(type="submit" value="Kaydet").col-md-12.btn.btn-primary
+                            textarea.form-control(id="editor" name="description" cols="30" rows="10")
+        .row.clearfix
+            .form-group.row.demo-tagsinput-area
+                .col-sm-12.bg-blue-grey
+                    .card.text-center
+                        .header.bg-white
+                            h2
+                                | #TAG
+                                small.text-danger
+                                    | Gerekli
+                                small.text-info
+                                    | Tag Öneri için 
+                                    a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
+                            .body
+                                .form-line
+                                    input.form-control#tags(type='text' data-role='tagsinput'  name="tags" placeholder="Taglerinizi Buraya Giriniz")
+        .form-group.row
+            input(type="submit" value="Kaydet").col-md-12.btn.btn-primary
 
 
 block script

@@ -21,6 +21,7 @@ const About=require("./model/about");
 const Category=require("./model/category");
 const ActiveModule=require("./model/activemodule");
 const Slide=require("./model/slide");
+const Lang=require("./model/lang");
 
 
 
@@ -38,12 +39,11 @@ const session=require("express-session");
 const mongoDbStore=require("connect-mongodb-session")(session);
 const csurf= require("csurf");
 const multer=require("multer");
-const sharp = require('sharp');
 const locals=require("./middleware/locals");
 const isAdmin=require("./middleware/isAdmin");
-
-const MulterSharpResizer = require("multer-sharp-resizer");
+const isFile=require("./middleware/isFile");
 const fs=require("fs");
+const sharp = require('sharp');
 
 
 const error = require("./controllers/errors");
@@ -52,11 +52,6 @@ var store=new mongoDbStore({
     uri:connectionString,
     collection:"mySessions"
 })
-
-// var store=new mongoDbStore({
-//     uri:connectionString,
-//     collection:"mySessions"
-// })
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
         webPreferences: {
@@ -66,15 +61,17 @@ app.on('ready', () => {
     });
 });
 
-app.use(session({
-    secret:"springday",
-    resave: true,
-    saveUninitialized:false,
-    cookie:{
-        maxAge:3600000
-    },
-    store:store
-}));
+app.use(
+    
+    session({
+        secret:process.env.SECRET ||"b92aaa7646686ed3833a60b352778234d1ea31e77d4122216e46523b411464ef",
+        resave: true,
+        saveUninitialized:false,
+        cookie:{
+            maxAge:36000000
+        },
+        store:store
+    }));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "wwwroot")));
 app.use(express.json())
@@ -98,32 +95,19 @@ app.use(multer({storage:storage,fileFilter: multerFilter}).fields([
     { name: 'logo', maxCount: 1 },
     { name: 'favico', maxCount: 1 },
     { name: 'footerLogo', maxCount: 1 },
+    { name: 'loadingLogo', maxCount: 1 },
     { name: 'cimage', maxCount: 1 },
     { name:"slideimg",maxCount:1},
     { name: 'categoryImg', maxCount: 1 },
     { name: 'servicesImg', maxCount: 1 },
     { name: 'projectImg', maxCount: 1 },  
-    { name: 'newsImg', maxCount: 1 }, 
+    { name: 'newsImg', maxCount: 1 },
+    { name: 'clientlogo', maxCount: 1 },
+
     { name: 'flFileUpload', maxCount: 12 }, 
 
 
 ]));
-
-
-app.use((req,res,next)=>{
-    if(!req.session.user){
-        return next();
-    }
-    User.findById(req.session.user._id)
-        .then(user=>{
-            req.user=user;
-            next();
-        })
-        .catch(err=>{console.log(err)});
-        
-
-})
-app.use(csurf());
 
 app.use((req,res,next)=>{
     Page.findOne()
@@ -141,18 +125,32 @@ app.use((req,res,next)=>{
                             .where({isActive:true})
                             .then(footerabouts=>{
                                 Category.find()
+                                .where({isActive:true})
                                 .then(menucategory=>{
                                     ActiveModule.findOne()
                                     .then(active=>{
-                                            req.system=system;
-                                            req.page=page;
-                                            req.social=social;
-                                            req.logo=logo;
-                                            req.theme=theme;
-                                            req.footerabouts=footerabouts;
-                                            req.menucategory=menucategory;
-                                            req.active=active;
-                                            next();
+                                        Lang.find()
+                                        .sort({date:1})
+                                        .then(lang=>{
+                                            Logo.findOne()
+                                            .select("loadingLogo isActive loadingtext")
+                                            .then(loading=>{
+                                                    req.system=system;
+                                                    req.page=page;
+                                                    req.social=social;
+                                                    req.logo=logo;
+                                                    req.theme=theme;
+                                                    req.footerabouts=footerabouts;
+                                                    req.menucategory=menucategory;
+                                                    req.active=active;
+                                                    req.lang=lang;
+                                                    req.loading=loading;
+                                                    next();
+                                                })
+                                                
+                                            
+                                        })
+                                            
                                         })
                                         
                                     
@@ -173,15 +171,22 @@ app.use((req,res,next)=>{
         
 
 })
-app.use("/admin", adminRoutes);
+app.use((req,res,next)=>{
+    if(!req.session.user){
+        return next();
+    }
+    User.findById(req.session.user._id)
+        .then(user=>{
+            req.user=user;
+            next();
+        })
+        .catch(err=>{console.log(err)});
+        
 
-app.use(userRoutes)
+})
 
-
-app.use(mainModeRoutes)
-
-app.get('/files',locals,isAdmin, function (req, res) {
-    const images = fs.readdirSync('wwwroot/img')
+app.get('/files',isFile,isAdmin, function (req, res) {
+    const images = fs.readdirSync('wwwroot/img/upload')
     var sorted = []
     for (let item of images){
         if(item.split('.').pop() === 'png'
@@ -190,7 +195,7 @@ app.get('/files',locals,isAdmin, function (req, res) {
         || item.split('.').pop() === 'svg'
         || item.split('.').pop() === 'webp'){
             var abc = {
-                    "image" : "/img/"+item,
+                    "image" : "/img/upload/"+item,
                     "folder" : '/'
             }
             sorted.push(abc)
@@ -198,19 +203,42 @@ app.get('/files',locals,isAdmin, function (req, res) {
     }
     res.send(sorted);
 })
-  //upload image to folder upload
-app.post('/upload',locals,isAdmin, function (req, res, next) {
-        res.redirect('back')
+app.post('/upload',isFile,isAdmin,async function (req, res, next) {
+    const image=req.files.flFileUpload;
+
+    if(image){
+        await sharp(req.files.flFileUpload[0].path)
+        .resize(700)
+        .webp({quality:30,alphaQuality:30,lossless:true,progressive:true})
+        .jpeg({quality:30,alphaQuality:30,lossless:true,progressive:true})
+        .png({quality:30,alphaQuality:30,lossless:true,progressive:true})
+        .toFile(
+            path.resolve(req.files.flFileUpload[0].destination,'upload',image[0].filename)
+        )
+        fs.unlinkSync(req.files.flFileUpload[0].path)
+    }
+    
+    res.redirect('back')
 });
-  //delete file
-app.post('/delete_file',locals,isAdmin, function(req, res, next){
-    var url_del = 'public' + req.body.url_del
+app.post('/delete_file',isFile,isAdmin, function(req, res, next){
+    var url_del =__dirname+"/wwwroot" + req.body.url_del
+    console.log(req.body.url_del)
     console.log(url_del)
     if(fs.existsSync(url_del)){
         fs.unlinkSync(url_del)
     }
     res.redirect('back')
 });
+app.use(csurf());
+app.use("/admin", adminRoutes);
+
+
+
+app.use(userRoutes)
+
+
+app.use(mainModeRoutes)
+
 app.use(accountRoutes);
 
 app.use("/500",locals,error.get505page);

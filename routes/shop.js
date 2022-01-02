@@ -37,8 +37,10 @@ router.post("/delete-cartItem",locals,isMainMode,ecommerce,isAuthenticated, shop
 router.get("/create-order",locals,isMainMode,ecommerce,isAuthenticated, shopController.getAdress);
 router.post("/create-order",locals,isMainMode,ecommerce,isAuthenticated, shopController.postOrder);
 router.get("/orders/:orderid",locals,isMainMode,ecommerce,isAuthenticated, shopController.getOrder);
+router.post("/orders/:orderid",locals,isMainMode,ecommerce,isAuthenticated, shopController.postPayment);
 
 router.get("/orders",locals,isMainMode,ecommerce,isAuthenticated, shopController.getOrders);
+
 
 
 router.get("/client",locals,isMainMode, shopController.getClient);

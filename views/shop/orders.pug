@@ -1,35 +1,67 @@
 extends ../layouts/main-layout.pug
 
 block styles
+    meta(name='robots' content='noindex')
+    meta(name='google' content='nositelinkssearchbox')
     link(href='/css/order.css' rel='stylesheet')
     link(href='/css/cart.css' rel='stylesheet')
     link(rel="stylesheet" href="/css/contactstyle.css")
     link(rel="stylesheet" href="/css/style2.css")
 
+
 block content
-    br
-    br
-    br
-    if !orders.approval
-        
-            .text-center
-                span.reversed.reversedRight
-                    span
-                        | ⚠
-                span.reversed.ml-3
-                    | Ödeme Yapılmadı
-                    |Lütfen İlgili 
-                    a(href="/" style="text-decoration: none" target="_blank").text-dark Banka Hesaplarına 
-                    br
-                    |Gerekli Ödemeyi Yapınız
+    
     .container.px-1.px-md-4.py-5.mx-auto
             
-
+            
+            if !orders.approval 
+                
+                if action!=="undefined" && action==="send"
+                    br
+                    br
+                    br
+                    .alert.alert-success.alert-dismissible.fade.show(role='alert')
+                        strong Mesaj İletildi. Gerekli kontrollerden sonra siparişiniz onaylanacaktır.
+                .card.text-white.bg-warning.text-center
+                        .card-header.bg-warning 
+                            i.fas.fa-exclamation-triangle.fa-5x
+                        .card-body
+                            h3.card-title Ödeme İşlemini Yapınız
+                            .table-responsive
+                                table.table.table-sm.table-dark(style="font-size:15px;")
+                                    thead.table-dark
+                                        tr
+                                            th(scope='col') Banka
+                                            th(scope='col') Hesap Sahibi
+                                            th(scope='col') Hesap Türü
+                                            th(scope='col') IBAN
+                                    tbody
+                                        each banks in bank
+                                            tr.text-dark.text-center
+                                                td.table-light.align-middle 
+                                                    img(src=`/img/resized/${banks.imageUrl}` width='200')
+                                                td.table-light.align-middle  #{banks.holder}
+                                                td.table-light.align-middle  #{banks.accountType}
+                                                td.table-light.align-middle  #{banks.iban}
+                        .card-footer.bg-light
+                            if action!=="undefined" && action==="send"
+                                .alert.alert-success.alert-dismissible.fade.show(role='alert')
+                                    strong Mesaj İletildi. Gerekli kontrollerden sonra siparişiniz onaylanacaktır.
+                            p.h3 Bildir
+                            if !orders.payment                            
+                                form(action=`/orders/${orders._id}` method="POST")
+                                    input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                                    input(type="hidden" name="orderid" value=`${orders._id}`)
+                                    button(type="submit" name="payment" value="true").btn.btn-outline-success.btn-sm ÖDEME İŞLEMİNİ YAPTIM
+                            else
+                                button(type="submit" name="payment" value="true" disabled).btn.btn-secondary.btn-sm ÖDEME İŞLEMİNİ YAPTIM
 
             .card.bg-light
-                .row.d-flex.justify-content-between.px-3.top
-                    .text-center
-                        h5
+                
+                .row.d-flex.justify-content-center.px-3.top
+
+                    .text-center.mt-3
+                        h3.text-center
                             | SİPARİŞ 
                         br
                         span.text-primary.font-weight-bold Sipariş Id: ##{orders._id}
@@ -37,7 +69,6 @@ block content
                         p
                         | #{orders.cargocompany===null ?"":orders.cargocompany==="undefined" ? "":orders.cargocompany}
                         span.font-weight-bold #{orders.cargonumber===null ?"":orders.cargonumber==="undefined" ? "":orders.cargonumber}
-                // Add class 'active' to progress
                 .row.d-flex.justify-content-center.text-center
                     .col-md-12.text-center
                         ul#progressbar.text-center
@@ -68,23 +99,24 @@ block content
                         tr
                             th.align-middle 
 
-                            th(scope="col").align-middle Ürün Adı 
-                            th(scope="col").align-middle Adet
-                            th(scope="col").align-middle Toplam
+                            th.align-middle Ürün Adı 
+                            th.align-middle Adet
+                            th.align-middle Toplam
                     tbody
                         each item in orders.items
                             tr.bg-dark.text-white
-                                    td.align-middle
+                                    td.align-middle.text-center
                                         .cart_item_image.mt-3
-                                            img(src=`/img/resized/${item.product.imageUrl}` width='100')
+                                            a(href=`/products/${item.product._id}` target="_blank")
+                                                img(src=`/img/resized/${item.product.imageUrl}` width='100')
                                     
-                                    td.align-middle
+                                    td.align-middle.text-center
                                         .cart_item_name.cart_info_col
                                             .cart_item_text #{item.product.name}
-                                    td.align-middle
+                                    td.align-middle.text-center
                                         .cart_item_quantity.cart_info_col
                                             .cart_item_text #{item.quantity}
-                                    td.align-middle
+                                    td.align-middle.text-center
                                         .cart_item_total.cart_info_col
                                             .cart_item_text #{(item.product.price)*(item.quantity)} TL
                         

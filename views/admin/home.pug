@@ -7,44 +7,105 @@ block content
         .col-lg-3.col-md-3.col-sm-6.col-xs-12
             a(href="/admin/products" style="text-decoration: none;")
 
-                .info-box.bg-pink.hover-expand-effect
+                .info-box.bg-red.hover-expand-effect
                     .icon
-                        i.material-icons shopping_cart
+                        i.fas.fa-box-open
                     .content
                         .text Ürün Sayısı
                         .number.count-to(data-from='0' data-to=`${products.length}` data-speed='1000' data-fresh-interval='20')
                     
         .col-lg-3.col-md-3.col-sm-6.col-xs-12
-            .info-box.bg-cyan.hover-expand-effect
-                .icon
-                    i.material-icons help
-                .content
-                    .text NEW TICKETS
-                    .number.count-to(data-from='0' data-to='257' data-speed='1000' data-fresh-interval='20')
+            a(href="/admin/categories" style="text-decoration: none;")
+                .info-box.bg-pink.hover-expand-effect
+                    .icon
+                        i.fas.fa-cubes
+                    .content
+                        .text Kategori Sayısı
+                        .number.count-to(data-from='0' data-to=`${category.length}` data-speed='1000' data-fresh-interval='20')
         .col-lg-3.col-md-3.col-sm-6.col-xs-12
-            .info-box.bg-light-green.hover-expand-effect
-                .icon
-                    i.material-icons forum
-                .content
-                    .text NEW COMMENTS
-                    .number.count-to(data-from='0' data-to='243' data-speed='1000' data-fresh-interval='20')
+            a(href="/admin/slide" style="text-decoration: none;")
+
+                .info-box.bg-purple.hover-expand-effect
+                    .icon
+                        i.fas.fa-images
+                    .content
+                        .text Slayt Sayısı
+                            .number.count-to(data-from='0' data-to=`${slide.length}` data-speed='1000' data-fresh-interval='20')
         .col-lg-3.col-md-3.col-sm-6.col-xs-12
             a(href="/admin/users" style="text-decoration: none;")
 
-                .info-box.bg-orange.hover-expand-effect
+                .info-box.bg-deep-purple.hover-expand-effect
                     .icon
-                        i.material-icons person_add
+                        i.fas.fa-user-plus
                     .content
                         .text Üye Sayısı
-                            .number.count-to(data-from='0' data-to=`${!user.isAdmin? user.length: "0"}` data-speed='1000' data-fresh-interval='20')
+                            .number.count-to(data-from='0' data-to=`${user.length}` data-speed='1000' data-fresh-interval='20')
         .col-lg-3.col-md-3.col-sm-6.col-xs-12
             a(href="/admin/contact" style="text-decoration: none;")
-                .info-box.bg-blue-grey.hover-zoom-effect
+                .info-box.bg-indigo.hover-zoom-effect
                     .icon
                         i.material-icons email
                     .content
                         .text Mesajlar
                         .number.count-to(data-from='0' data-to=`${contact.length}` data-speed='1000' data-fresh-interval='20')
+        .col-lg-3.col-md-3.col-sm-6.col-xs-12
+            a(href="/admin/advanced" style="text-decoration: none;")
+                .info-box.bg-blue.hover-zoom-effect
+                    .icon
+                        i.fas.fa-sign-in-alt
+                    .content
+                        .text Giriş Sayısı
+                        .number.count-to(data-from='0' data-to=`${alladvanced.length}` data-speed='1000' data-fresh-interval='20')
+        .col-lg-3.col-md-3.col-sm-6.col-xs-12
+            a(href="/admin/process" style="text-decoration: none;")
+                .info-box.bg-light-blue.hover-zoom-effect
+                    .icon
+                        i.fas.fa-clipboard-list
+                    .content
+                        .text Yapılan İşlem Sayısı
+                        .number.count-to(data-from='0' data-to=`${allprocess.length}` data-speed='1000' data-fresh-interval='20')
+
+        if ecommerce.ecommarce_isActive
+            .col-lg-3.col-md-3.col-sm-6.col-xs-12
+                a(href="/admin/orders" style="text-decoration: none;")
+                    .info-box.bg-cyan.hover-zoom-effect
+                        .icon
+                            i.fas.fa-shopping-cart
+                        .content
+                            .text Toplam Sipariş Sayısı
+                            .number.count-to(data-from='0' data-to=`${order.length}` data-speed='1000' data-fresh-interval='20')
+            .col-lg-3.col-md-3.col-sm-6.col-xs-12
+                a(href="/admin/orders" style="text-decoration: none;")
+                    div(style="height:6rem;").info-box.bg-teal.hover-zoom-effect
+                        .icon
+                            i.fas.fa-hand-holding-usd
+                        .content
+                            .text Şuanki Sipariş İsteği Sayısı
+                            .number.count-to(data-from='0' data-to=`${ordercount.length}` data-speed='1000' data-fresh-interval='20')
+            .col-lg-3.col-md-3.col-sm-6.col-xs-12
+                a(href="/admin/orders" style="text-decoration: none;")
+                    div(style="height:6rem;").info-box.bg-green.hover-zoom-effect
+                        .icon
+                            i.fas.fa-clipboard-check
+                        .content
+                            .text Şuanki Onaylanan Sipariş Sayısı 
+                            .number.count-to(data-from='0' data-to=`${approval.length}` data-speed='1000' data-fresh-interval='20')
+            .col-lg-3.col-md-3.col-sm-6.col-xs-12
+                a(href="/admin/orders" style="text-decoration: none;")
+                    div(style="height:6rem;").info-box.bg-light-green.hover-zoom-effect
+                        .icon
+                            i.fas.fa-truck
+                        .content
+                            .text Kargoya Verilen Sipariş Sayısı
+                            .number.count-to(data-from='0' data-to=`${cargo.length}` data-speed='1000' data-fresh-interval='20')
+            .col-lg-3.col-md-3.col-sm-6.col-xs-12
+                a(href="/admin/orders" style="text-decoration: none;")
+                    div(style="height:6rem;").info-box.bg-orange.hover-zoom-effect
+                        .icon
+                            i.fas.fa-thumbs-up
+                        .content
+                            .text Teslim Edilen Sipariş Sayısı
+                            .number.count-to(data-from='0' data-to=`${done.length}` data-speed='1000' data-fresh-interval='20')
     .row.clearfix
         .col-md-12
             .form-group

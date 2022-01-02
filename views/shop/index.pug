@@ -12,10 +12,10 @@ include ../mixins/shortservices.pug
 
 block styles    
   link(href='/plugins/aos/aos.css' rel='stylesheet')
-  link(href='/plugins/bootstrap-icons/bootstrap-icons.css' rel='stylesheet')
-  link(href='/plugins/boxicons/css/boxicons.min.css' rel='stylesheet')
+  //- link(href='/plugins/bootstrap-icons/bootstrap-icons.css' rel='stylesheet')
+  //- link(href='/plugins/boxicons/css/boxicons.min.css' rel='stylesheet')
   link(href='/plugins/glightbox/css/glightbox.min.css' rel='stylesheet')
-  link(href='/plugins/remixicon/remixicon.css' rel='stylesheet')
+  //- link(href='/plugins/remixicon/remixicon.css' rel='stylesheet')
   link(href='https://unpkg.com/swiper@7/swiper-bundle.min.css' rel='stylesheet')
   link(rel="stylesheet" href="/css/otherproduct.css")
   link(href='/css/themes/slide/style.css' rel='stylesheet')
@@ -63,10 +63,10 @@ block content
           .row(data-aos='fade-up' data-aos-delay='100')
               .col-lg-12.d-flex.justify-content-center
                   ul#portfolio-flters
-                      li.text-dark.filter-active(data-filter='*') Hepsi
+                      li.filter-active.category(data-filter='*') Hepsi
                       if categories.length>0
                           each category,products in categories
-                              li.text-dark(data-filter=`.${category._id}` class=category._id==selectedCategory?"active":"") #{category.name}
+                              li.category(data-filter=`.${category._id}` class=category._id==selectedCategory?"active":"") #{category.name}
           .row.portfolio-container(data-aos='fade-up' data-aos-delay='200')
             each product in products
               +productcard(product)
@@ -82,12 +82,13 @@ block content
     +client(client) 
     br
 
+
 block script
     script(src='/plugins/purecounter/purecounter.js')
     script(src='/plugins/aos/aos.js')
     script(src='/plugins/glightbox/js/glightbox.min.js')
     script(src='/plugins/isotope-layout/isotope.pkgd.min.js')
-    script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
+    //- script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
     script(src="/js/otherproduct.js")
     script(src="/js/slide.js")
-    script(src="/js/card.js")
+    //- script(src="/js/card.js")

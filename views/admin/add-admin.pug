@@ -26,7 +26,7 @@ block content
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.form-control#name(type="text" name="name" placeholder="Muhammed İkabl SIRDAŞ")  
+                                    input.form-control#name(type="name" name="name" placeholder="Muhammed İkabl SIRDAŞ")  
 
             .col-sm-6
                 .card.text-center.bg-blue-grey
@@ -37,7 +37,7 @@ block content
                                 | Gerekli
                     .body
                         .form-line
-                            input.form-control#email(type="text" name="email" placeholder="test@mail.com")
+                            input.form-control#email(type="email" name="email" placeholder="test@mail.com")
         .row.clearfix        
             .col-sm-6
                 .card.text-center.bg-blue-grey
@@ -55,22 +55,27 @@ block content
                         h2
                             | STATÜ
                             small.text-danger
-                                | Gerekli
+                                | Gerekli Lüften Sadece Bir Tanesini Seçiniz
                             small.text-info
                                 | Kısıtlı Admin Sadece Oluşturulan Listeleri Görebilir. Ekleme Güncelleme ve Silme İşlemi Yapamaz. Site Bakım Modunda Giriş Yapamaz.
                             small.text-info
                                 | Admin İçin Herhangi Bir Kısıt Bulunmamaktadır.
                     .body
-                        .form-line
-
-                            .form-check
-                                input#isAdmin.form-check-input(type='radio' value="true" name='isAdmin')
-                                label.form-check-label(for='isAdmin')
-                                    | Admin
-                            .form-check
-                                input#isLimited.form-check-input(type='radio' name='isLimited' value="true" checked='')
-                                label.form-check-label(for='isLimited')
-                                    | Kısıtlı Admin
+                        .row
+                            .col
+                                .card.bg-light
+                                    .body
+                                        .form-group
+                                            label.form-check-label.mb-3 Admin
+                                            .form-check.form-switch.d-flex.justify-content-center
+                                                input.form-check-input.mt-auto.p-2.bd-highlight#isAdmin(type="checkbox" name="isAdmin")
+                            .col
+                                .card.bg-light
+                                    .body
+                                        .form-group
+                                            label.form-check-label.mb-3 Kısıtlı Admin
+                                            .form-check.form-switch.d-flex.justify-content-center
+                                                input.form-check-input.mt-auto.p-2.bd-highlight#isLimited(type="checkbox" name="isLimited")
 
         .form-group.row
             input(type="submit" value="Admini Kaydet").btn.btn-warning.col-md-12 

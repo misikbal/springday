@@ -1,6 +1,7 @@
 extends ../layouts/admin-layout.pug
 block styles
     link(rel="stylesheet" href="/css/themes/image.css")
+    link(href='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' rel='stylesheet')
     script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
     script(src="/plugins/ckeditor/ckeditor.js")
 block content
@@ -37,8 +38,15 @@ block content
                             .body
                                 .form-line
                                     input.form-control#name(type="text" name="name" value=`${aboutservices.name}` placeholder="Sulu Klima")            
-        .row
-            .col-md-12
+        .row.clearfix
+            .col-md-2
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-4 Ana Sayfada Göster
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isHome(type="checkbox" name="isHome"  value=`${aboutservices.isHome}` checked=aboutservices.isHome)
+            .col-md-10
                 .form-group.row
                     .col-sm-12
                         .card.text-center.bg-blue-grey
@@ -48,7 +56,7 @@ block content
                                     small.text-info
                                         | Bir Tane Resim Seçilebilir
                             .text-center
-                                img(src=`/img/${aboutservices.imageUrl}` style="width:200px;").card-img-top.mt-3                            
+                                img(src=`/img/resized/${aboutservices.imageUrl}` style="width:200px;").card-img-top.mt-3                            
                             .body.bg-blue-grey
                                 .fileupload.fileupload-new(data-provides='fileupload')
                                     span.btn.btn-warning.btn-file
@@ -71,10 +79,26 @@ block content
                         .form-line
                         textarea.form-control(id="editor" name="description" cols="30" rows="10") #{aboutservices.description}
                             
+        .form-group.row.demo-tagsinput-area
+            .col-sm-12.bg-blue-grey
+                .card.text-center
+                    .header.bg-white
+                        h2
+                            | #TAG
+                            small.text-danger
+                                | Gerekli
+                            small.text-info
+                                | Tag Öneri için 
+                                a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
+                        .body
+                            .form-line
+                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value=`${aboutservices.tags}` placeholder="Taglerinizi Buraya Giriniz")
         .form-group.row
             input(type="submit" value="Hizmeti Güncelle").btn.btn-warning.col-md-12                     
 
 
 
 block script  
-    script(src="/js/script.js") 
+    script(src='/js/image.js')
+    script(src="/js/script.js")
+    script(src='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')

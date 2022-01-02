@@ -12,11 +12,11 @@ $("#flFileUpload").change(function(){
     readURL(this);
 });
 // check images demo
-var _validFileExtensions = [".jpg", ".jpeg",".gif", ".png", ".svg"];
+var _validFileExtensions = [".jpg", ".jpeg",".gif", ".png", ".svg",".webp"];
 function Validate(oForm) {
     var arrInputs = oForm.getElementsByTagName("input");
     if(arrInputs === ''){
-      alert('File upload: *jpg *jpeg *gif *png *svg');
+      alert('File upload: *jpg *jpeg *gif *png *svg *webp');
       return false;
     }
     for (var i = 0; i < arrInputs.length; i++) {
@@ -34,7 +34,7 @@ function Validate(oForm) {
                 }
 
                 if (!blnValid) {
-                    alert('File upload: *jpg *jpeg *gif *png *svg');
+                    alert('File upload: *jpg *jpeg *gif *png *svg *webp');
                     return false;
                 }
             }

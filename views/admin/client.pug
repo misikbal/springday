@@ -69,17 +69,16 @@ block content
                                             td(scope="row").align-middle #{index++}
 
                                             td.align-middle.text-center
-                                                img(src=`/img/${clients.clientlogo}` width="100" ).img-fluid.mx-auto.d-block
+                                                img(src=`/img/resized/${clients.clientlogo}` width="100" ).img-fluid.mx-auto.d-block
                                             td.align-middle #{clients.name}
                                             td.align-middle.text-center
                                                 a.btn.bg-blue-grey.btn-sm.mr-2(href=`${clients.link}` target="_blank")
                                                     span
                                                         i.fas.fa-external-link-alt.fa-2x                                                
                                             td.align-middle #{clients.userId.name}
-                                            td.align-middle 
-                                            //- #{clients.date.getHours()+":"+ clients.date.getMinutes()}
-                                            //-         br                                            
-                                            //-         | #{clients.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
+                                            td.align-middle #{clients.date.getHours()+":"+ clients.date.getMinutes()}
+                                                br                                            
+                                                | #{clients.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
                                             td.align-middle 
                                                 i(class=(clients.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
                                             if isAdmin

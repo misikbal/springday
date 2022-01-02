@@ -13,6 +13,16 @@ const projectSchema = mongoose.Schema({
         type:String,
     },
     isActive: Boolean,
+    isHome: Boolean,
+    tags:{
+        type:Array,
+        validate:{
+            validator:function(value) {
+                return value && value.length>0;
+            },
+            message:"ürün için en az bir etikten giriniz."
+        }
+    },
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",

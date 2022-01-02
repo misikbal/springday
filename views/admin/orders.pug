@@ -43,7 +43,7 @@ block content
                                         th Toplam Fiyat
                                         th Sipariş Tarihi
                                         th Siparişin Durumu
-
+                                        th Kullanıcı Ödeme İşlemini Yaptığını Bildirdi
                                         
                                         if isAdmin
                                             th Detaylar
@@ -55,6 +55,7 @@ block content
                                         th Toplam Fiyat
                                         th Sipariş Tarihi
                                         th Siparişin Durumu
+                                        th Kullanıcı Ödeme İşlemini Yaptığını Bildirdi
                                         if isAdmin
                                             th Detaylar
                                 tbody
@@ -71,12 +72,13 @@ block content
                                             td.align-middle #{order.date.getHours()+":"+ order.date.getMinutes()+" "}
                                                 br                                            
                                                 | #{order.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
+                                            
                                             td.align-middle 
-                                                    button.btn(class=(order.done? "btn-outline-success":order.cargo ? "btn-outline-info":order.approval ? "btn-outline-warning":!order.approval ? "btn-outline-danger"  :"") style="border-radius:50px;") 
+                                                    button.btn(class=(order.done? "btn-outline-success":order.cargo ? "btn-outline-info":order.approval ? "btn-outline-warning":!order.approval ? "btn-outline-danger"  :"") style="border-radius:5px; font-size:10px;") 
                                                         |#{order.done? "Ürün Teslim Edildi":order.cargo ? "Ürün Kargoya Verildi":order.approval ? "Sipariş Onaylandı": !order.approval ? "Ödeme Yapılmadı":""}
+                                            td.align-middle
                                             
-                                            
-                                            
+                                                i(class=(order.payment ? "text-success fas fa-comment-dollar" : "text-danger fas fa-comment-slash")).fa-3x
                                             
                                             if isAdmin
                                             

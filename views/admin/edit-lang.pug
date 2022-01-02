@@ -1,0 +1,85 @@
+extends ../layouts/admin-layout.pug
+
+block styles
+    link(rel="stylesheet" href="/css/themes/image.css")
+    link(href='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' rel='stylesheet')
+    script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+    script(src="/plugins/ckeditor/ckeditor.js")
+    
+block content
+    if errorMessage
+        div.alert.alert-danger.col-sm-7 !{errorMessage}
+    form(action="/admin/lang" method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)    
+        input(type="hidden" name="langid" value=`${lang._id}`)
+        .row.clearfix
+                .col-md-12
+                    .form-group.row
+                        .col-sm-12
+                            .card.text-center.bg-blue-grey
+                                .header
+                                    h2.text-white
+                                        | #{lang.lang} DİLİNİN GÜNCELLEME SAYFASI
+        .row.clearfix
+            .col-md-2
+
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-5 Aktif
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive" value=`${lang.isActive}` checked=lang.isActive)
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | DİLİN ADI
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#lang(type="text" name="lang" placeholder="English" value=`${lang.lang}`)  
+        .row
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | DİLİN BAYRAĞI
+                                    small.text-info
+                                        | Bir Tane Resim Seçilebilir
+                                .text-center
+                                    img(src=`/img/resized/${lang.imageUrl}` style="width:50px;").card-img-top.mt-3  
+                            .body.bg-blue-grey
+                                .fileupload.fileupload-new(data-provides='fileupload')
+                                    span.btn.btn-warning.btn-file
+                                        span.fileupload-new Yeni
+                                        span.fileupload-exists Değiştir
+                                        input#imageUrl(type="file" name="image" accept="image/*")
+                                    span.fileupload-preview
+                                    a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+            .col-md-6
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | DİLİN KODU
+                                    small.text-danger
+                                        | Gerekli
+                                    small.text-info
+                                        | Dil Kodunu Öğrenin
+                                        br
+                                        a(href="https://tr.wiktionary.org/wiki/Vikis%C3%B6zl%C3%BCk:Diller_listesi" style="text-decoration: none") https://tr.wiktionary.org/wiki/Vikis%C3%B6zl%C3%BCk:Diller_listesi
+                            .body
+                                .form-line
+                                    input.form-control#value(type="text" name="value" placeholder="en" value=`${lang.value}`)  
+        .form-group.row
+            input(type="submit" value="Dili Güncelle")#export-btn.col-md-12.btn.btn-warning
+block script
+    script(src='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')
+    script(src='/js/image.js')
+    script(src="/js/script.js") 

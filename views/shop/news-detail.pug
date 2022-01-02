@@ -2,15 +2,29 @@ extends ../layouts/main-layout.pug
 include ../mixins/client.pug
 
 block styles
-    link(href='/css/aboutservicesdetails.css' rel='stylesheet')
+    meta(name='keywords' content=news.tags[0])
+    meta(property='og:locale' content='tr_TR')
+    meta(property='og:type' content='article')
+    meta(property='og:url' content=`${system.siteUrl}/news/${news._id}`)
+    meta(property='og:site_name' content=`${title}`)
 
+    meta(property='article:section' content='Shop')
+    meta(property='og:updated_time' content=`${news.date}`)
+    meta(property='og:image:width' content='400')
+    meta(property='og:image:height' content='400')
+    meta(property='og:image:type' content='image/webp')
+
+    meta(property="og:image" content=`${news.imageUrl}`)
+    meta(property="og:title" content=`${news.name}`) 
+
+    link(href='/css/aboutservicesdetails.css' rel='stylesheet')
 
 
 block content
     br
     br
     br
-    img.d-block.w-100.animated(alt=`${news.imageUrl}` src=`/img/${news.imageUrl}`)
+    img.d-block.w-100.animated(alt=`${news.imageUrl}` src=`/img/resized/${news.imageUrl}`)
 
     .container
         .row
@@ -34,3 +48,7 @@ block content
                                             |#{newes.title}
                                             i.fa.fa-angle-right
     +client(client)
+    .gototop.js-top
+        a.js-gotop(href='#')
+            i.fa.fa-arrow-up
+

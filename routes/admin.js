@@ -11,6 +11,7 @@ const uploadController = require('../controllers/upload');
 const isAdmin=require("../middleware/isAdmin");
 const isLimited=require("../middleware/isLimited");
 
+
 const locals=require("../middleware/locals");
 
 router.get('/',locals,isLimited,adminController.getTasks);
@@ -166,5 +167,30 @@ router.post('/alladmin',locals,isAdmin, adminController.postEditAdmin);
 router.post('/delete-admin',locals,isAdmin, adminController.postDeleteAdmin);
 
 
+
+
+router.get('/lang',locals,isLimited, adminController.getLang);
+router.get('/add-lang',locals, isAdmin,adminController.getAddLang);
+router.post('/add-lang',locals,isAdmin, adminController.postAddLang);
+router.get('/lang/:langid',locals,isAdmin, adminController.getEditLang);
+router.post('/lang',locals,isAdmin, adminController.postEditLang);
+router.post('/delete-lang',locals,isAdmin, adminController.postDeleteLang);
+
+
+
+router.get('/bank',locals,isLimited, adminController.getBank);
+router.get('/add-bank',locals, isAdmin,adminController.getAddBank);
+router.post('/add-bank',locals,isAdmin, adminController.postAddBank);
+router.get('/bank/:bankid',locals,isAdmin, adminController.getEditBank);
+router.post('/bank',locals,isAdmin, adminController.postEditBank);
+router.post('/delete-bank',locals,isAdmin, adminController.postDeleteBank);
+
+router.get("/password",locals,isAdmin,adminController.getReset);
+router.post("/password",locals,isAdmin,adminController.postReset );
+
+router.get("/password",locals,isAdmin,adminController.getReset);
+router.post("/password",locals,isAdmin,adminController.postReset );
+router.get("/new-password/:token",isAdmin,locals,adminController.getNewPassword);
+router.post("/new-password",locals,isAdmin,adminController.postNewPassword );
 
 module.exports = router;   

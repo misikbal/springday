@@ -2,6 +2,20 @@ extends ../layouts/main-layout.pug
 include ../mixins/client.pug
 
 block styles 
+    meta(name='keywords' content=project.tags[0])
+    meta(property='og:locale' content='tr_TR')
+    meta(property='og:type' content='article')
+    meta(property='og:url' content=`${system.siteUrl}/project/${project._id}`)
+    meta(property='og:site_name' content=`${title}`)
+
+    meta(property='article:section' content='Shop')
+    meta(property='og:updated_time' content=`${project.date}`)
+    meta(property='og:image:width' content='400')
+    meta(property='og:image:height' content='400')
+    meta(property='og:image:type' content='image/webp')
+
+    meta(property="og:image" content=`${project.imageUrl}`)
+    meta(property="og:title" content=`${project.name}`) 
     link(href='/css/aboutservicesdetails.css' rel='stylesheet')
 block content
     br
@@ -13,7 +27,7 @@ block content
             .leftcolumn
                 .card.bg-light(style="border-top: 10px solid #0b5aa2;")
                     h2.text-center.itemss-head #{project.name}
-                    img.fakeimg(src=`/img/${project.imageUrl}` style='height:500px; width:auto;')
+                    img.fakeimg(src=`/img/resized/${project.imageUrl}` style='height:auto; width:auto;')
                     p !{project.description}
 
             .rightcolumn

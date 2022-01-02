@@ -9,6 +9,8 @@ const Contact = require("../model/contactus");
 const System = require("../model/system");
 const Advanced = require("../model/advanced");
 const Page = require("../model/page");
+const Systems = require("../model/system");
+
 
 const ip = require("ip");
 
@@ -29,7 +31,8 @@ exports.getLogin=(req,res,next)=>{
             path:"/login",
             title:"Login",
             page:page,
-            errorMessage:errorMessage
+            errorMessage:errorMessage,
+            action:req.query.action
         });
     }).catch(err =>console.log(err))
 
@@ -210,6 +213,8 @@ exports.postRegister=(req,res,next)=>{
                 return res.redirect("/register");
             })
         }
+        if(!user){
+
         bcrypt.hash(password,12)
         .then(hashedPassword=>{
         
@@ -237,7 +242,7 @@ exports.postRegister=(req,res,next)=>{
     
                                 sgMail
                             .send(msg)
-                            res.redirect("/login");
+                            res.redirect("/login?action=registered");
     
                         }).catch(err => next(err));  
                 
@@ -259,6 +264,8 @@ exports.postRegister=(req,res,next)=>{
                     next(err);
                 }
             })
+        }
+
     }).catch(err=>{
         if(err.name=="ValidationError"){
             let message="";
@@ -268,7 +275,8 @@ exports.postRegister=(req,res,next)=>{
             res.render("account/register",{
                 path:"/register",
                 title:"Register",
-                errorMessage:message
+                errorMessage:message,
+                action: req.query.action
             })
         }else{
             next(err);
@@ -284,7 +292,8 @@ exports.getReset=(req,res,next)=>{
     res.render("account/reset-password",{
         path:"/reset-password",
         title:"Reset Password",
-        errorMessage:errorMessage
+        errorMessage:errorMessage,
+        action: req.query.action
     }); 
 }
 exports.postReset=(req,res,next)=>{
@@ -307,26 +316,36 @@ exports.postReset=(req,res,next)=>{
                 user.resetTokenExpiration=Date.now()+3600000;
                 return user.save();
             }).then(result=>{
-                res.redirect("/");
-            const msg = {                
-                to: email, // Change to your recipient
-                from: 'muhammedikbal47100@gmail.com', // Change to your verified sender
-                subject: 'Parola Reset',
-                html: `
+                Systems.findOne()
+                .select("siteUrl")
+                .then(system=>{
+                const msg = {                
+                    to: email, // Change to your recipient
+                    from: 'muhammedikbal47100@gmail.com', // Change to your verified sender
+                    subject: 'Parola Reset',
+                    html: `
 
-                    <p>Parolanızu güncellemek için aşağıdaki linke tıklayınız.</p>
-                    <p>
-                        <a href="${system.siteUrl}/reset-password/${token}"> Reset Password </a>
-                    </p>
-                `,
-                }
-                sgMail
-                .send(msg)
-            })
-            .catch(err=>{
-                next(err);
-            })
-    });
+                        <p>Parolanızı güncellemek için aşağıdaki linke tıklayınız.</p>
+                        <p>
+                            <a href="${system.siteUrl}/reset-password/${token}"> Reset Password </a>
+                        </p>
+                    `,
+                    }
+                    sgMail
+                        .send(msg)
+                        .then(()=>{
+                            res.redirect("/reset-password?action=true");
+                        }).catch(err=>{
+                            res.redirect("/reset-password?action=false");
+                            console.log(err.response.body)
+                        })
+                })
+                .catch(err=>{
+                    next(err);
+                })
+        });
+});
+
     
     
 }
@@ -375,7 +394,7 @@ exports.postNewPassword=(req,res,next)=>{
         _user.resetTokenExpiration=undefined;
         return _user.save();
     }).then(()=>{
-        res.redirect("/login");
+        res.redirect("/login?action=success");
     }).catch(err=>{
         console.log(err);
     })

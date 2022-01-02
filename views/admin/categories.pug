@@ -49,8 +49,10 @@ block content
                                         th Kategori Adı
                                         th Yazar
                                         th Tarih
+                                        th Aktif
+
                                         if isAdmin
-                                            th
+                                            th 
                                 tfoot.bg-blue-grey
                                     tr
                                         th(scope="col").align-middle #
@@ -58,6 +60,7 @@ block content
                                         th Kategori Adı
                                         th Yazar
                                         th Tarih
+                                        th Aktif
                                         if isAdmin
                                             th
                                 tbody
@@ -72,8 +75,8 @@ block content
                                             td.align-middle #{category.date.getHours()+":"+ category.date.getMinutes()+" "}
                                                 br                                            
                                                 | #{category.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
-                                            //- td.align-middle 
-                                            //-     i(class=(product.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
+                                            td.align-middle 
+                                                i(class=(category.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
                                             if isAdmin
                                                 td.align-middle.position-relative
                                                     a.btn.btn-warning.btn-sm(href=`/admin/categories/${category._id}`) 

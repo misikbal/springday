@@ -7,6 +7,7 @@ mixin popularproduct(product)
                         img.card-img-top.deneme.center(data-src=`/img/resized/${product.imageUrl}` src="/img/three-dots.svg" alt=`${product.name}` style="width:100px; background-color:#9E9E9E").d-flex.justify-content-center
                     .col-md-8    
                         p.card-text.align-self-center #{product.name}
-                        p.card-text
-                            small.text-muted 
-                                i.fas.fa-lira-sign  #{product.price}
+                        if product.price!=null
+                            p.card-text
+                                small.text-muted 
+                                    i.fas.fa-lira-sign  #{product.price}

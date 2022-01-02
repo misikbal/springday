@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		
 		
 		
-			if (window.scrollY > 200) {
+			if (window.scrollY > 400) {
 				document.getElementById('navbar_top').classList.add('fixed-top');
 				document.getElementById('navbar_top').classList.remove('padding-top');
 
@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function(){
 			} else {
 				document.getElementById('navbar_top').classList.remove('fixed-top');
 
-					// remove padding top from body
 				document.body.style.paddingTop = '0';
 			
 			} 
@@ -39,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		if(window.location.pathname == '/' )
 		{
 		
-			if (window.scrollY > 200) {
+			if (window.scrollY > 400) {
 				document.getElementById('navbar_top').classList.add('fixed-top');
 				document.getElementById('navbar_top').classList.remove('padding-top');
 
@@ -98,7 +97,7 @@ $('body').on('mouseenter mouseleave','.nav-item',function(e){
             var _d=$(e.target).closest('.nav-item');_d.addClass('show');
             setTimeout(function(){
             _d[_d.is(':hover')?'addClass':'removeClass']('show');
-            },1);
+            },10);
         }
 });	
 

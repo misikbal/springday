@@ -1,7 +1,9 @@
 extends ../layouts/main-layout.pug
 include ../mixins/client.pug
 
-block styles 
+block styles
+    meta(name='robots' content='noindex')
+    meta(name='google' content='nositelinkssearchbox')
     link(href='/css/aboutservicesdetails.css' rel='stylesheet')
 block content
     br

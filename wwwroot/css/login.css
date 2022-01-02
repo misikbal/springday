@@ -202,7 +202,7 @@
     transition: all 200ms linear;
 }
 
-.btn{  
+.btn-login{  
   border-radius: 4px;
   height: 44px;
   font-size: 13px;

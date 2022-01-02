@@ -5,10 +5,10 @@ mixin aboutservices(aboutservices)
         .container.owl-2-style.text-center
                 .owl-carousel.owl-2.pt-3
                     each aboutservice in aboutservices
-                        .media-29101
-                            .item-4(style="height:18rem;")
+                        .media-29101(style="height:25rem;")
+                            .item-4(style="height:25rem;")
                                 a.card(href=`/aboutservices/${aboutservice._id}`).bg-light
-                                    img.deneme(data-src=`/img/${aboutservice.imageUrl}`)
+                                    img.deneme(data-src=`/img/resized/${aboutservice.imageUrl}`)
                                     .thumb.pt-1                                   
                                         h1.pb-1 #{aboutservice.name}
                                         span

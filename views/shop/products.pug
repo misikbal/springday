@@ -37,6 +37,7 @@ block content
                 .d-flex.align-content-stretch.flex-wrap
                   each product in products
                     if product.isActive
+                      
                       -var tag=product.tags[0].toString().split(",")
                       -for (var i=0; i<tag.length; i++){
                           button(type=button style="border-radius:30px; padding: 2px 5px;" ).btn.btn-info.btn-sm.mt-1.ml-1

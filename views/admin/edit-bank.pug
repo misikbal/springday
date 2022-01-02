@@ -1,0 +1,87 @@
+extends ../layouts/admin-layout.pug
+block styles 
+    link(rel="stylesheet" href="/css/themes/image.css")
+block content
+    if errorMessage
+        div.alert.alert-danger.col-sm-12 !{errorMessage}
+    form(action="/admin/bank"  method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)      
+        input(type="hidden" name="bankid" value=`${bank._id}`)         
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | BANKA HESABI EKLEME SAYFASI 
+        .row.clearfix
+            .col-md-2
+
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-5 Aktif
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive" value=`${bank.isActive}` checked=bank.isActive)
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | BANKA HESAP SAHİBİNİN ADI SOYADI
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#holder(type="text" name="holder" placeholder="Springday" value=`${bank.holder}`)  
+        .row
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | BANKA LOGOSU
+                                    small.text-info
+                                        | Bir Tane Resim Seçilebilir
+                            .text-center
+                                img(src=`/img/resized/${bank.imageUrl}` style="width:200px;").card-img-top.mt-3 
+                            .body.bg-blue-grey
+                                .fileupload.fileupload-new(data-provides='fileupload')
+                                    span.btn.btn-warning.btn-file
+                                        span.fileupload-new Yeni
+                                        span.fileupload-exists Değiştir
+                                        input#image(type="file" name="image" accept="image/*")
+                                    span.fileupload-preview
+                                    a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+        .row
+            .col-md-2
+                    .form-group.row
+                        .col-sm-12
+                            .card.text-center.bg-blue-grey
+                                .header.bg-white
+                                    h2
+                                        | HESAP TÜRÜ
+                                        small.text-danger
+                                            | Gerekli
+                                .body
+                                    .form-line
+                                        input.form-control#accountType(type="text" name="accountType" placeholder="TL"  value=`${bank.accountType}`)  
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | IBAN
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#iban(type="text" name="iban" placeholder="TR330006100519786457841326"  value=`${bank.iban}`)  
+        .form-group.row
+            input(type="submit" value="Hesabı Kaydet")#export-btn.col-md-12.btn.btn-warning
+block script
+    script(src='/js/image.js')

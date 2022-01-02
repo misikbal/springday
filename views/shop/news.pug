@@ -3,7 +3,6 @@ include ../mixins/client.pug
 
 block styles
 
-    link(href='/css/project.css' rel='stylesheet')
     link(href='/css/aboutservices.css' rel='stylesheet')
     link(href='/css/news.css' rel='stylesheet')
 
@@ -14,30 +13,52 @@ block content
     br
     br
     br
-    .container-fluid.pb-4.pt-4.paddding
+    .container.pb-4.pt-4.paddding
         .container.paddding
             .row.mx-0
                 .col-md-8.animate-box(data-animate-effect='fadeInLeft')
                     div
-                        .fh5co_heading.fh5co_heading_border_bottom.py-2.mb-4 News
+                        h2.fh5co_heading.fh5co_heading_border_bottom.py-2.mb-4 Gelişmeler
                     each newes in news
-                        .row.pb-4
-                            .col-md-5
+                        .row
+                            .col-md-12.bg-light
                                 .fh5co_hover_news_img
-                                    .fh5co_news_img
+                                    .fh5co_news_img.text-center
                                         a(href=`/news/${newes._id}` style="text-decoration: none")
-                                        img(src=`/img/${newes.imageUrl}` alt=`${newes.title}`)
-                                    div
-                            .col-md-7.animate-box
-                                a.fh5co_magna.py-2(href=`/news/${newes._id}` style="text-decoration: none")
-                                    | #{newes.title}
-                                    br
-                                a.fh5co_mini_time.py-3(href=`/news/${news._id}` style="text-decoration: none")
-                                    | #{newes.newsdate}
+                                            img(src=`/img/resized/${newes.imageUrl}` alt=`${newes.title}` style="width:500px; height:auto;")
+                        .row.mb-5
+                            .col-md-12.bg-light.align-middle.text-center
+                                .row
+                                    .col.text-center.mt-2
+                                        a(href=`/news/${newes._id}` style="text-decoration: none")
+                                            h3 #{newes.title}
+                                            br
+                                .row
+                                    .col
+                                
+                                        a(href=`/news/${news._id}` style="text-decoration: none")
+                                            p.h6 #{newes.newsdate}
+                                hr
+                                
                                 .fh5co_consectetur
-                                    | !{newes.description.toString().substr(0,250)+"..."}
-                .col-md-3.animate-box(data-animate-effect='fadeInRight')
-                    div
-                        .fh5co_heading.fh5co_heading_border_bottom.py-2.mb-4 Tags
+                                    p !{newes.description.toString().substr(0,250)+"..."}
+                                hr
+                                button.btn.btn-warning.mb-3
+                                    a.text-white(href=`/news/${newes._id}` style="text-decoration: none;")
+                                        span Devamı
+                .col-md-3.animate-box(data-animate-effect='fadeInRight').mt-5
+                    div        
+                            .card.mt-4.bg-light(style="height:auto;")
+                                .header.p-2
+                                    h2.h5.text-center
+                                        | TAG
+                                .body.ml-1
+                                    .d-flex.align-content-stretch.flex-wrap
+                                    each newes in news
+                                        -var tag=newes.tags[0].toString().split(",")
+                                        -for (var i=0; i<tag.length; i++){
+                                            button(type=button style="border-radius:30px; padding: 2px 5px;" ).btn.btn-info.btn-sm.mt-1.ml-1
+                                                a(href=`/news/${newes._id}` style="text-decoration: none;").text-light #{tag[i]}
+                                        -}
 
     +client(client)
