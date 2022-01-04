@@ -28,7 +28,7 @@ block content
     if slides.length>0
 
       .w-auto
-        #carouselExampleIndicators.carousel.slide.lazy-load(data-ride='carousel',data-interval="2500")
+        #carouselExampleIndicators.carousel.slide(data-ride='carousel',data-interval="2500")
             ol.carousel-indicators
               -var slideIndex=0;
                 each slide in slides
@@ -36,8 +36,7 @@ block content
                   -slideIndex++;
               script.
                 $(".carousel-indicators .li-slide").first().addClass("active");
-            #bigCarousel.carousel.slide
-            .carousel-inner.w-100            
+            .carousel-inner    
                   each slide in slides
                         +createSlide(slide)
             a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev')

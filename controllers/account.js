@@ -317,11 +317,11 @@ exports.postReset=(req,res,next)=>{
                 return user.save();
             }).then(result=>{
                 Systems.findOne()
-                .select("siteUrl")
+                .select("siteUrl mail")
                 .then(system=>{
                 const msg = {                
-                    to: email, // Change to your recipient
-                    from: 'muhammedikbal47100@gmail.com', // Change to your verified sender
+                    to: email, 
+                    from: system.mail, 
                     subject: 'Parola Reset',
                     html: `
 

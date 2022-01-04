@@ -59,13 +59,15 @@ aside#leftsidebar.sidebar
                     
                         i.material-icons menu
                         span Menü Yönetimi
-                li(class=(path===("/admin/add-lang") || path===("/admin/lang")  || path===("/admin/users") || path===("/admin/edit-lang") || (path==='/admin/contact') ? 'active ':''))
+                li(class=(path===("/admin/add-lang") || path===("/admin/lang")  || path===("/admin/users") || path===("/admin/edit-lang") || (path==='/admin/contact') || (path==='/admin/footer') ? 'active ':''))
                     a.menu-toggle(href='javascript:void(0);').nav-link
                         i.material-icons assignment_turned_in
                         span Site Yönetimi
                     ul.ml-menu
                         li(class=(path==='/admin/lang' ? 'active':''))
                             a(href='/admin/lang').nav-link Dil Yönetimi
+                        li(class=((path==='/admin/footer') ? 'active':''))
+                            a(href='/admin/footer').nav-link Footer Alanı
                         li(class=((path==='/admin/users') ? 'active':''))
                             a(href='/admin/users').nav-link Üyeler
                         li(class=((path==='/admin/contact') ? 'active':''))

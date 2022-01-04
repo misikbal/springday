@@ -97,10 +97,31 @@ block content
                                 optgroup(label='<-------------------->')
                                     option() Lütfen Bir Sayfa Seçiniz
 
-                                optgroup(label='Ürünler')
-                                    if product.length > 0
-                                        each products in product
-                                            option(value=`/products/${products._id+","+products.name}`) #{products.name}
+                                if product.length > 0
+                                    optgroup(label='Ürünler')
+                                            each products in product
+                                                    option(value=`/products/${products._id+","+products.name}`) #{products.name}
+                                if services.length > 0                                
+                                    optgroup(label='Hizmetler')
+                                            each service in services
+                                                    option(value=`/aboutservices/${service._id+","+service.name}`) #{service.name}
+                                if project.length > 0                                
+                                    optgroup(label='Projeler')
+                                            each projects in project
+                                                    option(value=`/project/${projects._id+","+projects.name}`) #{projects.name}
+                                if about.length > 0                                
+                                    optgroup(label='Hakkımızda Sayfası')
+                                            each abouts in about
+                                                    option(value=`/about/${abouts._id+","+abouts.name}`) #{abouts.name}
+                                if blog.length > 0                                
+                                    optgroup(label='Blog')
+                                            each blogs in blog
+                                                    option(value=`/news/${blogs._id+","+blogs.title}`) #{blogs.title}
+                                if client.length > 0                                
+                                    optgroup(label='Referanslar')
+                                            each clients in client
+                                                    option(value="/client,"+`${clients.name}`) #{clients.name}
+                                        
 
         .row
             .col-sm-12

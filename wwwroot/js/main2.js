@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		
 		
 		
-			if (window.scrollY > 400) {
+			if (window.scrollY > 600) {
 				document.getElementById('navbar_top').classList.add('fixed-top');
 				document.getElementById('navbar_top').classList.remove('padding-top');
 
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		if(window.location.pathname == '/' )
 		{
 		
-			if (window.scrollY > 400) {
+			if (window.scrollY > 600) {
 				document.getElementById('navbar_top').classList.add('fixed-top');
 				document.getElementById('navbar_top').classList.remove('padding-top');
 
@@ -127,7 +127,7 @@ $(document).ready(function($) {
 
 })(jQuery); 
 $(document).ready(function(){
-$('#itemslider').carousel({ interval: 3000 });
+// $('#itemslider').carousel({ interval: 3000 });
 
 $('.carousel-showmanymoveone .item').each(function(){
 var itemToClone = $(this);

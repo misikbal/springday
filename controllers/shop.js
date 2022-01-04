@@ -110,7 +110,7 @@ exports.getProducts = (req, res, next) => {
                 res.render("shop/products", {
                     title: "Products", 
                     products: products,
-                    path: '/',
+                    path: '/products',
                     categories:categories,
                     isAuthenticated:req.session.isAuthenticated
                 }) 
@@ -264,7 +264,7 @@ exports.getOrders = (req, res, next) => {
         .where({isActive:true})
         .then(allbank=>{
             res.render("shop/allorders", {
-                title: "Ordrers",
+                title: "Orders",
                 path: '/orders',
                 orders:orders,
                 allbank:allbank
@@ -403,7 +403,7 @@ exports.postAddContact= (req, res, next) => {
                 }
                 res.render('shop/contactus', {
                     title: 'Contact',
-                    path: '/shop/contactus',
+                    path: '/contactus',
                     errorMessage:message,
                     inputs:{
                         name: name,
@@ -437,7 +437,7 @@ exports.getAboutServices = (req, res, next) => {
                     title: "About Services", 
                     aboutservices: aboutservices,
                     client:client,
-                    path: '/',
+                    path: '/aboutservices',
                     isAuthenticated:req.session.isAuthenticated
                 }) 
             })
@@ -520,7 +520,7 @@ exports.getProjects = (req, res, next) => {
                     title: "Project", 
                     project: project,
                     client:client,
-                    path: '/',
+                    path: '/project',
                     isAuthenticated:req.session.isAuthenticated
                 }) 
             })
@@ -580,7 +580,7 @@ exports.getAbouts = (req, res, next) => {
                         viewabout: viewabout,
                         info:info,
                         client:client,
-                        path: '/',
+                        path: '/about',
                         isAuthenticated:req.session.isAuthenticated
                     })
                 })
@@ -638,7 +638,7 @@ exports.getNews = (req, res, next) => {
                     allnews:allnews,
                     client:client,
                     selectedCategory:newsid,
-                    path:"/about",
+                    path:"/news",
                 });
             })
         })
@@ -662,7 +662,7 @@ exports.getAllNews = (req, res, next) => {
                         title: "News", 
                         news: news,
                         client:client,
-                        path: '/',
+                        path: '/news',
                         isAuthenticated:req.session.isAuthenticated
                     })
             })

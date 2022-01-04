@@ -59,63 +59,99 @@
                                     img.card-image(src=`/img/resized/${logo.logo}` width="150px" )
                                 button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
                                     span.navbar-toggler-icon
+                                        i.fas.fa-bars.mt-1
+
                                 
                                 #navbarSupportedContent.collapse.navbar-collapse
                                     ul.navbar-nav.ml-auto.py-4.py-md-0
-                                        li.pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                            a(href="/",class=(path=='/'?'active nav-link':'nav-link') ) !{page.home}
+                                        if page.home!="" && page.home_isActive
+                                            li(class=(path==='/'?'active':'') ).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                a(href="/").nav-link !{page.home}
 
+                                        if page.products!="" && page.products_isActive
                                                 
-                                        li(class=(path=='/products'?'active':'')).dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4
-                                            a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true' delay=5000)
-                                                | !{page.products}
-                                            .dropdown-menu.megamenu.bg-light(aria-labelledby='navbarDropdown' style="opacity:0.95; height:auto; overflow:auto;")
-                                                .row.mb-3
-                                                    .col-12
-                                                        a.dropdown-item(href='/products')
-                                                            p Tüm Ürünler
-                                                        hr
-                                                .row
-                                                    p.h3 Kategoriler
-                                                    hr
-                                                    each menucategories in menucategory
-                                                        .col-4.text-center
-                                                            a.dropdown-item(href=`/categories/${menucategories._id}`)
+                                            li(class=(path==='/products'?'active':'')).dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                    a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true' delay=5000)
+                                                        | !{page.products}
+                                                    .dropdown-menu.megamenu.bg-light(aria-labelledby='navbarDropdown' style="opacity:0.95; height:auto; overflow:auto;")
+                                                        .row.mb-3
+                                                            .col-12
+                                                                a.dropdown-item(href='/products')
+                                                                    p Tüm Ürünler
+                                                                hr
+                                                        .row
+                                                            .col-12
 
-                                                                img(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${menucategories.categoryImg}` alt="").w-25.deneme.card-img-top
-                                                                
-                                                                p #{menucategories.name}
+                                                                p.h3 Kategoriler
+                                                                hr
+                                                                .row
+                                                                    each menucategories in menucategory
+                                                                        .col-4.text-center
+                                                                            a.dropdown-item(href=`/categories/${menucategories._id}`).nav-link
+
+                                                                                img(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${menucategories.categoryImg}` alt="").w-25.deneme.card-img-top
+                                                                                
+                                                                                p #{menucategories.name}
                                         //- li(class=(path==='/admin/categories' ? 'active':''))
-                                        li(class=(path===('/aboutservices') ? 'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                            a(href="/aboutservices").nav-link !{page.services}
-                                        li(class=(path==='/about'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                            a(href="/about").nav-link !{page.about}
-                                        li(class=(path==='/project'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                            a(href="/project").nav-link !{page.project}
-                                        li(class=(path==='/project'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                            a(href="/client",class=(path==='/client'?'active nav-link':'nav-link')).nav-link !{page.client}
-                                        li(class=(path==='/project'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                            a(href="/contactus",class=(path==='/contactus'?'active nav-link':'nav-link')).nav-link !{page.contact}
+                                        if page.services!="" && page.services_isActive
+                                        
+                                            li(class=(path===('/aboutservices') ? 'active':'')).nav-item.pl-4.pl-md-0.ml-0.ml-md-4
+                                                a(href="/aboutservices").nav-link !{page.services}
+                                        if page.about!="" && page.about_isActive
+                                            li(class=(path==='/about'?'active':'')).dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                a#about.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true' delay=5000)
+                                                    | !{page.about}
+                                                .dropdown-menu.megamenu.bg-light(aria-labelledby='about' style="opacity:0.95; height:auto;")
+                                                    .row.mb-3
+                                                        .col-12
+                                                            a.dropdown-item(href='/about')
+                                                                p Hakkımızda
+                                                            hr
+                                                    .row
+                                                        each about in footerabouts
+                                                            .col-4.text-center
+                                                                a.dropdown-item(href=`/about/${about._id}`)                                                                               
+                                                                    
+                                                                    p #{about.name}
+                                                                    
+                                        if page.project!="" && page.project_isActive
+                                        
+                                            li(class=(path==='/project'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                a(href="/project").nav-link !{page.project}
+                                        if page.client!="" && page.client_isActive
+                                        
+                                            li(class=(path==='/client'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                a(href="/client",class=(path==='/client'?'active nav-link':'nav-link')).nav-link !{page.client}
+                                        if page.contact!="" && page.contact_isActive
+                                        
+                                            li(class=(path==='/contactus'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                a(href="/contactus",class=(path==='/contactus'?'active nav-link':'nav-link')).nav-link !{page.contact}
+                                        if page.blog!="" && page.blog_isActive
+                                        
+                                            li(class=(path==='/news'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                a(href="/news",class=(path==='/news'?'active nav-link':'nav-link')).nav-link !{page.blog}
                                         if isAuthenticated
-                                                li.pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                                    a.nav-link.dropdown-toggle(data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') 
-                                                        span
-                                                            | !{page.user}
-                                                    .dropdown-menu.bg-light
-                                                        if active.ecommarce_isActive
-                                                            a.dropdown-item(href='/orders') SİPARİŞLERİM
-                                                        a.dropdown-item(href='#') AYARLAR
-                                                        hr.dropdown-divider
-                                                        a.dropdown-item(href='/logout') ÇIKIŞ
-                                                if active.ecommarce_isActive
+                                                if page.user!="" && page.user_isActive
                                                 
-                                                    li.pl-4.pl-md-0.ml-0.ml-md-4
-                                                        a.nav-link.cart.position-relative.d-inline-flex(href="/cart",class=(path==='/cart'?'active nav-link':'nav-link') aria-label='View your shopping cart')
+                                                    li(class=(path==='/orders'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                        a.nav-link.dropdown-toggle(data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') 
                                                             span
-                                                                | !{page.cart}
+                                                                | !{page.user}
+                                                        .dropdown-menu.bg-light
+                                                            if active.ecommarce_isActive
+                                                                a.dropdown-item(href='/orders') SİPARİŞLERİM
+                                                            //- a.dropdown-item(href='#') AYARLAR
+                                                            hr.dropdown-divider
+                                                            a.dropdown-item(href='/logout') ÇIKIŞ
+                                                if active.ecommarce_isActive 
+                                                    if page.cart!="" && page.cart_isActive
+                                                        li(class=(path==='/cart'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                            a.nav-link.cart.position-relative.d-inline-flex(href="/cart",class=(path==='/cart'?'active nav-link':'nav-link') aria-label='View your shopping cart')
+                                                                span
+                                                                    | !{page.cart}
 
                                         else if !isAuthenticated
-                                            li.pl-4.pl-md-0.ml-0.ml-md-4
+                                            li(class=(path==='/login'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4
                                                 a.nav-link(href="/login") GİRİŞ
                                         if isAdmin || isLimited
                                             li.pl-4.pl-md-0.ml-0.ml-md-4

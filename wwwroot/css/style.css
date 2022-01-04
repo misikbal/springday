@@ -80,7 +80,6 @@ body.dark::-webkit-scrollbar-thumb:hover {
 }
 .navbar-nav a {
 	font-family: poppins;
-	font-size: 12px;
 	text-transform: uppercase;
 	font-weight: bold;
 }
@@ -1040,21 +1039,6 @@ body.dark .fakeimg {
 	}
 	.nav-item:after{
 		display: none;
-	}
-	.nav-item::before {
-		position: absolute;
-		display: block;
-		top: 15px;
-		left: 0;
-		width: 11px;
-		height: 1px;
-		content: "";
-		border: none;
-		background-color: #000;
-		/* vertical-align: 0; */
-	}
-	body.dark .nav-item::before {
-		background-color: #fff;
 	}
 	body.dark .dropdown-toggle::after {
 		background-color: #fff;

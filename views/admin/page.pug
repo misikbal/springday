@@ -24,6 +24,7 @@ block content
                         .header
                             h2.text-white
                                 | SAYFA AYARI
+                                
         .row.clearfix.text-center.d-flex.justify-content-center
             .col-lg-6.col-md-6.col-sm-12.col-xs-12
                 .card
@@ -31,64 +32,116 @@ block content
                         h2
                             | Navbar Ayarları
                             small Sadece sayfaların isimlerini değiştirebilir ve aktif/pasif yapabilirsiniz
+                            small.text-info
+                                    a(href="https://fontawesome.com/v5.15/icons/" target="_blank") https://fontawesome.com/v5.15/icons/ 
+                                    |site üzerinden istediğiniz iconu seçip yapıştırabilirsiniz
                     .body
                         .clearfix.m-b-20
                             .dd
                                 ol.dd-list(data-id)
                                     
                                         li.dd-item(data-home='home')
-                                            .input-container
-                                                span.text-center.dd-handle
-                                                    i.fas.fa-align-justify
-                                                input(type="text" name="home" value=`${page.home}`)#home.form-control.text-center.input-field
+                                            .row
+                                                .col-11
+                                                    .input-container
+                                                        span.text-center.dd-handle
+                                                            i.fas.fa-align-justify
+                                                        input(type="text" name="home" value=`${page.home}`)#home.form-control.text-center.input-field
+                                                .col-1
+                                                    .form-check.form-switch.d-flex.justify-content-center.mt-2
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="home_isActive" value=`${page.home_isActive}` checked=page.home_isActive)
                                     
                                         li.dd-item(data-products='products')
-                                            .input-container
-                                                span.text-center.dd-handle
-                                                    i.fas.fa-align-justify
-                                                input(type="text" name="products" value=`${page.products}`)#products.form-control.text-center.input-field
+                                            .row
+                                                .col-11
+                                                    .input-container
+                                                        span.text-center.dd-handle
+                                                            i.fas.fa-align-justify
+                                                        input(type="text" name="products" value=`${page.products}`)#products.form-control.text-center.input-field
+                                                .col-1
+                                                    .form-check.form-switch.d-flex.justify-content-center.mt-2
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="products_isActive" value=`${page.products_isActive}` checked=page.products_isActive)
                                                                             
                                         li.dd-item(data-services='services')
-                                            .input-container
-                                                span.text-center.dd-handle
-                                                    i.fas.fa-align-justify
-                                                input(type="text" name="services" value=`${page.services}`)#services.form-control.text-center.input-field
-                                    
+                                            .row
+                                                .col-11
+                                                    .input-container
+                                                        span.text-center.dd-handle
+                                                            i.fas.fa-align-justify
+                                                        input(type="text" name="services" value=`${page.services}`)#services.form-control.text-center.input-field
+                                                .col-1
+                                                    .form-check.form-switch.d-flex.justify-content-center.mt-2
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="services_isActive" value=`${page.services_isActive}` checked=page.services_isActive)
                                         li.dd-item(data-about='about')
-                                            .input-container
-                                                span.text-center.dd-handle
-                                                    i.fas.fa-align-justify
-                                                input(type="text" name="about" value=`${page.about}`)#about.form-control.text-center.input-field
-                                    
+                                            .row
+                                                .col-11
+                                                    .input-container
+                                                        span.text-center.dd-handle
+                                                            i.fas.fa-align-justify
+                                                        input(type="text" name="about" value=`${page.about}`)#about.form-control.text-center.input-field
+                                                .col-1
+                                                    .form-check.form-switch.d-flex.justify-content-center.mt-2
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="about_isActive" value=`${page.about_isActive}` checked=page.about_isActive)
                                         li.dd-item(data-project='project')
-                                            .input-container
-                                                span.text-center.dd-handle
-                                                    i.fas.fa-align-justify
-                                                input(type="text" name="project" value=`${page.project}`)#project.form-control.text-center.input-field
-                                    
+                                            .row
+                                                .col-11
+                                                    .input-container
+                                                        span.text-center.dd-handle
+                                                            i.fas.fa-align-justify
+                                                        input(type="text" name="project" value=`${page.project}`)#project.form-control.text-center.input-field
+                                                .col-1
+                                                    .form-check.form-switch.d-flex.justify-content-center.mt-2
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="project_isActive" value=`${page.project_isActive}` checked=page.project_isActive)
                                         li.dd-item(data-client='client')
-                                            .input-container                                        
-                                                span.text-center.dd-handle
-                                                    i.fas.fa-align-justify
-                                                input(type="text" name="client" value=`${page.client}`)#client.form-control.text-center.input-field
-                                                                    
+                                            .row
+                                                .col-11
+                                                    .input-container                                        
+                                                        span.text-center.dd-handle
+                                                            i.fas.fa-align-justify
+                                                        input(type="text" name="client" value=`${page.client}`)#client.form-control.text-center.input-field
+                                                .col-1
+                                                    .form-check.form-switch.d-flex.justify-content-center.mt-2
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="client_isActive" value=`${page.client_isActive}` checked=page.client_isActive)
                                         li.dd-item(data-contact='contact')
-                                            .input-container                                        
-                                                span.text-center.dd-handle
-                                                    i.fas.fa-align-justify
-                                                input(type="text" name="contact" value=`${page.contact}`)#contact.form-control.text-center.input-field
-                                    
+                                            .row
+                                                .col-11
+                                                    .input-container                                        
+                                                        span.text-center.dd-handle
+                                                            i.fas.fa-align-justify
+                                                        input(type="text" name="contact" value=`${page.contact}`)#contact.form-control.text-center.input-field
+                                                .col-1
+                                                    .form-check.form-switch.d-flex.justify-content-center.mt-2
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="contact_isActive" value=`${page.contact_isActive}` checked=page.contact_isActive)
+                                        li.dd-item(data-contact='blog')
+                                            .row
+                                                .col-11
+                                                    .input-container                                        
+                                                        span.text-center.dd-handle
+                                                            i.fas.fa-align-justify
+                                                        input(type="text" name="blog" value=`${page.blog}`)#blog.form-control.text-center.input-field
+                                                .col-1
+                                                    .form-check.form-switch.d-flex.justify-content-center.mt-2
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="blog_isActive" value=`${page.blog_isActive}` checked=page.blog_isActive)
                                         li.dd-item(data-cart='cart')
-                                            .input-container
-                                                span.text-center.dd-handle
-                                                    | !{page.cart}
-                                                input(type="text" name="cart" value=`${page.cart}`)#cart.form-control.text-center.input-field
-                                    
+                                            .row
+                                                .col-11
+                                                    .input-container
+                                                        span.text-center.dd-handle
+                                                            | !{page.cart}
+                                                        input(type="text" name="cart" value=`${page.cart}`)#cart.form-control.text-center.input-field
+                                                .col-1
+                                                    .form-check.form-switch.d-flex.justify-content-center.mt-2
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="cart_isActive" value=`${page.cart_isActive}` checked=page.cart_isActive)
                                         li.dd-item(data-user='user')
-                                            .input-container
-                                                span.text-center.dd-handle
-                                                    | !{page.user}
-                                                input(type="text" name="user" value=`${page.user}`)#user.form-control.text-center.input-field
+                                            .row
+                                                .col-11
+                                                    .input-container
+                                                        span.text-center.dd-handle
+                                                            | !{page.user}
+                                                        input(type="text" name="user" value=`${page.user}`)#user.form-control.text-center.input-field
+                                                .col-1
+                                                    .form-check.form-switch.d-flex.justify-content-center.mt-2
+                                                        input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="user_isActive" value=`${page.user_isActive}` checked=page.user_isActive)
                             
                         if isAdmin
                             .form-group.row.d-flex.justify-content-center

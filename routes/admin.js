@@ -193,4 +193,7 @@ router.post("/password",locals,isAdmin,adminController.postReset );
 router.get("/new-password/:token",isAdmin,locals,adminController.getNewPassword);
 router.post("/new-password",locals,isAdmin,adminController.postNewPassword );
 
+
+router.get("/footer",locals,isLimited,adminController.getFooter);
+router.post("/footer",locals,isAdmin,adminController.postEditFooter);
 module.exports = router;   

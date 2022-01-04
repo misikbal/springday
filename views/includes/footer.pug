@@ -4,10 +4,8 @@ footer
     .container.first_class
       .row
         .col-md-4.col-sm-6
-          h3 BE THE FIRST TO KNOW
-          p
-            | Get all the latest information on  Triedge Services, Events, Jobs
-            | and Fairs. Sign up for our newsletter today.
+          h3 #{footer.title}
+          p #{footer.description}
         .col-md-4.col-sm-6
           if logo.footerLogo.length > 0
             img(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${logo.footerLogo}`).deneme
@@ -43,29 +41,31 @@ footer
       .container.second_class_bdr
         .row
           .col-md-3.col-sm-6
-            p
-              | Your one-stop career platform to find Jobs, Internships, Professional Trainings, Projects, and Volunteering Opportunities.
+            p #{footer.slogan}
           .col-md-3.col-sm-6
             h3 SAYFALAR
             ul.footer-links
-              if page.home !==""   
+              if page.home !=="" && page.home_isActive
                 li
                   a(href='/') !{page.home}
-              if page.products !==""       
+              if page.products !=="" && page.products_isActive      
                 li
                   a(href='/products' target='_blank') !{page.products}
-              if page.about !==""     
+              if page.about !=="" && page.about_isActive   
                 li
                   a(href='/about' target='_blank') !{page.about}
-              if page.contact !==""    
+              if page.contact !=="" && page.contact_isActive
                 li
                   a(href='/contactus' target='_blank') !{page.contact}
-              if page.client !==""    
+              if page.client !=="" && page.client_isActive 
                 li
                   a(href='/client' target='_blank') !{page.client}
-              if page.project !==""    
+              if page.project !=="" && page.project_isActive   
                 li
                   a(href='/project' target='_blank') !{page.project}
+              if page.project !=="" && page.blog_isActive
+                li
+                  a(href='/news' target='_blank') !{page.blog}
           .col-md-3.col-sm-6
             h3 S.S.S
             ul.footer-category
@@ -74,13 +74,12 @@ footer
                   a(href=`/about/${footerabout._id}` target="_blank") #{footerabout.name}
             .clearfix
           .col-md-3.col-sm-6
-            h3 triedge Events
+            h3 #{page.blog}
             ul.footer-links
-              li
-                a(href='#') Triedge Events
-              li
-                a(href='#') Jobs &amp;AMP; Internship Fair 2019
+              each blogs in blog
+                li
+                  a(href=`/news/${blogs._id}`) #{blogs.title}
     .row
       .container-fluid
         .copyright  
-          p Copyright 2019 | All Rights Reserved by TRIEDGE Solutions Pvt. Ltd.
+          p !{footer.alt}

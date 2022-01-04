@@ -1,0 +1,88 @@
+extends ../layouts/admin-layout.pug
+
+block styles
+    include ../admin/includes/formhead.pug
+    
+    
+
+block content
+    if(action!=="undefined" && action==="edit")
+        .alert.alert-info.alert-dismissible.fade.show(role='alert')
+            strong Footer Alanı Başarılı Bir Şekilde Güncellendi
+        script.
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+            }, 2000);
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .form-group.row
+                .card.text-center.bg-blue-grey
+                    .header
+                        h2.text-white
+                            | FOOTER AYARLARI
+    form(action="/admin/footer" method="POST")  
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)   
+        .form-group.row
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | Footer Başlık
+                                    small.text-info
+                                        | Footer Alanında en üste yazacak bir başlık
+
+                            .body
+                                .form-line
+                                    input(type="text" name="title" value=`${footer.title}` placeholder="Başlık").form-control#title
+        .form-group.row
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | Footer Açıklama
+                                    small.text-info
+                                        | Sitenizi bir cümle ile açıklayınız
+
+                            .body
+                                .form-line
+                                    input(type="text" name="description" value=`${footer.description}` placeholder="Açıklama").form-control#description
+        .form-group.row
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | Marka Sloganı
+                                    small.text-info
+                                        | Marka sloganı varsa yazınız
+
+                            .body
+                                .form-line
+                                    input(type="text" name="slogan" value=`${footer.slogan}` placeholder="Slogan").form-control#slogan
+        .form-group.row
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | Footer Alt Bilgi
+                                    small.text-info
+                                        | Telif Hakkı 
+
+                            .body
+                                .form-line
+                                    textarea(type="text" name="alt" cols="10" rows="5" placeholder='Alt Bilgi').form-control#alt #{footer.alt}
+        if isAdmin
+
+            .form-group.row
+                .col-sm-12
+                    input(type="submit" value="Footer Alanını Kaydet").btn.btn-warning.col-md-12
+                

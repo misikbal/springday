@@ -23,6 +23,7 @@ const ActiveModule = require("../model/activemodule");
 const Lang = require("../model/lang");
 const Bank = require("../model/bank");
 const Slide = require("../model/slide");
+const Footer = require("../model/footer");
 const crypto = require("crypto");
 const path = require("path");
 const fs = require("fs");
@@ -1764,6 +1765,21 @@ const contact = req.body.contact;
 
 const cart = req.body.cart;
 const user = req.body.user;
+const blog = req.body.blog;
+
+
+const home_isActive =Boolean( req.body.home_isActive);
+const products_isActive = Boolean(req.body.products_isActive);
+const services_isActive = Boolean(req.body.services_isActive);
+const about_isActive = Boolean(req.body.about_isActive);
+const project_isActive = Boolean(req.body.project_isActive);
+const client_isActive = Boolean(req.body.client_isActive);
+const contact_isActive = Boolean(req.body.contact_isActive);
+
+const cart_isActive = Boolean(req.body.cart_isActive);
+const user_isActive = Boolean(req.body.user_isActive);
+const blog_isActive = Boolean(req.body.blog_isActive);
+
 
 Page.findOne()
     .then((pages) => {
@@ -1777,14 +1793,30 @@ Page.findOne()
     });
 
     (pages.home = home),
-        (pages.products = products),
-        (pages.services = services),
-        (pages.about = about),
-        (pages.project = project),
-        (pages.client = client),
-        (pages.contact = contact),
-        (pages.cart = cart),
-        (pages.user = user);
+    (pages.products = products),
+    (pages.services = services),
+    (pages.about = about),
+    (pages.project = project),
+    (pages.client = client),
+    (pages.contact = contact),
+    (pages.cart = cart),
+    (pages.user = user);
+    (pages.blog = blog);
+
+
+    pages.home_isActive=home_isActive;
+    pages.products_isActive=products_isActive;
+    pages.services_isActive=services_isActive;
+    pages.about_isActive=about_isActive;
+    pages.project_isActive=project_isActive;
+    pages.client_isActive=client_isActive;
+    pages.contact_isActive=contact_isActive;
+    pages.cart_isActive=cart_isActive;
+    pages.blog_isActive=blog_isActive;
+    pages.user_isActive=user_isActive;
+
+
+
     progress.save();
     pages.save();
     })
@@ -2976,11 +3008,11 @@ crypto.randomBytes(32, (err, buffer) => {
     })
     .then((result) => {
         Systems.findOne()
-        .select("siteUrl")
+        .select("siteUrl mail")
         .then((system) => {
             const msg = {
             to: email,
-            from: "muhammedikbal47100@gmail.com",
+            from: system.mail,
             subject: "Yeni Parola",
             html: `
         
@@ -3062,3 +3094,52 @@ User.findOne({
     console.log(err);
     });
 };
+
+
+exports.getFooter = (req, res, next) => {
+    Footer.findOne()
+        .then((footer) => {
+        res.render("admin/footer", {
+            title: "Admin Edit Footer",
+            path: "/admin/footer",
+            footer: footer,
+            action: req.query.action,
+        });
+        })
+    
+        .catch((err) => {
+        next(err);
+        });
+    };
+    
+    exports.postEditFooter = (req, res, next) => {
+    const title = req.body.title;
+    const description = req.body.description;
+    const slogan = req.body.slogan;
+    const alt = req.body.alt;
+
+    
+    Footer.findOne()
+        .then((footer) => {
+        if (!footer) {
+            return res.redirect("/");
+        }
+        const progress = new Process({
+            userId: req.user,
+            type: "edit",
+            name: "Footer alanını güncelledi.",
+        });
+    
+        footer.title=title;
+        footer.description=description;
+        footer.slogan=slogan;
+        footer.alt=alt;
+        progress.save();
+        footer.save();
+        })
+        .then((result) => {
+        res.redirect("/admin/footer?action=edit");
+        })
+        .catch((err) => next(err));
+    };
+    

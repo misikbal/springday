@@ -1,10 +1,17 @@
 const Slide=require('../model/slide');
 const Product=require('../model/product');
+const About=require('../model/about');
+const Services=require('../model/aboutservices');
+const Project=require('../model/project');
+const Blog=require('../model/news');
+const Client=require('../model/client');
+
+
+
 const Process=require('../model/process');
 const sharp = require('sharp');
 const path = require('path');
 
-const mongoose =require("mongoose");
 const fs=require("fs");
 
 exports.getSlide = (req, res, next) => {
@@ -15,6 +22,7 @@ exports.getSlide = (req, res, next) => {
             Product.find()
             .select("name")
             .then(product=>{
+
                 res.render('admin/slide', {
                     title: 'Admin Slide',
                     slide: slide,
@@ -34,34 +42,56 @@ exports.getAddSlide = (req, res, next) => {
     Product.find()
     .select("name")
     .then(product=>{
-        res.render('admin/add-slide', {
-            title: 'New Slide',
-            path: '/admin/add-slide',
-            product:product,
-            inputs:{
-                image:"",
-                title:"",
-                description:"",
-                buttonName:"",
-                buttonLink:"",
-                animate:"",
-                isActive:"",
-            }      
-    });
+        About.find()
+        .where({isActive:true})
+        .select("name")
+        .then(about=>{
+            Services.find()
+            .where({isActive:true})
+            .select("name")
+            .then(services=>{
+                Project.find()
+                .select("name")
+                .where({isActive:true})
+                .then(project=>{
+                    Blog.find()
+                    .where({isActive:true})
+                    .select("title")
+                    .then(blog=>{
+                        Client.find()
+                        .where({isActive:true})
+                        .select("name")
+                        .then(client=>{
+                            res.render('admin/add-slide', {
+                                title: 'New Slide',
+                                path: '/admin/add-slide',
+                                product:product,
+                                about:about,
+                                services:services,
+                                project:project,
+                                blog:blog,
+                                client:client,
+                                inputs:{
+                                    image:"",
+                                    title:"",
+                                    description:"",
+                                    buttonName:"",
+                                    buttonLink:"",
+                                    animate:"",
+                                    isActive:"",
+                                }      
+                        });
+                        })
+                    })
+                })
+            })
+        })
 });
 
 }
 
 exports.postAddSlide = async(req, res, next) => {
     
-    // const image=sharp(req.files.slideimg[0].path)
-    // .webp({quality:10,alphaQuality:10,lossless:true,progressive:true})
-    // .jpeg({quality:10,alphaQuality:10,lossless:true,progressive:true})
-    // .png({quality:10,alphaQuality:10,lossless:true,progressive:true})
-    // .toFile("/img/"+req.files.slideimg[0].filename,(err,info)=>{
-    //     fs.unlinkSync(req.files.slideimg[0].path)
-    //     console.log("byrada")
-    // });
     const {filename:image}=req.files.slideimg[0];
 
     
@@ -78,7 +108,7 @@ exports.postAddSlide = async(req, res, next) => {
             path: '/admin/add-slide',
             errorMessage:"Lüften bir resim seçiniz",
             inputs:{
-                // image:image.file,
+                image:image.file,
                 title:title,
                 description:description,
                 buttonName:buttonName,
@@ -167,14 +197,45 @@ exports.getEditSlide = (req, res, next) => {
             Product.find()
             .select("name")
             .then(product=>{
-                res.render('admin/edit-slide', {
-                    title: 'Edit Slide',
-                    path: '/admin/slide',
-                    slide: slide,
-                    product:product
-                });
-                    })
-                    })
+                About.find()
+                .where({isActive:true})
+                .select("name")
+                .then(about=>{
+                    Services.find()
+                    .where({isActive:true})
+                    .select("name")
+                    .then(services=>{
+                        Project.find()
+                        .where({isActive:true})
+                        .select("name")
+                        .then(project=>{
+                            Blog.find()
+                            .where({isActive:true})
+                            .select("title")
+                            .then(blog=>{
+                                Client.find()
+                                .where({isActive:true})
+                                .select("name")
+                                .then(client=>{
+                                    res.render('admin/edit-slide', {
+                                        title: 'Edit Slide',
+                                        path: '/admin/slide',
+                                        slide: slide,
+                                        product:product,
+                                        about:about,
+                                        services:services,
+                                        project:project,
+                                        blog:blog,
+                                        client:client,
+                                    });
+                                })
+                        })
+                })
+            })
+        })
+    })
+})
+
 
         .catch(err => { next(err); });
 }

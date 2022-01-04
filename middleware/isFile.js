@@ -10,6 +10,10 @@ module.exports=(req,res,next)=>{
     res.locals.active=req.active;
     res.locals.lang=req.lang;
     res.locals.loading=req.loading;
+    res.locals.footer=req.footer;
+    res.locals.blog=req.blog;
+
+
 
     
     next();

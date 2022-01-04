@@ -22,6 +22,10 @@ const Category=require("./model/category");
 const ActiveModule=require("./model/activemodule");
 const Slide=require("./model/slide");
 const Lang=require("./model/lang");
+const Footer=require("./model/footer");
+const News=require("./model/news");
+
+
 
 
 
@@ -121,8 +125,10 @@ app.use((req,res,next)=>{
                         Themes.findOne()
                         .then(theme=>{
                             About.find()
+                            .limit(7)
                             .where({isHome:false})
                             .where({isActive:true})
+                            
                             .then(footerabouts=>{
                                 Category.find()
                                 .where({isActive:true})
@@ -135,17 +141,30 @@ app.use((req,res,next)=>{
                                             Logo.findOne()
                                             .select("loadingLogo isActive loadingtext")
                                             .then(loading=>{
-                                                    req.system=system;
-                                                    req.page=page;
-                                                    req.social=social;
-                                                    req.logo=logo;
-                                                    req.theme=theme;
-                                                    req.footerabouts=footerabouts;
-                                                    req.menucategory=menucategory;
-                                                    req.active=active;
-                                                    req.lang=lang;
-                                                    req.loading=loading;
-                                                    next();
+                                                Footer.findOne()
+                                                .then(footer=>{
+                                                    News.find()
+                                                    .limit(7)
+                                                    .where({isActive:true})
+                                                    .then(blog=>{
+                                                        req.system=system;
+                                                        req.page=page;
+                                                        req.social=social;
+                                                        req.logo=logo;
+                                                        req.theme=theme;
+                                                        req.footerabouts=footerabouts;
+                                                        req.menucategory=menucategory;
+                                                        req.active=active;
+                                                        req.lang=lang;
+                                                        req.loading=loading;
+                                                        req.footer=footer;
+                                                        req.blog=blog;
+    
+                                                        next();
+                                                    })
+                                                    
+                                                })
+                                                    
                                                 })
                                                 
                                             
