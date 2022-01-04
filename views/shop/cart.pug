@@ -7,10 +7,8 @@ block styles
 
 block content
     if(action!=="undefined" && action==="delete")
-        div.alert.alert-danger The  product has been deleted.
+        div.alert.alert-danger Ürün Sepetten Silindi
 
-    if(action!=="undefined" && action==="edit")
-        div.alert.alert-success The  product has been update.
 
 
     .cart_section
@@ -59,8 +57,8 @@ block content
                                             - total +=(product.productId.price * product.quantity);
                                         | #{total} TL
                             .cart_buttons
-                                a(href="/").btn.btn-secondary.text-light Alişverişe Devam Et
-                                a(href="/adress").btn.btn-secondary.text-light Alişverişe Tamamla
+                                a(href="/products").btn.btn-secondary.text-light Alişverişe Devam Et
+                                a(href="/create-order").btn.btn-warning.text-light Alişverişe Tamamla
 
                     else
                         .row

@@ -1,15 +1,6 @@
 extends ../layouts/admin-layout.pug
 
 block content
-    if(action!=="undefined" && action==="create")
-        .alert.alert-success.alert-dismissible.fade.show(role='alert')
-            strong Ürün Başarılı Bir Şekilde Eklendi
-    if(action!=="undefined" && action==="delete")
-        .alert.alert-warning.alert-dismissible.fade.show(role='alert')
-            strong Ürün Başarılı Bir Şekilde Silindi
-    if(action!=="undefined" && action==="edit")
-        .alert.alert-info.alert-dismissible.fade.show(role='alert')
-            strong Ürün Ayarları Başarılı Bir Şekilde Güncellendi
 
         
     script.
@@ -25,7 +16,7 @@ block content
                 .card.text-center.bg-blue-grey
                     .header
                         h2.text-white
-                            | ÜRÜNLER
+                            | SİPAŞLER
     .row.clearfix
         .col-lg-12.col-md-12.col-sm-12.col-xs-12
             

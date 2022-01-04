@@ -341,7 +341,7 @@ exports.postOrder = (req, res, next) => {
             return req.user.clearCart();
         })
         .then(()=>{
-            res.redirect(`/orders/${order._id}`)
+            res.redirect(`/orders`)
         })
         .catch(err=>{next(err)});
 
