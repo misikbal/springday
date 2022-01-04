@@ -70,7 +70,7 @@
 
                                         if page.products!="" && page.products_isActive
                                                 
-                                            li(class=(path==='/products'?'active':'')).dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                            li(class=(path==='/products'?'active':'')).dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4
                                                     a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true' delay=5000)
                                                         | !{page.products}
                                                     .dropdown-menu.megamenu.bg-light(aria-labelledby='navbarDropdown' style="opacity:0.95; height:auto; overflow:auto;")
@@ -95,11 +95,11 @@
                                         //- li(class=(path==='/admin/categories' ? 'active':''))
                                         if page.services!="" && page.services_isActive
                                         
-                                            li(class=(path===('/aboutservices') ? 'active':'')).nav-item.pl-4.pl-md-0.ml-0.ml-md-4
+                                            li(class=(path===('/aboutservices') ? 'active':'')).nav-item.pl-4.pl-md-0.ml-0.ml-md-4.nav-item
                                                 a(href="/aboutservices").nav-link !{page.services}
                                         if page.about!="" && page.about_isActive
-                                            li(class=(path==='/about'?'active':'')).dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                                a#about.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true' delay=5000)
+                                            li(class=(path==='/about'?'active':'')).dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4
+                                                a#about.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='false' aria-expanded='false' delay=5000)
                                                     | !{page.about}
                                                 .dropdown-menu.megamenu.bg-light(aria-labelledby='about' style="opacity:0.95; height:auto;")
                                                     .row.mb-3
