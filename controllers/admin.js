@@ -2312,7 +2312,7 @@ User.findOne({ email: email })
     })
     .then(() => {
     Mail.findOne()
-        .select("title from html properties")
+        .select("title html properties")
         .then((mail) => {
         Systems.find()
             .select("sgMail")
@@ -2320,7 +2320,6 @@ User.findOne({ email: email })
             res.redirect("/admin/alladmin?action=create");
             const msg = {
                 to: email,
-                from: mail.from,
                 subject: mail.title,
                 html: mail.html,
             };

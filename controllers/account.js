@@ -56,31 +56,23 @@ exports.postLogin =(req,res,next)=> {
                         return res.redirect("/login");
                     })                    
                 }
-                if(user.isAdmin){
-                    const advanced=new Advanced(
-                        {
-                            userId:user._id,
-                            status:"admin",
-                            ip:ip.address()
-                        }
-                    )
-                    advanced.save()
-                }
-                else if(user.isLimited){
-                    const advanced=new Advanced(
-                        {
-                            userId:user._id,
-                            status:"Kısıtlı Admin",
-                            ip:ip.address()
-                        }
-                    )
-                    advanced.save()
-                }
+
                     bcrypt.compare(password,user.password)
                     .then(isSuccess=>{
                         if(isSuccess){
-                            if(res.locals.isAdmin){
+                            if(user.isAdmin){
                                 
+                            }
+                            
+                            if(res.locals.isAdmin){
+                                    const advanced=new Advanced(
+                                        {
+                                            userId:user._id,
+                                            status:"admin",
+                                            ip:ip.address()
+                                        }
+                                    )
+                                    advanced.save()
                                 
 
                                     req.session.user=user;
@@ -91,6 +83,24 @@ exports.postLogin =(req,res,next)=> {
                                     return res.redirect(url); 
 
                                 })
+                            }
+                            else if(user.isLimited){
+                                const advanced=new Advanced(
+                                    {
+                                        userId:user._id,
+                                        status:"Kısıtlı Admin",
+                                        ip:ip.address()
+                                    }
+                                )
+                                advanced.save()
+
+                                req.session.user=user;
+                                req.session.isAuthenticated=true;
+                                return req.session.save(function(err) {
+                                var url="/admin/" || req.session.redirectTo;                                    
+                                delete req.session.redirectTo                                    
+                                return res.redirect(url); 
+                            })
                             }
                             else{
                                 
@@ -231,11 +241,11 @@ exports.postRegister=(req,res,next)=>{
                     .select("title from html properties")
                     .then((mail)=>{
                         System.find()
-                        .select("sgMail")
+                        .select("sgMail mail")
                         .then(apikey=>{
                             const msg = {                
                                 to: email,
-                                from: mail.from,
+                                from: mail.mail,
                                 subject: mail.title,
                                 html: mail.html,
                                 }

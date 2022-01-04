@@ -1,9 +1,7 @@
 extends ../layouts/admin-layout.pug
 block styles
     link(rel="stylesheet" href="/css/login.css")
-    script(src="/plugins/ckeditor/ckeditor.js")
-
-
+    script(src="//cdn.ckeditor.com/4.17.1/full/ckeditor.js")
 block content
         form(action="/admin/mail" method="POST" enctype="multipart/form-data")
             input(type="hidden" name="_csrf" value=`${csrfToken}`)    
@@ -15,23 +13,59 @@ block content
                                 h2.text-white
                                     | E-POSTA AYARLARI
             .form-group.row
-                label(for="from").col-sm-2.col-form-label from
-                .col-sm-10
-                    input(type="text" name="from" value=`${mail.from}`).form-control#from
+                .col-sm-12
+                    .card.text-center.bg-blue-grey
+                        .header.bg-white
+                            h2
+                                | GÖNDEREN MAİL ADRESİ
+                                small.text-info
+                                    | Sistem Ayarlarında Kaydedilen Mail
+                                
+                                    
+                        .body
+                            .form-line
+                                input(type="text" name="mail" value=`${system.mail}` disabled).form-control#mail.bg-white.text-dark
             .form-group.row
-                label(for="title").col-sm-2.col-form-label Title
-                .col-sm-10
-                    input(type="text" name="title" value=`${mail.title}`).form-control#title
+                .col-sm-12
+                    .card.text-center.bg-blue-grey
+                        .header.bg-white
+                            h2
+                                | MAİL BAŞLIĞI
+                                small.text-danger
+                                    | Gerekli
+                        .body
+                            .form-line
+                                input.form-control#title(type="text" name="title" value=`${mail.title}` placeholder="Kayıt İşlemi Tamamlandı")  
             .form-group.row
-                label(for="html").col-sm-2.col-form-label html
-                .col-sm-10
-                    textarea.form-control(id="editor" name="html" cols="30" rows="10") #{mail.html}              
+                .col-sm-12
+                    .card.text-center.bg-blue-grey
+                        .header.bg-white
+                            h2
+                                | AÇIKLAMA                            
+                                small.text-danger
+                                    | Gerekli
+                                small.text-info
+                                    | Resim Konulabilir (Resim Ekleme Simgesine Tıklayın > Sunucuya Gözat )
+                                small.text-info
+                                    | İsterseniz 
+                                    a(href="https://playground.dyspatch.io/#/") dyspatch.io 
+                                    | üzerinden tasarlayıp ckeditordeki kaynak butonuna tıklayıp 
+                                    br
+                                    |html kısmı oraya yapıştırabilirsiniz
+                        .body
+                            .form-line
+                            textarea.form-control(id="editor" name="html" cols="30" rows="10") #{mail.html}                  
             .form-group.row
-                label(for="properties").col-sm-2.col-form-label properties
-                .col-sm-10
-                    input(type="text" name="properties" value=`${mail.properties}`).form-control#properties               
+                .col-sm-12
+                    .card.text-center
+                        .header.bg-blue-grey
+                            h2.text-white
+                                | ÖN İZLEME     
+                        .body.bg-white
+                            p !{mail.html}
             if isAdmin
                 .form-group.row
                     input(type="submit" value="Kaydet").btn.btn-warning.col-md-12                  
 block script  
-    script(src="/js/script.js") 
+    script.
+        CKEDITOR.replace('editor')
