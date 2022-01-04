@@ -27,7 +27,7 @@ block content
             .leftcolumn
                 .card.bg-light(style="border-top: 10px solid #0b5aa2;")
                     h2.text-center.itemss-head #{project.name}
-                    img.fakeimg(src=`/img/resized/${project.imageUrl}` style='height:auto; width:auto;')
+                    img.fakeimg(src=`/img/resized/${project.imageUrl}`).rounded.mx-auto.d-block
                     p !{project.description}
 
             .rightcolumn

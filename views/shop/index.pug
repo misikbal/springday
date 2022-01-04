@@ -12,11 +12,8 @@ include ../mixins/shortservices.pug
 
 block styles    
 
-  link(rel="stylesheet" href="/css/otherproduct.css")
-  link(href='/css/category.css' rel='stylesheet')
+  link(href='/css/otherproduct.min.css' rel='stylesheet')
   link(href='/css/project.css' rel='stylesheet')
-  link(href='/css/aboutservices.css' rel='stylesheet')
-
 
 block content
     if slides.length>0
@@ -70,6 +67,7 @@ block content
     +project(projectinfo)
     
     br
+    
     +aboutservices(aboutservices)
     br
     +client(client) 
@@ -77,11 +75,13 @@ block content
 
 
 block script
-    script(src='/plugins/purecounter/purecounter.js')
-    script(src='/plugins/aos/aos.js')
-    script(src='/plugins/glightbox/js/glightbox.min.js')
-    script(src='/plugins/isotope-layout/isotope.pkgd.min.js')
+    //- script(src='/plugins/purecounter/purecounter.js')
+    //- script(src='/plugins/aos/aos.js')
+    //- script(src='/plugins/glightbox/js/glightbox.min.js')
+    //- script(src='/plugins/isotope-layout/isotope.pkgd.min.js')
     //- script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
     script(src="/js/otherproduct.js")
+    script(src="/js/category.js")
+    
     script(src="/js/slide.js")
     //- script(src="/js/card.js")

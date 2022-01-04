@@ -24,9 +24,9 @@ block content
     br
     .row
         .leftcolumn
-            .card.bg-light(style="border-top: 10px solid #0b5aa2;")
+            .card.bg-light(style="border-top: 10px solid #0b5aa2;").text-center
                 h2.text-center.itemss-head #{aboutservice.name}
-                img.fakeimg(src=`/img/resized/${aboutservice.imageUrl}` style='height:500px; width:auto;')
+                img.fakeimg(src=`/img/resized/${aboutservice.imageUrl}`).rounded.mx-auto.d-block
                 p !{aboutservice.description}
 
         .rightcolumn
