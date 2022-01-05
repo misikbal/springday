@@ -238,20 +238,22 @@ exports.postRegister=(req,res,next)=>{
         })
             .then(()=>{
                 Mail.findOne()
-                    .select("title from html properties")
+                    .select("title html properties")
                     .then((mail)=>{
-                        System.find()
+                        System.findOne()
                         .select("sgMail mail")
                         .then(apikey=>{
                             const msg = {                
                                 to: email,
-                                from: mail.mail,
+                                from: apikey.mail,
                                 subject: mail.title,
                                 html: mail.html,
                                 }
     
                                 sgMail
                             .send(msg)
+                            console.log(email);
+                            console.log(apikey.mail);
                             res.redirect("/login?action=registered");
     
                         }).catch(err => next(err));  

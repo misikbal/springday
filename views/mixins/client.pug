@@ -1,9 +1,9 @@
 mixin client(client)
-    section#clients.clients(style="margin-top:10rem;")
+    section#clients.clients
         h2.mb-4.text-center Referanslar
-        .container(data-aos='zoom-in')
+        .container(data-aos='zoom-in' style="height:7rem;")
             .clients-slider.swiper
-                .swiper-wrapper.align-items-center.mb-5
+                .swiper-wrapper.align-items-center.mb-1
                     each clients in client
                             .swiper-slide
                                 img.img-fluid.deneme(data-src= `/img/resized/${clients.clientlogo}` alt='')

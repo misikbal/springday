@@ -112,7 +112,7 @@
                                                             .col-4.text-center
                                                                 a.dropdown-item(href=`/about/${about._id}`)                                                                               
                                                                     
-                                                                    p #{about.name}
+                                                                    p !{about.name}
                                                                     
                                         if page.project!="" && page.project_isActive
                                         
@@ -133,7 +133,7 @@
                                         if isAuthenticated
                                                 if page.user!="" && page.user_isActive
                                                 
-                                                    li(class=(path==='/orders'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                    li(class=(path==='/orders'?'active':'')).nav-item.pl-4.pl-md-0.ml-0.ml-md-4
                                                         a.nav-link.dropdown-toggle(data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') 
                                                             span
                                                                 | !{page.user}
@@ -145,7 +145,7 @@
                                                             a.dropdown-item(href='/logout') ÇIKIŞ
                                                 if active.ecommarce_isActive 
                                                     if page.cart!="" && page.cart_isActive
-                                                        li(class=(path==='/cart'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                        li(class=(path==='/cart'?'active':'')).nav-item.pl-4.pl-md-0.ml-0.ml-md-4
                                                             a.nav-link.cart.position-relative.d-inline-flex(href="/cart",class=(path==='/cart'?'active nav-link':'nav-link') aria-label='View your shopping cart')
                                                                 span
                                                                     | !{page.cart}
