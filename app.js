@@ -1,8 +1,9 @@
-const express = require("express");
-const app = express();
+var compression = require('compression')
+var express = require("express");
+var app = express();
 const bodyparser = require("body-parser");
 const path = require("path");
-
+app.use(compression())
 app.set("view engine", "pug");
 app.set("views", "./views");
 const mainModeRoutes = require("./routes/mainMode");
