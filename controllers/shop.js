@@ -214,7 +214,7 @@ exports.addToCart = (req, res, next) => {
                 return req.user.addToCart(product);
             })
             .then(()=>{
-                res.send("?action=insert");
+                res.redirect("?action=insert");
             })
             .catch((err)=>{
                 next(err);
