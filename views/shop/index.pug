@@ -11,9 +11,9 @@ include ../mixins/aboutservices.pug
 include ../mixins/shortservices.pug
 
 block styles    
-
-  link(href='/css/otherproduct.min.css' rel='stylesheet')
-  link(href='/css/project.css' rel='stylesheet')
+  script(type="text/javascript").
+    link('/css/otherproduct.min.css')
+    link('/css/project.css')
 
 block content
     if slides.length>0
