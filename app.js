@@ -1,6 +1,6 @@
-var compression = require('compression')
-var express = require("express");
-var app = express();
+const compression = require('compression')
+const express = require("express");
+const app = express();
 const bodyparser = require("body-parser");
 const path = require("path");
 app.use(compression())
