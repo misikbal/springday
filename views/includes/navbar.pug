@@ -89,7 +89,7 @@
                                                                         .col-4.text-center
                                                                             a.dropdown-item(href=`/categories/${menucategories._id}`).nav-link
 
-                                                                                img(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${menucategories.categoryImg}` alt="").w-25.deneme.card-img-top
+                                                                                //- img.deneme.card-img-top.w-25(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${menucategories.categoryImg}` alt="")
                                                                                 
                                                                                 p #{menucategories.name}
                                         //- li(class=(path==='/admin/categories' ? 'active':''))
@@ -186,9 +186,9 @@
                     .text-center
                         .alert.alert-success.show.mt-3
                             strong Ürün Başarılı Bir Şekilde Sepetinize Eklendi
-        script.
-            window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                    $(this).remove(); 
-                });
-            }, 3000);
+        //- script.
+        //-     window.setTimeout(function() {
+        //-         $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        //-             $(this).remove(); 
+        //-         });
+        //-     }, 3000);

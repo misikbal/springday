@@ -9,11 +9,11 @@ $(function() {
             loop: true,
             stagePadding: 0,
             margin: 20,
-            smartSpeed: 200,
+            smartSpeed: 800,
             autoplay: true,
             nav: true,
-            dots: true,
-            pauseOnHover: true,
+            dots: false,
+            pauseOnHover: false,
             responsive:{
                 700:{
                     margin: 20,

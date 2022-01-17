@@ -14,14 +14,14 @@ block content
             else
               h1 No Producsts
         .col-md-3.pt-2
-          .card.bg-light
+          .card.bg-light(style="height:auto;")
             .header.p-2
                 h2.h5.text-center
                     | KATEGORİLER
             .body
               include ../includes/menu.pug
           if products.length > 0
-            .card.mt-4.bg-light
+            .card.mt-4.bg-light(style="height:auto;")
               .header.p-2
                   h2.h5.text-center
                       | POPÜLER ÜRÜNLER
@@ -29,7 +29,7 @@ block content
                   each product in products
                     +popularproduct(product)
           if products.length > 0          
-            .card.mt-4.bg-light
+            .card.mt-4.bg-light(style="height:auto;")
               .header.p-2
                   h2.h5.text-center
                       | TAG

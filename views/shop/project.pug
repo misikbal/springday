@@ -4,8 +4,6 @@ include ../mixins/client.pug
 block styles
 
     link(href='/css/project.css' rel='stylesheet')
-    link(href='/css/aboutservices.css' rel='stylesheet')
-
 
 block content
     if project.length>0
@@ -33,6 +31,3 @@ block content
     br
     br
     +client(client)
-block script
-
-    script(src="/js/card.js")

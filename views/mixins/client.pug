@@ -1,10 +1,9 @@
 mixin client(client)
     section#clients.clients
         h2.mb-4.text-center Referanslar
-        .container(data-aos='zoom-in' style="height:7rem;")
-            .clients-slider.swiper
-                .swiper-wrapper.align-items-center.mb-1
+        .container.owl-2-style.text-center
+            .owl-carousel.owl-2.pt-3
+                if client.length>0
                     each clients in client
-                            .swiper-slide
-                                img.img-fluid.deneme(data-src= `/img/resized/${clients.clientlogo}` alt='')
-                .swiper-pagination
+                            .media-29101
+                                img.deneme.img-fluid.rounded.w-50(data-src= `/img/resized/${clients.clientlogo}` alt='')

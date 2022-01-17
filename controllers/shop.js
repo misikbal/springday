@@ -17,45 +17,45 @@ const Bank = require('../model/bank');
 
 
 
-exports.getIndex = (req, res, next) => {
+exports.getIndex = async (req, res, next) => {
     
-    Product.find({isHome:true})
+    await Product.find({isHome:true})
         .where({isActive:true})
         .sort({date:-1})
         .populate("categories.0",{"_id":{"$slice":1}})
 
 
 
-        .select("name price imageUrl categories description isActive popular tags")
+        .select("name price imageUrl categories isActive")
         .then(products=>{
             return products;
-        }).then(products=>{
-            Category.find()
+        }).then(async(products) => {
+            await Category.find()
             .where({isActive:true})
             .sort({date:-1})
             .then(categories=>{
                 return categories;
-            }).then(categories=>{
-                Slide.find()
+            }).then(async(categories)=>{
+                await Slide.find()
                 .where({isActive:true})
 
                 .sort({date:-1})
-                .then(slides=>{      
-                    Client.find()
+                .then(async(slides)=>{      
+                    await Client.find()
                         .where({isActive:true})
                         .select("clientlogo")
-                        .then(client=>{
-                            Services.find()
+                        .then(async (client)=>{
+                            await Services.find()
                             .where({isActive:true})
                             
-                            .then(services=>{
-                                AboutServices.find({isHome:true})
+                            .then(async(services)=>{
+                                await AboutServices.find({isHome:true})
                                     .where({isActive:true})
 
-                                    .then(aboutservices=>{
-                                        Project.find({isActive:true})
+                                    .then(async(aboutservices)=>{
+                                        await Project.find({isActive:true})
                                         .where({isHome:true})
-                                        .then(projectinfo=>{
+                                        .then(async(projectinfo)=>{
                                             
                                                 res.render("shop/index", {
                                                     title: "Springday", 
