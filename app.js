@@ -255,10 +255,6 @@ app.use(csurf());
 
 
 app.use("/admin", adminRoutes);
-
-
-app.use(userRoutes)
-
 app.use(function (req, res, next) {
     if (req.method != 'GET') {
     return next();
@@ -281,6 +277,10 @@ app.use(function (req, res, next) {
     return next();
     }
 });
+
+app.use(userRoutes)
+
+
 
 app.use(mainModeRoutes)
 
