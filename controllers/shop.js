@@ -148,7 +148,7 @@ exports.getProduct = (req, res, next) => {
                             
             }).catch((err)=>{
                 next(err);
-            });
+            })
         
     
     /*Product.findByPk(req.params.productid).then((product=>{

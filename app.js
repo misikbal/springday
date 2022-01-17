@@ -1,4 +1,5 @@
 const compression = require('compression')
+const spdy = require("spdy")
 const express = require("express");
 const app = express();
 const bodyparser = require("body-parser");
@@ -252,34 +253,32 @@ app.post('/delete_file',isFile,isAdmin, function(req, res, next){
     res.redirect('back')
 });
 app.use(csurf());
-
-
 app.use("/admin", adminRoutes);
+
 app.use(function (req, res, next) {
-    if (req.method != 'GET') {
-    return next();
-    }
-    var cachedReponse = myCache.get(req.url);
-    if (cachedReponse) {
-    res.header(cachedReponse.headers);
-    res.header('X-Proxy-Cache', 'HIT');
-    return res.send(cachedReponse.body);
-    } else {
-    res.originalSend = res.send;
-    res.send = (body) => {
-        myCache.set(req.url, {
-        'headers'   : res.getHeaders(),
-        'body'      : body
-        });
-        res.header('X-Proxy-Cache', 'MISS');
-        res.originalSend(body);
-    };
-    return next();
-    }
-});
+        if (req.method != 'GET') {
+        return next();
+        }
+        var cachedReponse = myCache.get(req.url);
+        if (cachedReponse) {
+        res.header(cachedReponse.headers);
+        res.header('X-Proxy-Cache', 'HIT');
+        return res.send(cachedReponse.body);
+        } else {
+        res.originalSend = res.send;
+        res.send = (body) => {
+            myCache.set(req.url, {
+            'headers'   : res.getHeaders(),
+            'body'      : body
+            });
+            res.header('X-Proxy-Cache', 'MISS');
+            res.originalSend(body);
+        };
+        return next();
+        }
+    });
 
 app.use(userRoutes)
-
 
 
 app.use(mainModeRoutes)
@@ -296,7 +295,13 @@ app.use((error,req,res,next)=>{
 mongoose.connect(process.env.MONGODB_URI || connectionString,{ useNewUrlParser: true,useUnifiedTopology: true })
     .then(()=>{
         console.log("connected to mongodb");
-        app.listen(port, () => {
+        spdy.createServer(
+            {
+                key: fs.readFileSync("./server.key"),
+                cert: fs.readFileSync("./server.crt")
+            },
+            app
+        ).listen(port, () => {
             console.log("App is running on port " + port);
         });
     })

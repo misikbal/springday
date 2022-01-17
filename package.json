@@ -35,6 +35,7 @@
     "pug": "^3.0.2",
     "sequelize": "^4.44.4",
     "sharp": "^0.29.3",
+    "spdy": "^4.0.2",
     "validator": "^13.7.0",
     "webp-converter": "^2.3.3"
   },
