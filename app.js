@@ -294,7 +294,7 @@ app.use((error,req,res,next)=>{
 
 mongoose.connect(process.env.MONGODB_URI || connectionString,{ useNewUrlParser: true,useUnifiedTopology: true })
     .then(()=>{
-        console.log("connected to mongodb");
+        console.log("mongodb baglandı");
         spdy.createServer(
             {
                 key: fs.readFileSync("./server.key"),
@@ -302,7 +302,7 @@ mongoose.connect(process.env.MONGODB_URI || connectionString,{ useNewUrlParser: 
             },
             app
         ).listen(port, () => {
-            console.log("App is running on port " + port);
+            console.log("Proje calıştırıldı " + port);
         });
     })
     .catch(err=>{
