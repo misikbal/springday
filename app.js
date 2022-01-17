@@ -7,8 +7,7 @@ const path = require("path");
 app.use(compression())
 app.set("view engine", "pug");
 app.set("views", "./views");
-const NodeCache = require( "node-cache" );
-const myCache = new NodeCache( { stdTTL: 300, checkperiod: 310 } );
+
 const mainModeRoutes = require("./routes/mainMode");
 
 const adminRoutes = require("./routes/admin");
@@ -119,12 +118,19 @@ app.use(multer({storage:storage,fileFilter: multerFilter}).fields([
 
 app.use(async (req,res,next)=>{
     await Page.findOne()
+
         .then(async(page)=>{
             await Social.findOne()
+            .select(["-_id","-userId"])
+
             .then(async(social)=>{
                 await Logo.findOne()
+                .select(["-_id","-userId","-__v"])
+
                 .then(async(logo)=>{
                     await System.findOne()
+                    .select(["-_id","-date","-userId"])
+
                     .then(async(system)=>{
                         await Themes.findOne()
                         .then(async(theme)=>{
@@ -132,9 +138,10 @@ app.use(async (req,res,next)=>{
                             .limit(7)
                             .where({isHome:false})
                             .where({isActive:true})
-                            
+                            .select(["-description","-date","-userId","-__v"])
                             .then(async(footerabouts)=>{
                                 await Category.find()
+                                .select(["-date","-userId","-__v"])
                                 .where({isActive:true})
                                 .then(async(menucategory)=>{
                                     await ActiveModule.findOne()
@@ -150,6 +157,7 @@ app.use(async (req,res,next)=>{
                                                     await News.find()
                                                     .limit(7)
                                                     .where({isActive:true})
+                                                    .select(["-description","-newsdate","-tags","-imageUrl","-date","-userId","-__v"])
                                                     .then(async(blog)=>{
                                                         req.system=system;
                                                         req.page=page;
@@ -255,28 +263,28 @@ app.post('/delete_file',isFile,isAdmin, function(req, res, next){
 app.use(csurf());
 app.use("/admin", adminRoutes);
 
-app.use(function (req, res, next) {
-        if (req.method != 'GET') {
-        return next();
-        }
-        var cachedReponse = myCache.get(req.url);
-        if (cachedReponse) {
-        res.header(cachedReponse.headers);
-        res.header('X-Proxy-Cache', 'HIT');
-        return res.send(cachedReponse.body);
-        } else {
-        res.originalSend = res.send;
-        res.send = (body) => {
-            myCache.set(req.url, {
-            'headers'   : res.getHeaders(),
-            'body'      : body
-            });
-            res.header('X-Proxy-Cache', 'MISS');
-            res.originalSend(body);
-        };
-        return next();
-        }
-    });
+// app.use(locals,isMainMode,function (req, res, next) {
+//         if (req.method != 'GET') {
+//         return next();
+//         }
+//         var cachedReponse = myCache.get(req.url);
+//         if (cachedReponse) {
+//         res.header(cachedReponse.headers);
+//         res.header('X-Proxy-Cache', 'HIT');
+//         return res.send(cachedReponse.body);
+//         } else {
+//         res.originalSend = res.send;
+//         res.send = (body) => {
+//             myCache.set(req.url, {
+//             'headers'   : res.getHeaders(),
+//             'body'      : body
+//             });
+//             res.header('X-Proxy-Cache', 'MISS');
+//             res.originalSend(body);
+//         };
+//         return next();
+//         }
+//     });
 
 app.use(userRoutes)
 

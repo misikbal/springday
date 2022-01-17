@@ -11,9 +11,10 @@ include ../mixins/aboutservices.pug
 include ../mixins/shortservices.pug
 
 block styles
-  
   link(data-href='/css/otherproduct.min.css')
-  link(data-href='/css/project.css')
+
+  link(data-href='/css/project.css' rel='stylesheet')
+
 block content
     if slides.length>0
 
@@ -52,11 +53,13 @@ block content
           .row(data-aos='fade-up' data-aos-delay='100')
               .col-lg-12.d-flex.justify-content-center
                   ul#portfolio-flters
-                      li.filter-active.category(data-filter='*') Hepsi
+                      li.filter-active.category.m-1
+                        a(href="/products" style="text-decoration:none;" target="_blank").text-white Hepsi
                       if categories.length>0
                           each category,products in categories
-                              li.category(data-filter=`.${category._id}` class=category._id==selectedCategory?"active":"") #{category.name}
-          .row.portfolio-container(data-aos='fade-up' data-aos-delay='200')
+                              li.filter-active.category.m-1
+                                a(href=`/categories/${category._id}` style="text-decoration:none;" target="_blank").text-white #{category.name}
+          .row.portfolio-container
             each product in products
               +productcard(product)
           button.btn.btn-warning.col-md-12 
@@ -71,5 +74,10 @@ block content
     br
     +client(client) 
     br
-
+//- block script
+//-   script(async src='/plugins/aos/aos.js')
+//-   script(async src='/plugins/glightbox/js/glightbox.min.js')
+//-   script(async src='/plugins/isotope-layout/isotope.pkgd.min.js')
+//-   script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
+//-   script(async src="/js/pages/services/main.js")
 

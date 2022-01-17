@@ -15,24 +15,20 @@ const Bank = require('../model/bank');
 
 
 
-
-
 exports.getIndex = async (req, res, next) => {
     
     await Product.find({isHome:true})
         .where({isActive:true})
         .sort({date:-1})
         .populate("categories.0",{"_id":{"$slice":1}})
-
-
-
-        .select("name price imageUrl categories isActive")
+        .select(['-description',"-date","-userId","-__v","-tags"])
         .then(products=>{
             return products;
         }).then(async(products) => {
             await Category.find()
             .where({isActive:true})
-            .sort({date:-1})
+            .sort("name")
+            .select(["-date","-userId","-__v"])
             .then(categories=>{
                 return categories;
             }).then(async(categories)=>{
@@ -40,6 +36,7 @@ exports.getIndex = async (req, res, next) => {
                 .where({isActive:true})
 
                 .sort({date:-1})
+                .select(["-date","-userId","-__v"])
                 .then(async(slides)=>{      
                     await Client.find()
                         .where({isActive:true})
@@ -47,14 +44,16 @@ exports.getIndex = async (req, res, next) => {
                         .then(async (client)=>{
                             await Services.find()
                             .where({isActive:true})
-                            
+                            .select(["-date","-userId","-__v"])
                             .then(async(services)=>{
                                 await AboutServices.find({isHome:true})
                                     .where({isActive:true})
-
+                                    .select(["-description","-date","-userId","-__v"])
                                     .then(async(aboutservices)=>{
                                         await Project.find({isActive:true})
                                         .where({isHome:true})
+                                        .select(["-description","-date","-userId","-__v"])
+
                                         .then(async(projectinfo)=>{
                                             
                                                 res.render("shop/index", {
