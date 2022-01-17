@@ -252,6 +252,13 @@ app.post('/delete_file',isFile,isAdmin, function(req, res, next){
     res.redirect('back')
 });
 app.use(csurf());
+
+
+app.use("/admin", adminRoutes);
+
+
+app.use(userRoutes)
+
 app.use(function (req, res, next) {
     if (req.method != 'GET') {
     return next();
@@ -274,12 +281,6 @@ app.use(function (req, res, next) {
     return next();
     }
 });
-
-app.use("/admin", adminRoutes);
-
-
-app.use(userRoutes)
-
 
 app.use(mainModeRoutes)
 
