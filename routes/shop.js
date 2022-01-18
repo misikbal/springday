@@ -21,30 +21,36 @@ const myCache = new NodeCache( { stdTTL: 300, checkperiod: 310 } );
 
 
 
-router.get("/",locals,home,isMainMode
-// ,function (req, res, next) {
-//     if (req.method != 'GET') {
-//     return next();
-//     }
-//     var cachedReponse = myCache.get(req.url);
-//     if (cachedReponse) {
-//     res.header(cachedReponse.headers);
-//     res.header('X-Proxy-Cache', 'HIT');
-//     return res.send(cachedReponse.body);
-//     } else {
-//     res.originalSend = res.send;
-//     res.send = (body) => {
-//         myCache.set(req.url, {
-//         'headers'   : res.getHeaders(),
-//         'body'      : body
-//         });
-//         res.header('X-Proxy-Cache', 'MISS');
-//         res.originalSend(body);
-//     };
-//     return next();
-//     }
-// }
-,shopController.getIndex);
+router.get("/",
+    
+locals,home,isMainMode,
+function (req, res, next) {
+    if(!req.session.isAuthenticated){
+            if (req.method != 'GET') {
+                return next();
+        }
+        var cachedReponse = myCache.get(req.url);
+        if (cachedReponse) {
+        res.header(cachedReponse.headers);
+        res.header('X-Proxy-Cache', 'HIT');
+        return res.send(cachedReponse.body);
+        } else {
+        res.originalSend = res.send;
+        res.send = (body) => {
+            myCache.set(req.url, {
+            'headers'   : res.getHeaders(),
+            'body'      : body
+            });
+            res.header('X-Proxy-Cache', 'MISS');
+            res.originalSend(body);
+        };
+        return next();
+        }
+    }
+    next();
+},
+
+shopController.getIndex);
 
 router.get("/products",locals,products,isMainMode, shopController.getProducts);
 router.get("/products/:productid", locals,products,isMainMode,shopController.getProduct);

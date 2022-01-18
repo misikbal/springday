@@ -21,8 +21,8 @@ head
       meta(property='og:updated_time' content=`${system.date}`)
       meta(property='og:image:width' content='400')
       meta(property='og:image:height' content='400')
-      meta(property='og:image:type' content='image/webp')
-      link(type="image/x-icon" rel='shortcut icon' href=`/img/resized/${logo.favico}`)
+      meta(property='og:image:type' content='image/jpg')
+      link(type="image/x-icon" rel='shortcut icon' href=`/img/resized/${system.favico}`)
       link(rel='alternate' hreflang='x-default' href='/')
 
       script(type="text/javascript").
@@ -37,24 +37,28 @@ head
                                     }
       script(type="text/javascript").
             link('https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css' )
-            link("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css")
-            link('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css' )
+            link("/css/icomoon/icon.css")
             link("/css/style.min.css")
+            //- link("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css")
+            link('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css' )
+
             link( '/css/themes/nav/owl.carousel.min.css')
       script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer")
-
+      script(src='/js/lazy.js')
+      
       script.
             let root=document.documentElement.style
-            root.setProperty('--navbarLight', `!{theme.navbarLight}`);
-            root.setProperty('--navbarDark', `!{theme.navbarDark}`);
-            root.setProperty('--infoLight', `!{theme.infoLight}`);
-            root.setProperty('--infoDark', `!{theme.infoDark}`);
-            root.setProperty('--cardLight', `!{theme.cardLight}`);
-            root.setProperty('--cardDark', `!{theme.cardrDark}`);
-            root.setProperty('--bodyLight', `!{theme.bodyLight}`);
-            root.setProperty('--bodyDark', `!{theme.bodyDark}`);
-            root.setProperty('--footerLight', `!{theme.footerLight}`);
-            root.setProperty('--footerDark', `!{theme.footerDark}`);
+            root.setProperty('--navbarLight', `!{system.navbarLight}`);
+            root.setProperty('--navbarDark', `!{system.navbarDark}`);
+            root.setProperty('--infoLight', `!{system.infoLight}`);
+            root.setProperty('--infoDark', `!{system.infoDark}`);
+            root.setProperty('--cardLight', `!{system.cardLight}`);
+            root.setProperty('--cardDark', `!{system.cardrDark}`);
+            root.setProperty('--bodyLight', `!{system.bodyLight}`);
+            root.setProperty('--bodyDark', `!{system.bodyDark}`);
+            root.setProperty('--footerLight', `!{system.footerLight}`);
+            root.setProperty('--footerDark', `!{system.footerDark}`);
+
       span !{system.googleAnalitcs}
 
       block styles

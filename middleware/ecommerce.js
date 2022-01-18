@@ -1,6 +1,6 @@
 module.exports = (req,res,next)=>{
     
-    if(!req.active.ecommarce_isActive){
+    if(!req.system.ecommarce_isActive){
         
             return res.redirect("/");
         }

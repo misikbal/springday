@@ -15,17 +15,10 @@ const userRoutes = require("./routes/shop");
 const accountRoutes = require("./routes/account");
 
 const User=require("./model/user");
-const Page=require("./model/page");
-const Social=require("./model/socialmedia");
-const Logo=require("./model/logo");
 const System=require("./model/system");
-const Themes=require("./model/themes");
 const About=require("./model/about");
 const Category=require("./model/category");
-const ActiveModule=require("./model/activemodule");
-const Slide=require("./model/slide");
 const Lang=require("./model/lang");
-const Footer=require("./model/footer");
 const News=require("./model/news");
 
 
@@ -49,6 +42,9 @@ const multer=require("multer");
 const locals=require("./middleware/locals");
 const isAdmin=require("./middleware/isAdmin");
 const isFile=require("./middleware/isFile");
+const isMainMode=require("./middleware/isMainMode");
+
+
 const fs=require("fs");
 const sharp = require('sharp');
 
@@ -116,92 +112,49 @@ app.use(multer({storage:storage,fileFilter: multerFilter}).fields([
 
 ]));
 
-app.use(async (req,res,next)=>{
-    await Page.findOne()
+app.use( (req,res,next)=>{    
+        System.findOne()
+            .lean()
+            .then((system)=>{
+                    About.find()
+                    .limit(7)
+                    .where({isHome:false})
+                    .where({isActive:true})
+                    .select(["-description","-date","-userId","-__v"])
+                    .lean()
+                    .then((footerabouts)=>{
+                        Category.find()
+                            .where({ isActive: true })
+                            .then((menucategory) => {
+                            Lang.find()
+                                .sort({ date: 1 })
+                                .then((lang) => {
+                                News.find()
+                                    .limit(7)
+                                    .where({ isActive: true })
+                                    .select("_id title")
+                                    .lean()
+                                    .then((blog) => {
+                                    req.system = system;
+                                    req.footerabouts = footerabouts;
+                                    req.menucategory = menucategory;
+                                    req.lang = lang;
+                                    req.blog = blog;
 
-        .then(async(page)=>{
-            await Social.findOne()
-            .select(["-_id","-userId"])
-
-            .then(async(social)=>{
-                await Logo.findOne()
-                .select(["-_id","-userId","-__v"])
-
-                .then(async(logo)=>{
-                    await System.findOne()
-                    .select(["-_id","-date","-userId"])
-
-                    .then(async(system)=>{
-                        await Themes.findOne()
-                        .then(async(theme)=>{
-                            await About.find()
-                            .limit(7)
-                            .where({isHome:false})
-                            .where({isActive:true})
-                            .select(["-description","-date","-userId","-__v"])
-                            .then(async(footerabouts)=>{
-                                await Category.find()
-                                .select(["-date","-userId","-__v"])
-                                .where({isActive:true})
-                                .then(async(menucategory)=>{
-                                    await ActiveModule.findOne()
-                                    .then(async(active)=>{
-                                        await Lang.find()
-                                        .sort({date:1})
-                                        .then(async(lang)=>{
-                                            await Logo.findOne()
-                                            .select("loadingLogo isActive loadingtext")
-                                            .then(async(loading)=>{
-                                                await Footer.findOne()
-                                                .then(async(footer)=>{
-                                                    await News.find()
-                                                    .limit(7)
-                                                    .where({isActive:true})
-                                                    .select(["-description","-newsdate","-tags","-imageUrl","-date","-userId","-__v"])
-                                                    .then(async(blog)=>{
-                                                        req.system=system;
-                                                        req.page=page;
-                                                        req.social=social;
-                                                        req.logo=logo;
-                                                        req.theme=theme;
-                                                        req.footerabouts=footerabouts;
-                                                        req.menucategory=menucategory;
-                                                        req.active=active;
-                                                        req.lang=lang;
-                                                        req.loading=loading;
-                                                        req.footer=footer;
-                                                        req.blog=blog;
-    
-                                                        next();
-                                                    })
-                                                    
-                                                })
-                                                    
-                                                })
-                                                
-                                            
-                                        })
-                                            
-                                        })
-                                        
-                                    
-                                })
-                                
-                            })
-                            
-                        })
+                                    next();
+                                    });
+                                });
+                            });
                         
                     })
-
-                })
-                
+                    
             })
-            
-        })
-        .catch(err=>{console.log(err)});
-        
-
+    .catch(err=>{console.log(err)});
 })
+
+
+
+
 app.use((req,res,next)=>{
     if(!req.session.user){
         return next();
@@ -260,31 +213,9 @@ app.post('/delete_file',isFile,isAdmin, function(req, res, next){
     }
     res.redirect('back')
 });
+
 app.use(csurf());
 app.use("/admin", adminRoutes);
-
-// app.use(locals,isMainMode,function (req, res, next) {
-//         if (req.method != 'GET') {
-//         return next();
-//         }
-//         var cachedReponse = myCache.get(req.url);
-//         if (cachedReponse) {
-//         res.header(cachedReponse.headers);
-//         res.header('X-Proxy-Cache', 'HIT');
-//         return res.send(cachedReponse.body);
-//         } else {
-//         res.originalSend = res.send;
-//         res.send = (body) => {
-//             myCache.set(req.url, {
-//             'headers'   : res.getHeaders(),
-//             'body'      : body
-//             });
-//             res.header('X-Proxy-Cache', 'MISS');
-//             res.originalSend(body);
-//         };
-//         return next();
-//         }
-//     });
 
 app.use(userRoutes)
 

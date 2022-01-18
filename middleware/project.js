@@ -1,6 +1,6 @@
 module.exports = (req,res,next)=>{
     
-    if(!req.page.project_isActive){
+    if(!req.system.project_isActive){
         
             return res.redirect("/");
         }

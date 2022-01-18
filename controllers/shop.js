@@ -16,45 +16,54 @@ const Bank = require('../model/bank');
 
 
 exports.getIndex = async (req, res, next) => {
-    
-    await Product.find({isHome:true})
+    Product.find({isHome:true})
         .where({isActive:true})
         .sort({date:-1})
         .populate("categories.0",{"_id":{"$slice":1}})
         .select(['-description',"-date","-userId","-__v","-tags"])
+        .lean()
+
         .then(products=>{
             return products;
-        }).then(async(products) => {
-            await Category.find()
+        }).then((products) => {
+            Category.find()
             .where({isActive:true})
             .sort("name")
-            .select(["-date","-userId","-__v"])
+            .lean()
+
+            // .select(["-date","-userId","-__v"])
             .then(categories=>{
                 return categories;
-            }).then(async(categories)=>{
-                await Slide.find()
+            }).then((categories)=>{
+                Slide.find()
                 .where({isActive:true})
 
                 .sort({date:-1})
-                .select(["-date","-userId","-__v"])
-                .then(async(slides)=>{      
-                    await Client.find()
+                // .select(["-date","-userId","-__v"])
+                .lean()
+
+                .then((slides)=>{      
+                    Client.find()
                         .where({isActive:true})
                         .select("clientlogo")
-                        .then(async (client)=>{
-                            await Services.find()
+                        .lean()                        
+                        .then( (client)=>{
+                            Services.find()
                             .where({isActive:true})
-                            .select(["-date","-userId","-__v"])
-                            .then(async(services)=>{
-                                await AboutServices.find({isHome:true})
+                            // .select(["-date","-userId","-__v"])
+                            .lean()
+
+                            .then((services)=>{
+                                AboutServices.find({isHome:true})
                                     .where({isActive:true})
                                     .select(["-description","-date","-userId","-__v"])
-                                    .then(async(aboutservices)=>{
-                                        await Project.find({isActive:true})
+                                    .lean()
+                                    .then((aboutservices)=>{
+                                        Project.find({isActive:true})
                                         .where({isHome:true})
                                         .select(["-description","-date","-userId","-__v"])
-
-                                        .then(async(projectinfo)=>{
+                                        .lean()
+                                        .then((projectinfo)=>{
                                             
                                                 res.render("shop/index", {
                                                     title: "Springday", 
@@ -76,7 +85,7 @@ exports.getIndex = async (req, res, next) => {
                                 
                             })
                             
-                        });    
+                        });
                     
                 }) .catch((err)=>{
                     next(err);
@@ -98,7 +107,7 @@ exports.getProducts = (req, res, next) => {
     .where({isActive:true})
     .populate("categories.0",{"_id":{"$slice":1}})
     .select("name price imageUrl categories description isActive popular tags")
-
+    .lean()
     .then(products=>{
         return products; 
     })
@@ -123,7 +132,7 @@ exports.getProducts = (req, res, next) => {
 exports.getProduct = (req, res, next) => {
             Product.findById(req.params.productid)
             .populate("categories.0",{"_id":{"$slice":1}})
-
+            .lean()
             .then(products=>{
                 Client.find()
                 .select("clientlogo")
@@ -233,6 +242,7 @@ exports.getOrder = (req, res, next) => {
     Order
     .findOne({"user.userId":req.user._id,_id:id})
     .sort({date:-1})
+    .lean()
 
     .then(orders=>{
             Bank.find()
@@ -257,7 +267,7 @@ exports.getOrders = (req, res, next) => {
     Order
     .find({"user.userId":req.user._id})
     .sort({date:-1})
-
+    .lean()
     .then(orders=>{
         Bank.find()
         .where({isActive:true})
@@ -362,6 +372,7 @@ exports.postPayment = (req, res, next) => {
 
 exports.getContact = (req, res, next) => {  
     System.find()
+    .lean()
     .then(system=>{
         res.render("shop/contactus", {
             title: "Contact Us", 
@@ -422,15 +433,16 @@ exports.postAddContact= (req, res, next) => {
 exports.getAboutServices = (req, res, next) => {    
     
     AboutServices.find()
-
+    .lean()
     .then(aboutservices=>{
         return aboutservices; 
     })
     .then(aboutservices=>{
         Client.find()
             .where({isActive:true})
-
             .select("clientlogo")
+            .lean()
+
             .then(client=>{
                 res.render("shop/aboutservices", {
                     title: "About Services", 
@@ -449,12 +461,12 @@ exports.getAboutServices = (req, res, next) => {
 exports.getAboutService = (req, res, next) => {
     const aboutserviceid=req.params.aboutserviceid
     AboutServices.findById(req.params.aboutserviceid)
-
+    .lean()
     .then(aboutservice=>{
         Client.find()
         .where({isActive:true})
-
         .select("clientlogo")
+        .lean()
         .then(client=>{
             AboutServices.find()
             .where({isActive:true})
@@ -477,14 +489,17 @@ exports.getAboutService = (req, res, next) => {
 exports.getProject = (req, res, next) => {
     const projectid=req.params.projectid
     Project.findById(req.params.projectid)
-    
+    .lean()
     .then(project=>{
         Client.find()
         .where({isActive:true})
 
         .select("clientlogo")
+        .lean()
         .then(client=>{
             Project.find()
+            .lean()
+
             .then(allproject=>{
                 res.render("shop/project-detail",{
                     title:project.name,
@@ -505,7 +520,7 @@ exports.getProjects = (req, res, next) => {
     
     Project.find()
     .where({isActive:true})
-
+    .lean()
     .then(project=>{
         return project; 
     })
@@ -514,6 +529,7 @@ exports.getProjects = (req, res, next) => {
             .where({isActive:true})
 
             .select("clientlogo")
+            .lean()
             .then(client=>{
                 res.render("shop/project", {
                     title: "Project", 
@@ -538,11 +554,12 @@ exports.getAbout = (req, res, next) => {
     .then(about=>{
         Client.find()
         .select("clientlogo")
-
+        .lean()
 
         .then(client=>{
             About.find()
             .where({isActive:true})
+            .lean()
             .then(allabout=>{
                 res.render("shop/about-detail",{
                     title:about.name,
@@ -563,12 +580,14 @@ exports.getAbouts = (req, res, next) => {
     
     About.findOne({isHome:true})
     .where({isActive:true})
+    .lean()
     .then(viewabout=>{
         return viewabout; 
     })
     .then(viewabout=>{
         Client.find()
             .select("clientlogo")
+            .lean()
             .then(client=>{
                 About.find()
                 .select("_id name")                
@@ -597,6 +616,7 @@ exports.getClient = (req, res, next) => {
     
     Client.find()
     .where({isActive:true})
+    .lean()
     .then(client=>{
         return client; 
     })
@@ -621,15 +641,17 @@ exports.getClient = (req, res, next) => {
 exports.getNews = (req, res, next) => {
     const newsid=req.params.newsid
     News.findById(newsid)
-
+    .lean()
     .then(news=>{
         Client.find()
+        .lean()
         .select("clientlogo")
 
 
         .then(client=>{
             News.find()
             .where({isActive:true})
+            .lean()
             .then(allnews=>{
                 res.render("shop/news-detail",{
                     title:news.title,
@@ -649,6 +671,7 @@ exports.getNews = (req, res, next) => {
 exports.getAllNews = (req, res, next) => {    
     
     News.find()
+    .lean()
     .where({isActive:true})
     .then(news=>{
         return news; 
@@ -656,6 +679,7 @@ exports.getAllNews = (req, res, next) => {
     .then(news=>{
         Client.find()
             .select("clientlogo")
+            .lean()
             .then(client=>{
                     res.render("shop/news", {
                         title: "News", 

@@ -6,6 +6,9 @@ block styles
     link(href='/css/cart.css' rel='stylesheet')
 
 block content
+    br
+    br
+    br
     if(action!=="undefined" && action==="delete")
         div.alert.alert-danger Ürün Sepetten Silindi
 
@@ -54,7 +57,7 @@ block content
                                     .order_total_amount 
                                         - var total = 0;
                                         each product in products
-                                            - total +=(product.productId.price * product.quantity);
+                                            -1 total +=(product.productId.price * product.quantity);
                                         | #{total} TL
                             .cart_buttons
                                 a(href="/products").btn.btn-secondary.text-light Alişverişe Devam Et

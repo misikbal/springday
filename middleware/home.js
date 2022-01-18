@@ -1,6 +1,6 @@
 module.exports = (req,res,next)=>{
     
-    if(!req.page.home_isActive){
+    if(!req.system.home_isActive){
         
             return res.redirect("/mainMode");
         }

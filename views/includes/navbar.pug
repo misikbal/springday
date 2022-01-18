@@ -8,44 +8,44 @@
 //-     .site-mobile-menu-body
 
 
-.site-navbar-wrap(class=(active.isNavbar ? "sticky-wrapper is-sticky" : "")).translate
-    if active.contactnavbar_isActive
+.site-navbar-wrap(class=(system.isNavbar ? "sticky-wrapper is-sticky" : "")).translate
+    if system.contactnavbar_isActive
 
         #top.site-navbar-top(style="font-size:13px;")
             .container
                 .row.align-items-center
                     .col-6
                         .d-flex.mr-auto
-                            if social.linkedin!==""                        
+                            if system.contactmail!==""                        
 
-                                a.d-flex.align-items-center.mr-4(href=`mailto:${social.mail}` target='_blank' style="text-decoration: none")
+                                a.d-flex.align-items-center.mr-4(href=`mailto:${system.contactmail}` target='_blank' style="text-decoration: none")
                                     span.mr-2
-                                        i.far.fa-envelope
-                                    span.d-none.d-md-inline-block #{social.mail}
-                            if social.phone!==""                        
+                                        i.icon-gmail
+                                    span.d-none.d-md-inline-block #{system.contactmail}
+                            if system.contactphone!==""                        
                             
-                                a.d-flex.align-items-center.mr-auto(href=`tel://+${social.phone}` target='_blank' style="text-decoration: none")
+                                a.d-flex.align-items-center.mr-auto(href=`tel://+${system.contactphone}` target='_blank' style="text-decoration: none")
                                     span.mr-2
-                                        i.fas.fa-phone
-                                    span.d-none.d-md-inline-block #{social.phone}
+                                        i.icon-phone-square
+                                    span.d-none.d-md-inline-block #{system.contactphone}
                     .col-6.text-right
                         .mr-auto
-                            if social.facebook!==""
-                                a.p-2.pl-0(href=`${social.facebook}` target='_blank')
-                                    span.fab.fa-facebook       
-                            if social.twitter!==""                        
-                                a.p-2.pl-0(href=`${social.twitter}` target='_blank' )
-                                    span.fab.fa-twitter
-                            if social.instagram!==""  
-                                a.p-2.pl-0(href=`${social.instagram}` target='_blank')
-                                    span.fab.fa-instagram
-                            if social.youtube!==""      
-                                a.p-2.pl-0(href=`${social.youtube}` target='_blank')
-                                    span.fab.fa-youtube
-                            if social.linkedin!==""                        
+                            if system.facebook!==""
+                                a.p-2.pl-0(href=`${system.facebook}` target='_blank')
+                                    span.icon-facebook
+                            if system.twitter!==""                        
+                                a.p-2.pl-0(href=`${system.twitter}` target='_blank' )
+                                    span.icon-twitter
+                            if system.instagram!==""  
+                                a.p-2.pl-0(href=`${system.instagram}` target='_blank')
+                                    span.icon-instagram
+                            if system.youtube!==""      
+                                a.p-2.pl-0(href=`${system.youtube}` target='_blank')
+                                    span.icon-youtube
+                            if system.linkedin!==""                        
                             
-                                a.p-2.pl-0(href=`${social.linkedin}` target='_blank')
-                                    span.fab.fa-linkedin
+                                a.p-2.pl-0(href=`${system.linkedin}` target='_blank')
+                                    span.icon-linkedin
 
     #sticky-wrapper
         #navbar_top
@@ -56,7 +56,7 @@
 
                             nav.navbar.navbar-expand-lg.site-navigation
                                 a(href='/')
-                                    img.card-image(src=`/img/resized/${logo.logo}` width="150px" style="height:auto;")
+                                    img.card-image(src=`/img/resized/${system.logo}` width="150px" style="height:auto;")
                                 button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
                                     span.navbar-toggler-icon
                                         i.fas.fa-bars.mt-1
@@ -64,15 +64,15 @@
                                 
                                 #navbarSupportedContent.collapse.navbar-collapse
                                     ul.navbar-nav.ml-auto.py-4.py-md-0
-                                        if page.home!="" && page.home_isActive
+                                        if system.home!="" && system.home_isActive
                                             li(class=(path==='/'?'active':'') ).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                                a(href="/").nav-link !{page.home}
+                                                a(href="/").nav-link !{system.home}
 
-                                        if page.products!="" && page.products_isActive
+                                        if system.products!="" && system.products_isActive
                                                 
                                             li(class=(path==='/products'?'active':'')).dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4
                                                     a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true' delay=5000)
-                                                        | !{page.products}
+                                                        | !{system.products}
                                                     .dropdown-menu.megamenu.bg-light(aria-labelledby='navbarDropdown' style="opacity:0.95; height:auto; overflow:auto;")
                                                         .row.mb-3
                                                             .col-12
@@ -93,14 +93,14 @@
                                                                                 
                                                                                 p #{menucategories.name}
                                         //- li(class=(path==='/admin/categories' ? 'active':''))
-                                        if page.services!="" && page.services_isActive
+                                        if system.services!="" && system.services_isActive
                                         
                                             li(class=(path===('/aboutservices') ? 'active':'')).nav-item.pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                                a(href="/aboutservices").nav-link !{page.services}
-                                        if page.about!="" && page.about_isActive
+                                                a(href="/aboutservices").nav-link !{system.services}
+                                        if system.about!="" && system.about_isActive
                                             li(class=(path==='/about'?'active':'')).dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4
                                                 a#about.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='false' aria-expanded='false' delay=5000)
-                                                    | !{page.about}
+                                                    | !{system.about}
                                                 .dropdown-menu.megamenu.bg-light(aria-labelledby='about' style="opacity:0.95; height:auto;")
                                                     .row.mb-3
                                                         .col-12
@@ -114,41 +114,40 @@
                                                                     
                                                                     p !{about.name}
                                                                     
-                                        if page.project!="" && page.project_isActive
+                                        if system.project!="" && system.project_isActive
                                         
                                             li(class=(path==='/project'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                                a(href="/project").nav-link !{page.project}
-                                        if page.client!="" && page.client_isActive
+                                                a(href="/project").nav-link !{system.project}
+                                        if system.client!="" && system.client_isActive
                                         
                                             li(class=(path==='/client'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                                a(href="/client",class=(path==='/client'?'active nav-link':'nav-link')).nav-link !{page.client}
-                                        if page.contact!="" && page.contact_isActive
+                                                a(href="/client",class=(path==='/client'?'active nav-link':'nav-link')).nav-link !{system.client}
+                                        if system.contact!="" && system.contact_isActive
                                         
                                             li(class=(path==='/contactus'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                                a(href="/contactus",class=(path==='/contactus'?'active nav-link':'nav-link')).nav-link !{page.contact}
-                                        if page.blog!="" && page.blog_isActive
+                                                a(href="/contactus",class=(path==='/contactus'?'active nav-link':'nav-link')).nav-link !{system.contact}
+                                        if system.blog!="" && system.blog_isActive
                                         
                                             li(class=(path==='/news'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                                a(href="/news",class=(path==='/news'?'active nav-link':'nav-link')).nav-link !{page.blog}
+                                                a(href="/news",class=(path==='/news'?'active nav-link':'nav-link')).nav-link !{system.blog}
                                         if isAuthenticated
-                                                if page.user!="" && page.user_isActive
+                                                if system.user!="" && system.user_isActive
                                                 
                                                     li(class=(path==='/orders'?'active':'')).nav-item.pl-4.pl-md-0.ml-0.ml-md-4
                                                         a.nav-link.dropdown-toggle(data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') 
                                                             span
-                                                                | !{page.user}
+                                                                | !{system.user}
                                                         .dropdown-menu.bg-light
-                                                            if active.ecommarce_isActive
-                                                                a.dropdown-item(href='/orders') SİPARİŞLERİM
+                                                            if system.ecommarce_isActive
+                                                                a.dropdown-item.bg-light(href='/orders') SİPARİŞLERİM
                                                             //- a.dropdown-item(href='#') AYARLAR
-                                                            hr.dropdown-divider
-                                                            a.dropdown-item(href='/logout') ÇIKIŞ
-                                                if active.ecommarce_isActive 
-                                                    if page.cart!="" && page.cart_isActive
+                                                            a.dropdown-item.bg-light(href='/logout') ÇIKIŞ
+                                                if system.ecommarce_isActive 
+                                                    if system.cart!="" && system.cart_isActive
                                                         li(class=(path==='/cart'?'active':'')).nav-item.pl-4.pl-md-0.ml-0.ml-md-4
                                                             a.nav-link.cart.position-relative.d-inline-flex(href="/cart",class=(path==='/cart'?'active nav-link':'nav-link') aria-label='View your shopping cart')
                                                                 span
-                                                                    | !{page.cart}
+                                                                    | !{system.cart}
 
                                         else if !isAuthenticated
                                             li(class=(path==='/login'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4
@@ -156,8 +155,8 @@
                                         if isAdmin || isLimited
                                             li.pl-4.pl-md-0.ml-0.ml-md-4
                                                 a(href="/admin/").nav-link
-                                                    i.fas.fa-tachometer-alt
-                                        if active.translate_isActive
+                                                    i.icon-dashboard
+                                        if system.translate_isActive
                                             li.pl-4.pl-md-0.ml-0.ml-md-4.pt-1
                                                 .dropdown.show
                                                     button#link.btn.btn-outline-info.btn-sm.dropdown-toggle(role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
@@ -170,10 +169,10 @@
                                                                     
                                                                         //- img(src=`/img/resized/${langs.imageUrl}` height='30' width='30' alt='Turkish').text-start
                                                                         p(stlye="font-size:10px;") #{langs.lang}
-                                        if active.darkmode_isActive
+                                        if system.darkmode_isActive
                                             li.pl-4.pl-md-0.ml-0.ml-md-4.pt-1.text-center
                                                 .switch
-                                                    i.fas.fa-adjust
+                                                    i.icon-adjust
                                                     div
                                                         input(type="checkbox")
                                                         span.slider.round.bg-light

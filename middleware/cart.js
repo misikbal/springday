@@ -1,6 +1,6 @@
 module.exports = (req,res,next)=>{
     
-    if(!req.page.cart_isActive){
+    if(!req.system.cart_isActive){
         
             return res.redirect("/");
         }
