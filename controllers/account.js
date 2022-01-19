@@ -8,7 +8,6 @@ const Mail = require("../model/mail");
 const Contact = require("../model/contactus");
 const System = require("../model/system");
 const Advanced = require("../model/advanced");
-const Page = require("../model/page");
 const Systems = require("../model/system");
 
 
