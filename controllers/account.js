@@ -24,17 +24,12 @@ System.find()
 exports.getLogin=(req,res,next)=>{
     var errorMessage=req.session.errorMessage;
     delete req.session.errorMessage;
-    Page.findOne()
-    .then(page=>{
-        res.render("account/login",{
-            path:"/login",
-            title:"Login",
-            page:page,
-            errorMessage:errorMessage,
-            action:req.query.action
-        });
-    }).catch(err =>console.log(err))
-
+    res.render("account/login",{
+        path:"/login",
+        title:"Login",
+        errorMessage:errorMessage,
+        action:req.query.action
+    });
 }
 
 exports.postLogin =(req,res,next)=> {
