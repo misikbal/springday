@@ -101,7 +101,6 @@ exports.postAddSlide = async(req, res, next) => {
     const buttonLink=req.body.buttonLink;
     const animate=req.body.animate;
     const isActive = Boolean(req.body.isActive);
-    console.log(image)
     if(!image){
         return res.render('admin/add-slide', {
             title: 'New Slide',
@@ -119,15 +118,14 @@ exports.postAddSlide = async(req, res, next) => {
     }
     
     await sharp(req.files.slideimg[0].path)
-    .resize(960)
-    .webp({quality:10,alphaQuality:10,lossless:true,progressive:true})
-    .jpeg({quality:10,alphaQuality:10,lossless:true,progressive:true})
-    .png({quality:10,alphaQuality:10,lossless:true,progressive:true})
+    .resize(540)
+    .webp({quality:10,alphaQuality:10,lossless:false,progressive:true})
+    .jpeg({quality:10,alphaQuality:10,lossless:false,progressive:true})
+    .png({quality:10,alphaQuality:10,lossless:false,progressive:true})
     .toFile(
         path.resolve(req.files.slideimg[0].destination,'resized',image)
     )
     fs.unlinkSync(req.files.slideimg[0].path)
-    console.log("burada")
     const slide = new Slide(
         {   
             image: image,
@@ -253,7 +251,7 @@ exports.postEditSlide = async (req, res, next) => {
     const image=req.files.slideimg;
     if(image){
         await sharp(req.files.slideimg[0].path)
-        .resize(1280)
+        .resize(540)
         .webp({quality:10,alphaQuality:10,lossless:true,progressive:true})
         .jpeg({quality:10,alphaQuality:10,lossless:true,progressive:true})
         .png({quality:10,alphaQuality:10,lossless:true,progressive:true})

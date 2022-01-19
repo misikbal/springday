@@ -100,7 +100,7 @@ Product.find()
                                                     .where({approval:false})
                                                     .select("date")
                                                     .then(ordercount=>{
-                                                            ActiveModule.findOne()
+                                                            Systems.findOne()
                                                             .select("ecommarce_isActive")
                                                             .then(ecommerce=>{
                                                                 res.render("admin/home", {
