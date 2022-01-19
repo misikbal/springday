@@ -27,25 +27,23 @@ block content
             .section-title
                 h2(style="margin-top:100px;") 
                     p #{system.contact}
-            if system.googlemaps!="undefined"           
+            if contact.googlemaps!="undefined"           
                 div
-                    each systems in system
-                        iframe(style='border:0; width: 100%; height: 270px;' src=`${systems.googlemaps}` frameborder='0' allowfullscreen='')
+                    iframe(style='border:0; width: 100%; height: 270px;' src=`${contact.googlemaps}` frameborder='0' allowfullscreen='')
             .row.mt-5
                 .col-lg-4
                     .info.bg-light.p-3(style="height:auto;")
-                        each systems in system
-                            i.fas.fa-thumbtack
-                            h4 Adres
-                            p.text-start #{systems.address}
-                            br
-                            i.fas.fa-envelope
-                            h4 Email
-                            p.text-start #{systems.mail}
-                            br
-                            i.fas.fa-phone
-                            h4 Telefon
-                            p.text-start #{systems.phone}
+                        i.fas.fa-thumbtack
+                        h4 Adres
+                        p.text-start #{contact.address}
+                        br
+                        i.fas.fa-envelope
+                        h4 Email
+                        p.text-start #{contact.mail}
+                        br
+                        i.fas.fa-phone
+                        h4 Telefon
+                        p.text-start #{contact.phone}
 
                 .col-lg-8.mt-5.mt-lg-0                 
                     .contact

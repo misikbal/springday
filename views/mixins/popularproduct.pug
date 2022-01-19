@@ -1,6 +1,6 @@
 mixin popularproduct(product)
     if(product.isActive && product.popular)
-        a(href=`products/${product._id}` style="text-decoration: none;").text-dark
+        a(href=`/products/${product._id}` style="text-decoration: none;").text-dark
             .card.mt-1.bg-light#card-hover
                 .row
                     .col-md-4
@@ -10,4 +10,4 @@ mixin popularproduct(product)
                         if product.price!=null
                             p.card-text
                                 small.text-muted 
-                                    i.fas.fa-lira-sign  #{product.price}
+                                    i.fas.fa-lira-sign  #{product.price} ₺

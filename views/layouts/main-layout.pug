@@ -3,7 +3,7 @@ if system.loadingisActive
     script(type='text/javascript').
         window.onload=function(){document.getElementById("yukleniy").style.display="none";} 
 doctype html
-html(lang="tr")
+html(lang=`${system.language}`)
     if system.loadingisActive
         style(type='text/css').
             div.hbne{opacity:0.99;filter:alpha(opacity=70);position:fixed;z-index:4000;}
@@ -16,7 +16,7 @@ html(lang="tr")
     if system.translate_isActive
         #google_translate_element2
         script(type='text/javascript').
-            function googleTranslateElementInit2() {new google.translate.TranslateElement({pageLanguage:  `!{system.language}` ,autoDisplay: false}, 'google_translate_element2');}
+            function googleTranslateElementInit2() {new google.translate.TranslateElement({pageLanguage:  `!{system.language}` ,autoDisplay: true}, 'google_translate_element2');}
         script(type='text/javascript' src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit2')
         script(type='text/javascript').
             /* <![CDATA[ */
@@ -41,7 +41,7 @@ html(lang="tr")
                     br
                     
                     p #{system.loadingtext}
-        if system.tawktoscript!="" || system.tawktoscript!=null || system.tawkto_isActive==true
+        if system.tawktoscript!="" && system.tawktoscript!=null && system.tawkto_isActive==true
             span !{system.tawktoscript}
         if system.whatsapp_isActive
         
@@ -50,7 +50,7 @@ html(lang="tr")
                 position:fixed;
                 width:60px;
                 height:60px;
-                bottom:30px;
+                bottom:1px;
                 left:30px;
                 border-radius:50px;
                 text-align:center;

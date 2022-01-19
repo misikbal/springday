@@ -13,7 +13,6 @@ block content
         div.alert.alert-danger Ürün Sepetten Silindi
 
 
-
     .cart_section
         .container-fluid
             .row
@@ -57,10 +56,10 @@ block content
                                     .order_total_amount 
                                         - var total = 0;
                                         each product in products
-                                            -1 total +=(product.productId.price * product.quantity);
+                                            - total +=(product.productId.price * product.quantity);
                                         | #{total} TL
                             .cart_buttons
-                                a(href="/products").btn.btn-secondary.text-light Alişverişe Devam Et
+                                a(href="/").btn.btn-secondary.text-light.mr-2 Alişverişe Devam Et
                                 a(href="/create-order").btn.btn-warning.text-light Alişverişe Tamamla
 
                     else
@@ -72,7 +71,7 @@ block content
                                             img.img-fluid.mb-4.mr-3(src='https://i.imgur.com/dCdflKN.png' width='130' height='130')
                                             h3
                                                 strong Sepetiniz Boş
-                                            p Beni mutlu edecek bir şey ekle
+                                            h4  Beni mutlu edecek bir şey ekle :)
                                             a.btn.btn-primary.cart-btn-transform.m-3(href='/' data-abc='true') Alışverişe Devam Et
 
 

@@ -2,7 +2,7 @@ extends ../layouts/admin-layout.pug
 
 block styles
     include ../admin/includes/formhead.pug
-    
+    script(src="/plugins/jquery/jquery.min.js")
     
 
 block content
@@ -33,12 +33,33 @@ block content
                             .card.bg-light.text-center
                                 .body
                                     .form-group
-                                        label.form-check-label.mb-5 Bakım Modu
+                                        label(style="margin-bottom:5rem;").form-check-label Bakım Modu
                                         .form-check.form-switch.d-flex.justify-content-center
                                             input.form-check-input.mt-auto.p-2.bd-highlight#mainMode(type="checkbox" name="mainMode" value=`${system.mainMode}` checked=system.mainMode)
 
-
                         .col-md-10
+                            .card.bg-light.text-center
+                                .body
+                                    .form-group
+                                        label.form-check-label Geliştirici Modu
+                                        br
+                                        small.text-warning
+                                            | Geliştirici Modu Kapaylıken Kullanıcılar Sayfalara Eriştiği Zaman sitenin bir kısmın memory'e kaydedilir. 
+                                        br
+                                        small.text-warning                                        
+                                            |Bu nedenle geliştirici modu kapalıyken eklenen bir ürün veya slayt vs. 5 DK sonra gösterilecektir. 
+                                        br
+                                        small.text-warning
+                                            |Bu olay sayesinde web sitesi %50 daha hızlı açılır
+                                        br
+                                        small.text-info                                        
+                                            |Bakım Modu Bu Olaya Dahil Değildir. Memorye kaydedilmediği için bakım modu açıldığı an aktif olur.
+                                    
+                                        
+                                        .form-check.form-switch.d-flex.justify-content-center
+                                            input.form-check-input.mt-auto.p-2.bd-highlight#isMemory(type="checkbox" name="isMemory" value=`${system.isMemory}` checked=system.isMemory)
+                    .row.clearfix
+                        .col-md-12
                             .form-group.row
                                 .col-sm-12
                                     .card.text-center.bg-blue-grey
@@ -217,5 +238,6 @@ block content
                         .col-sm-12
                             input(type="submit" value="Genel Ayarları Kaydet").btn.btn-warning.col-md-12
                 
-block script  
-    include ../admin/includes/formscript.pug
+block script
+    include ../admin/includes/formscript.pug    
+

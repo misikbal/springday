@@ -71,7 +71,7 @@ block content
                             
                         .purchase-info.align-self-center
                                     if product.price!=null
-                                        if active.ecommarce_isActive
+                                        if system.ecommarce_isActive
                                             form(action="/cart" method="POST")
                                                 input(type="hidden" name="_csrf" value=`${csrfToken}`)  
                                                 input(type="hidden" name="productId" value=`${product._id}`)

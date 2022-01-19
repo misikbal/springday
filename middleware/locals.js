@@ -10,14 +10,5 @@ module.exports=(req,res,next)=>{
     res.locals.lang=req.lang;
     res.locals.blog=req.blog;
 
-
-    
-
-
-
-
-
-
-
     next();
 }

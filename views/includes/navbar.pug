@@ -21,13 +21,15 @@
                                 a.d-flex.align-items-center.mr-4(href=`mailto:${system.contactmail}` target='_blank' style="text-decoration: none")
                                     span.mr-2
                                         i.icon-gmail
-                                    span.d-none.d-md-inline-block #{system.contactmail}
+                                    span.d-none.d-md-inline-block.mb-2
+                                        p #{system.contactmail}
                             if system.contactphone!==""                        
                             
                                 a.d-flex.align-items-center.mr-auto(href=`tel://+${system.contactphone}` target='_blank' style="text-decoration: none")
                                     span.mr-2
                                         i.icon-phone-square
-                                    span.d-none.d-md-inline-block #{system.contactphone}
+                                    span.d-none.d-md-inline-block.mb-2
+                                        p #{system.contactphone}
                     .col-6.text-right
                         .mr-auto
                             if system.facebook!==""
@@ -56,7 +58,7 @@
 
                             nav.navbar.navbar-expand-lg.site-navigation
                                 a(href='/')
-                                    img.card-image(src=`/img/resized/${system.logo}` width="150px" style="height:auto;")
+                                    img.card-image(src=`/img/resized/${system.logo}` width="150px" height="68px")
                                 button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
                                     span.navbar-toggler-icon
                                         i.fas.fa-bars.mt-1
@@ -82,16 +84,16 @@
                                                         .row
                                                             .col-12
 
-                                                                p.h3 Kategoriler
+                                                                p.h5 Kategoriler
                                                                 hr
                                                                 .row
                                                                     each menucategories in menucategory
                                                                         .col-4.text-center
                                                                             a.dropdown-item(href=`/categories/${menucategories._id}`).nav-link
 
-                                                                                //- img.deneme.card-img-top.w-25(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${menucategories.categoryImg}` alt="")
+                                                                                img.deneme(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="50" height="50" data-src=`/img/resized/${menucategories.categoryImg}` alt="")
                                                                                 
-                                                                                p #{menucategories.name}
+                                                                                p(style="font-size: 0.6rem;") #{menucategories.name}
                                         //- li(class=(path==='/admin/categories' ? 'active':''))
                                         if system.services!="" && system.services_isActive
                                         
@@ -159,24 +161,24 @@
                                         if system.translate_isActive
                                             li.pl-4.pl-md-0.ml-0.ml-md-4.pt-1
                                                 .dropdown.show
-                                                    button#link.btn.btn-outline-info.btn-sm.dropdown-toggle(role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-                                                        | DİL
+                                                    button#link.btn.btn-outline-info.btn-sm.dropdown-toggle(role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' translate="no")
+                                                        | LANGUAGE
                                                     .dropdown-menu(aria-labelledby='link' style="overflow:scrollLeft").bg-light.text-center
                                                         .row
                                                             each langs in lang
                                                                 .col
                                                                     a.dropdown-item.gflag.nturl(onclick=`doGTranslate('${system.language}|${langs.value}');return false;` title=`${langs.lang}` )
                                                                     
-                                                                        //- img(src=`/img/resized/${langs.imageUrl}` height='30' width='30' alt='Turkish').text-start
-                                                                        p(stlye="font-size:10px;") #{langs.lang}
+                                                                        img.deneme.text-start(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${langs.imageUrl}` height='30' width='30' alt='Turkish')
+                                                                        p(stlye="font-size:10px;" translate="no") #{langs.lang}
                                         if system.darkmode_isActive
                                             li.pl-4.pl-md-0.ml-0.ml-md-4.pt-1.text-center
+
                                                 .switch
                                                     i.icon-adjust
                                                     div
                                                         input(type="checkbox")
                                                         span.slider.round.bg-light
-                                        
 
 
         if action!=="undefined" && action==="insert"

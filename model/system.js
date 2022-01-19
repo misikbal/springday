@@ -12,6 +12,9 @@ const settingsSchema = mongoose.Schema({
     mainMode: {
         type: Boolean,
     },
+    isMemory: {
+        type: Boolean,
+    },
     phone: String,
     mail: String,
     address:String,

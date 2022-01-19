@@ -197,7 +197,6 @@ exports.getProductsByCategoryId = (req, res, next) => {
     
 }
 
-
 exports.getCart = (req, res, next) => {
     req.user
         .populate("cart.items.productId")
@@ -371,13 +370,14 @@ exports.postPayment = (req, res, next) => {
 
 
 exports.getContact = (req, res, next) => {  
-    System.find()
+    System.findOne()
+    .select("googlemaps address phone contactmail")
     .lean()
-    .then(system=>{
+    .then(contact=>{
         res.render("shop/contactus", {
             title: "Contact Us", 
             path: '/contactus',
-            system:system,
+            contact:contact,
             action: req.query.action
         }) 
     })

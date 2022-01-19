@@ -13,66 +13,39 @@ const project=require("../middleware/project");
 const services=require("../middleware/services");
 const user=require("../middleware/user");
 
+
 const isMainMode=require("../middleware/isMainMode");
 const ecommerce=require("../middleware/ecommerce");
 const shopController = require("../controllers/shop");
-const NodeCache = require( "node-cache" );
-const myCache = new NodeCache( { stdTTL: 300, checkperiod: 310 } );
+const memoryLogin=require("../middleware/isLoginCached");
+const cached=require("../middleware/cached");
 
 
 
-router.get("/",
-    
-locals,home,isMainMode,
-// function (req, res, next) {
-//     if(!req.session.isAuthenticated){
-//             if (req.method != 'GET') {
-//                 return next();
-//         }
-//         var cachedReponse = myCache.get(req.url);
-//         if (cachedReponse) {
-//         res.header(cachedReponse.headers);
-//         res.header('X-Proxy-Cache', 'HIT');
-//         return res.send(cachedReponse.body);
-//         } else {
-//         res.originalSend = res.send;
-//         res.send = (body) => {
-//             myCache.set(req.url, {
-//             'headers'   : res.getHeaders(),
-//             'body'      : body
-//             });
-//             res.header('X-Proxy-Cache', 'MISS');
-//             res.originalSend(body);
-//         };
-//         return next();
-//         }
-//     }
-//     next();
-// },
 
-shopController.getIndex);
+router.get("/",locals,home,isMainMode,cached,memoryLogin,shopController.getIndex);
 
-router.get("/products",locals,products,isMainMode, shopController.getProducts);
-router.get("/products/:productid", locals,products,isMainMode,shopController.getProduct);
-router.get("/categories/:categoryid", locals,products,isMainMode,shopController.getProductsByCategoryId);
+router.get("/products",locals,products,isMainMode,cached,memoryLogin, shopController.getProducts);
+router.get("/products/:productid", locals,products,isMainMode,cached,memoryLogin,shopController.getProduct);
+router.get("/categories/:categoryid", locals,products,isMainMode,cached,memoryLogin,shopController.getProductsByCategoryId);
 
 router.get("/cart",locals,cart,isMainMode,ecommerce,isAuthenticated, shopController.getCart);
 router.post("/cart",locals,cart,isMainMode,ecommerce,isAuthenticated, shopController.addToCart);
 
-router.get("/aboutservices", locals,services,isMainMode,shopController.getAboutServices);
-router.get("/aboutservices/:aboutserviceid", locals,services,isMainMode,shopController.getAboutService);
+router.get("/aboutservices", memoryLogin,locals,services,isMainMode,cached,memoryLogin,shopController.getAboutServices);
+router.get("/aboutservices/:aboutserviceid", memoryLogin,locals,services,cached,memoryLogin,isMainMode,shopController.getAboutService);
 
-router.get("/project", locals,project,isMainMode,shopController.getProjects);
-router.get("/project/:projectid", locals,project,isMainMode,shopController.getProject);
+router.get("/project", memoryLogin,locals,project,isMainMode,cached,memoryLogin,shopController.getProjects);
+router.get("/project/:projectid", locals,project,isMainMode,cached,memoryLogin,shopController.getProject);
 
 
-router.get("/about", locals,about,isMainMode,shopController.getAbouts);
-router.get("/about/:aboutid", locals,about,isMainMode,shopController.getAbout);
+router.get("/about", locals,about,isMainMode,cached,memoryLogin,shopController.getAbouts);
+router.get("/about/:aboutid", locals,about,isMainMode,cached,memoryLogin,shopController.getAbout);
 
-router.get("/news", locals,isMainMode,shopController.getAllNews);
-router.get("/news/:newsid", locals,isMainMode,shopController.getNews);
+router.get("/news", locals,isMainMode,cached,memoryLogin,shopController.getAllNews);
+router.get("/news/:newsid", locals,isMainMode,cached,memoryLogin,shopController.getNews);
 
-router.get("/contactus",locals,contact,isMainMode, shopController.getContact);
+router.get("/contactus",locals,contact,isMainMode,cached,memoryLogin, shopController.getContact);
 router.post("/contactus", shopController.postAddContact);
 
 
@@ -86,6 +59,6 @@ router.get("/orders",locals,user,isMainMode,ecommerce,isAuthenticated, shopContr
 
 
 
-router.get("/client",locals,client,isMainMode, shopController.getClient);
+router.get("/client",locals,client,isMainMode,cached,memoryLogin, shopController.getClient);
 
 module.exports = router;

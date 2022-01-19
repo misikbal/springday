@@ -31,6 +31,7 @@ const News=require("./model/news");
 
 
 
+
 //  mongodb+srv://misikbal:A1b2c3d4.@cluster0.jajbp.mongodb.net/sptrindDay?retryWrites=true&w=majority
 const connectionString="mongodb+srv://springdayAdmin:A1b2c3d4.@cluster0.pwmu2.mongodb.net/node?retryWrites=true&w=majority";
 const mongoose =require("mongoose");
@@ -112,47 +113,6 @@ app.use(multer({storage:storage,fileFilter: multerFilter}).fields([
 
 ]));
 
-app.use( (req,res,next)=>{    
-        System.findOne()
-            .lean()
-            .then((system)=>{
-                    About.find()
-                    .limit(7)
-                    .where({isHome:false})
-                    .where({isActive:true})
-                    .select(["-description","-date","-userId","-__v"])
-                    .lean()
-                    .then((footerabouts)=>{
-                        Category.find()
-                            .where({ isActive: true })
-                            .then((menucategory) => {
-                            Lang.find()
-                                .sort({ date: 1 })
-                                .then((lang) => {
-                                News.find()
-                                    .limit(7)
-                                    .where({ isActive: true })
-                                    .select("_id title")
-                                    .lean()
-                                    .then((blog) => {
-                                    req.system = system;
-                                    req.footerabouts = footerabouts;
-                                    req.menucategory = menucategory;
-                                    req.lang = lang;
-                                    req.blog = blog;
-
-                                    next();
-                                    });
-                                });
-                            });
-                        
-                    })
-                    
-            })
-    .catch(err=>{console.log(err)});
-})
-
-
 
 
 app.use((req,res,next)=>{
@@ -168,6 +128,46 @@ app.use((req,res,next)=>{
         
 
 })
+
+app.use((req,res,next)=>{    
+    System.findOne()
+        .then((system)=>{
+                About.find()
+                .limit(7)
+                .where({isHome:false})
+                .where({isActive:true})
+                .select(["-description","-date","-userId","-__v"])
+                .lean()
+                .then((footerabouts)=>{
+                    Category.find()
+                        .where({ isActive: true })
+                        .then((menucategory) => {
+                        Lang.find()
+                            .sort({ date: 1 })
+                            .then((lang) => {
+                            News.find()
+                                .limit(7)
+                                .where({ isActive: true })
+                                .select("_id title")
+                                .lean()
+                                .then((blog) => {
+                                req.system = system;
+                                req.footerabouts = footerabouts;
+                                req.menucategory = menucategory;
+                                req.lang = lang;
+                                req.blog = blog;
+
+                                next();
+                                });
+                            });
+                        });
+                    
+                })
+                
+        })
+.catch(err=>{console.log(err)});
+})
+
 
 app.get('/files',isFile,isAdmin, function (req, res) {
     const images = fs.readdirSync('wwwroot/img/upload')

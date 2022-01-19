@@ -26,6 +26,9 @@ block content
                 .header
                     h2
                         | Sosyal Medya
+                    br
+                    small.text-warning
+                        | Boş bırakılan alanların logosu gösterilmeyecektir.
                 .body
                     .demo-masked-input
                         form(action="/admin/social" method="POST")  
@@ -80,7 +83,7 @@ block content
                                             span.input-group-addon
                                                 i.material-icons phone
                                             .form-line
-                                                input.form-control.mobile-phone-number#phone(type='text' name="phone" placeholder='Ex: +90 (000) 000-00-00' value=`${social.phone}`)
+                                                input.form-control.mobile-phone-number#contactphone(type='text' name="contactphone" placeholder='Ex: +90 (000) 000-00-00' value=`${social.contactphone}`)
                             .row.clearfix       
                                 .col-sm-6
                                     .form-group
@@ -89,11 +92,11 @@ block content
                                             span.input-group-addon
                                                 i.material-icons email
                                             .form-line
-                                                input.form-control.email#mail(type='text' name="mail" placeholder='Ex: example@example.com' value=`${social.mail}`)
+                                                input.form-control.email#contactmail(type='text' name="contactmail" placeholder='Ex: example@example.com' value=`${social.contactmail}`)
                                 if isAdmin
                                     .col-sm-6
                                         .form-group
-                                            input(type="submit" value="Kaydet").btn.btn-info.col-sm-12.mt-5
+                                            input(type="submit" value="Kaydet").btn.btn-warning.col-sm-12.mt-5
 
 block script
     include ../admin/includes/formscript.pug

@@ -149,7 +149,8 @@ Product.find()
     });
 };
 exports.getThemes = (req, res, next) => {
-Themes.findOne()
+Systems.findOne()
+    .select("bodyDark bodyLight cardLight cardrDark footerDark footerLight infoDark infoLight navbarDark navbarLight")
     .then((themes) => {
     res.render("admin/themes", {
         title: "Admin Themes",
@@ -177,7 +178,9 @@ const cardrDark = req.body.cardrDark;
 
 const footerLight = req.body.footerLight;
 const footerDark = req.body.footerDark;
-Themes.findOne()
+Systems.findOne()
+    .select("bodyDark bodyLight cardLight cardrDark footerDark footerLight infoDark infoLight navbarDark navbarLight")
+
     .then((themes) => {
     if (!themes) {
         return res.redirect("/");
@@ -649,6 +652,7 @@ Systems.findOne()
 
 exports.getSystems = (req, res, next) => {
 Systems.findOne()
+    .select("siteUrl isMemory language mainMode phone address googlemaps sgMail mail tawktoscript googleAnalitcs description tags")
     .then((system) => {
     res.render("admin/system", {
         title: "Admin system",
@@ -667,6 +671,8 @@ exports.postEditSystems = (req, res, next) => {
 const siteUrl = req.body.siteUrl;
 const language = req.body.language;
 const mainMode = Boolean(req.body.mainMode);
+const isMemory = Boolean(req.body.isMemory);
+
 const phone = req.body.phone;
 const mail = req.body.mail;
 const address = req.body.address;
@@ -676,7 +682,9 @@ const googleAnalitcs = req.body.googleAnalitcs;
 const description = req.body.description;
 const tags = req.body.tags;
 
+
 Systems.findOne()
+    .select("siteUrl isMemory language mainMode phone address googlemaps sgMail mail tawktoscript googleAnalitcs description tags")
     .then((system) => {
     if (!system) {
         return res.redirect("/");
@@ -690,6 +698,8 @@ Systems.findOne()
     (system.siteUrl = siteUrl),
         (system.language = language),
         (system.mainMode = mainMode),
+        (system.isMemory = isMemory),
+
         (system.phone = phone),
         (system.mail = mail),
         (system.address = address),
@@ -710,7 +720,8 @@ Systems.findOne()
 };
 
 exports.getLogo = (req, res, next) => {
-Logo.findOne()
+Systems.findOne()
+    .select("logo favico footerLogo loadingLogo loadingisActive loadingtext")
     .then((logo) => {
     res.render("admin/logo", {
         title: "Admin Logo",
@@ -727,7 +738,7 @@ Logo.findOne()
 
 exports.postEditLogo = async (req, res, next) => {
 const file = req.files;
-const isActive = Boolean(req.body.isActive);
+const loadingisActive = Boolean(req.body.loadingisActive);
 const loadingtext = req.body.loadingtext;
 const loadingLogo = req.body.loadingLogo;
 
@@ -808,7 +819,8 @@ if (file.logo) {
     fs.unlinkSync(req.files.footerLogo[0].path);
 }
 
-Logo.findOne()
+Systems.findOne()
+    .select("logo favico footerLogo loadingLogo loadingisActive loadingtext")
     .then((logoSetting) => {
     if (file.logo) {
         fs.unlink("wwwroot/img/resized/" + logoSetting.logo, (err) => {
@@ -861,7 +873,7 @@ Logo.findOne()
     if (!file.loadingLogo) {
         logoSetting.loadingLogo = loadingLogo;
     }
-    logoSetting.isActive = isActive;
+    logoSetting.loadingisActive = loadingisActive;
     logoSetting.loadingtext = loadingtext;
     return logoSetting.save();
     })
@@ -872,7 +884,8 @@ Logo.findOne()
 };
 
 exports.getSocialMedia = (req, res, next) => {
-SocialMedia.findOne()
+Systems.findOne()
+    .select("facebook instagram linkedin twitter youtube contactmail contactphone")
     .then((social) => {
     res.render("admin/social", {
         title: "Admin Social",
@@ -893,8 +906,13 @@ const instagram = req.body.instagram;
 const twitter = req.body.twitter;
 const linkedin = req.body.linkedin;
 const youtube = req.body.youtube;
+const contactmail = req.body.contactmail;
+const contactphone = req.body.contactphone;
+
 const userId = req.user;
-SocialMedia.findOne()
+Systems.findOne()
+    .select("facebook instagram linkedin twitter youtube contactmail contactphone")
+
     .then((social) => {
     if (!social) {
         return res.redirect("/");
@@ -911,6 +929,8 @@ SocialMedia.findOne()
         (social.linkedin = linkedin),
         (social.youtube = youtube),
         (social.userId = userId),
+        social.contactmail=contactmail,
+        social.contactphone=contactphone
         social.save();
     })
     .then((result) => {
@@ -1739,7 +1759,8 @@ Project.findOne({ _id: id })
     });
 };
 exports.getPage = (req, res, next) => {
-Page.findOne()
+Systems.findOne()
+    .select("home products about about_isActive blog blog_isActive cart cart_isActive client client_isActive contact contact_isActive home_isActive products_isActive project project_isActive services services_isActive user user_isActive")
     .then((page) => {
     res.render("admin/page", {
         title: "Admin Page Settings",
@@ -1781,7 +1802,8 @@ const user_isActive = Boolean(req.body.user_isActive);
 const blog_isActive = Boolean(req.body.blog_isActive);
 
 
-Page.findOne()
+Systems.findOne()
+    .select("home products about about_isActive blog blog_isActive cart cart_isActive client client_isActive contact contact_isActive home_isActive products_isActive project project_isActive services services_isActive user user_isActive")
     .then((pages) => {
     if (!pages) {
         return res.redirect("/");
@@ -2445,7 +2467,8 @@ User.findOne({ _id: id })
 };
 
 exports.getActiveModule = (req, res, next) => {
-ActiveModule.findOne()
+Systems.findOne()
+    .select("contactnavbar_isActive darkmode_isActive ecommarce_isActive isNavbar tawkto_isActive translate_isActive whatsapp_isActive")
     .then((active) => {
     res.render("admin/activemodule", {
         title: "Admin Active Module",
@@ -2469,7 +2492,8 @@ const translate_isActive = Boolean(req.body.translate_isActive);
 const ecommarce_isActive = Boolean(req.body.ecommarce_isActive);
 const isNavbar = Boolean(req.body.isNavbar);
 
-ActiveModule.findOne()
+Systems.findOne()
+    .select("contactnavbar_isActive darkmode_isActive ecommarce_isActive isNavbar tawkto_isActive translate_isActive whatsapp_isActive")
     .then((active) => {
     if (!active) {
         return res.redirect("/");
@@ -3096,7 +3120,8 @@ User.findOne({
 
 
 exports.getFooter = (req, res, next) => {
-    Footer.findOne()
+    Systems.findOne()
+        .select("alt footerdescription slogan title")
         .then((footer) => {
         res.render("admin/footer", {
             title: "Admin Edit Footer",
@@ -3118,7 +3143,9 @@ exports.getFooter = (req, res, next) => {
     const alt = req.body.alt;
 
     
-    Footer.findOne()
+    Systems.findOne()
+        .select("alt footerdescription slogan title")
+        
         .then((footer) => {
         if (!footer) {
             return res.redirect("/");
