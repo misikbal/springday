@@ -2,15 +2,15 @@ mixin createSlide(slide)
     .carousel-item
         img.d-block.animated.item.w-100.h-auto.d-inline-block(alt=`${slide.slide.title}` src=`/img/resized/${slide.slide.image}` class=`${slide.slide.animate}`)
 
-        .carousel-caption.d-md-block
-                if slide.slide.title!=""
-                    h5.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`) #{slide.slide.title}
-                if slide.slide.description!=""
+        span.carousel-caption
+            if slide.slide.title!=""
+                h5.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`) #{slide.slide.title}
+            if slide.slide.description!=""
+            
+                p.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
+                    | #{slide.slide.description}
+            if slide.slide.buttonName!=""
+                p.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
                 
-                    p.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
-                        | #{slide.slide.description}
-                if slide.slide.buttonName!=""
-                    p.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
-                    
-                        a(href=`${slide.slide.buttonLink.toString().split(",")[0]}`)
-                            button.btn.btn-warning.m-2(style="font-size: 16px;") #{slide.slide.buttonName}
+                    a(href=`${slide.slide.buttonLink.toString().split(",")[0]}`)
+                        button.btn.btn-warning.m-2(style="font-size: 16px;") #{slide.slide.buttonName}
