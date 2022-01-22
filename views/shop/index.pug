@@ -53,14 +53,6 @@ block content
     .container.pt-5
         .section-title.pt-2
             p ÜRÜNLERİMİZ
-        .row
-            .col-lg-12.d-flex.justify-content-center.mb-3
-              btn.btn.btn-warning.m-1
-                a(href="/products" style="text-decoration:none;" target="_blank").text-white Hepsi
-              if categories.length>0
-                  each category,products in categories
-                    btn.btn.btn-warning.m-1
-                        a(href=`/categories/${category._id}` style="text-decoration:none;" target="_blank").text-white #{category.name}
         .row.portfolio-container
           each product in products
             +productcard(product)
