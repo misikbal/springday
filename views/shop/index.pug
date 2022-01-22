@@ -50,24 +50,22 @@ block content
         //-     });
 
     +category(categories)
-    section#portfolio.portfolio
-      .container(data-aos='fade-up')
-          .section-title
-              p Ürünlerimiz
-          .row(data-aos='fade-up' data-aos-delay='100')
-              .col-lg-12.d-flex.justify-content-center
-                  ul#portfolio-flters
-                      li.filter-active.category.m-1
-                        a(href="/products" style="text-decoration:none;" target="_blank").text-white Hepsi
-                      if categories.length>0
-                          each category,products in categories
-                              li.filter-active.category.m-1
-                                a(href=`/categories/${category._id}` style="text-decoration:none;" target="_blank").text-white #{category.name}
-          .row.portfolio-container
-            each product in products
-              +productcard(product)
-          button.btn.btn-warning.col-md-12 
-            a(href="/products" style="text-decoration: none;").text-dark  Daha Fazla Ürün Göster
+    .container.pt-5
+        .section-title.pt-2
+            p ÜRÜNLERİMİZ
+        .row
+            .col-lg-12.d-flex.justify-content-center.mb-3
+              btn.btn.btn-warning.m-1
+                a(href="/products" style="text-decoration:none;" target="_blank").text-white Hepsi
+              if categories.length>0
+                  each category,products in categories
+                    btn.btn.btn-warning.m-1
+                        a(href=`/categories/${category._id}` style="text-decoration:none;" target="_blank").text-white #{category.name}
+        .row.portfolio-container
+          each product in products
+            +productcard(product)
+        button.btn.btn-warning.col-md-12 
+          a(href="/products" style="text-decoration: none;").text-dark  Daha Fazla Ürün Göster
 
     +shortservices(posts)
     br

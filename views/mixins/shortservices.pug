@@ -5,8 +5,8 @@ mixin shortservices(posts)
                 p Servislerimiz
             .row
                 each post in posts
-                    if post.type=="shortservices" && post.shortservices.isActive
-                        .col.p-1(data-aos='zoom-in' data-aos-delay='100')
+                    if post.type=="shortservices"
+                        .col.p-1
                             .icon-box.bg-light
                                 .icon
                                     | !{post.shortservices.icon}

@@ -68,20 +68,20 @@ block content
                                                 .fa-5x
                                                     | !{service.shortservices.icon}
                                             td.align-middle #{service.shortservices.name}
-                                            td.align-middle #{service.shortservices.userId.name}
-                                            td.align-middle #{service.shortservices.date.getHours()+":"+ service.shortservices.date.getMinutes()+" "}
+                                            td.align-middle #{service.userId.name}
+                                            td.align-middle #{service.date.getHours()+":"+ service.date.getMinutes()+" "}
                                                 br                                            
-                                                | #{service.shortservices.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
+                                                | #{service.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
                                             td.align-middle 
-                                                i(class=(service.shortservices.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
+                                                i(class=(service.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
                                             if isAdmin
                                                 td.align-middle.position-relative
-                                                    a.btn.btn-warning.btn-sm(href=`/admin/services/${service.id}`) 
+                                                    a.btn.btn-warning.btn-sm(href=`/admin/services/${service._id}`) 
                                                         span 
                                                             i.fas.fa-edit.fa-xs
                                                     form(action="/admin/delete-services" method="POST")
                                                         input(type="hidden" name="_csrf" value=`${csrfToken}`)  
-                                                        input(type="hidden" name="serviceid" value=`${service.id}`)
+                                                        input(type="hidden" name="serviceid" value=`${service._id}`)
                                                         button(type="submit" style="height:40px; width:40px;").btn.btn-danger.btn-sm
                                                             span 
                                                                 i.fas.fa-trash-alt.fa-xs

@@ -1214,13 +1214,14 @@ const icon = req.body.icon;
 const description = req.body.description;
 const isActive = Boolean(req.body.isActive);
     const services = new Post({
+        userId: req.user,
+        isActive: isActive,
+        date:Date.now(),
         shortservices:{
             name: name,
             icon: icon,
             description: description,
-            userId: req.user,
-            isActive: isActive,
-            date:Date.now(),
+            
         },
         type:"shortservices"
     
@@ -1248,7 +1249,7 @@ exports.getEditServices = (req, res, next) => {
 if (req.params.serviceid === "favicon.ico") {
     return res.status(404);
 }
-Post.findOne({ id: req.params.serviceid })
+Post.findOne({ _id: req.params.serviceid })
 
     .then((services) => {
     if (!services) {
@@ -1283,7 +1284,7 @@ Post.findOne({ _id: id })
     services.shortservices.name = name;
     services.shortservices.icon = icon;
     services.shortservices.description = description;
-    services.shortservices.isActive = isActive;
+    services.isActive = isActive;
     const progress = new Process({
         userId: req.user,
         type: "edit",

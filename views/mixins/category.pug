@@ -1,18 +1,17 @@
 mixin category(category)
-    .content
-        .site-section-half.mb-1.bg-light
-            .section-title.pt-2
-                p KATEGORİLER
-            .container.owl-2-style.text-center
-                .owl-carousel.owl-2.pt-3
-                    if category.length>0
-                        each categories in category
-                            .media-29101
-                                a(href=`/categories/${categories._id}` target="_blank" )
-                                    img.deneme.img-fluid.rounded.w-50(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${categories.categoryImg}` alt=`${categories.name}` )
-                                h3(style="font-size:16px;")
-                                    a(href=`/categories/${categories._id}` target="_blank" style="text-decoration:none;") #{categories.name}
+    .mb-1.bg-light
+        .section-title.pt-2
+            p KATEGORİLER
+        .container.owl-2-style.text-center
+            .owl-carousel.owl-2
+                if category.length>0
+                    each categories in category
+                        .media-29101
+                            a(href=`/categories/${categories._id}` target="_blank" )
+                                img.deneme.img-fluid.rounded.w-50(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${categories.categoryImg}` alt=`${categories.name}` )
+                            h3(style="font-size:16px;")
+                                a(href=`/categories/${categories._id}` target="_blank" style="text-decoration:none;") #{categories.name}
 
-                    else
-                        .media-29101(style="width: 5rem; margin-left:25rem;")
-                            h3 Kategori Mevcut Değil
+                else
+                    .media-29101(style="width: 5rem; margin-left:25rem;")
+                        h3 Kategori Mevcut Değil

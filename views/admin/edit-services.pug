@@ -7,7 +7,7 @@ block content
         div.alert.alert-danger.col-sm-12 !{errorMessage}
     form(action="/admin/services" method="POST")
         input(type="hidden" name="_csrf" value=`${csrfToken}`)    
-        input(type="hidden" name="serviceid" value=`${services.id}`)
+        input(type="hidden" name="serviceid" value=`${services._id}`)
         .row.clearfix
             .col-md-12
                 .form-group.row
@@ -24,7 +24,7 @@ block content
                         .form-group
                             label.form-check-label.mb-5 Aktif
                             .form-check.form-switch.d-flex.justify-content-center
-                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive" value=`${services.shortservices.isActive}` checked=services.shortservices.isActive)
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive" value=`${services.isActive}` checked=services.isActive)
             .col-md-10
                 .form-group.row
                     .col-sm-12
