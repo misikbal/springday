@@ -8,10 +8,10 @@
 //-     .site-mobile-menu-body
 
 
-.site-navbar-wrap(class=(system.isNavbar ? "sticky-wrapper is-sticky" : "")).translate
+.site-navbar-wrap(class=(system.isNavbar ? "sticky-wrapper is-sticky" : "") style=(path==="/" ? "position:absolute;":"")).translate
     if system.contactnavbar_isActive
 
-        #top.site-navbar-top(style="font-size:13px;")
+        #top.site-navbar-top(style="font-size:14px;")
             .container
                 .row.align-items-center
                     .col-6
@@ -60,11 +60,11 @@
                                 a(href='/')
                                     img.card-image(src=`/img/resized/${system.logo}` width="150px" height="68px")
                                 button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
-                                    span.navbar-toggler-icon
-                                        i.fas.fa-bars.mt-1
+                                    span.navbar-toggler-icon.mr-1.mt-1.pt-2
+                                        i(style="font-size:2rem;").icon-th-menu-outline
 
                                 
-                                #navbarSupportedContent.collapse.navbar-collapse
+                                #navbarSupportedContent.collapse.navbar-collapse(style="font-size:13px;")
                                     ul.navbar-nav.ml-auto.py-4.py-md-0
                                         if system.home!="" && system.home_isActive
                                             li(class=(path==='/'?'active':'') ).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
@@ -79,21 +79,21 @@
                                                         .row.mb-3
                                                             .col-12
                                                                 a.dropdown-item(href='/products')
-                                                                    p Tüm Ürünler
-                                                                hr
+                                                                    p Tüm Ürünlerimiz
                                                         .row
                                                             .col-12
 
+                                                                hr.bg-info
                                                                 p.h5 Kategoriler
-                                                                hr
-                                                                .row
+
+                                                                .row(style="font-size: 0.6rem;")
                                                                     each menucategories in menucategory
                                                                         .col-4.text-center
                                                                             a.dropdown-item(href=`/categories/${menucategories._id}`).nav-link
 
-                                                                                img.deneme(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="50" height="50" data-src=`/img/resized/${menucategories.categoryImg}` alt="")
+                                                                                img.deneme(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="50" height="50" data-src=`/img/resized/${menucategories.categoryImg}` alt=menucategories.name style="background-color:#fff" )
                                                                                 
-                                                                                p(style="font-size: 0.6rem;") #{menucategories.name}
+                                                                                p #{menucategories.name}
                                         //- li(class=(path==='/admin/categories' ? 'active':''))
                                         if system.services!="" && system.services_isActive
                                         
@@ -107,14 +107,15 @@
                                                     .row.mb-3
                                                         .col-12
                                                             a.dropdown-item(href='/about')
-                                                                p Hakkımızda
-                                                            hr
-                                                    .row
-                                                        each about in footerabouts
-                                                            .col-4.text-center
-                                                                a.dropdown-item(href=`/about/${about._id}`)                                                                               
-                                                                    
-                                                                    p !{about.name}
+                                                                p !{system.about}
+                                                            hr.bg-info
+                                                    .row(style="font-size:1rem")
+                                                        each about in globalvalue
+                                                            if about.type=="about" && about.isHome==false
+                                                                .col.text-center
+                                                                    a.dropdown-item(href=`/about/${about.url}`)                                                                               
+                                                                        
+                                                                        p !{about.about.name}
                                                                     
                                         if system.project!="" && system.project_isActive
                                         
@@ -161,24 +162,17 @@
                                         if system.translate_isActive
                                             li.pl-4.pl-md-0.ml-0.ml-md-4.pt-1
                                                 .dropdown.show
-                                                    button#link.btn.btn-outline-info.btn-sm.dropdown-toggle(role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' translate="no")
+                                                    button#link.btn.btn-outline-info.btn-xs.dropdown-toggle(style="font-size:9px;" role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' translate="no")
                                                         | LANGUAGE
                                                     .dropdown-menu(aria-labelledby='link' style="overflow:scrollLeft").bg-light.text-center
                                                         .row
-                                                            each langs in lang
-                                                                .col
-                                                                    a.dropdown-item.gflag.nturl(onclick=`doGTranslate('${system.language}|${langs.value}');return false;` title=`${langs.lang}` )
-                                                                    
-                                                                        img.deneme.text-start(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${langs.imageUrl}` height='30' width='30' alt='Turkish')
-                                                                        p(stlye="font-size:10px;" translate="no") #{langs.lang}
-                                        if system.darkmode_isActive
-                                            li.pl-4.pl-md-0.ml-0.ml-md-4.pt-1.text-center
-
-                                                .switch
-                                                    i.icon-adjust
-                                                    div
-                                                        input(type="checkbox")
-                                                        span.slider.round.bg-light
+                                                            each langs in globalvalue
+                                                                if langs.type=="lang"
+                                                                    .col
+                                                                        a.dropdown-item.gflag.nturl(onclick=`doGTranslate('${system.language}|${langs.lang.value}');return false;` title=`${langs.lang.lang}` )
+                                                                        
+                                                                            img.deneme.text-start(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${langs.lang.imageUrl}` height='30' width='30' alt=langs.lang.lang)
+                                                                            p(style="font-size:10px" translate="no") #{langs.lang.lang}
 
 
         if action!=="undefined" && action==="insert"

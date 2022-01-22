@@ -23,15 +23,6 @@ block content
                         .text Kategori Sayısı
                         .number.count-to(data-from='0' data-to=`${category.length}` data-speed='1000' data-fresh-interval='20')
         .col-lg-3.col-md-3.col-sm-6.col-xs-12
-            a(href="/admin/slide" style="text-decoration: none;")
-
-                .info-box.bg-purple.hover-expand-effect
-                    .icon
-                        i.fas.fa-images
-                    .content
-                        .text Slayt Sayısı
-                            .number.count-to(data-from='0' data-to=`${slide.length}` data-speed='1000' data-fresh-interval='20')
-        .col-lg-3.col-md-3.col-sm-6.col-xs-12
             a(href="/admin/users" style="text-decoration: none;")
 
                 .info-box.bg-deep-purple.hover-expand-effect
@@ -106,6 +97,22 @@ block content
                         .content
                             .text Teslim Edilen Sipariş Sayısı
                             .number.count-to(data-from='0' data-to=`${done.length}` data-speed='1000' data-fresh-interval='20')
+    if system.isMemory==false
+        .row.clearfix 
+            .alert.alert-warning(role='alert').pl-2.pr-2
+                h4.alert-heading Geliştirici Modu Kapalı
+                p
+                    | Ürün, kategori, slayt, genel ayarlar( Bakım ve Geliştirici Modu Hariç) ve Sayfalarda yapılan işlemler sitede aktif olan kullanıcılara 5 DK sonra yansıyacaktır.
+                hr
+                p.mb-0.bg-light.text-warning.p-3
+                    | Lütfen bir işlem yapmadan önce 
+                    a(href="/admin/system").alert-link.text-secondary geliştirici modu 
+                    |açınız. Ardından sitenin hızlı açılması için geliştirici modu kapatınız. 
+                p.mb-0.p-3            
+                    |Eğer web sitesinde "memory" ile alakalı bir hata alıyorsanız 
+                    a(href="/admin/system").alert-link.text-secondary geliştirici modu 
+                    |açınız. 
+
     .row.clearfix
         .col-md-12
             .form-group

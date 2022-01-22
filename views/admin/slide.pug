@@ -68,13 +68,13 @@ block content
                                         tr
                                             td(scope="row").align-middle #{index++}
                                             td 
-                                                img(src=`/img/resized/${slides.image}` width='180')
-                                            td.align-middle #{slides.title}
+                                                img(src=`/img/resized/${slides.slide.image}` width='180')
+                                            td.align-middle #{slides.slide.title}
                                             td.align-middle.text-center
-                                                a.btn.bg-blue-grey.btn-sm.mr-2(href=`${slides.buttonLink.toString().split(",")[0]}` target="_blank")
+                                                a.btn.bg-blue-grey.btn-sm.mr-2(href=`${slides.slide.buttonLink.toString().split(",")[0]}` target="_blank")
                                                     span
                                                         i.fas.fa-external-link-alt.fa-2x
-                                            td.align-middle #{slides.buttonName}
+                                            td.align-middle #{slides.slide.buttonName}
                                             td.align-middle #{slides.userId.name}                                                
                                             td.align-middle #{slides.date.getHours()+":"+ slides.date.getMinutes()+" "}
                                                 br                                            

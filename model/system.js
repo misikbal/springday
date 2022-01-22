@@ -37,6 +37,10 @@ const settingsSchema = mongoose.Schema({
     description:{
         type:String,
     },
+    date:{
+        type:Date,
+        default:Date.now
+    },
     //active
     contactnavbar_isActive:Boolean,
     whatsapp_isActive:Boolean,

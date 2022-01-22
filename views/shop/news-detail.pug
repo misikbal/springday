@@ -2,20 +2,20 @@ extends ../layouts/main-layout.pug
 include ../mixins/client.pug
 
 block styles
-    meta(name='keywords' content=news.tags[0])
+    meta(name='keywords' content=news.news.tags[0])
     meta(property='og:locale' content='tr_TR')
     meta(property='og:type' content='article')
     meta(property='og:url' content=`${system.siteUrl}/news/${news._id}`)
     meta(property='og:site_name' content=`${title}`)
 
     meta(property='article:section' content='Shop')
-    meta(property='og:updated_time' content=`${news.date}`)
+    meta(property='og:updated_time' content=`${news.news.date}`)
     meta(property='og:image:width' content='400')
     meta(property='og:image:height' content='400')
     meta(property='og:image:type' content='image/webp')
 
-    meta(property="og:image" content=`${news.imageUrl}`)
-    meta(property="og:title" content=`${news.name}`) 
+    meta(property="og:image" content=`${news.news.imageUrl}`)
+    meta(property="og:title" content=`${news.news.name}`) 
 
     link(href='/css/aboutservicesdetails.css' rel='stylesheet')
 
@@ -24,14 +24,20 @@ block content
     br
     br
     br
-    img.d-block.w-100.animated(alt=`${news.imageUrl}` src=`/img/resized/${news.imageUrl}`)
-
+    br
+    br
     .container
         .row
             .leftcolumn
                 .card.bg-light(style="border-top: 10px solid #0b5aa2;")
-                    h2.text-center.itemss-head #{news.title}
-                    p !{news.description}
+                    h2.text-center.itemss-head #{news.news.title}
+                    img.d-block.animated.w-100(alt=`${news.news.imageUrl}` src=`/img/resized/${news.news.imageUrl}` style="height:auto;")
+
+                    span#description
+                        |!{news.news.description}
+                    script.
+                        $("span#description img").addClass("w-100 h-auto border-right-0 rounded")
+                        $("span#description p").addClass("text-justify text-muted")
 
             .rightcolumn
                 br
@@ -44,11 +50,12 @@ block content
                             each newes in allnews
                                 .itemss-body-content                        
                                     #card-hover
-                                        a(href=`/news/${newes._id}` class=newes._id==selectedCategory?"list-group-item active":"list-group-item" style="text-decoration: none").bg-light
-                                            |#{newes.title}
+                                        a(href=`/news/${newes.url}` class=newes.url==selectedCategory?"list-group-item active":"list-group-item" style="text-decoration: none").bg-light
+                                            |#{newes.news.title}
                                             i.fa.fa-angle-right
-    +client(client)
-    .gototop.js-top
-        a.js-gotop(href='#')
-            i.fa.fa-arrow-up
+    br
+    br
+    br
+    br
+    +client(globalvalue)
 

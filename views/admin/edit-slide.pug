@@ -20,7 +20,7 @@ block content
                         .card.text-center.bg-blue-grey
                             .header
                                 h2.text-white
-                                    | "#{slide.title}" BAŞLIKLI SLAYTIN GÜNCELLEME SAYFASI
+                                    | "#{slide.slide.title}" BAŞLIKLI SLAYTIN GÜNCELLEME SAYFASI
         .row.clearfix
             .col-md-2
                 .card.bg-light.text-center
@@ -40,7 +40,7 @@ block content
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.form-control#name(type="text" name="title" value=`${slide.title}` placeholder="Büyük Fırsat")    
+                                    input.form-control#name(type="text" name="title" value=`${slide.slide.title}` placeholder="Büyük Fırsat")    
         .row
             .col-md-12
                 .form-group.row
@@ -54,7 +54,7 @@ block content
                                     small.text-info
                                         | Bir Tane Resim Seçilebilir
                             .text-center
-                                img(src=`/img/resized/${slide.image}` style="width:200px;").card-img-top.mt-3                            
+                                img(src=`/img/resized/${slide.slide.image}` style="width:200px;").card-img-top.mt-3                            
                             .body.bg-blue-grey
                                 .fileupload.fileupload-new(data-provides='fileupload')
                                     span.btn.btn-warning.btn-file
@@ -75,7 +75,7 @@ block content
                             
                     .body
                         .form-line
-                            textarea.form-control(type="text" name="description" cols="5" rows="1") #{slide.description}
+                            textarea.form-control(type="text" name="description" cols="5" rows="1") #{slide.slide.description}
         .form-group.row        
             .col-sm-6
                 .card.text-center.bg-blue-grey
@@ -86,7 +86,7 @@ block content
                                 | Gerekli
                     .body
                         .form-line
-                            input.form-control#buttonName(type="text" name="buttonName" value=`${slide.buttonName}` placeholder="Detaylar")            
+                            input.form-control#buttonName(type="text" name="buttonName" value=`${slide.slide.buttonName}` placeholder="Detaylar")            
             .col-sm-6
                 .card.text-center.bg-blue-grey
                     .header.bg-white
@@ -98,32 +98,46 @@ block content
                         .form-line
                             select(name="buttonLink").js-animations.form-control#buttonLink
                                 optgroup(label='Seçilen Animasyon')
-                                    option(value=`${slide.buttonLink.toString().split(",")[0]}`) #{slide.buttonLink.toString().split(",")[1]}
+                                    option(value=`${slide.slide.buttonLink.toString().split(",")[0]}`) #{slide.slide.buttonLink.toString().split(",")[1]}
+                                optgroup(label='<-------------------->')
+                                    option() Lütfen Bir Sayfa Seçiniz
 
                                 if product.length > 0
                                     optgroup(label='Ürünler')
+                                            option(value=`/products,Ürün Sayfası`) Ürün Sayfası
                                             each products in product
                                                     option(value=`/products/${products._id+","+products.name}`) #{products.name}
-                                if services.length > 0                                
+                                if category.length > 0
+                                    optgroup(label='Kategoriler')
+                                            each cate in category
+                                                    option(value=`/categories/${cate._id+","+cate.name}`) #{cate.name}
+                                if post.length > 0
                                     optgroup(label='Hizmetler')
-                                            each service in services
-                                                    option(value=`/aboutservices/${service._id+","+service.name}`) #{service.name}
-                                if project.length > 0                                
-                                    optgroup(label='Projeler')
-                                            each projects in project
-                                                    option(value=`/project/${projects._id+","+projects.name}`) #{projects.name}
-                                if about.length > 0                                
-                                    optgroup(label='Hakkımızda Sayfası')
-                                            each abouts in about
-                                                    option(value=`/about/${abouts._id+","+abouts.name}`) #{abouts.name}
-                                if blog.length > 0                                
+                                        option(value=`/aboutservices,Hizmet Sayfası`) Hizmet Sayfası
+                                        each service in post
+                                            if service.type=="aboutservices"
+
+                                                option(value=`/aboutservices/${service.url+","+service.aboutservices.name}`) #{service.aboutservices.name}
+                                if post.length > 0 
+
+                                        optgroup(label='Projeler')
+                                                option(value=`/project,Proje Sayfası`) Proje Sayfası
+                                                each projects in post
+                                                    if projects.type=="project"                                   
+
+                                                        option(value=`/project/${projects.url+","+projects.project.name}`) #{projects.project.name}
+                                if post.length > 0
+                                    optgroup(label='Hakkımızda Alanı')
+                                            option(value=`/about,Hakkımızda Sayfası`) Hakkımızda Sayfası
+                                                each abouts in post
+                                                    if abouts.type=="about"    
+                                                        option(value=`/about/${abouts.url+","+abouts.about.name}`) #{abouts.about.name}
+                                if post.length > 0                   
                                     optgroup(label='Blog')
-                                            each blogs in blog
-                                                    option(value=`/news/${blogs._id+","+blogs.title}`) #{blogs.title}
-                                if client.length > 0                                
-                                    optgroup(label='Referanslar')
-                                            each clients in client
-                                                    option(value="/client,"+`${clients.name}`) #{clients.name}
+                                            option(value=`/news,Ürün Sayfası`) Blog Sayfası                                            
+                                            each blogs in post
+                                                if blogs.type=="news"
+                                                    option(value=`/news/${blogs.url+","+blogs.news.title}`) #{blogs.news.title}
                                         
 
         .row
@@ -135,11 +149,11 @@ block content
                             small.text-danger
                                 | Gerekli
                     .body
-                        img.js-animating-object.img-responsive(src=`/img/resized/${slide.image}`).w-75
+                        img.js-animating-object.img-responsive(src=`/img/resized/${slide.slide.image}`).w-75
                         .form-line                
                             select(name="animate").js-animations.form-control.show-tick#animate
                                 optgroup(label='Seçilen Animasyon')
-                                    option(value=`${slide.animate}`) #{slide.animate}
+                                    option(value=`${slide.slide.animate}`) #{slide.slide.animate}
 
                                 optgroup(label='Attention Seekers')
                                     option(value='bounce') bounce

@@ -20,6 +20,8 @@ const About=require("./model/about");
 const Category=require("./model/category");
 const Lang=require("./model/lang");
 const News=require("./model/news");
+const Post=require("./model/post");
+
 
 
 
@@ -132,34 +134,20 @@ app.use((req,res,next)=>{
 app.use((req,res,next)=>{    
     System.findOne()
         .then((system)=>{
-                About.find()
-                .limit(7)
-                .where({isHome:false})
-                .where({isActive:true})
-                .select(["-description","-date","-userId","-__v"])
-                .lean()
-                .then((footerabouts)=>{
                     Category.find()
                         .where({ isActive: true })
                         .then((menucategory) => {
-                        Lang.find()
-                            .sort({ date: 1 })
-                            .then((lang) => {
-                            News.find()
-                                .limit(7)
-                                .where({ isActive: true })
-                                .select("_id title")
-                                .lean()
-                                .then((blog) => {
-                                req.system = system;
-                                req.footerabouts = footerabouts;
-                                req.menucategory = menucategory;
-                                req.lang = lang;
-                                req.blog = blog;
+                                    Post.find({$or: [{type:"client"} , {type:"about"},{type:"lang"},{type:"news"}]})
+                                        .select("client.clientlogo client.name about.name lang.lang lang.value lang.imageUrl news.title isHome isActive url type")
+                                        .where({isActive: true})
+                                        .sort({date: -1})
+                                        .lean()
+                                        .then(globalvalue=>{
+                                            req.system = system;
+                                            req.menucategory = menucategory;
+                                            req.globalvalue = globalvalue;
+                                            next();
 
-                                next();
-                                });
-                            });
                         });
                     
                 })

@@ -21,13 +21,13 @@ block content
                 each projects in project
                     .col-md-4
                         .item-1
-                            a.card(href=`/project/${projects._id}` style="height:auto;").bg-light
-                                .thumb.deneme(style=`background-image: url(/img/resized/${projects.imageUrl});`)
-                                article
-                                    h1 #{projects.name}
+                            a.card(href=`/project/${projects.url}` style="height:auto;").bg-light
+                                img.thumb(style=`background-image: url(/img/resized/${projects.project.imageUrl});`)
+                                article                                    
+                                    h2 #{projects.project.name}
                                     span
                                         button.btn.btn-dark(style="text-decoration: none") İncele
     br
     br
     br
-    +client(client)
+    +client(globalvalue)

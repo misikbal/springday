@@ -32,10 +32,10 @@ router.get("/categories/:categoryid", locals,products,isMainMode,cached,memoryLo
 router.get("/cart",locals,cart,isMainMode,ecommerce,isAuthenticated, shopController.getCart);
 router.post("/cart",locals,cart,isMainMode,ecommerce,isAuthenticated, shopController.addToCart);
 
-router.get("/aboutservices", memoryLogin,locals,services,isMainMode,cached,memoryLogin,shopController.getAboutServices);
-router.get("/aboutservices/:aboutserviceid", memoryLogin,locals,services,cached,memoryLogin,isMainMode,shopController.getAboutService);
+router.get("/aboutservices", locals,services,isMainMode,cached,memoryLogin,shopController.getAboutServices);
+router.get("/aboutservices/:aboutserviceid", locals,services,cached,memoryLogin,isMainMode,shopController.getAboutService);
 
-router.get("/project", memoryLogin,locals,project,isMainMode,cached,memoryLogin,shopController.getProjects);
+router.get("/project", locals,project,isMainMode,cached,memoryLogin,shopController.getProjects);
 router.get("/project/:projectid", locals,project,isMainMode,cached,memoryLogin,shopController.getProject);
 
 

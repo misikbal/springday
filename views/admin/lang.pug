@@ -69,9 +69,9 @@ block content
                                         tr
                                             td(scope="row").align-middle #{index++}
                                             td.align-middle
-                                                img(src=`/img/resized/${langs.imageUrl}` width='50')
-                                            td.align-middle #{langs.lang}
-                                            td.align-middle #{langs.value}
+                                                img(src=`/img/resized/${langs.lang.imageUrl}` width='50')
+                                            td.align-middle #{langs.lang.lang}
+                                            td.align-middle #{langs.lang.value}
                                             td.align-middle #{langs.userId.name}
                                             td.align-middle #{langs.date.getHours()+":"+ langs.date.getMinutes()+" "}
                                                 br                                            

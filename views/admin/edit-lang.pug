@@ -19,7 +19,7 @@ block content
                             .card.text-center.bg-blue-grey
                                 .header
                                     h2.text-white
-                                        | #{lang.lang} DİLİNİN GÜNCELLEME SAYFASI
+                                        | #{lang.lang.lang} DİLİNİN GÜNCELLEME SAYFASI
         .row.clearfix
             .col-md-2
 
@@ -40,7 +40,7 @@ block content
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.form-control#lang(type="text" name="lang" placeholder="English" value=`${lang.lang}`)  
+                                    input.form-control#lang(type="text" name="lang" placeholder="English" value=`${lang.lang.lang}`)  
         .row
             .col-md-6
                 .form-group.row
@@ -52,7 +52,7 @@ block content
                                     small.text-info
                                         | Bir Tane Resim Seçilebilir
                                 .text-center
-                                    img(src=`/img/resized/${lang.imageUrl}` style="width:50px;").card-img-top.mt-3  
+                                    img(src=`/img/resized/${lang.lang.imageUrl}` style="width:50px;").card-img-top.mt-3  
                             .body.bg-blue-grey
                                 .fileupload.fileupload-new(data-provides='fileupload')
                                     span.btn.btn-warning.btn-file
@@ -76,7 +76,7 @@ block content
                                         a(href="https://tr.wiktionary.org/wiki/Vikis%C3%B6zl%C3%BCk:Diller_listesi" style="text-decoration: none") https://tr.wiktionary.org/wiki/Vikis%C3%B6zl%C3%BCk:Diller_listesi
                             .body
                                 .form-line
-                                    input.form-control#value(type="text" name="value" placeholder="en" value=`${lang.value}`)  
+                                    input.form-control#value(type="text" name="value" placeholder="en" value=`${lang.lang.value}`)  
         .form-group.row
             input(type="submit" value="Dili Güncelle")#export-btn.col-md-12.btn.btn-warning
 block script

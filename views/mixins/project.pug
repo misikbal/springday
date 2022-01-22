@@ -1,17 +1,18 @@
-mixin project(projectinfo)
-    if projectinfo.length>0
-        header.mb-5
-            h1 PROJELERİMİZ
-        .container.owl-3-style.text-center
-                .owl-carousel.owl-3.pt-3
-                    
-                    each projects in projectinfo
-                        .media-29101(style="height:25rem;")
-                            .item-4(style="height:25rem;")
-                                a.card(href=`/project/${projects._id}`).bg-light
-                                    img.deneme(data-src=`/img/resized/${projects.imageUrl}`).mx-auto
-                                    .thumb.pt-3                                    
-                                        h1.pb-3 #{projects.name}
-                                        span
-                                            button.btn.btn-dark(style="text-decoration: none") İncele
-                                        
+mixin project(posts)
+    
+        if posts.length>0
+            header.mb-5
+                h1 PROJELERİMİZ
+            .container.owl-3-style.text-center
+                    .owl-carousel.owl-3.pt-3
+                        
+                        each projects in posts
+                            if projects.type=="project" && projects.isHome
+                                .media-29101()
+                                    .item-4
+                                        a.card(href=`/project/${projects.url}` style="height:auto;").bg-light
+                                            img.deneme(data-src=`/img/resized/${projects.project.imageUrl}`)
+                                            article                                    
+                                                h2 #{projects.project.name}
+                                                span
+                                                    button.btn.btn-dark(style="text-decoration: none") İncele

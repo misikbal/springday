@@ -16,7 +16,7 @@ block content
                         .card.text-center.bg-blue-grey
                             .header
                                 h2.text-white
-                                    | "#{news.title}" BAŞLIKLI GÖNDERİYİ GÜNCELLEME SAYFASI
+                                    | "#{news.news.title}" BAŞLIKLI GÖNDERİYİ GÜNCELLEME SAYFASI
         .row.clearfix
             .col-md-2
                 .card.bg-light.text-center
@@ -36,7 +36,7 @@ block content
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.form-control#title(type="text" name="title" value=`${news.title}` placeholder="Basında Biz")            
+                                    input.form-control#title(type="text" name="title" value=`${news.news.title}` placeholder="Basında Biz")            
         .row
             .col-md-12
                 .form-group.row
@@ -50,7 +50,7 @@ block content
                                     small.text-info
                                         | Bir Tane Resim Seçilebilir
                             .text-center
-                                img(src=`/img/resized/${news.imageUrl}` style="width:400px;").card-img-top.mt-3                            
+                                img(src=`/img/resized/${news.news.imageUrl}` style="width:400px;").card-img-top.mt-3                            
                             .body.bg-blue-grey
                                 .fileupload.fileupload-new(data-provides='fileupload')
                                     span.btn.btn-warning.btn-file
@@ -72,7 +72,7 @@ block content
                                 | Resim Konulabilir (Resim Ekleme Simgesine Tıklayın > Sunucuya Gözat )
                     .body
                         .form-line
-                        textarea.form-control(id="editor" name="description" cols="30" rows="10") #{news.description}
+                        textarea.form-control(id="editor" name="description" cols="30" rows="10") #{news.news.description}
         .form-group.row
             .col-sm-12
                 .card.text-center.bg-blue-grey
@@ -97,7 +97,7 @@ block content
                                 a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
                         .body
                             .form-line
-                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value=`${news.tags}` placeholder="Taglerinizi Buraya Giriniz")
+                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value=`${news.news.tags}` placeholder="Taglerinizi Buraya Giriniz")
             
         .form-group.row
             input(type="submit" value="Gönderiyi Güncelle").btn.btn-warning.col-md-12                                          

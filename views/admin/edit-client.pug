@@ -16,7 +16,7 @@ block content
                         .card.text-center.bg-blue-grey
                             .header
                                 h2.text-white
-                                    | "#{client.name}" REFERANSINI GÜNCELLEME SAYFASI
+                                    | "#{client.client.name}" REFERANSINI GÜNCELLEME SAYFASI
         .row.clearfix
             .col-md-2
                 .card.bg-light.text-center
@@ -36,7 +36,7 @@ block content
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.form-control#name(type="text" name="name" value=`${client.name}` placeholder="Bosch")            
+                                    input.form-control#name(type="text" name="name" value=`${client.client.name}` placeholder="Bosch")            
         .row
             .col-md-12
                 .form-group.row
@@ -50,7 +50,7 @@ block content
                                     small.text-info
                                         | Bir Tane Resim Seçilebilir
                             .text-center
-                                img(src=`/img/resized/${client.clientlogo}` style="width:200px;").card-img-top.mt-3                            
+                                img(src=`/img/resized/${client.client.clientlogo}` style="width:200px;").card-img-top.mt-3                            
                             .body.bg-blue-grey
                                 .fileupload.fileupload-new(data-provides='fileupload')
                                     span.btn.btn-warning.btn-file
@@ -69,7 +69,7 @@ block content
                                 | İsteğe Bağlı
                     .body
                         .form-line
-                            input.form-control#name(type="text" name="link" value=`${client.link}` placeholder="https://www.bosch-home.com.tr/")            
+                            input.form-control#link(type="text" name="link" value=`${client.client.link}` placeholder="https://www.bosch-home.com.tr/")            
             .col-sm-6
                 .card.text-center.bg-blue-grey
                     .header.bg-white
@@ -80,7 +80,7 @@ block content
                             
                     .body
                         .form-line
-                            textarea.form-control(type="text" name="description" cols="5" rows="1") #{client.description}
+                            textarea.form-control(type="text" name="description" cols="5" rows="1") #{client.client.description}
         .col-sm-12
             .form-group
                 input(type="submit" value="Referansı Güncelle").btn.btn-warning.col-sm-12                  

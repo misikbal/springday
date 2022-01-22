@@ -47,6 +47,7 @@ block content
                                         th(scope="col").align-middle #
                                         th Proje Resmi
                                         th Proje Adı
+
                                         th Yazar
                                         th Tarih
                                         th Aktif
@@ -59,6 +60,7 @@ block content
                                         th(scope="col").align-middle #
                                         th Proje Resmi
                                         th Proje Adı
+
                                         th Yazar
                                         th Tarih
                                         th Aktif
@@ -71,9 +73,10 @@ block content
                                         tr
                                             td(scope="row").align-middle #{index++}
                                             td 
-                                                img(src=`/img/resized/${projects.imageUrl}` width='180')
-                                            td.align-middle #{projects.name}
+                                                img(src=`/img/resized/${projects.project.imageUrl}` width='180')
+                                            td.align-middle #{projects.project.name}
                                             td.align-middle #{projects.userId.name}
+
                                             td.align-middle #{projects.date.getHours()+":"+ projects.date.getMinutes()+" "}
                                                 br                                            
                                                 | #{projects.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
@@ -88,7 +91,7 @@ block content
                                                             i.fas.fa-edit.fa-xs
                                                     form(action="/admin/delete-project" method="POST")
                                                         input(type="hidden" name="_csrf" value=`${csrfToken}`)  
-                                                        input(type="hidden" name="projectsid" value=`${projects._id}`)
+                                                        input(type="hidden" name="projectid" value=`${projects._id}`)
                                                         button(type="submit" style="height:40px; width:40px;").btn.btn-danger.btn-sm
                                                             span 
                                                                 i.fas.fa-trash-alt.fa-xs

@@ -71,12 +71,12 @@ block content
                                         tr
                                             td(scope="row").align-middle #{index++}
                                             td 
-                                                img(src=`/img/resized/${aboutservice.imageUrl}` width='150')
-                                            td.align-middle #{aboutservice.name}
+                                                img(src=`/img/resized/${aboutservice.aboutservices.imageUrl}` width='150')
+                                            td.align-middle #{aboutservice.aboutservices.name}
                                             td.align-middle #{aboutservice.userId.name}
-                                            td.align-middle #{aboutservice.date.getDate()+"/"+aboutservice.date.getMonth()+"/"+aboutservice.date.getFullYear()}
-                                                br
-                                                |#{aboutservice.date.getHours()+":"+ aboutservice.date.getMinutes()+" "}
+                                            td.align-middle #{aboutservice.date.getHours()+":"+ aboutservice.date.getMinutes()}
+                                                br                                            
+                                                | #{aboutservice.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}                                            
                                             td.align-middle 
                                                 i(class=(aboutservice.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
                                             td.align-middle 

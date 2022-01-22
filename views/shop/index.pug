@@ -16,19 +16,21 @@ block styles
   link(data-href='/css/project.css' rel='stylesheet')
 
 block content
-    if slides.length>0
+    if posts.length>0
 
       .w-auto
         #carouselExampleIndicators.carousel.slide(data-ride='carousel',data-interval="2500")
             ol.carousel-indicators
               -var slideIndex=0;
-                each slide in slides
-                  li.li-white.li-slide(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
-                  -slideIndex++;
+                each slide in posts
+                  if slide.tpye=="slide"
+                    li.li-white.li-slide(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
+                    -slideIndex++;
               script.
                 $(".carousel-indicators .li-slide").first().addClass("active");
             .carousel-inner    
-                  each slide in slides
+                  each slide in posts
+                    if slide.type=="slide"
                         +createSlide(slide)
             a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev')
               span.carousel-control-prev-icon(aria-hidden='true')
@@ -36,8 +38,9 @@ block content
             a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next')
               span.carousel-control-next-icon(aria-hidden='true')
               span.sr-only Next
-        //- script.
-        //-     $(".carousel-item .item").first().addClass("active").attr('src', $(".carousel-item .item").first().attr('lazy-load-src')).removeAttr('lazy-load-src')
+        script.
+            document.querySelector(".carousel-item:first-child").classList.add("active")
+            document.querySelector("li").classList.add("active");
         //- script.
         //-     $(function() {
         //-         $('.carousel-item').on('slid', function() {
@@ -45,6 +48,7 @@ block content
         //-             $nextImage.attr('src', $nextImage.data('data-lazy-load-src'));
         //-         });
         //-     });
+
     +category(categories)
     section#portfolio.portfolio
       .container(data-aos='fade-up')
@@ -64,20 +68,14 @@ block content
               +productcard(product)
           button.btn.btn-warning.col-md-12 
             a(href="/products" style="text-decoration: none;").text-dark  Daha Fazla Ürün Göster
-    +shortservices(services)
-    br
-    +project(projectinfo)
-    
-    br
-    
-    +aboutservices(aboutservices)
-    br
-    +client(client) 
-    br
-//- block script
-//-   script(async src='/plugins/aos/aos.js')
-//-   script(async src='/plugins/glightbox/js/glightbox.min.js')
-//-   script(async src='/plugins/isotope-layout/isotope.pkgd.min.js')
-//-   script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
-//-   script(async src="/js/pages/services/main.js")
 
+    +shortservices(posts)
+    br
+    +project(posts)
+    
+    br
+    
+    +aboutservices(posts)
+    br
+    +client(globalvalue) 
+    br

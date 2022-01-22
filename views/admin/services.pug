@@ -9,7 +9,7 @@ block content
             
     if(action!=="undefined" && action==="edit")
         .alert.alert-info.alert-dismissible.fade.show(role='alert')
-            strong Servis Ayarları Başarılı Bir Şekilde Güncellendi
+            strong Servis Başarılı Bir Şekilde Silindi
         
     script.
         window.setTimeout(function() {
@@ -61,27 +61,27 @@ block content
                                             th
                                 tbody
                                     -var index=1;
-                                    each service in services           
+                                    each service in services  
                                         tr
                                             td(scope="row").align-middle #{index++}
                                             td 
                                                 .fa-5x
-                                                    | !{service.icon}
-                                            td.align-middle #{service.name}
-                                            td.align-middle #{service.userId.name}
-                                            td.align-middle #{service.date.getHours()+":"+ service.date.getMinutes()+" "}
+                                                    | !{service.shortservices.icon}
+                                            td.align-middle #{service.shortservices.name}
+                                            td.align-middle #{service.shortservices.userId.name}
+                                            td.align-middle #{service.shortservices.date.getHours()+":"+ service.shortservices.date.getMinutes()+" "}
                                                 br                                            
-                                                | #{service.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
+                                                | #{service.shortservices.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
                                             td.align-middle 
-                                                i(class=(service.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
+                                                i(class=(service.shortservices.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
                                             if isAdmin
                                                 td.align-middle.position-relative
-                                                    a.btn.btn-warning.btn-sm(href=`/admin/services/${service._id}`) 
+                                                    a.btn.btn-warning.btn-sm(href=`/admin/services/${service.id}`) 
                                                         span 
                                                             i.fas.fa-edit.fa-xs
                                                     form(action="/admin/delete-services" method="POST")
                                                         input(type="hidden" name="_csrf" value=`${csrfToken}`)  
-                                                        input(type="hidden" name="serviceid" value=`${service._id}`)
+                                                        input(type="hidden" name="serviceid" value=`${service.id}`)
                                                         button(type="submit" style="height:40px; width:40px;").btn.btn-danger.btn-sm
                                                             span 
                                                                 i.fas.fa-trash-alt.fa-xs

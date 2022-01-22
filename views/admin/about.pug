@@ -65,11 +65,11 @@ block content
                                     each abouts in about                
                                         tr           
                                             td(scope="row").align-middle #{index++}                                            
-                                            td.align-middle #{abouts.name}
+                                            td.align-middle #{abouts.about.name}
                                             td.align-middle #{abouts.userId.name}
-                                            td.align-middle #{abouts.date.getDate()+"/"+abouts.date.getMonth()+"/"+abouts.date.getFullYear()+" "}
-                                                br
-                                                |#{abouts.date.getHours()+":"+ abouts.date.getMinutes()}
+                                            td.align-middle #{abouts.date.getHours()+":"+ abouts.date.getMinutes()+" "}
+                                                br                                            
+                                                | #{abouts.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
                                             td.align-middle 
                                                 i(class=(abouts.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
                                             td.align-middle 

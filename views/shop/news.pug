@@ -23,27 +23,27 @@ block content
                             .col-md-12.bg-light
                                 .fh5co_hover_news_img
                                     .fh5co_news_img.text-center
-                                        a(href=`/news/${newes._id}` style="text-decoration: none")
-                                            img(src=`/img/resized/${newes.imageUrl}` alt=`${newes.title}` style="width:500px; height:auto;")
+                                        a(href=`/news/${newes.url}` style="text-decoration: none")
+                                            img(src=`/img/resized/${newes.news.imageUrl}` alt=`${newes.news.title}`).mx-auto
                         .row.mb-5
                             .col-md-12.bg-light.align-middle.text-center
                                 .row
                                     .col.text-center.mt-2
-                                        a(href=`/news/${newes._id}` style="text-decoration: none")
-                                            h3 #{newes.title}
+                                        a(href=`/news/${newes.url}` style="text-decoration: none")
+                                            h3 #{newes.news.title}
                                             br
                                 .row
                                     .col
                                 
-                                        a(href=`/news/${news._id}` style="text-decoration: none")
+                                        a(href=`/news/${news.url}` style="text-decoration: none")
                                             p.h6 #{newes.newsdate}
                                 hr
                                 
                                 .fh5co_consectetur
-                                    p !{newes.description.toString().substr(0,250)+"..."}
+                                    p !{newes.news.description.toString().substr(0,250)+"..."}
                                 hr
                                 button.btn.btn-warning.mb-3
-                                    a.text-white(href=`/news/${newes._id}` style="text-decoration: none;")
+                                    a.text-white(href=`/news/${newes.url}` style="text-decoration: none;")
                                         span Devamı
                 .col-md-3.animate-box(data-animate-effect='fadeInRight').mt-5
                     div        
@@ -54,10 +54,10 @@ block content
                                 .body.ml-1
                                     .d-flex.align-content-stretch.flex-wrap
                                     each newes in news
-                                        -var tag=newes.tags[0].toString().split(",")
+                                        -var tag=newes.news.tags[0].toString().split(",")
                                         -for (var i=0; i<tag.length; i++){
                                             button(type=button style="border-radius:30px; padding: 2px 5px;" ).btn.btn-info.btn-sm.mt-1.ml-1
-                                                a(href=`/news/${newes._id}` style="text-decoration: none;").text-light #{tag[i]}
+                                                a(href=`/news/${newes.url}` style="text-decoration: none;").text-light #{tag[i]}
                                         -}
 
-    +client(client)
+    +client(globalvalue)

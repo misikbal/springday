@@ -1,10 +1,7 @@
-const Slide=require('../model/slide');
 const Product=require('../model/product');
-const About=require('../model/about');
-const Services=require('../model/aboutservices');
-const Project=require('../model/project');
-const Blog=require('../model/news');
-const Client=require('../model/client');
+const Post=require('../model/post');
+const Category=require('../model/category');
+
 
 
 
@@ -15,23 +12,17 @@ const path = require('path');
 const fs=require("fs");
 
 exports.getSlide = (req, res, next) => {
-    Slide.find()
+    Post.find({type:"slide"})
         .sort({date:-1})
         .populate("userId","name -_id")
         .then(slide => {
-            Product.find()
-            .select("name")
-            .then(product=>{
 
                 res.render('admin/slide', {
                     title: 'Admin Slide',
                     slide: slide,
-                    product:product,
                     path: '/admin/slide',
                     action: req.query.action
                 });
-            })
-
         })
         .catch((err) => {
             next(err);
@@ -42,52 +33,34 @@ exports.getAddSlide = (req, res, next) => {
     Product.find()
     .select("name")
     .then(product=>{
-        About.find()
-        .where({isActive:true})
+        Category.find({isActive: true})
         .select("name")
-        .then(about=>{
-            Services.find()
-            .where({isActive:true})
-            .select("name")
-            .then(services=>{
-                Project.find()
-                .select("name")
-                .where({isActive:true})
-                .then(project=>{
-                    Blog.find()
-                    .where({isActive:true})
-                    .select("title")
-                    .then(blog=>{
-                        Client.find()
-                        .where({isActive:true})
-                        .select("name")
-                        .then(client=>{
-                            res.render('admin/add-slide', {
-                                title: 'New Slide',
-                                path: '/admin/add-slide',
-                                product:product,
-                                about:about,
-                                services:services,
-                                project:project,
-                                blog:blog,
-                                client:client,
-                                inputs:{
-                                    image:"",
-                                    title:"",
-                                    description:"",
-                                    buttonName:"",
-                                    buttonLink:"",
-                                    animate:"",
-                                    isActive:"",
-                                }      
-                        });
-                        })
-                    })
-                })
+        .then(category=>{
+            Post.find({$or: [{type:"news"} , {type:"about"},{type:"aboutservices"},{type:"project"}]})
+            .where({isActive: true})
+            .select("type url project.name aboutservices.name news.title about.name")
+            .then(post=>{
+                res.render('admin/add-slide', {
+                    title: 'New Slide',
+                    path: '/admin/add-slide',
+                    product:product,
+                    category:category,
+                    post:post,
+                    inputs:{
+                        image:"",
+                        title:"",
+                        description:"",
+                        buttonName:"",
+                        buttonLink:"",
+                        animate:"",
+                        isActive:"",
+                    }      
             })
+            
+        });
         })
-});
-
+        
+        })
 }
 
 exports.postAddSlide = async(req, res, next) => {
@@ -126,23 +99,29 @@ exports.postAddSlide = async(req, res, next) => {
         path.resolve(req.files.slideimg[0].destination,'resized',image)
     )
     fs.unlinkSync(req.files.slideimg[0].path)
-    const slide = new Slide(
+    const slide = new Post(
         {   
-            image: image,
-            title:title,
-            description:description,
-            buttonName:buttonName,
-            buttonLink:buttonLink,
-            animate:animate,
+            type:"slide",
             isActive:isActive,
             userId:req.user,
+            date:Date.now(),
+            slide:{
+                image: image,
+                title:title,
+                description:description,
+                buttonName:buttonName,
+                buttonLink:buttonLink,
+                animate:animate,
+            }
+            
+
         }
     );
     const progress=new Process(
         { 
             userId:req.user,
             type:"insert",
-            name:slide.title+" başlıklı slaytı ekledi"
+            name:slide.slide.title+" başlıklı slaytı ekledi"
         }
     )
     progress.save().then(() => {
@@ -183,7 +162,7 @@ exports.getEditSlide = (req, res, next) => {
     if (req.params.categoryid === "favicon.ico") {
         return res.status(404)
     }
-    Slide.findOne({_id:req.params.slideid,userId:req.user._id})
+    Post.findOne({_id:req.params.slideid})
         
         .then(slide => {
             if(!slide){
@@ -195,42 +174,23 @@ exports.getEditSlide = (req, res, next) => {
             Product.find()
             .select("name")
             .then(product=>{
-                About.find()
-                .where({isActive:true})
+                Category.find({isActive: true})
                 .select("name")
-                .then(about=>{
-                    Services.find()
-                    .where({isActive:true})
-                    .select("name")
-                    .then(services=>{
-                        Project.find()
-                        .where({isActive:true})
-                        .select("name")
-                        .then(project=>{
-                            Blog.find()
-                            .where({isActive:true})
-                            .select("title")
-                            .then(blog=>{
-                                Client.find()
-                                .where({isActive:true})
-                                .select("name")
-                                .then(client=>{
+                .then(category=>{
+                    Post.find({$or: [{type:"news"} , {type:"about"},{type:"aboutservices"},{type:"project"}]})
+                    .where({isActive: true})
+                    .select("type url project.name aboutservices.name news.title about.name")
+                    .then(post=>{
                                     res.render('admin/edit-slide', {
                                         title: 'Edit Slide',
                                         path: '/admin/slide',
                                         slide: slide,
                                         product:product,
-                                        about:about,
-                                        services:services,
-                                        project:project,
-                                        blog:blog,
-                                        client:client,
+                                        post:post,
+                                        category:category
                                     });
                                 })
                         })
-                })
-            })
-        })
     })
 })
 
@@ -260,30 +220,30 @@ exports.postEditSlide = async (req, res, next) => {
         )
         fs.unlinkSync(req.files.slideimg[0].path)
     }
-    Slide.findOne({_id:id})
+    Post.findOne({_id:id})
         .then(slide=>{
             if(!slide){
                 return res.redirect("/");
             }
-            slide.title=title,
-            slide.description=description,
-            slide.buttonName=buttonName,
-            slide.buttonLink=buttonLink,
-            slide.animate=animate,
+            slide.slide.title=title,
+            slide.slide.description=description,
+            slide.slide.buttonName=buttonName,
+            slide.slide.buttonLink=buttonLink,
+            slide.slide.animate=animate,
             slide.isActive=isActive
             if (image) {
-                fs.unlink("wwwroot/img/resized/"+slide.image,err=>{
+                fs.unlink("wwwroot/img/resized/"+slide.slide.image,err=>{
                     if(err){
                     console.log(err);
                     }
                 });
-                slide.image = image[0].filename;
+                slide.slide.image = image[0].filename;
             }
             const progress=new Process(
                 { 
                     userId:req.user,
                     type:"edit",
-                    name:slide.title+" başlıklı slaytı güncelledi."
+                    name:slide.slide.title+" başlıklı slaytı güncelledi."
                 });
 
             progress.save()
@@ -299,12 +259,12 @@ exports.postEditSlide = async (req, res, next) => {
 exports.postDeleteSlide = (req, res, next) => {
 
     const id = req.body.slideid;
-    Slide.findOne({_id:id,userId:req.user._id})
+    Post.findOne({_id:id})
         .then(slide=>{
             if(!slide){
                 return next(new Error("Silinmek istenen slide bulumadı."));
             }
-            fs.unlink("wwwroot/img/resized/"+slide.image,err=>{
+            fs.unlink("wwwroot/img/resized/"+slide.slide.image,err=>{
                 if(err){
                 console.log(err);
                 }
@@ -313,10 +273,10 @@ exports.postDeleteSlide = (req, res, next) => {
                 { 
                     userId:req.user,
                     type:"delete",
-                    name:slide.title+" başlıklı slaytı sildi."
+                    name:slide.slide.title+" başlıklı slaytı sildi."
                 });
             progress.save()
-            return Slide.deleteOne({_id:id,userId:req.user._id})
+            return Post.deleteOne({_id:id})
 
         }).then((result) => {
             if(result.deletedCount===0){

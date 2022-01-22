@@ -9,12 +9,13 @@ aside#leftsidebar.sidebar
                 if isAdmin
                     img(src='/img/admin.png' width='100' height='100' alt='Admin')
                 else if isLimited
-                    img(src='/img/limited.jpg' width='100' height='100' alt='Limited Admin')
+                    img(src='/img/limited.png' width='100' height='100' alt='Limited Admin')
         .menu
         
             ul.list
                 li.header 
                     a(href="/admin/").navbar-brand Sprinday Admin Dashboard
+
                 li(class=(path==='/admin/'? 'active ':''))
                     a(href="/admin/").nav-link
                         i.material-icons home
@@ -23,7 +24,11 @@ aside#leftsidebar.sidebar
                     a.menu-toggle(href='javascript:void(0);').nav-link
                         i.material-icons  build
                         span Genel Ayarlar
-                    ul.ml-menu 
+                    
+                    ul.ml-menu
+                        if path==="/admin/system"
+                            li.bg-warning.align-middle.text-center
+                                p Bazen menüler açılmıyor olabilir. Bunun için lütfen anasayfaya gidip tekrar deneyiniz
                         if isAdmin
                             li(class=(path==='/admin/system' ? 'active':''))
                                 a(href='/admin/system').nav-link Sistem Ayarları
@@ -55,10 +60,14 @@ aside#leftsidebar.sidebar
                         li(class=(path==='/admin/slide' ? 'active':''))
                             a(href="/admin/slide").nav-link Sliderler             
                 li(class=((path==='/admin/page') ? 'active':''))
+
                     a(href='/admin/page').nav-link
                     
                         i.material-icons menu
                         span Menü Yönetimi
+                if path==="/admin/page"
+                    li.bg-warning.align-middle.text-center
+                        p Bazen menüler açılmıyor olabilir. Bunun için lütfen anasayfaya gidip tekrar deneyiniz
                 li(class=(path===("/admin/add-lang") || path===("/admin/lang")  || path===("/admin/users") || path===("/admin/edit-lang") || (path==='/admin/contact') || (path==='/admin/footer') ? 'active ':''))
                     a.menu-toggle(href='javascript:void(0);').nav-link
                         i.material-icons assignment_turned_in
@@ -89,7 +98,7 @@ aside#leftsidebar.sidebar
                         li(class=((path==='/admin/about') ? 'active':''))
                             a(href='/admin/about').nav-link Hakkımızda (S.S.S)
                         li(class=((path==='/admin/news') ? 'active':''))
-                            a(href='/admin/news').nav-link Gönderiler
+                            a(href='/admin/news').nav-link Blog
                 li(class=(path===("/admin/social")  || path===("/admin/bank") || path===("/admin/edit-bank") || (path==='/admin/add-bank') ? 'active ':''))
                     a.menu-toggle(href='javascript:void(0);').nav-link
                         i.material-icons info

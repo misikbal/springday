@@ -1,23 +1,16 @@
 const Product = require("../model/product");
 const Category = require("../model/category");
 const Systems = require("../model/system");
-const Client = require("../model/client");
-const Services = require("../model/shortservices");
 const Contact = require("../model/contactus");
 const User = require("../model/user");
-const AboutServices = require("../model/aboutservices");
-const Project = require("../model/project");
 const Process = require("../model/process");
 const Advanced = require("../model/advanced");
-const About = require("../model/about");
-const News = require("../model/news");
 const Order = require("../model/order");
 const bcrypt = require("bcrypt");
 const sgMail = require("@sendgrid/mail");
 const Mail = require("../model/mail");
-const Lang = require("../model/lang");
 const Bank = require("../model/bank");
-const Slide = require("../model/slide");
+const Post = require("../model/post");
 const crypto = require("crypto");
 const path = require("path");
 const fs = require("fs");
@@ -28,7 +21,24 @@ Systems.find()
 .then((apiKey) => {
     sgMail.setApiKey(apiKey[0].sgMail);
 });
+var slugify = function(text) {
+    var trMap = {
+        'çÇ':'c',
+        'ğĞ':'g',
+        'şŞ':'s',
+        'üÜ':'u',
+        'ıİ':'i',
+        'öÖ':'o'
+    };
+    for(var key in trMap) {
+        text = text.replace(new RegExp('['+key+']','g'), trMap[key]);
+    }
+    return  text.replace(/[^-a-zA-Z0-9\s]+/ig, '')
+                .replace(/\s/gi, "-")
+                .replace(/[-]+/gi, "-")
+                .toLowerCase();
 
+}
 exports.getProducts = (req, res, next) => {
 Product.find()
     .sort({ date: -1 })
@@ -75,9 +85,6 @@ Product.find()
                         Process.find()
                             .select("name")
                             .then((allprocess) => {
-                            Slide.find()
-                                .select("title")
-                                .then(slide => {
                                 Category.find()
                                 .select("name")
                                 .then(category=>{
@@ -113,7 +120,6 @@ Product.find()
                                                                     user: user,
                                                                     alladvanced: alladvanced,
                                                                     allprocess: allprocess,
-                                                                    slide:slide,
                                                                     category:category,
                                                                     order:order,
                                                                     approval:approval,
@@ -128,8 +134,7 @@ Product.find()
                                                     });
                                                 });
                                             });
-                                        });                                        
-                                    });
+                                        });         
                                 });
                             });
                         });
@@ -667,8 +672,10 @@ const language = req.body.language;
 const mainMode = Boolean(req.body.mainMode);
 const isMemory = Boolean(req.body.isMemory);
 
-const phone = req.body.phone;
+const sgMail = req.body.sgMail;
 const mail = req.body.mail;
+const phone = req.body.phone;
+
 const address = req.body.address;
 const googlemaps = req.body.googlemaps;
 const tawktoscript = req.body.tawktoscript;
@@ -690,16 +697,17 @@ Systems.findOne()
     });
 
     (system.siteUrl = siteUrl),
-        (system.language = language),
-        (system.mainMode = mainMode),
-        (system.isMemory = isMemory),
+    (system.language = language),
+    (system.mainMode = mainMode),
+    (system.isMemory = isMemory),
 
-        (system.phone = phone),
-        (system.mail = mail),
-        (system.address = address),
-        (system.userId = req.user),
-        (system.googlemaps = googlemaps),
-        (system.tawktoscript = tawktoscript);
+    (system.phone = phone),
+    (system.mail = mail),
+    (system.address = address),
+    (system.userId = req.user),
+    (system.googlemaps = googlemaps),
+    (system.tawktoscript = tawktoscript);
+    system.sgMail=sgMail;
     system.googleAnalitcs = googleAnalitcs;
     system.description = description;
     system.tags = tags;
@@ -738,20 +746,20 @@ const loadingLogo = req.body.loadingLogo;
 
 if (file.logo) {
     await sharp(req.files.logo[0].path)
-    .resize(200)
+    .resize(150)
     .webp({
-        quality: 10,
-        alphaQuality: 10,
+        quality: 50,
+        alphaQuality: 50,
         lossless: true,
         progressive: true,
     })
     .jpeg({
-        quality: 10,
-        alphaQuality: 10,
+        quality: 50,
+        alphaQuality: 50,
         lossless: true,
         progressive: true,
     })
-    .png({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
+    .png({ quality: 50, alphaQuality: 50, lossless: true, progressive: true })
 
     .toFile(
         path.resolve(
@@ -763,7 +771,7 @@ if (file.logo) {
     fs.unlinkSync(req.files.logo[0].path);
 } else if (file.favico) {
     await sharp(req.files.favico[0].path)
-    .resize(32)
+    .resize(16)
     .webp({
         quality: 10,
         alphaQuality: 10,
@@ -788,20 +796,20 @@ if (file.logo) {
     fs.unlinkSync(req.files.favico[0].path);
 } else if (file.footerLogo) {
     await sharp(req.files.footerLogo[0].path)
-    .resize(200)
+    .resize(150)
     .webp({
-        quality: 10,
-        alphaQuality: 10,
+        quality: 50,
+        alphaQuality: 50,
         lossless: true,
         progressive: true,
     })
     .jpeg({
-        quality: 10,
-        alphaQuality: 10,
+        quality: 50,
+        alphaQuality: 50,
         lossless: true,
         progressive: true,
     })
-    .png({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
+    .png({ quality: 50, alphaQuality: 50, lossless: true, progressive: true })
 
     .toFile(
         path.resolve(
@@ -811,6 +819,32 @@ if (file.logo) {
         )
     );
     fs.unlinkSync(req.files.footerLogo[0].path);
+}
+else if (file.loadingLogo) {
+    await sharp(req.files.loadingLogo[0].path)
+    .resize(50)
+    .webp({
+        quality: 50,
+        alphaQuality: 50,
+        lossless: true,
+        progressive: true,
+    })
+    .jpeg({
+        quality: 50,
+        alphaQuality: 50,
+        lossless: true,
+        progressive: true,
+    })
+    .png({ quality: 50, alphaQuality: 50, lossless: true, progressive: true })
+
+    .toFile(
+        path.resolve(
+        req.files.loadingLogo[0].destination,
+        "resized",
+        file.loadingLogo[0].filename
+        )
+    );
+    // fs.unlinkSync(req.files.loadingLogo[0].path);
 }
 
 Systems.findOne()
@@ -856,6 +890,7 @@ Systems.findOne()
         });
         progress.save();
     } else if (file.loadingLogo) {
+        
         logoSetting.loadingLogo = file.loadingLogo[0].filename;
         const progress = new Process({
         userId: req.user,
@@ -864,9 +899,9 @@ Systems.findOne()
         });
         progress.save();
     }
-    if (!file.loadingLogo) {
+        else if (!file.loadingLogo && loadingLogo!=null) {
         logoSetting.loadingLogo = loadingLogo;
-    }
+        }
     logoSetting.loadingisActive = loadingisActive;
     logoSetting.loadingtext = loadingtext;
     return logoSetting.save();
@@ -934,7 +969,7 @@ Systems.findOne()
 };
 
 exports.getClient = (req, res, next) => {
-Client.find()
+    Post.find({type:"client"})
     .sort({ date: -1 })
     .populate("userId", "name -_id")
 
@@ -969,7 +1004,6 @@ const name = req.body.name;
 const link = req.body.link;
 const description = req.body.description;
 const isActive = Boolean(req.body.isActive);
-
 if (!image) {
     return res.render("admin/add-client", {
     title: "New Client",
@@ -983,7 +1017,7 @@ if (!image) {
     });
 }
 await sharp(req.files.clientlogo[0].path)
-    .resize(300)
+    .resize(100)
     .webp({ quality: 30, alphaQuality: 30, lossless: true, progressive: true })
     .jpeg({ quality: 30, alphaQuality: 30, lossless: true, progressive: true })
     .png({ quality: 30, alphaQuality: 30, lossless: true, progressive: true })
@@ -991,37 +1025,43 @@ await sharp(req.files.clientlogo[0].path)
     path.resolve(req.files.clientlogo[0].destination, "resized", image)
     );
 fs.unlinkSync(req.files.clientlogo[0].path);
-const client = new Client({
-    name: name,
-    link: link,
-    clientlogo: image,
-    description: description,
-    userId: req.user,
-    isActive: isActive,
-});
 
-const progress = new Process({
-    userId: req.user,
-    type: "insert",
-    name: client.name + " referansını ekledi",
-});
-progress.save().then(() => {
-    client
-    .save()
-    .then(() => {
-        res.redirect("/admin/client?action=create");
-    })
-    .catch((err) => {
-        next(err);
+    const post = new Post({
+        type:"client",
+        userId: req.user,
+        isActive: isActive,
+        date:Date.now(),
+        client:{
+            name: name,
+            link: link,
+            clientlogo: image,
+            description: description,
+        },
+        
     });
-});
+    
+    const progress = new Process({
+        userId: req.user,
+        type: "insert",
+        name: post.client.name + " referansını ekledi",
+    });
+    progress.save().then(() => {
+        post
+        .save()
+        .then(() => {
+            res.redirect("/admin/client?action=create");
+        })
+        .catch((err) => {
+            next(err);
+        });
+    });
 };
 
 exports.getEditClient = (req, res, next) => {
 if (req.params.clientid === "favicon.ico") {
     return res.status(404);
 }
-Client.findOne({ _id: req.params.clientid })
+Post.findOne({ _id: req.params.clientid })
 
     .then((client) => {
     if (!client) {
@@ -1050,7 +1090,7 @@ const description = req.body.description;
 const isActive = Boolean(req.body.isActive);
 if (image) {
     await sharp(req.files.clientlogo[0].path)
-    .resize(300)
+    .resize(100)
     .webp({
         quality: 10,
         alphaQuality: 10,
@@ -1067,35 +1107,35 @@ if (image) {
     .toFile(
         path.resolve(
         req.files.clientlogo[0].destination,
-        "resized",
+        "resized",      
         image[0].filename
         )
     );
     fs.unlinkSync(req.files.clientlogo[0].path);
 }
 
-Client.findOne({ _id: id })
+Post.findOne({ _id: id})
     .then((client) => {
     if (!client) {
         return res.redirect("/");
     }
 
-    client.name = name;
-    client.link = link;
-    client.description = description;
+    client.client.name = name;
+    client.client.link = link;
+    client.client.description = description;
     client.isActive = isActive;
     if (image) {
-        fs.unlink("wwwroot/img/resized/" + client.clientlogo, (err) => {
+        fs.unlink("wwwroot/img/resized/" + client.client.clientlogo, (err) => {
         if (err) {
             console.log(err);
         }
         });
-        client.clientlogo = image[0].filename;
+        client.client.clientlogo = image[0].filename;
     }
     const progress = new Process({
         userId: req.user,
         type: "edit",
-        name: client.name + " referansını güncelledi.",
+        name: client.client.name + " referansını güncelledi.",
     });
 
     progress.save();
@@ -1109,13 +1149,12 @@ Client.findOne({ _id: id })
 
 exports.postDeleteClient = (req, res, next) => {
 const id = req.body.clientid;
-
-Client.findOne({ _id: id })
+Post.findOne({ _id: id })
     .then((client) => {
     if (!client) {
         return next(new Error("Silinmek istenen müşteri bulunmadı."));
     }
-    fs.unlink("wwwroot/img/resized/" + client.clientlogo, (err) => {
+    fs.unlink("wwwroot/img/resized/" + client.client.clientlogo, (err) => {
         if (err) {
         console.log(err);
         }
@@ -1124,10 +1163,10 @@ Client.findOne({ _id: id })
     const progress = new Process({
         userId: req.user,
         type: "delete",
-        name: client.name + " referansını sildi.",
+        name: client.client.name + " referansını sildi.",
     });
     progress.save();
-    return Client.deleteOne({ _id: id });
+    return Post.deleteOne({ _id: id });
     })
     .then((result) => {
     if (result.deletedCount === 0) {
@@ -1141,10 +1180,11 @@ Client.findOne({ _id: id })
 };
 
 exports.getServices = (req, res, next) => {
-Services.find()
+Post.find({type:"shortservices"})
     .sort({ date: -1 })
     .populate("userId", "name -_id")
     .then((services) => {
+
     res.render("admin/services", {
         title: "Admin Services",
         path: "/admin/services",
@@ -1173,37 +1213,42 @@ const name = req.body.name;
 const icon = req.body.icon;
 const description = req.body.description;
 const isActive = Boolean(req.body.isActive);
-
-const services = new Services({
-    name: name,
-    icon: icon,
-    description: description,
-    userId: req.user,
-    isActive: isActive,
-});
-
-const progress = new Process({
-    userId: req.user,
-    type: "insert",
-    name: services.name + " servisini ekledi",
-});
-progress.save().then(() => {
-    services
-    .save()
-    .then(() => {
-        res.redirect("/admin/services?action=create");
-    })
-    .catch((err) => {
-        next(err);
+    const services = new Post({
+        shortservices:{
+            name: name,
+            icon: icon,
+            description: description,
+            userId: req.user,
+            isActive: isActive,
+            date:Date.now(),
+        },
+        type:"shortservices"
+    
     });
-});
+    
+    const progress = new Process({
+        userId: req.user,
+        type: "insert",
+        name: services.shortservices.name + " servisini ekledi",
+    });
+    progress.save().then(() => {
+        services
+        .save()
+        .then(() => {
+            res.redirect("/admin/services?action=create");
+        })
+        .catch((err) => {
+            next(err);
+        });
+    });
+
 };
 
 exports.getEditServices = (req, res, next) => {
 if (req.params.serviceid === "favicon.ico") {
     return res.status(404);
 }
-Services.findOne({ _id: req.params.serviceid })
+Post.findOne({ id: req.params.serviceid })
 
     .then((services) => {
     if (!services) {
@@ -1224,30 +1269,28 @@ Services.findOne({ _id: req.params.serviceid })
 };
 
 exports.postEditServices = (req, res, next) => {
-const id = req.body.serviceid;
-
+const id=req.body.serviceid
 const name = req.body.name;
 const icon = req.body.icon;
 const description = req.body.description;
 const isActive = Boolean(req.body.isActive);
-
-Services.findOne({ _id: id })
-    .then((serivces) => {
-    if (!serivces) {
+Post.findOne({ _id: id })
+    .then((services) => {
+    if (!services) {
         return res.redirect("/");
     }
 
-    serivces.name = name;
-    serivces.icon = icon;
-    serivces.description = description;
-    serivces.isActive = isActive;
+    services.shortservices.name = name;
+    services.shortservices.icon = icon;
+    services.shortservices.description = description;
+    services.shortservices.isActive = isActive;
     const progress = new Process({
         userId: req.user,
         type: "edit",
-        name: serivces.name + " servisini güncelledi.",
+        name: services.shortservices.name + " servisini güncelledi.",
     });
     progress.save();
-    return serivces.save();
+    return services.save();
     })
     .then((result) => {
     res.redirect("/admin/services?action=edit");
@@ -1258,7 +1301,7 @@ Services.findOne({ _id: id })
 exports.postDeleteServices = (req, res, next) => {
 const id = req.body.serviceid;
 
-Services.findOne({ _id: id })
+Post.findOne({ _id: id })
     .then((services) => {
     if (!services) {
         return next(new Error("Silinmek istenen servis bulunmadı."));
@@ -1266,7 +1309,7 @@ Services.findOne({ _id: id })
     const progress = new Process({
         userId: req.user,
         type: "delete",
-        name: services.name + " servisini sildi.",
+        name: services.shortservices.name + " servisini sildi.",
     });
 
     progress.save();
@@ -1348,9 +1391,10 @@ Contact.findOne({ _id: id })
 };
 
 exports.getAboutServices = (req, res, next) => {
-AboutServices.find()
-    .sort({ date: -1 })
+Post.find({type:"aboutservices"})
+    .sort({date:-1} )
     .populate("userId", "name -_id")
+    .lean()
     .then((aboutservices) => {
     res.render("admin/aboutservices", {
         title: "Admin About Services",
@@ -1382,6 +1426,7 @@ const description = req.body.description;
 const isActive = Boolean(req.body.isActive);
 const isHome = Boolean(req.body.isHome);
 const tags = req.body.tags;
+const url=slugify(name);
 
 if (!imageUrl) {
     return res.render("admin/add-aboutservices", {
@@ -1403,20 +1448,26 @@ await sharp(req.files.servicesImg[0].path)
     path.resolve(req.files.servicesImg[0].destination, "resized", imageUrl)
     );
 fs.unlinkSync(req.files.servicesImg[0].path);
-const aboutservices = new AboutServices({
-    name: name,
-    imageUrl: imageUrl,
-    description: description,
-    userId: req.user,
+const aboutservices = new Post({
+    type:"aboutservices",
     isActive: isActive,
     isHome: isHome,
-    tags: tags,
+    date:Date.now(),
+    url:url,
+    userId:req.user,
+    aboutservices:{
+        name: name,
+        imageUrl: imageUrl,
+        description: description,
+        tags: tags,
+    },
+
 });
 
 const progress = new Process({
     userId: req.user,
     type: "insert",
-    name: aboutservices.name + " hizmetini ekledi",
+    name: aboutservices.aboutservices.name + " hizmetini ekledi",
 });
 progress.save().then(() => {
     aboutservices
@@ -1434,7 +1485,7 @@ exports.getEditAboutServices = (req, res, next) => {
 if (req.params.aboutserviceid === "favicon.ico") {
     return res.status(404);
 }
-AboutServices.findOne({ _id: req.params.aboutserviceid })
+Post.findOne({ _id: req.params.aboutserviceid })
 
     .then((aboutservices) => {
     if (!aboutservices) {
@@ -1462,6 +1513,7 @@ const description = req.body.description;
 const isActive = Boolean(req.body.isActive);
 const isHome = Boolean(req.body.isHome);
 const tags = req.body.tags;
+const url=slugify(name);
 
 if (imageUrl) {
     await sharp(req.files.servicesImg[0].path)
@@ -1488,29 +1540,30 @@ if (imageUrl) {
     );
     fs.unlinkSync(req.files.servicesImg[0].path);
 }
-AboutServices.findOne({ _id: id })
+Post.findOne({ _id: id })
     .then((aboutservices) => {
     if (!aboutservices) {
         return res.redirect("/");
     }
 
-    aboutservices.name = name;
-    aboutservices.description = description;
+    aboutservices.aboutservices.name = name;
+    aboutservices.aboutservices.description = description;
     aboutservices.isActive = isActive;
     aboutservices.isHome = isHome;
-    aboutservices.tags = tags;
+    aboutservices.aboutservices.tags = tags;
+    aboutservices.url=url;
     if (imageUrl) {
-        fs.unlink("wwwroot/img/resized/" + aboutservices.imageUrl, (err) => {
+        fs.unlink("wwwroot/img/resized/" + aboutservices.aboutservices.imageUrl, (err) => {
         if (err) {
             console.log(err);
         }
         });
-        aboutservices.imageUrl = imageUrl[0].filename;
+        aboutservices.aboutservices.imageUrl = imageUrl[0].filename;
     }
     const progress = new Process({
         userId: req.user,
         type: "edit",
-        name: aboutservices.name + " hizmetini güncelledi.",
+        name: aboutservices.aboutservices.name + " hizmetini güncelledi.",
     });
 
     progress.save();
@@ -1525,12 +1578,12 @@ AboutServices.findOne({ _id: id })
 exports.postDeleteAboutServices = (req, res, next) => {
 const id = req.body.aboutserviceid;
 
-AboutServices.findOne({ _id: id })
+Post.findOne({ _id: id })
     .then((aboutservices) => {
     if (!aboutservices) {
         return next(new Error("Silinmek istenen hizmet bulunmadı."));
     }
-    fs.unlink("wwwroot/img/resized/" + aboutservices.imageUrl, (err) => {
+    fs.unlink("wwwroot/img/resized/" + aboutservices.aboutservices.imageUrl, (err) => {
         if (err) {
         console.log(err);
         }
@@ -1538,7 +1591,7 @@ AboutServices.findOne({ _id: id })
     const progress = new Process({
         userId: req.user,
         type: "delete",
-        name: aboutservices.name + " hizmetini sildi.",
+        name: aboutservices.aboutservices.name + " hizmetini sildi.",
     });
     progress.save();
     return aboutservices.deleteOne({ _id: id });
@@ -1555,9 +1608,9 @@ AboutServices.findOne({ _id: id })
 };
 
 exports.getProject = (req, res, next) => {
-Project.find()
-    .sort({ date: -1 })
+Post.find({type:"project"})
     .populate("userId", "name -_id")
+    .lean()
     .then((project) => {
     res.render("admin/project", {
         title: "Admin About Project",
@@ -1585,6 +1638,8 @@ const description = req.body.description;
 const isActive = Boolean(req.body.isActive);
 const isHome = Boolean(req.body.isHome);
 const tags = req.body.tags;
+const url=slugify(name);
+
 
 if (!image) {
     return res.render("admin/add-project", {
@@ -1602,19 +1657,26 @@ await sharp(req.files.projectImg[0].path)
     path.resolve(req.files.projectImg[0].destination, "resized", image)
     );
 fs.unlinkSync(req.files.projectImg[0].path);
-const project = new Project({
-    name: name,
-    imageUrl: image,
-    description: description,
+const project = new Post({
+    type:"project",
+
     userId: req.user,
     isActive: isActive,
     isHome: isHome,
-    tags: tags,
+    date:Date.now(),
+    url:url,
+    project:{
+        name: name,
+        imageUrl: image,
+        description: description,
+        tags: tags,
+    },
+
 });
 const progress = new Process({
     userId: req.user,
     type: "insert",
-    name: project.name + " projesini ekledi",
+    name: project.project.name + " projesini ekledi",
 });
 progress.save().then(() => {
     project
@@ -1632,7 +1694,7 @@ exports.getEditProject = (req, res, next) => {
 if (req.params.projectid === "favicon.ico") {
     return res.status(404);
 }
-Project.findOne({ _id: req.params.projectid })
+Post.findOne({ _id: req.params.projectid })
 
     .then((project) => {
     if (!project) {
@@ -1658,6 +1720,7 @@ const name = req.body.name;
 const image = req.files.projectImg;
 const description = req.body.description;
 const tags = req.body.tags;
+const url=slugify(name);
 
 const isActive = Boolean(req.body.isActive);
 const isHome = Boolean(req.body.isHome);
@@ -1687,29 +1750,31 @@ if (image) {
     );
     fs.unlinkSync(req.files.projectImg[0].path);
 }
-Project.findOne({ _id: id })
+Post.findOne({ _id: id })
     .then((project) => {
     if (!project) {
         return res.redirect("/");
     }
 
-    project.name = name;
-    project.description = description;
+    project.project.name = name;
+    project.project.description = description;
     project.isActive = isActive;
     project.isHome = isHome;
-    project.tags = tags;
+    project.project.tags = tags;
+    project.url = url;
+
     if (image) {
-        fs.unlink("wwwroot/img/resized/" + project.imageUrl, (err) => {
+        fs.unlink("wwwroot/img/resized/" + project.project.imageUrl, (err) => {
         if (err) {
             console.log(err);
         }
         });
-        project.imageUrl = image[0].filename;
+        project.project.imageUrl = image[0].filename;
     }
     const progress = new Process({
         userId: req.user,
         type: "edit",
-        name: project.name + " projesini güncelledi.",
+        name: project.project.name + " projesini güncelledi.",
     });
 
     progress.save();
@@ -1723,13 +1788,12 @@ Project.findOne({ _id: id })
 
 exports.postDeleteProject = (req, res, next) => {
 const id = req.body.projectid;
-
-Project.findOne({ _id: id })
+Post.findOne({ _id: id })
     .then((project) => {
     if (!project) {
         return next(new Error("Silinmek istenen hizmet bulunmadı."));
     }
-    fs.unlink("wwwroot/img/resized/" + project.imageUrl, (err) => {
+    fs.unlink("wwwroot/img/resized/" + project.project.imageUrl, (err) => {
         if (err) {
         console.log(err);
         }
@@ -1737,7 +1801,7 @@ Project.findOne({ _id: id })
     const progress = new Process({
         userId: req.user,
         type: "delete",
-        name: project.name + " projesini sildi.",
+        name: project.project.name + " projesini sildi.",
     });
     progress.save();
     return project.deleteOne({ _id: id });
@@ -1843,7 +1907,7 @@ Systems.findOne()
 };
 
 exports.getAbout = (req, res, next) => {
-About.find()
+Post.find({type:"about"})
     .sort({ date: -1 })
     .populate("userId", "name -_id")
     .then((about) => {
@@ -1876,19 +1940,28 @@ const name = req.body.name;
 const description = req.body.description;
 const isActive = Boolean(req.body.isActive);
 const isHome = Boolean(req.body.isHome);
+const url=slugify(name);
 
-const about = new About({
-    name: name,
-    description: description,
-    userId: req.user,
+const about = new Post({
+    type:"about",
     isActive: isActive,
     isHome: isHome,
-});
+    userId: req.user,
+    url:url,
+    date:Date.now(),
+    about:{
+            name: name,
+            description: description,
+
+        }
+    },
+
+);
 
 const progress = new Process({
     userId: req.user,
     type: "insert",
-    name: about.name + " başlıklı bilgiyi hakkımızda sayfasına ekledi",
+    name: about.about.name + " başlıklı bilgiyi hakkımızda sayfasına ekledi",
 });
 progress.save().then(() => {
     about
@@ -1906,7 +1979,7 @@ exports.getEditAbout = (req, res, next) => {
 if (req.params.aboutid === "favicon.ico") {
     return res.status(404);
 }
-About.findOne({ _id: req.params.aboutid })
+Post.findOne({ _id: req.params.aboutid })
 
     .then((about) => {
     if (!about) {
@@ -1932,24 +2005,24 @@ const name = req.body.name;
 const description = req.body.description;
 const isActive = Boolean(req.body.isActive);
 const isHome = Boolean(req.body.isHome);
+const url=slugify(name);
 
-About.findOne({ _id: id })
+Post.findOne({ _id: id })
     .then((about) => {
     if (!about) {
         return res.redirect("/");
     }
-
-    about.name = name;
-    about.description = description;
+    about.about.name = name;
+    about.about.description = description;
     about.isActive = isActive;
     about.isHome = isHome;
-
+    about.url=url;
     const progress = new Process({
         userId: req.user,
         type: "edit",
         name:
         "Hakkımızda sayfasındaki  " +
-        about.name +
+        about.about.name +
         " başlıklı bilgiyi güncelledi.",
     });
 
@@ -1965,7 +2038,7 @@ About.findOne({ _id: id })
 exports.postDeleteAbout = (req, res, next) => {
 const id = req.body.aboutid;
 
-About.findOne({ _id: id })
+Post.findOne({ _id: id })
     .then((about) => {
     if (!about) {
         return next(new Error("Silinmek istenilen bulunmadı."));
@@ -1973,7 +2046,7 @@ About.findOne({ _id: id })
     const progress = new Process({
         userId: req.user,
         type: "delete",
-        name: about.name + " başlıklı bilgiyi hakkımızda sayfasından sildi.",
+        name: about.about.name + " başlıklı bilgiyi hakkımızda sayfasından sildi.",
     });
     progress.save();
     return about.deleteOne({ _id: id });
@@ -1990,8 +2063,8 @@ About.findOne({ _id: id })
 };
 
 exports.getNews = (req, res, next) => {
-News.find()
-    .sort({ newsdate: 1 })
+Post.find({type:"news"})
+    .sort({ date: 1 })
     .populate("userId", "name -_id")
     .then((news) => {
     res.render("admin/news", {
@@ -2019,6 +2092,7 @@ const title = req.body.title;
 const description = req.body.description;
 const newsdate = req.body.newsdate;
 const tags = req.body.tags;
+const url=slugify(title);
 
 const isActive = Boolean(req.body.isActive);
 if (!image) {
@@ -2029,25 +2103,32 @@ if (!image) {
     });
 }
 await sharp(req.files.newsImg[0].path)
-    .resize(700)
+    .resize(1280)
     .webp({ quality: 30, alphaQuality: 30, lossless: true, progressive: true })
     .jpeg({ quality: 30, alphaQuality: 30, lossless: true, progressive: true })
     .png({ quality: 30, alphaQuality: 30, lossless: true, progressive: true })
     .toFile(path.resolve(req.files.newsImg[0].destination, "resized", image));
 fs.unlinkSync(req.files.newsImg[0].path);
-const news = new News({
-    title: title,
-    imageUrl: image,
-    description: description,
+const news = new Post({
+    type:"news",
+    
     userId: req.user,
     newsdate: newsdate,
     isActive: isActive,
-    tags: tags,
+    date:Date.now(),
+    url:url,
+    news:{
+        title: title,
+        imageUrl: image,
+        description: description,
+        tags: tags,
+    }
+
 });
 const progress = new Process({
     userId: req.user,
     type: "insert",
-    name: news.title + " başlıklı gönderi ekledi",
+    name: news.news.title + " başlıklı gönderi ekledi",
 });
 progress.save().then(() => {
     news
@@ -2065,7 +2146,7 @@ exports.getEditNews = (req, res, next) => {
 if (req.params.newsid === "favicon.ico") {
     return res.status(404);
 }
-News.findOne({ _id: req.params.newsid })
+Post.findOne({ _id: req.params.newsid })
 
     .then((news) => {
     if (!news) {
@@ -2092,25 +2173,26 @@ const imageUrl = req.files.newsImg;
 const description = req.body.description;
 const newsdate = req.body.newsdate;
 const tags = req.body.tags;
+const url=slugify(title);
 
 const isActive = Boolean(req.body.isActive);
 
 if (imageUrl) {
     await sharp(req.files.newsImg[0].path)
-    .resize(700)
+    .resize(1280)
     .webp({
-        quality: 10,
-        alphaQuality: 10,
+        quality: 30,
+        alphaQuality: 30,
         lossless: true,
         progressive: true,
     })
     .jpeg({
-        quality: 10,
-        alphaQuality: 10,
+        quality: 30,
+        alphaQuality: 30,
         lossless: true,
         progressive: true,
     })
-    .png({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
+    .png({ quality: 30, alphaQuality: 30, lossless: true, progressive: true })
     .toFile(
         path.resolve(
         req.files.newsImg[0].destination,
@@ -2120,29 +2202,31 @@ if (imageUrl) {
     );
     fs.unlinkSync(req.files.newsImg[0].path);
 }
-News.findOne({ _id: id })
+Post.findOne({ _id: id })
     .then((news) => {
     if (!news) {
         return res.redirect("/");
     }
 
-    news.title = title;
-    news.description = description;
+    news.news.title = title;
+    news.news.description = description;
     news.newsdate = newsdate;
-    news.tags = tags;
+    news.news.tags = tags;
     news.isActive = isActive;
+    news.url = url;
+    
     if (imageUrl) {
-        fs.unlink("wwwroot/img/resized/" + news.imageUrl, (err) => {
+        fs.unlink("wwwroot/img/resized/" + news.news.imageUrl, (err) => {
         if (err) {
             console.log(err);
         }
         });
-        news.imageUrl = imageUrl[0].filename;
+        news.news.imageUrl = imageUrl[0].filename;
     }
     const progress = new Process({
         userId: req.user,
         type: "edit",
-        name: news.title + " başlıklı gönderiyi güncelledi.",
+        name: news.news.title + " başlıklı gönderiyi güncelledi.",
     });
 
     progress.save();
@@ -2157,12 +2241,12 @@ News.findOne({ _id: id })
 exports.postDeleteNews = (req, res, next) => {
 const id = req.body.newsid;
 
-News.findOne({ _id: id })
+Post.findOne({ _id: id })
     .then((news) => {
     if (!news) {
         return next(new Error("Silinmek istenen gönderi bulunmadı."));
     }
-    fs.unlink("wwwroot/img/resized/" + news.imageUrl, (err) => {
+    fs.unlink("wwwroot/img/resized/" + news.news.imageUrl, (err) => {
         if (err) {
         console.log(err);
         }
@@ -2170,7 +2254,7 @@ News.findOne({ _id: id })
     const progress = new Process({
         userId: req.user,
         type: "delete",
-        name: news.title + " başlıklı gönderiyi sildi.",
+        name: news.news.title + " başlıklı gönderiyi sildi.",
     });
     progress.save();
     return news.deleteOne({ _id: id });
@@ -2572,7 +2656,7 @@ Order.findOne({ _id: id })
 };
 
 exports.getLang = (req, res, next) => {
-Lang.find()
+Post.find({type:"lang"})
     .sort({ date: -1 })
     .populate("userId", "name -_id")
     .then((lang) => {
@@ -2624,12 +2708,18 @@ await sharp(req.files.image[0].path)
     .png({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
     .toFile(path.resolve(req.files.image[0].destination, "resized", image));
 fs.unlinkSync(req.files.image[0].path);
-const language = new Lang({
-    lang: lang,
-    value: value,
-    imageUrl: image,
+const language = new Post({
     isActive: isActive,
     userId: req.user,
+    date:Date.now(),
+    type:"lang",
+    lang:{
+        lang: lang,
+        value: value,
+        imageUrl: image,
+    },
+
+
 });
 const progress = new Process({
     userId: req.user,
@@ -2668,7 +2758,7 @@ exports.getEditLang = (req, res, next) => {
 if (req.params.langid === "favicon.ico") {
     return res.status(404);
 }
-Lang.findOne({ _id: req.params.langid })
+Post.findOne({ _id: req.params.langid })
 
     .then((lang) => {
     if (!lang) {
@@ -2719,7 +2809,7 @@ if (image) {
     );
     fs.unlinkSync(req.files.image[0].path);
 }
-Lang.findOne({ _id: id })
+Post.findOne({ _id: id })
     .then((language) => {
     if (!language) {
         return res.redirect("/");
@@ -2727,19 +2817,19 @@ Lang.findOne({ _id: id })
     const progress = new Process({
         userId: req.user,
         type: "edit",
-        name: language.lang + " dilini güncelledi.",
+        name: language.lang.lang + " dilini güncelledi.",
     });
-    language.lang = lang;
-    language.value = value;
+    language.lang.lang = lang;
+    language.lang.value = value;
     language.isActive = isActive;
 
     if (image) {
-        fs.unlink("wwwroot/img/resized/" + language.imageUrl, (err) => {
+        fs.unlink("wwwroot/img/resized/" + language.lang.imageUrl, (err) => {
         if (err) {
             console.log(err);
         }
         });
-        language.imageUrl = image[0].filename;
+        language.lang.imageUrl = image[0].filename;
     }
     progress.save();
     return language.save();
@@ -2753,7 +2843,7 @@ Lang.findOne({ _id: id })
 exports.postDeleteLang = (req, res, next) => {
 const id = req.body.langid;
 
-Lang.findOne({ _id: id })
+Post.findOne({ _id: id })
 
     .then((lang) => {
     if (!lang) {
@@ -2764,7 +2854,7 @@ Lang.findOne({ _id: id })
         type: "delete",
         name: lang.name + " dilini sildi.",
     });
-    fs.unlink("wwwroot/img/resized/" + lang.imageUrl, (err) => {
+    fs.unlink("wwwroot/img/resized/" + lang.lang.imageUrl, (err) => {
         if (err) {
         console.log(err);
         }

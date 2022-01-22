@@ -2,11 +2,11 @@ extends ../layouts/main-layout.pug
 include ../mixins/client.pug
 
 block styles 
-    if aboutservice.tags.length > 0
-        meta(name='keywords' content=aboutservice.tags[0])
+    //- if aboutservice.aboutservices.tags.length > 0
+    //-     meta(name='keywords' content=aboutservice.tags[0])
     meta(property='og:locale' content='tr_TR')
     meta(property='og:type' content='article')
-    meta(property='og:url' content=`${system.siteUrl}/aboutservices/${aboutservice._id}`)
+    meta(property='og:url' content=`${system.siteUrl}/aboutservices/${aboutservice.url}`)
     meta(property='og:site_name' content=`${title}`)
 
     meta(property='article:section' content='Shop')
@@ -15,33 +15,46 @@ block styles
     meta(property='og:image:height' content='400')
     meta(property='og:image:type' content='image/webp')
 
-    meta(property="og:image" content=`${aboutservice.imageUrl}`)
-    meta(property="og:title" content=`${aboutservice.name}`) 
+    meta(property="og:image" content=`${aboutservice.aboutservices.imageUrl}`)
+    meta(property="og:title" content=`${aboutservice.aboutservices.name}`) 
     link(href='/css/aboutservicesdetails.css' rel='stylesheet')
 block content
     br
     br
     br
     br
-    .row
-        .leftcolumn
-            .card.bg-light(style="border-top: 10px solid #0b5aa2;").text-center
-                h2.text-center.itemss-head #{aboutservice.name}
-                img.fakeimg(src=`/img/resized/${aboutservice.imageUrl}`).rounded.mx-auto.d-block
-                p !{aboutservice.description}
+    br
+    br
+    br
 
-        .rightcolumn
-            br
-            .itemss.bg-light
-                .itemss-head
-                    h2.text-center Diğer Hizmetler
-                    hr
-                .itemss-body
-                    if allservices.length>0
-                        each services in allservices
+    .container
+        .row
+            .leftcolumn(style="overflow-x:auto;")
+                .card.bg-light(style="border-top: 10px solid #0b5aa2;").text-center
+                    h2.text-center.itemss-head #{aboutservice.aboutservices.name}
+                    img.fakeimg(src=`/img/resized/${aboutservice.aboutservices.imageUrl}`).rounded.mx-auto.d-block
+                    span#description.mt-3.p-3
+                        | !{aboutservice.aboutservices.description}
+                    script.
+                        $("span#description img").addClass("deneme w-100 h-auto")
+                        $("span#description p").addClass("text-justify text-muted")
+
+
+
+            .rightcolumn
+                br
+                .itemss.bg-light
+                    .itemss-head
+                        h2.text-center Diğer Hizmetler
+                        hr
+                    .itemss-body
+                        each services in allaboutservices
                             .itemss-body-content                        
                                 #card-hover
-                                    a(href=`/aboutservices/${services._id}` class=services._id==selectedCategory?"list-group-item active":"list-group-item" style="text-decoration: none").bg-light
-                                        |#{services.name}
+                                    a(href=`/aboutservices/${services.url}` class=services.url==selectedCategory?"list-group-item active":"list-group-item" style="text-decoration: none").bg-light
+                                        |#{services.aboutservices.name}
                                         i.ml-3.icon-chevron-circle-right
-    +client(client)
+    br
+    br
+    br
+    +client(globalvalue)

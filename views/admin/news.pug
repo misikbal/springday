@@ -72,8 +72,8 @@ block content
                                         tr
                                             td(scope="row").align-middle #{index++}
                                             td 
-                                                img(src=`/img/resized/${newes.imageUrl}` width='180')
-                                            td.align-middle #{newes.title}
+                                                img(src=`/img/resized/${newes.news.imageUrl}` width='180')
+                                            td.align-middle #{newes.news.title}
                                             td.align-middle #{newes.newsdate}
                                             td.align-middle #{newes.userId.name}
                                             td.align-middle #{newes.date.getDate()+"/"+newes.date.getMonth()+"/"+newes.date.getFullYear()+" "}

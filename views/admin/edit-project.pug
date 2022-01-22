@@ -15,7 +15,7 @@ block content
                         .card.text-center.bg-blue-grey
                             .header
                                 h2.text-white
-                                    | "#{project.name}" BAŞLIKLI PROJE GÜNCELLEME SAYFASI
+                                    | "#{project.project.name}" BAŞLIKLI PROJE GÜNCELLEME SAYFASI
         .row.clearfix
             .col-md-2
                 .card.bg-light.text-center
@@ -35,7 +35,7 @@ block content
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.form-control#title(type="text" name="name" value=`${project.name}` placeholder="Dora ayakkabı Firması")            
+                                    input.form-control#title(type="text" name="name" value=`${project.project.name}` placeholder="Dora ayakkabı Firması")            
         .row.clearfix
             .col-md-2
                 .card.bg-light.text-center
@@ -54,7 +54,7 @@ block content
                             small.text-info
                                 | Bir Tane Resim Seçilebilir
                     .text-center
-                        img(src=`/img/resized/${project.imageUrl}` style="width:400px;").card-img-top.mt-3                            
+                        img(src=`/img/resized/${project.project.imageUrl}` style="width:400px;").card-img-top.mt-3                            
                     .body.bg-blue-grey
                         .fileupload.fileupload-new(data-provides='fileupload')
                             span.btn.btn-warning.btn-file
@@ -75,7 +75,7 @@ block content
                                 | Resim Konulabilir (Resim Ekleme Simgesine Tıklayın > Sunucuya Gözat )
                     .body
                         .form-line
-                        textarea.form-control(id="editor" name="description" cols="30" rows="10") #{project.description}
+                        textarea.form-control(id="editor" name="description" cols="30" rows="10") #{project.project.description}
         .form-group.row.demo-tagsinput-area
             .col-sm-12.bg-blue-grey
                 .card.text-center
@@ -89,7 +89,7 @@ block content
                                 a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
                         .body
                             .form-line
-                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value=`${project.tags}` placeholder="Taglerinizi Buraya Giriniz")
+                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value=`${project.project.tags}` placeholder="Taglerinizi Buraya Giriniz")
 
         .form-group.row
             input(type="submit" value="Projeyi Güncelle").btn.btn-warning.col-md-12                                          

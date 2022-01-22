@@ -1,14 +1,15 @@
-mixin shortservices(services)
+mixin shortservices(posts)
     section#services.services
-        .container(data-aos='fade-up')
+        .container
             .section-title
                 p Servislerimiz
             .row
-                each service in services
-                    .col.p-1(data-aos='zoom-in' data-aos-delay='100')
-                        .icon-box.bg-light
-                            .icon
-                                | !{service.icon}
-                            h3.text-light
-                                a(href='' style="text-decoration:none;") #{service.name}
-                            p #{service.description}
+                each post in posts
+                    if post.type=="shortservices" && post.shortservices.isActive
+                        .col.p-1(data-aos='zoom-in' data-aos-delay='100')
+                            .icon-box.bg-light
+                                .icon
+                                    | !{post.shortservices.icon}
+                                h3.text-light
+                                    a(href='' style="text-decoration:none;") #{post.shortservices.name}
+                                p #{post.shortservices.description}

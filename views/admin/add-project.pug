@@ -41,7 +41,7 @@ block content
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.form-control#name(type="text" name="name" placeholder="Fabrika Montajı")  
+                                    input.form-control#name(type="text" name="name" required placeholder="Fabrika Montajı")  
         .row.clearfix
             .col-md-2
                 .card.bg-light.text-center
@@ -64,7 +64,7 @@ block content
                                     span.btn.btn-warning.btn-file
                                         span.fileupload-new Yeni
                                         span.fileupload-exists Değiştir
-                                        input#image(type="file" name="projectImg")
+                                        input#image(type="file" name="projectImg" required accept="image/*")
                                     span.fileupload-preview
                                     a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
         .form-group.row
@@ -93,7 +93,7 @@ block content
                                 a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
                         .body
                             .form-line
-                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value='' placeholder="Taglerinizi Buraya Giriniz")
+                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" required placeholder="Taglerinizi Buraya Giriniz")
         .form-group.row
             input(type="submit" value="Projeyi Kaydet").col-md-12.btn.btn-warning
 

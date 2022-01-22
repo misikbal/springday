@@ -69,16 +69,18 @@ footer
           .col-md-3.col-sm-6
             h3 S.S.S
             ul.footer-category
-              each footerabout in footerabouts
-                li
-                  a(href=`/about/${footerabout._id}` target="_blank") #{footerabout.name}
+              each footerabout in globalvalue
+                if footerabout.type=="about"
+                  li
+                    a(href=`/about/${footerabout.url}` target="_blank") #{footerabout.about.name}
             .clearfix
           .col-md-3.col-sm-6
             h3 #{system.blog}
             ul.footer-links
-              each blogs in blog
-                li
-                  a(href=`/news/${blogs._id}`) #{blogs.title}
+              each blogs in globalvalue
+                if blogs.type=="news"
+                  li
+                    a(href=`/news/${blogs.url}`) #{blogs.news.title}
     .row
       .container-fluid
         .copyright  

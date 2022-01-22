@@ -14,18 +14,26 @@ block content
         .row
             .leftcolumn
                 .card.bg-light(style="border-top: 10px solid #0b5aa2;")
-                    h2.text-center.itemss-head #{viewabout.name}
-                    p !{viewabout.description}
+                    h2.text-center.itemss-head #{viewabout.about.name}
+                    span(style="")#description
+                        | !{viewabout.about.description}
+                    script.
+                        $("span#description img").addClass("w-100 h-auto border-right-0 rounded")
+                        $("span#description p").addClass("text-justify text-muted")
 
             .rightcolumn
                 br
                 .itemss.bg-light
                     .itemss-body
-                        if info.length>0
-                            each abouts in info
-                                .itemss-body-content                        
-                                    #card-hover
-                                        a(href=`/about/${abouts._id}` class=abouts._id==selectedCategory?"list-group-item active":"list-group-item" style="text-decoration: none").bg-light
-                                            |#{abouts.name}
-                                            i.ml-3.icon-chevron-circle-right
-    +client(client)
+                        if globalvalue.length>0
+                            each abouts in globalvalue
+                                if abouts.type=="about"
+                                    .itemss-body-content                        
+                                        #card-hover
+                                            a(href=`/about/${abouts.url}` class=abouts.url==selectedCategory?"list-group-item active":"list-group-item" style="text-decoration: none").bg-light
+                                                |#{abouts.about.name}
+                                                i.ml-3.icon-chevron-circle-right
+    br
+    br
+    br
+    +client(globalvalue)

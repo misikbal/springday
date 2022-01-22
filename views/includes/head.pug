@@ -1,4 +1,5 @@
 head
+      title #{title}
       meta(charset='UTF-8')
       meta(http-equiv='X-UA-Compatible' content='IE=Edge')
       meta(http-equiv='Content-Type' content='text/html; charset=utf-8')
@@ -10,8 +11,8 @@ head
       meta(name='googlebot-news' content='index')
       meta(content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport')
       
-      meta(content=`${system.description}` name='description')
-      meta(content=`${system.tags}` name='keywords')
+      meta(name='description' content=`${system.description}`)
+      meta(name='keywords' content=`${system.tags}`)
       meta(property='og:locale' content='tr_TR')
       meta(property='og:type' content='article')
       meta(property='og:url' content=`${system.siteUrl}`)
@@ -26,22 +27,27 @@ head
       link(rel='alternate' hreflang='x-default' href='/')
 
       script(type="text/javascript").
-                                    function link(url) {
-                                    var s = document.createElement('link');
-                                    s.type = 'text/css';
-                                    s.rel = 'stylesheet';
-                                    s.async = true;
-                                    s.href = url;
-                                    var x = document.getElementsByTagName('head')[0];
-                                    x.appendChild(s);
-                                    }
+            function link(url) {
+            var s = document.createElement('link');
+            s.type = 'text/css';
+            s.rel = 'stylesheet';
+            s.async = true;
+            s.href = url;
+            var x = document.getElementsByTagName('head')[0];
+            x.appendChild(s);
+            }
+      //- link(href="https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap" rel="preload" as="font")
+      
+      
+      style.
+            @import url("https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap");
+
       script(type="text/javascript").
             link('https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css' )
-            link("/css/icomoon/icon.css")
-            link("/css/style.min.css")
-            link("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css")
-            link('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css' )
-            link("/plugins/animate-css/animate.css")
+            link("/css/style.min.css")     
+            
+            link("/css/icomoon/icon.min.css")
+            link("/plugins/animate-css/animate.min.css")
 
             link( '/css/themes/nav/owl.carousel.min.css')
       script.
@@ -56,13 +62,12 @@ head
             root.setProperty('--bodyDark', `!{system.bodyDark}`);
             root.setProperty('--footerLight', `!{system.footerLight}`);
             root.setProperty('--footerDark', `!{system.footerDark}`);
+      link(data-href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css")
       script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer")
-      script(src='/js/lazy.js')
+      script(src='/js/lazy.min.js')
 
       span !{system.googleAnalitcs}
 
       block styles
 
 
-
-      title #{title}

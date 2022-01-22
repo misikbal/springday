@@ -1,92 +1,48 @@
 const Product = require("../model/product");
 const Category=require("../model/category");
 const Order=require("../model/order");
-const Slide=require('../model/slide');
-const Client=require('../model/client');
-const Services=require('../model/shortservices');
 const System=require('../model/system');
-const Contact=require('../model/contactus');
-const AboutServices = require('../model/aboutservices');
-const Project = require('../model/project');
-const About = require('../model/about');
-const News = require('../model/news');
+const Contact=require('../model/contactus')
 const Bank = require('../model/bank');
+const Post = require('../model/post');
+
 
 
 
 
 exports.getIndex = async (req, res, next) => {
-    Product.find({isHome:true})
-        .where({isActive:true})
+    Post.find({$or: [{type:"project"} , {type:"aboutservices"}, {type:"shortservices"},{type:"slide"}]})
         .sort({date:-1})
-        .populate("categories.0",{"_id":{"$slice":1}})
-        .select(['-description',"-date","-userId","-__v","-tags"])
+        .where({isActive:true})
+        .select("slide.image slide.title slide.description slide.buttonName slide.buttonLink slide.animate aboutservices.name aboutservices.imageUrl project.name project.imageUrl url type isHome")
         .lean()
-
-        .then(products=>{
-            return products;
-        }).then((products) => {
-            Category.find()
+        .then(posts=>{
+        Product.find({isHome:true})
             .where({isActive:true})
-            .sort("name")
+            .sort({date:-1})
+            .populate("categories.0",{"_id":{"$slice":1}})
+            .select(['-description',"-date","-userId","-__v","-tags"])
             .lean()
-
-            // .select(["-date","-userId","-__v"])
-            .then(categories=>{
-                return categories;
-            }).then((categories)=>{
-                Slide.find()
+            .then(products=>{
+                return products;
+            }).then((products) => {
+                Category.find()
                 .where({isActive:true})
-
-                .sort({date:-1})
-                // .select(["-date","-userId","-__v"])
+                .sort("name")
                 .lean()
+                .then(categories=>{
+                    return categories;
+                }).then((categories)=>{   
 
-                .then((slides)=>{      
-                    Client.find()
-                        .where({isActive:true})
-                        .select("clientlogo")
-                        .lean()                        
-                        .then( (client)=>{
-                            Services.find()
-                            .where({isActive:true})
-                            // .select(["-date","-userId","-__v"])
-                            .lean()
-
-                            .then((services)=>{
-                                AboutServices.find({isHome:true})
-                                    .where({isActive:true})
-                                    .select(["-description","-date","-userId","-__v"])
-                                    .lean()
-                                    .then((aboutservices)=>{
-                                        Project.find({isActive:true})
-                                        .where({isHome:true})
-                                        .select(["-description","-date","-userId","-__v"])
-                                        .lean()
-                                        .then((projectinfo)=>{
-                                            
-                                                res.render("shop/index", {
-                                                    title: "Springday", 
-                                                    products: products,
-                                                    slides:slides,
-                                                    path: '/',
-                                                    categories:categories,
-                                                    client:client,
-                                                    services:services,
-                                                    aboutservices:aboutservices,
-                                                    projectinfo:projectinfo,
-                                                    action: req.query.action
-                                            })
-                                            
-                                        })
-                                        
-                                    })
-                                    
-                                
-                            })
+                            res.render("shop/index", {
+                                title: "Springday", 
+                                products: products,
+                                path: '/',
+                                posts:posts,
+                                categories:categories,
+                                action: req.query.action
+                        })
                             
-                        });
-                    
                 }) .catch((err)=>{
                     next(err);
                 });
@@ -134,9 +90,6 @@ exports.getProduct = (req, res, next) => {
             .populate("categories.0",{"_id":{"$slice":1}})
             .lean()
             .then(products=>{
-                Client.find()
-                .select("clientlogo")
-                .then(client=>{
                     Product.find()
                     .where({isActive:true})
                     .where({isHome:true})
@@ -146,28 +99,15 @@ exports.getProduct = (req, res, next) => {
                             title:products.name,
                             product:products,
                             other:other,
-                            client:client,
                             path:"/products",
                             isAuthenticated:req.session.isAuthenticated
                         });
                     })
-                    
-                })
                             
             }).catch((err)=>{
                 next(err);
             })
         
-    
-    /*Product.findByPk(req.params.productid).then((product=>{
-        res.render("shop/product-detail",{
-            title:product.name,
-            product:product,
-            path:"/products"
-        });
-    })).catch((err)=>{
-        console.log(err);
-    });  */  
     
 }
 exports.getProductsByCategoryId = (req, res, next) => {
@@ -432,27 +372,18 @@ exports.postAddContact= (req, res, next) => {
 }
 exports.getAboutServices = (req, res, next) => {    
     
-    AboutServices.find()
+    Post.find({type:"aboutservices",isActive:true})
+    .sort({ date: -1})
+    .select(["-aboutservices.description"])
     .lean()
     .then(aboutservices=>{
-        return aboutservices; 
-    })
-    .then(aboutservices=>{
-        Client.find()
-            .where({isActive:true})
-            .select("clientlogo")
-            .lean()
-
-            .then(client=>{
                 res.render("shop/aboutservices", {
                     title: "About Services", 
                     aboutservices: aboutservices,
-                    client:client,
                     path: '/aboutservices',
                     isAuthenticated:req.session.isAuthenticated
                 }) 
             })
-    })
     .catch((err)=>{
         next(err);
     });
@@ -460,57 +391,47 @@ exports.getAboutServices = (req, res, next) => {
 }
 exports.getAboutService = (req, res, next) => {
     const aboutserviceid=req.params.aboutserviceid
-    AboutServices.findById(req.params.aboutserviceid)
+    Post.findOne({url:req.params.aboutserviceid,isActive:true})
     .lean()
     .then(aboutservice=>{
-        Client.find()
-        .where({isActive:true})
-        .select("clientlogo")
-        .lean()
-        .then(client=>{
-            AboutServices.find()
-            .where({isActive:true})
+        Post.find({type:"aboutservices",isActive:true})
+            .select("aboutservices.name url")
+            .sort({ date: -1 })
+            .lean()
             
-            .then(allservices=>{
+            .then(allaboutservices=>{
                 res.render("shop/aboutservice-detail",{
-                    title:aboutservice.name,
+                    title:aboutservice.aboutservices.name,
                     aboutservice:aboutservice,
-                    allservices:allservices,
-                    client:client,
                     selectedCategory:aboutserviceid,
+                    allaboutservices:allaboutservices,
                     path:"/aboutservices",
                 });
             })
-        })
+                
     }).catch((err)=>{
         next(err);
     });
 }
 exports.getProject = (req, res, next) => {
     const projectid=req.params.projectid
-    Project.findById(req.params.projectid)
+    Post.findOne({url:req.params.projectid,isActive:true})
     .lean()
     .then(project=>{
-        Client.find()
-        .where({isActive:true})
-
-        .select("clientlogo")
-        .lean()
-        .then(client=>{
-            Project.find()
+        Post.find({type:"project", isActive:true})
+            .sort({ date: -1 })
+            .select("project.name url")
             .lean()
 
             .then(allproject=>{
                 res.render("shop/project-detail",{
-                    title:project.name,
+                    title:project.project.name,
                     project:project,
                     allproject:allproject,
-                    client:client,
                     selectedCategory:projectid,
                     path:"/project",
                 });
             })
-        })
     }).catch((err)=>{
         next(err);
     });
@@ -518,27 +439,19 @@ exports.getProject = (req, res, next) => {
 
 exports.getProjects = (req, res, next) => {    
     
-    Project.find()
-    .where({isActive:true})
+    Post.find({type:"project", isActive:true})
+    .sort({ date: -1 })
     .lean()
     .then(project=>{
         return project; 
     })
     .then(project=>{
-        Client.find()
-            .where({isActive:true})
-
-            .select("clientlogo")
-            .lean()
-            .then(client=>{
                 res.render("shop/project", {
                     title: "Project", 
                     project: project,
-                    client:client,
                     path: '/project',
                     isAuthenticated:req.session.isAuthenticated
                 }) 
-            })
     })
     .catch((err)=>{
         next(err);
@@ -549,28 +462,15 @@ exports.getProjects = (req, res, next) => {
 
 exports.getAbout = (req, res, next) => {
     const aboutid=req.params.aboutid
-    About.findById(aboutid)
-
+    Post.findOne({url:aboutid,isActive:true})
+    .lean()
     .then(about=>{
-        Client.find()
-        .select("clientlogo")
-        .lean()
-
-        .then(client=>{
-            About.find()
-            .where({isActive:true})
-            .lean()
-            .then(allabout=>{
                 res.render("shop/about-detail",{
-                    title:about.name,
+                    title:about.about.name,
                     about:about,
-                    allabout:allabout,
-                    client:client,
                     selectedCategory:aboutid,
                     path:"/about",
                 });
-            })
-        })
     }).catch((err)=>{
         next(err);
     });
@@ -578,31 +478,18 @@ exports.getAbout = (req, res, next) => {
 
 exports.getAbouts = (req, res, next) => {    
     
-    About.findOne({isHome:true})
-    .where({isActive:true})
+    Post.findOne({type:"about",isHome:true,isHome:true})
     .lean()
     .then(viewabout=>{
         return viewabout; 
     })
     .then(viewabout=>{
-        Client.find()
-            .select("clientlogo")
-            .lean()
-            .then(client=>{
-                About.find()
-                .select("_id name")                
-                .where({isActive:true})
-                .then(info=>{
-                    res.render("shop/about", {
-                        title: "About", 
-                        viewabout: viewabout,
-                        info:info,
-                        client:client,
-                        path: '/about',
-                        isAuthenticated:req.session.isAuthenticated
-                    })
-                })
-            })
+        res.render("shop/about", {
+            title: "About", 
+            viewabout: viewabout,
+            path: '/about',
+            isAuthenticated:req.session.isAuthenticated
+        })
     })
     .catch((err)=>{
         next(err);
@@ -614,8 +501,8 @@ exports.getAbouts = (req, res, next) => {
 
 exports.getClient = (req, res, next) => {    
     
-    Client.find()
-    .where({isActive:true})
+    Post.find({type:"client",isActive:true})
+    .sort({ date: -1 })
     .lean()
     .then(client=>{
         return client; 
@@ -624,8 +511,7 @@ exports.getClient = (req, res, next) => {
         res.render("shop/client", {
             title: "About", 
             client:client,
-            path: '/client',
-            isAuthenticated:req.session.isAuthenticated
+            path: '/client'
         })
     })
     .catch((err)=>{
@@ -640,29 +526,21 @@ exports.getClient = (req, res, next) => {
 
 exports.getNews = (req, res, next) => {
     const newsid=req.params.newsid
-    News.findById(newsid)
+    Post.findOne({url:newsid,isActive:true})
     .lean()
     .then(news=>{
-        Client.find()
-        .lean()
-        .select("clientlogo")
-
-
-        .then(client=>{
-            News.find()
+            Post.find({type:"news"})
             .where({isActive:true})
             .lean()
             .then(allnews=>{
                 res.render("shop/news-detail",{
-                    title:news.title,
+                    title:news.news.title,
                     news:news,
                     allnews:allnews,
-                    client:client,
                     selectedCategory:newsid,
                     path:"/news",
                 });
             })
-        })
     }).catch((err)=>{
         next(err);
     });
@@ -670,26 +548,20 @@ exports.getNews = (req, res, next) => {
 
 exports.getAllNews = (req, res, next) => {    
     
-    News.find()
+    Post.find({type:"news",isActive:true})
+    .sort({newsdate:-1})
     .lean()
-    .where({isActive:true})
     .then(news=>{
         return news; 
     })
     .then(news=>{
-        Client.find()
-            .select("clientlogo")
-            .lean()
-            .then(client=>{
                     res.render("shop/news", {
                         title: "News", 
                         news: news,
-                        client:client,
                         path: '/news',
                         isAuthenticated:req.session.isAuthenticated
                     })
             })
-    })
     .catch((err)=>{
         next(err);
     });

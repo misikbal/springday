@@ -55,10 +55,6 @@ exports.postLogin =(req,res,next)=> {
                     .then(isSuccess=>{
                         if(isSuccess){
                             if(user.isAdmin){
-                                
-                            }
-                            
-                            if(res.locals.isAdmin){
                                     const advanced=new Advanced(
                                         {
                                             userId:user._id,

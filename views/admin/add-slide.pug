@@ -39,7 +39,7 @@ block content
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.form-control#title(type="text" name="title" placeholder="Büyük Fırsat")  
+                                    input.form-control#title(type="text" name="title" required placeholder="Büyük Fırsat")  
         .row
             .col-md-12
                 .form-group.row
@@ -57,7 +57,7 @@ block content
                                     span.btn.btn-warning.btn-file
                                         span.fileupload-new Yeni
                                         span.fileupload-exists Değiştir
-                                        input#clientlogo(type="file" name="slideimg" accept="image/*")
+                                        input#slideimg(type="file" name="slideimg" required accept="image/*")
                                     span.fileupload-preview
                                     a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
         .form-group.row
@@ -99,29 +99,40 @@ block content
 
                                 if product.length > 0
                                     optgroup(label='Ürünler')
+                                            option(value=`/products,Ürün Sayfası`) Ürün Sayfası
                                             each products in product
                                                     option(value=`/products/${products._id+","+products.name}`) #{products.name}
-                                if services.length > 0                                
+                                if category.length > 0
+                                    optgroup(label='Kategoriler')
+                                            each cate in category
+                                                    option(value=`/categories/${cate._id+","+cate.name}`) #{cate.name}
+                                if post.length > 0
                                     optgroup(label='Hizmetler')
-                                            each service in services
-                                                    option(value=`/aboutservices/${service._id+","+service.name}`) #{service.name}
-                                if project.length > 0                                
-                                    optgroup(label='Projeler')
-                                            each projects in project
-                                                    option(value=`/project/${projects._id+","+projects.name}`) #{projects.name}
-                                if about.length > 0                                
-                                    optgroup(label='Hakkımızda Sayfası')
-                                            each abouts in about
-                                                    option(value=`/about/${abouts._id+","+abouts.name}`) #{abouts.name}
-                                if blog.length > 0                                
+                                        option(value=`/aboutservices,Hizmet Sayfası`) Hizmet Sayfası
+                                        each service in post
+                                            if service.type=="aboutservices"
+
+                                                option(value=`/aboutservices/${service.url+","+service.aboutservices.name}`) #{service.aboutservices.name}
+                                if post.length > 0 
+
+                                        optgroup(label='Projeler')
+                                                option(value=`/project,Proje Sayfası`) Proje Sayfası
+                                                each projects in post
+                                                    if projects.type=="project"                                   
+
+                                                        option(value=`/project/${projects.url+","+projects.project.name}`) #{projects.project.name}
+                                if post.length > 0
+                                    optgroup(label='Hakkımızda Alanı')
+                                            option(value=`/about,Hakkımızda Sayfası`) Hakkımızda Sayfası
+                                                each abouts in post
+                                                    if abouts.type=="about"    
+                                                        option(value=`/about/${abouts.url+","+abouts.about.name}`) #{abouts.about.name}
+                                if post.length > 0                   
                                     optgroup(label='Blog')
-                                            each blogs in blog
-                                                    option(value=`/news/${blogs._id+","+blogs.title}`) #{blogs.title}
-                                if client.length > 0                                
-                                    optgroup(label='Referanslar')
-                                            each clients in client
-                                                    option(value="/client,"+`${clients.name}`) #{clients.name}
-                                        
+                                            option(value=`/news,Ürün Sayfası`) Blog Sayfası                                            
+                                            each blogs in post
+                                                if blogs.type=="news"
+                                                    option(value=`/news/${blogs.url+","+blogs.news.title}`) #{blogs.news.title}
 
         .row
             .col-sm-12

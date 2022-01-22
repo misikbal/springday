@@ -1,9 +1,11 @@
-mixin client(client)
-    section#clients.clients
-        h2.mb-4.text-center Referanslar
-        .container.owl-2-style.text-center
-            .owl-carousel.owl-2.pt-3
-                if client.length>0
-                    each clients in client
-                            .media-29101
-                                img.deneme.img-fluid.rounded.w-50(data-src= `/img/resized/${clients.clientlogo}` alt='')
+mixin client(posts)
+    if posts.length >0
+        section#clients.clients
+            h2.mb-4.text-center Referanslar
+            .container.owl-2-style.text-center
+                .owl-carousel.owl-2.pt-3
+                    each post in posts
+                        if post.type=="client"
+                                .media-29101
+                                    a(href="/client" target="_blank")
+                                        img.deneme.img-fluid.rounded.w-50(data-src= `/img/resized/${post.client.clientlogo}` alt=post.client.name)
