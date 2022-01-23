@@ -15,6 +15,7 @@ module.exports = (req,res,next)=>{
         res.header('X-Proxy-Cache', 'HIT');
         return res.send(cachedReponse.body);
         } else {
+
         res.originalSend = res.send;
         res.send = (body) => {
             myCache.set(req.url, {

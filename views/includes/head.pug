@@ -2,6 +2,9 @@ head
       title #{title}
       meta(charset='UTF-8')
       meta(http-equiv='X-UA-Compatible' content='IE=Edge')
+      meta(http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate')
+      meta(http-equiv='Pragma' content='no-cache')
+      meta(http-equiv='Expires' content='0')
       meta(http-equiv='Content-Type' content='text/html; charset=utf-8')
       meta(http-equiv='content-language' content=`${system.language}`)     
       meta(name='robots' content='follow')
@@ -10,7 +13,8 @@ head
       meta(name='googlebot' content='index')
       meta(name='googlebot-news' content='index')
       meta(content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport')
-      
+
+
       meta(name='description' content=`${system.description}`)
       meta(name='keywords' content=`${system.tags}`)
       meta(property='og:locale' content='tr_TR')

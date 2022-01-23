@@ -49,14 +49,14 @@ block content
         //-         });
         //-     });
 
-    .container.pt-5
-        .section-title.pt-2
-            p ÜRÜNLERİMİZ
-        .row.portfolio-container
+      .section-title.pt-2
+          p ÜRÜNLERİMİZ
+      .container
+        .row
           each product in products
             +productcard(product)
-        button.btn.btn-warning.col-md-12 
-          a(href="/products" style="text-decoration: none;").text-dark  Daha Fazla Ürün Göster
+      button.btn.btn-warning.col-md-12 
+        a(href="/products" style="text-decoration: none;").text-dark  Daha Fazla Ürün Göster
     br
     br
     +category(categories)

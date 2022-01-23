@@ -32,8 +32,8 @@ exports.getIndex = async (req, res, next) => {
                 .lean()
                 .then(categories=>{
                     return categories;
-                }).then((categories)=>{   
-
+                }).then((categories)=>{ 
+                            
                             res.render("shop/index", {
                                 title: "Springday", 
                                 products: products,
