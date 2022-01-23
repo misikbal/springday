@@ -222,18 +222,18 @@ app.use((error,req,res,next)=>{
 mongoose.connect(process.env.MONGODB_URI || connectionString,{ useNewUrlParser: true,useUnifiedTopology: true })
     .then(()=>{
         console.log("mongodb baglandı");
-        spdy.createServer(
-            {
-                key: fs.readFileSync("./server.key"),
-                cert: fs.readFileSync("./server.crt")
-            },
-            app
-        ).listen(port, () => {
-            console.log("Proje calıştırıldı " + port);
-        });
-        // app.listen(port, () => {
+        // spdy.createServer(
+        //     {
+        //         key: fs.readFileSync("./server.key"),
+        //         cert: fs.readFileSync("./server.crt")
+        //     },
+        //     app
+        // ).listen(port, () => {
         //     console.log("Proje calıştırıldı " + port);
         // });
+        app.listen(port, () => {
+            console.log("Proje calıştırıldı " + port);
+        });
     })
     .catch(err=>{
         
