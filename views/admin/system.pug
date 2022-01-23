@@ -24,7 +24,8 @@ block content
                             | SİSTEM AYARLARI
     if isAdmin
         .col-lg-12
-        
+            div.bg-warning.align-middle.text-center
+                    p Bazen navbar menüleri açılmıyor olabilir. Bunun için lütfen anasayfaya gidip tekrar deneyiniz
             .demo-masked-input
                 form(action="/admin/system" method="POST")  
                     input(type="hidden" name="_csrf" value=`${csrfToken}`)         

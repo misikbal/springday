@@ -8,10 +8,10 @@ mixin project(posts)
                         
                         each projects in posts
                             if projects.type=="project" && projects.isHome
-                                .media-29101()
+                                .media-29101
                                     .item-4
                                         a.card(href=`/project/${projects.url}` style="height:auto;").bg-light
-                                            img.deneme(data-src=`/img/resized/${projects.project.imageUrl}`)
+                                            img.deneme(data-src=`/img/resized/${projects.project.imageUrl}` width="300" height="auto")
                                             article                                    
                                                 h2 #{projects.project.name}
                                                 span

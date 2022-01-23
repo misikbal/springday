@@ -21,7 +21,7 @@ block content
                     .col-md-4.mb-5
                         .item-1(style="height:auto;").d-flex.justify-content-center
                             a.card(href=`${clients.client.link}` target="_blank" style="height:auto;").bg-light
-                                img.deneme(src=`/img/resized/${clients.client.clientlogo}` style="margin-left: auto; margin-right: auto; width: 50%;").mt-2
+                                img.deneme.w-75.h-auto(src=`/img/resized/${clients.client.clientlogo}` style="margin-left: auto; margin-right: auto").mt-2
                                 article
                                     h1 #{clients.client.name}
                                     p #{clients.client.description}

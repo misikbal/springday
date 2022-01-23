@@ -8,7 +8,7 @@
 //-     .site-mobile-menu-body
 
 
-.site-navbar-wrap(class=(system.isNavbar ? "sticky-wrapper is-sticky" : "") style=(path==="/" ? "position:absolute;":"")).translate
+nav.site-navbar-wrap(class=(system.isNavbar ? "sticky-wrapper is-sticky" : "") style=(path==="/" ? "position:absolute;":""))
     if system.contactnavbar_isActive
 
         #top.site-navbar-top(style="font-size:14px;")
@@ -181,9 +181,3 @@
                     .text-center
                         .alert.alert-success.show.mt-3
                             strong Ürün Başarılı Bir Şekilde Sepetinize Eklendi
-        //- script.
-        //-     window.setTimeout(function() {
-        //-         $(".alert").fadeTo(500, 0).slideUp(500, function(){
-        //-             $(this).remove(); 
-        //-         });
-        //-     }, 3000);

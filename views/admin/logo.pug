@@ -94,7 +94,10 @@ block content
                             .card-header
                                 .text-center
                                     h5 Seçilen Logo
-                                    img.card-image(src=`/img/${logo.loadingLogo}` width="100")
+                                    if system.loadingLogo.toString().split(" ")[0].split("-")[0]=="spinner"
+                                        div(class=`${system.loadingLogo}` role='status' style="width: 3rem; height: 3rem;")
+                                    else
+                                        img.card-image(src=`/img/${logo.loadingLogo}` width="100")
 
                         .card-footer.bg-blue-grey
                             h2.text-center
@@ -130,6 +133,7 @@ block content
                                         h6.text-info
                                             | Hem resim yükleyip hem de aşağıdan gif seçtiyseniz sadece yükelenen dosya kaydedilecektir.
                                     .card-body
+                                        h5.text-dark Animasyonlu Yükleme Logoları
                                         .row.mt-5
 
                                             .col
@@ -207,7 +211,154 @@ block content
                                                             
                                                             label
                                                                 input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="10.webp" ? true:false  value="10.webp")
+                                            .col
+                                                .card.bg-blue-grey.text-center(style="height:auto;")
+                                                    img.card-img-top(src="/img/11.avif" for='btnradio1' width="100").bg-white
+                                                    .card-body
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="11.avif" ? true:false  value="11.avif")
+                                        h5.text-dark Performanslı Yükleme Logoları
+                                        .row.mt-5
+                                            .col
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-border.text-primary(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-primary" ? true:false  value="spinner-border text-primary")
+                                            .col
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-border.text-secondary(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-secondary" ? true:false  value="spinner-border text-secondary")
+                                            .col
+                                                
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-border.text-success(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-success" ? true:false  value="spinner-border text-success")
+                                            .col
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-border.text-danger(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-danger" ? true:false  value="spinner-border text-danger")
+                                            .col
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-border.text-warning(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-warning" ? true:false  value="spinner-border text-warning")
+                                            .col
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-border.text-info(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-info" ? true:false  value="spinner-border text-info")
+                                            .col
+                                                
+                                                .card.text-center.bg-dark(style="height:auto;")
+                                                    .spinner-border.text-light(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-light" ? true:false  value="spinner-border text-light")
+                                            .col
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-border.text-dark(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-dark" ? true:false  value="spinner-border text-dark")
 
+
+
+
+
+                                        .row.mt-1
+                                            .col
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-grow.text-primary(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-primary" ? true:false  value="spinner-grow text-primary")
+                                            .col
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-grow.text-secondary(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-secondary" ? true:false  value="spinner-grow text-secondary")
+                                            .col
+                                                
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-grow.text-success(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-success" ? true:false  value="spinner-grow text-success")
+                                            .col
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-grow.text-danger(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-danger" ? true:false  value="spinner-grow text-danger")
+                                            .col
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-grow.text-warning(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-warning" ? true:false  value="spinner-grow text-warning")
+                                            .col
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-grow.text-info(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-info" ? true:false  value="spinner-grow text-info")
+                                            .col
+                                                
+                                                .card.text-center.bg-dark(style="height:auto;")
+                                                    .spinner-grow.text-light(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-light" ? true:false  value="spinner-grow text-light")
+                                            .col
+                                                .card.text-center.bg-light(style="height:auto;")
+                                                    .spinner-grow.text-dark(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
+                                                    .card-body.bg-blue-grey
+                                                        .radio.text-center
+                                                            
+                                                            label
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-dark" ? true:false  value="spinner-grow text-dark")
             if isAdmin
                 .form-group.row
                     input(type="submit" value="Kaydet").btn.btn-warning.col-md-12                  

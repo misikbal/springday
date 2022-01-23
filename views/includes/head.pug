@@ -46,10 +46,12 @@ head
             link("/css/style.min.css")   
             
             link("/plugins/animate-css/animate.min.css")
-            link('/css/themes/nav/owl.carousel.min.css')
             
-      script(async src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer")
-      script(type='text/javascript' async).
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" rel="preload" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer")
+
+
+      script(async src='/js/lazy.min.js')
+      script(type='text/javascript' rel="preload" ).
             let root=document.documentElement.style
             root.setProperty('--navbarLight', `!{system.navbarLight}`);
             root.setProperty('--navbarDark', `!{system.navbarDark}`);
@@ -61,10 +63,9 @@ head
             root.setProperty('--bodyDark', `!{system.bodyDark}`);
             root.setProperty('--footerLight', `!{system.footerLight}`);
             root.setProperty('--footerDark', `!{system.footerDark}`);
-      link(data-href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css")
-
-      script(async src='/js/lazy.min.js')
       span !{system.googleAnalitcs}
+      link(data-href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css")
+      link(data-href='/css/themes/nav/owl.carousel.min.css' rel='stylesheet')
 
       block styles
 

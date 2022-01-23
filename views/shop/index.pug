@@ -11,7 +11,7 @@ include ../mixins/aboutservices.pug
 include ../mixins/shortservices.pug
 
 block styles
-  link(data-href='/css/otherproduct.min.css')
+  link(data-href='/css/otherproduct.min.css' rel='stylesheet')
 
   link(data-href='/css/project.css' rel='stylesheet')
 
@@ -49,7 +49,6 @@ block content
         //-         });
         //-     });
 
-    +category(categories)
     .container.pt-5
         .section-title.pt-2
             p ÜRÜNLERİMİZ
@@ -58,6 +57,9 @@ block content
             +productcard(product)
         button.btn.btn-warning.col-md-12 
           a(href="/products" style="text-decoration: none;").text-dark  Daha Fazla Ürün Göster
+    br
+    br
+    +category(categories)
 
     +shortservices(posts)
     br
