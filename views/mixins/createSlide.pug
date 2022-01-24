@@ -1,6 +1,6 @@
 mixin createSlide(slide)
     .carousel-item
-        img.d-block.animated.item.w-100.h-auto.d-inline-block(alt=`${slide.slide.title}` src=`/img/resized/${slide.slide.image}` class=`${slide.slide.animate}`)
+        img.d-block.animated.item.w-100.h-auto.d-inline-block(alt=`${slide.slide.title}` src=`/img/resized/${slide.slide.image}`)
 
         span.carousel-caption
             if slide.slide.title!=""

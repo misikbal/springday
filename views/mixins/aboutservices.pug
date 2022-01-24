@@ -9,7 +9,7 @@ mixin aboutservices(posts)
                             .media-29101(style="height:auto;")
                                 .item-4(style="height:auto;")
                                     a.card(href=`/aboutservices/${post.url}` style="height:auto;").bg-light
-                                        img.deneme(data-src=`/img/resized/${post.aboutservices.imageUrl}` width="300" height="auto")
+                                        img.deneme(data-src=`/img/resized/${post.aboutservices.imageUrl}` style="width:300px; height:160px;" alt=post.aboutservices.name)
                                         article                                 
                                             h2 #{post.aboutservices.name}
                                             span

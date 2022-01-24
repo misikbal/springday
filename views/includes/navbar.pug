@@ -18,14 +18,14 @@ if system.contactnavbar_isActive
                     .d-flex.mr-auto
                         if system.contactmail!==""                        
 
-                            a.d-flex.align-items-center.mr-4(href=`mailto:${system.contactmail}` target='_blank' style="text-decoration: none")
+                            a.d-flex.align-items-center.mr-4(href=`mailto:${system.contactmail}` target='_blank' style="text-decoration: none" titile)
                                 span.mr-2
                                     i.icon-gmail
                                 span.d-none.d-md-inline-block.mb-2
                                     p #{system.contactmail}
                         if system.contactphone!==""                        
                         
-                            a.d-flex.align-items-center.mr-auto(href=`tel://+${system.contactphone}` target='_blank' style="text-decoration: none")
+                            a.d-flex.align-items-center.mr-auto(href=`tel://+${system.contactphone}` target='_blank' style="text-decoration: none" title=`${system.contactphone}`)
                                 span.mr-2
                                     i.icon-phone-square
                                 span.d-none.d-md-inline-block.mb-2
@@ -33,23 +33,23 @@ if system.contactnavbar_isActive
                 .col-6.text-right
                     .mr-auto
                         if system.facebook!==""
-                            a.p-2.pl-0(href=`${system.facebook}` target='_blank')
+                            a.p-2.pl-0(href=`${system.facebook}` target='_blank' rel="noopener" title=`${system.facebook}`)
                                 span.icon-facebook
                         if system.twitter!==""                        
-                            a.p-2.pl-0(href=`${system.twitter}` target='_blank' )
+                            a.p-2.pl-0(href=`${system.twitter}` target='_blank' rel="noopener" title=`${system.twitter}`)
                                 span.icon-twitter
                         if system.instagram!==""  
-                            a.p-2.pl-0(href=`${system.instagram}` target='_blank')
+                            a.p-2.pl-0(href=`${system.instagram}` target='_blank' rel="noopener" title=`${system.instagram}`)
                                 span.icon-instagram
                         if system.youtube!==""      
-                            a.p-2.pl-0(href=`${system.youtube}` target='_blank')
+                            a.p-2.pl-0(href=`${system.youtube}` target='_blank' rel="noopener" title=`${system.youtube}`)
                                 span.icon-youtube
                         if system.linkedin!==""                        
                         
-                            a.p-2.pl-0(href=`${system.linkedin}` target='_blank')
+                            a.p-2.pl-0(href=`${system.linkedin}` target='_blank' rel="noopener" title=`${system.linkedin}` )
                                 span.icon-linkedin
 
-#sticky-wrapper.sticky-wrapper.is-sticky
+#sticky-wrapper
     #navbar_top
         #lightcolor.site-navbar.site-navbar-target.js-sticky-header
             .container
@@ -58,7 +58,7 @@ if system.contactnavbar_isActive
 
                         nav.navbar.navbar-expand-lg.site-navigation
                             a(href='/')
-                                img(src=`/img/resized/${system.logo}` width="150px" height="68px")
+                                img(src=`/img/resized/${system.logo}` width="150px" height="68px" alt="Springday Logo")
                             button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
                                 span.navbar-toggler-icon.mr-1.mt-1.pt-2
                                     i(style="font-size:2rem;").icon-th-menu-outline
@@ -67,8 +67,8 @@ if system.contactnavbar_isActive
                             #navbarSupportedContent.collapse.navbar-collapse(style="font-size:13px;")
                                 ul.navbar-nav.ml-auto.py-4.py-md-0
                                     if system.home!="" && system.home_isActive
-                                        li(class=(path==='/'?'active':'') ).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
-                                            a(href="/").nav-link !{system.home}
+                                        li(class=(path==='/'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                            a(href="/" title="Anasayfa").nav-link !{system.home}
 
                                     if system.products!="" && system.products_isActive
                                             
@@ -162,7 +162,7 @@ if system.contactnavbar_isActive
                                     if system.translate_isActive
                                         li.pl-4.pl-md-0.ml-0.ml-md-4.pt-1
                                             .dropdown.show
-                                                button#link.btn.btn-outline-info.btn-xs.dropdown-toggle(style="font-size:9px;" role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' translate="no")
+                                                button#link.btn.btn-dark.btn-xs.dropdown-toggle(style="font-size:9px;" role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' translate="no")
                                                     | LANGUAGE
                                                 .dropdown-menu(aria-labelledby='link' style="overflow:scrollLeft").bg-light.text-center
                                                     .row

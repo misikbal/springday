@@ -1,8 +1,7 @@
-
+<!DOCTYPE html>
 if system.loadingisActive
     script(type='text/javascript').
         window.onload=function(){document.getElementById("yukleniy").style.display="none";} 
-doctype html
 html(lang=`${system.language}`)
     if system.loadingisActive
         style(type='text/css').
@@ -34,7 +33,7 @@ html(lang=`${system.language}`)
         if system.loadingisActive
             #yukleniy.hbne.hghd(style=`background-color:#fff;width:100%;height:100%;padding-top:25%; `)
                 center
-                    a(target='_blank' style='background-color:transparent;border:none;padding:0px;margin:0px;')
+                    a(href="#" target='_blank' rel="noopener" style='background-color:transparent;border:none;padding:0px;margin:0px;' title="Yükleniyor")
                         if system.loadingLogo.toString().split(" ")[0].split("-")[0]=="spinner"
                             div(class=`${system.loadingLogo}` role='status' style="width: 3rem; height: 3rem;")
                         else
@@ -58,7 +57,7 @@ html(lang=`${system.language}`)
             .switch.mode
                 i.icon-night
                 div
-                    input(type="checkbox")
+                    input(type="checkbox" title="Koyu veya Açık Tema")
         if system.whatsapp_isActive
         
             style.
@@ -72,7 +71,7 @@ html(lang=`${system.language}`)
                 z-index:100;
                 }
             
-            a.float(href=`https://api.whatsapp.com/send?phone=${system.phone}` target='_blank')
+            a.float(href=`https://api.whatsapp.com/send?phone=${system.phone}` rel="noopener" target='_blank' title=`${system.phone}`)
                 i.icon-whatsapp1.bg-light(style="border-radius:50%;")
             
         
@@ -81,7 +80,7 @@ html(lang=`${system.language}`)
 
         block content
         #preloader
-            a.back-to-top.d-flex.align-items-center.justify-content-center(href='#')
+            a.back-to-top.d-flex.align-items-center.justify-content-center(href='#' title="Yukarı Çık")
         include ../includes/footer.pug
         include ../includes/script.pug
 

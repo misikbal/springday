@@ -17,46 +17,44 @@ block styles
 
 block content
     if posts.length>0
-
-      .w-auto
-        #carouselExampleIndicators.carousel.slide(data-ride='carousel',data-interval="2500")
-            ol.carousel-indicators
-              -var slideIndex=0;
+      #carouselExampleIndicators.carousel.slide(data-ride='carousel',data-interval="2500")
+          ol.carousel-indicators
+            -var slideIndex=0;
+              each slide in posts
+                if slide.tpye=="slide"
+                  li.li-white.li-slide(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
+                  -slideIndex++;
+            script.
+              $(".carousel-indicators .li-slide").first().addClass("active");
+          .carousel-inner
                 each slide in posts
-                  if slide.tpye=="slide"
-                    li.li-white.li-slide(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
-                    -slideIndex++;
-              script.
-                $(".carousel-indicators .li-slide").first().addClass("active");
-            .carousel-inner    
-                  each slide in posts
-                    if slide.type=="slide"
-                        +createSlide(slide)
-            a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev')
-              span.carousel-control-prev-icon(aria-hidden='true')
-              span.sr-only Previous
-            a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next')
-              span.carousel-control-next-icon(aria-hidden='true')
-              span.sr-only Next
-        script.
-            document.querySelector(".carousel-item:first-child").classList.add("active")
-            document.querySelector("li").classList.add("active");
-        //- script.
-        //-     $(function() {
-        //-         $('.carousel-item').on('slid', function() {
-        //-             var $nextImage = $('.active', this).next('.carousel-item .item').find('img');
-        //-             $nextImage.attr('src', $nextImage.data('data-lazy-load-src'));
-        //-         });
-        //-     });
+                  if slide.type=="slide"
+                      +createSlide(slide)
+          a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev' title="Önceki")
+            span.carousel-control-prev-icon(aria-hidden='true')
+            span.sr-only Previous
+          a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next' title="Sonraki")
+            span.carousel-control-next-icon(aria-hidden='true')
+            span.sr-only Next
+      script.
+          document.querySelector(".carousel-item:first-child").classList.add("active")
+          document.querySelector("li").classList.add("active");
+      //- script.
+      //-     $(function() {
+      //-         $('.carousel-item').on('slid', function() {
+      //-             var $nextImage = $('.active', this).next('.carousel-item .item').find('img');
+      //-             $nextImage.attr('src', $nextImage.data('data-lazy-load-src'));
+      //-         });
+      //-     });
 
-      .section-title.pt-2
-          p ÜRÜNLERİMİZ
-      .container
-        .row
-          each product in products
-            +productcard(product)
-      button.btn.btn-warning.col-md-12 
-        a(href="/products" style="text-decoration: none;").text-dark  Daha Fazla Ürün Göster
+    .section-title.pt-2
+        p ÜRÜNLERİMİZ
+    .container
+      .row
+        each product in products
+          +productcard(product)
+        button.btn.btn-warning.col-md-12 
+          a(href="/products" style="text-decoration: none;").text-dark  Daha Fazla Ürün Göster
     br
     br
     +category(categories)

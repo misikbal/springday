@@ -651,7 +651,7 @@ Systems.findOne()
 
 exports.getSystems = (req, res, next) => {
 Systems.findOne()
-    .select("siteUrl isMemory language mainMode phone address googlemaps sgMail mail tawktoscript googleAnalitcs description tags")
+    .select("siteUrl protokol isMemory language mainMode phone address googlemaps sgMail mail tawktoscript googleAnalitcs description tags")
     .then((system) => {
     res.render("admin/system", {
         title: "Admin system",
@@ -682,10 +682,12 @@ const tawktoscript = req.body.tawktoscript;
 const googleAnalitcs = req.body.googleAnalitcs;
 const description = req.body.description;
 const tags = req.body.tags;
+const protokol = req.body.protokol;
+
 
 
 Systems.findOne()
-    .select("siteUrl isMemory language mainMode phone address googlemaps sgMail mail tawktoscript googleAnalitcs description tags")
+    .select("siteUrl protokol isMemory language mainMode phone address googlemaps sgMail mail tawktoscript googleAnalitcs description tags")
     .then((system) => {
     if (!system) {
         return res.redirect("/");
@@ -711,6 +713,7 @@ Systems.findOne()
     system.googleAnalitcs = googleAnalitcs;
     system.description = description;
     system.tags = tags;
+    system.protokol=protokol;
 
     progress.save();
     system.save();

@@ -5,6 +5,10 @@ const settingsSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    protokol:{
+        type:String,
+        default:"http2"
+    },
     language: {
         type: String,
         trim:true

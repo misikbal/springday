@@ -222,18 +222,27 @@ app.use((error,req,res,next)=>{
 mongoose.connect(process.env.MONGODB_URI || connectionString,{ useNewUrlParser: true,useUnifiedTopology: true })
     .then(()=>{
         console.log("mongodb baglandı");
-        // spdy.createServer(
-        //     {
-        //         key: fs.readFileSync("./server.key"),
-        //         cert: fs.readFileSync("./server.crt")
-        //     },
-        //     app
-        // ).listen(port, () => {
-        //     console.log("Proje calıştırıldı " + port);
-        // });
-        app.listen(port, () => {
-            console.log("Proje calıştırıldı " + port);
-        });
+        System.findOne()
+        .select("protokol")
+        .then(system=>{
+        if(system.protokol=="http2"){
+            spdy.createServer(
+                {
+                    key: fs.readFileSync("./server.key"),
+                    cert: fs.readFileSync("./server.crt")
+                },
+                app
+            ).listen(port, () => {
+                console.log("HTTP2 Proje calıştırıldı " + port);
+            });
+        }
+        else if(system.protokol=="http"){
+            app.listen(port, () => {
+                console.log("HTTP Proje calıştırıldı " + port);
+            });
+        }
+        })
+
     })
     .catch(err=>{
         

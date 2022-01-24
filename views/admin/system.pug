@@ -28,18 +28,39 @@ block content
                     p Bazen navbar menüleri açılmıyor olabilir. Bunun için lütfen anasayfaya gidip tekrar deneyiniz
             .demo-masked-input
                 form(action="/admin/system" method="POST")  
-                    input(type="hidden" name="_csrf" value=`${csrfToken}`)         
+                    input(type="hidden" name="_csrf" value=`${csrfToken}`)     
                     .row.clearfix
+                        .col-sm-4
+                            .card.text-center(style="height:16rem;")
+                                .header.bg-white
+                                    h2
+                                        | Protokol
+                                        small.text-danger
+                                            | Gerekli
+                                        small.text-danger
+                                            | Protokol Değişikliğinden Sonra Hosting üzerinden projeyi tekrar derleyiniz
+                                        small.text-info
+                                            | HTTP2 Protokolü Önerilir
+                                .body
+                                    .form-check
+                                        input#flexRadioDefault1.form-check-input(type='radio' name='protokol' checked=system.protokol=="http2" ? true:false  value="http2")
+                                        label.form-check-label(for='protokol1')
+                                            | HTTP2
+
+                                    .form-check
+                                        input#protokol2.form-check-input(type='radio' name='protokol' checked=system.protokol=="http" ? true:false  value="http")
+                                        label.form-check-label(for='protokol2')
+                                            | HTTP/1.0
                         .col-md-2
-                            .card.bg-light.text-center
+                            .card.bg-light.text-center(style="height:16rem;")
                                 .body
                                     .form-group
                                         label(style="margin-bottom:5rem;").form-check-label Bakım Modu
                                         .form-check.form-switch.d-flex.justify-content-center
                                             input.form-check-input.mt-auto.p-2.bd-highlight#mainMode(type="checkbox" name="mainMode" value=`${system.mainMode}` checked=system.mainMode)
 
-                        .col-md-10
-                            .card.bg-light.text-center
+                        .col-md-6
+                            .card.bg-light.text-center(style="height:16rem;")
                                 .body
                                     .form-group
                                         label.form-check-label Geliştirici Modu
@@ -61,7 +82,7 @@ block content
                                             input.form-check-input.mt-auto.p-2.bd-highlight#isMemory(type="checkbox" name="isMemory" value=`${system.isMemory}` checked=system.isMemory)
                     .row.clearfix
                         .col-md-12
-                            .form-group.row
+                            .form-group.row    
                                 .col-sm-12
                                     .card.text-center.bg-blue-grey
                                         .header.bg-white
