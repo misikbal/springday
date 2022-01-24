@@ -3,10 +3,11 @@ extends ../layouts/main-layout.pug
 block styles
     meta(name='robots' content='noindex')
     meta(name='google' content='nositelinkssearchbox')
-    link(href='/css/order.css' rel='stylesheet')
-    link(href='/css/cart.css' rel='stylesheet')
-    link(rel="stylesheet" href="/css/contactstyle.css")
-    link(rel="stylesheet" href="/css/style2.css")
+    script(type='text/javascript').
+        link('/css/order.css')
+        link('/css/cart.css')
+        link("/css/contactstyle.css")
+        link("/css/style2.css")
 
 
 block content

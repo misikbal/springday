@@ -15,7 +15,7 @@ module.exports = (req,res,next)=>{
         res.header('X-Proxy-Cache', 'HIT');
         return res.send(cachedReponse.body);
         } else {
-
+        
         res.originalSend = res.send;
         res.send = (body) => {
             myCache.set(req.url, {
@@ -24,6 +24,11 @@ module.exports = (req,res,next)=>{
             });
             res.header('X-Proxy-Cache', 'MISS');
             res.originalSend(body);
+            if (this._cacheControl && !res.getHeader('Cache-Control')) {
+                var cacheControl = 'public, max-age=' + Math.floor(this._maxage / 1000)
+                debug('cache-control %s', cacheControl)
+                res.setHeader('Cache-Control', cacheControl) // this line is responsible for that
+                }
         };
         return next();
         }

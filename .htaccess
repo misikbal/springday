@@ -1,0 +1,11 @@
+<FilesMatch ""> 
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+</FilesMatch>
+
+<FilesMatch ".*"> 
+    Header set Cache-Control "max-age=604800, s-maxage=604800, public, must-revalidate"
+</FilesMatch>
+
+<FilesMatch "\.(js)">
+    Header set Cache-Control "max-age=604800, s-maxage=604800, private, must-revalidate"
+</FilesMatch>

@@ -1,18 +1,42 @@
 extends ../layouts/main-layout.pug
-include ../mixins/productcard.pug
+include ../mixins/productspage.pug
 include ../mixins/popularproduct.pug
 include ../mixins/tag.pug
 
 block content
-  .container.p-100.mb-5
+  br
+  br
+  br
+  br
+
+  .container.p-100
     .row
-        .col-md-9   
+      .col-md-9
+        if path=="/products"
+          h2.text-center ÜRÜNLERİMİZ
+        
+        else if categories.length>0
+          if path==`/categories/${selectedCategory}`
+            each category in categories
+              if category._id==selectedCategory
+                h2.text-center #{category.name}
+    .row
+
+        .col-md-9
           .row
             if products.length>0
               each product in products
-                +productcard(product)
+                +productspage(product)
             else
-              h1 No Producsts
+              .col-md-12.portfolio-item.mt-2
+
+                .card.bg-light
+                    .card-body.cart
+                        .col-sm-12.empty-cart-cls.text-center
+                            img.img-fluid.mb-4.mr-3(src='/img/noproduct.png' width='300' height='300')
+                            h3
+                                strong Bu Kategoriye Ait Ürün Bulunamadı
+                            a.btn.btn-warning.cart-btn-transform.m-3(href='/products' data-abc='true') Ürünler Sayfasına Geri Dön
         .col-md-3.pt-2
           .card.bg-light(style="height:auto;")
             .header.p-2

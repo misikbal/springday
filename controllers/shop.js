@@ -128,7 +128,7 @@ exports.getProductsByCategoryId = (req, res, next) => {
                             categories:model.categories,
                             selectedCategory:categoryid,
                             isAuthenticated:req.session.isAuthenticated,
-                            path: '/products',
+                            path: `/categories/${categoryid}`,
                         });
         })
         .catch(err=>{

@@ -2,9 +2,9 @@ extends ../layouts/main-layout.pug
 include ../mixins/client.pug
 
 block styles
-
-    link(href='/css/project.css' rel='stylesheet')
-
+    
+    script(type='text/javascript').
+        link('/css/project.css')
 block content
     if project.length>0
         br

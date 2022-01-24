@@ -1,0 +1,29 @@
+mixin productspage(product)
+    if product.isActive    
+        .col-md-6.portfolio-item
+                .wsk-cp-product
+                    .wsk-cp-img.text-center
+                        form(action="/product/details" method="POST")
+                            img.img-fluid.deneme(src=`/img/2.webp` data-src=`/img/resized/${product.imageUrl}` alt=`${product.name}` width="300" height="300").card-img-top
+                    .portfolio-info.wsk-cp-text
+                        .category
+                            span
+                                a.text-white(href=`/products/${product._id}` style="text-decoration: none;")
+                                    span Detaylar
+                        .title-product
+                            h3.card-title #{product.name}
+                        .description-product.text-center
+                                a(href=`/categories/${product.categories[0]._id}` style="text-decoration: none;").p-1.text-dark #{product.categories[0].name}
+                        if product.price!=null
+                            .card-footer
+                                .wcf-left
+                                    span.price 
+                                        |#{product.price} ₺
+                                if system.ecommarce_isActive
+                                
+                                    .wcf-right
+                                        form(action="/cart" method="POST")
+                                            input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                                            input(type="hidden" name="productId" value=`${product._id}`)
+                                            button(type="submit" style="background-color:#FFC451;" title="Sepete Ekle").btn.btn-sm.ml-3 
+                                                i.icon-cart-plus

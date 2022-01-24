@@ -3,7 +3,7 @@ include ../mixins/client.pug
 
 block styles 
     //- if aboutservice.aboutservices.tags.length > 0
-    //-     meta(name='keywords' content=aboutservice.tags[0])
+    meta(name='keywords' content=aboutservice.aboutservices.tags[0])
     meta(property='og:locale' content='tr_TR')
     meta(property='og:type' content='article')
     meta(property='og:url' content=`${system.siteUrl}/aboutservices/${aboutservice.url}`)
@@ -17,7 +17,8 @@ block styles
 
     meta(property="og:image" content=`${aboutservice.aboutservices.imageUrl}`)
     meta(property="og:title" content=`${aboutservice.aboutservices.name}`) 
-    link(href='/css/aboutservicesdetails.css' rel='stylesheet')
+    script(type='text/javascript').
+        link('/css/aboutservicesdetails.css')
 block content
     br
     br

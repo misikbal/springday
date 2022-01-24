@@ -35,13 +35,14 @@ block content
 
     //- #home.ct-header.ct-header--slider.ct-slick-custom-dots
     #carouselExampleIndicators.ct-slick-homepage.carousel.slide(data-arrows='true' data-autoplay='true')
-      
+      -var index=0;      
       each slide in posts
         if slide.type=="slide"
           .carousel-inner
             .ct-header.tablex.item
 
-                img.animated.w-100.h-auto(data-lazy=`/img/resized/${slide.slide.image}` alt=`${slide.slide.title}`)
+                img#slide.animated.w-100.h-auto(data-lazy=`/img/resized/${slide.slide.image}` alt=`${slide.slide.title}`)
+                -index++;
                 span.carousel-caption
                   if slide.slide.title!=""
                       h5.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`) #{slide.slide.title}
@@ -53,6 +54,9 @@ block content
                       p.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
                         a(href=`${slide.slide.buttonLink.toString().split(",")[0]}`)
                           button.btn.btn-warning.m-2(style="font-size: 1rem;") #{slide.slide.buttonName}
+                if index==1
+                  script.
+                      $("#slide").first().attr("src",`/img/resized/!{slide.slide.image}`)
 
 
 
