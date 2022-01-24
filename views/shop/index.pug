@@ -16,6 +16,24 @@ block styles
   link(data-href='/css/project.css' rel='stylesheet')
 
 block content
+    //- .owl-carousel.owl-1.owl-theme
+    //-   each slide in posts
+    //-     if slide.type=="slide"
+    //-         img.owl-lazy.d-block.animated.item.w-100.h-auto.d-inline-block(alt=`${slide.slide.title}` data-src=`/img/resized/${slide.slide.image}`)
+    //-         span.carousel-caption
+    //-           if slide.slide.title!=""
+    //-               h5.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`) #{slide.slide.title}
+    //-           if slide.slide.description!=""
+              
+    //-               p.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
+    //-                   | #{slide.slide.description}
+    //-           if slide.slide.buttonName!=""
+    //-               p.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
+                  
+    //-                   a(href=`${slide.slide.buttonLink.toString().split(",")[0]}`)
+    //-                       button.btn.btn-warning.m-2(style="font-size: 10px;") #{slide.slide.buttonName}
+
+    
     if posts.length>0
       #carouselExampleIndicators.carousel.slide(data-ride='carousel',data-interval="2500")
           ol.carousel-indicators
@@ -39,13 +57,13 @@ block content
       script.
           document.querySelector(".carousel-item:first-child").classList.add("active")
           document.querySelector("li").classList.add("active");
-      //- script.
-      //-     $(function() {
-      //-         $('.carousel-item').on('slid', function() {
-      //-             var $nextImage = $('.active', this).next('.carousel-item .item').find('img');
-      //-             $nextImage.attr('src', $nextImage.data('data-lazy-load-src'));
-      //-         });
-      //-     });
+      script.
+          $(function() {
+              $('.carousel-item').on('slid', function() {
+                  var $nextImage = $('.active', this).next('.carousel-item .item').find('img');
+                  $nextImage.attr('src', $nextImage.data('data-lazy-load-src'));
+              });
+          });
 
     .section-title.pt-2
         p ÜRÜNLERİMİZ

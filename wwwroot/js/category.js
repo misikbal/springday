@@ -1,16 +1,16 @@
 
-
 $(function() {
-
 	if ( $('.owl-2').length > 0 ) {
         $('.owl-2').owlCarousel({
             center: true,
             items:3,
+            lazyLoad:true,
+            responsiveClass:true,
             loop: true,
             stagePadding: 0,
             margin: 20,
             smartSpeed: 800,
-            autoplay: true,
+            autoPlay: 750,
             nav: true,
             dots: false,
             pauseOnHover: false,
@@ -37,8 +37,8 @@ $(function() {
             loop: true,
             stagePadding: 0,
             margin: 20,
-            smartSpeed: 200,
-            autoplay: true,
+            smartSpeed: 600,
+            autoPlay: 750,
             nav: true,
             dots: true,
             pauseOnHover: true,
