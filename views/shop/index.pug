@@ -33,37 +33,61 @@ block content
     //-                   a(href=`${slide.slide.buttonLink.toString().split(",")[0]}`)
     //-                       button.btn.btn-warning.m-2(style="font-size: 10px;") #{slide.slide.buttonName}
 
-    
-    if posts.length>0
-      #carouselExampleIndicators.carousel.slide(data-ride='carousel',data-interval="2500")
-          ol.carousel-indicators
-            -var slideIndex=0;
-              each slide in posts
-                if slide.tpye=="slide"
-                  li.li-white.li-slide(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
-                  -slideIndex++;
-            script.
-              $(".carousel-indicators .li-slide").first().addClass("active");
+    //- #home.ct-header.ct-header--slider.ct-slick-custom-dots
+    #carouselExampleIndicators.ct-slick-homepage.carousel.slide(data-arrows='true' data-autoplay='true')
+      
+      each slide in posts
+        if slide.type=="slide"
           .carousel-inner
-                each slide in posts
-                  if slide.type=="slide"
-                      +createSlide(slide)
-          a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev' title="Önceki")
-            span.carousel-control-prev-icon(aria-hidden='true')
-            span.sr-only Previous
-          a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next' title="Sonraki")
-            span.carousel-control-next-icon(aria-hidden='true')
-            span.sr-only Next
-      script.
-          document.querySelector(".carousel-item:first-child").classList.add("active")
-          document.querySelector("li").classList.add("active");
-      script.
-          $(function() {
-              $('.carousel-item').on('slid', function() {
-                  var $nextImage = $('.active', this).next('.carousel-item .item').find('img');
-                  $nextImage.attr('src', $nextImage.data('data-lazy-load-src'));
-              });
-          });
+            .ct-header.tablex.item
+
+                img.animated.w-100.h-auto(data-lazy=`/img/resized/${slide.slide.image}` alt=`${slide.slide.title}`)
+                span.carousel-caption
+                  if slide.slide.title!=""
+                      h5.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`) #{slide.slide.title}
+                  if slide.slide.description!=""
+                  
+                      p.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
+                          | #{slide.slide.description}
+                  if slide.slide.buttonName!=""
+                      p.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
+                        a(href=`${slide.slide.buttonLink.toString().split(",")[0]}`)
+                          button.btn.btn-warning.m-2(style="font-size: 1rem;") #{slide.slide.buttonName}
+
+
+
+
+
+    //- if posts.length>0
+    //-   #carouselExampleIndicators.carousel.slide(data-ride='carousel',data-interval="2500")
+    //-       ol.carousel-indicators
+    //-         -var slideIndex=0;
+    //-           each slide in posts
+    //-             if slide.tpye=="slide"
+    //-               li.li-white.li-slide(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
+    //-               -slideIndex++;
+    //-         script.
+    //-           $(".carousel-indicators .li-slide").first().addClass("active");
+    //-       .carousel-inner
+    //-             each slide in posts
+    //-               if slide.type=="slide"
+    //-                   +createSlide(slide)
+    //-       a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev' title="Önceki")
+    //-         span.carousel-control-prev-icon(aria-hidden='true')
+    //-         span.sr-only Previous
+    //-       a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next' title="Sonraki")
+    //-         span.carousel-control-next-icon(aria-hidden='true')
+    //-         span.sr-only Next
+    //-   script.
+    //-       document.querySelector(".carousel-item:first-child").classList.add("active")
+    //-       document.querySelector("li").classList.add("active");
+    //-   script.
+    //-       $(function() {
+    //-           $('.carousel-item').on('slid', function() {
+    //-               var $nextImage = $('.active', this).next('.carousel-item .item').find('img');
+    //-               $nextImage.attr('src', $nextImage.data('data-lazy-load-src'));
+    //-           });
+    //-       });
 
     .section-title.pt-2
         p ÜRÜNLERİMİZ

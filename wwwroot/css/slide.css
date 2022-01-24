@@ -1,0 +1,201 @@
+.slick-arrow.slick-hidden {
+	display: none;
+}
+.slick-prev,
+.slick-next {
+	position: absolute;
+	display: block;
+	width: 60px;
+	height: 100px;
+	cursor: pointer;
+	background: transparent;
+	top: 50%;
+	margin-top: -45px;
+	font-size: 0;
+	border: none;
+	z-index: 2;
+}
+.slick-prev:before,
+.slick-next:before,
+.slick-prev:after,
+.slick-next:after {
+	content: '';
+	position: absolute;
+	background: #fff;
+	height: 2px;
+	width: 50px;
+	top: 50%;
+	left: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+.slick-prev:before,
+.slick-next:before {
+	margin-top: -22px;
+}
+.slick-prev:after,
+.slick-next:after {
+	margin-top: 22px;
+	margin-top: 2.2rem;
+}
+.slick-prev:hover:before,
+.slick-next:hover:before {
+	margin-top: -18px;
+	margin-top: -1.8rem;
+}
+.slick-prev:hover:after,
+.slick-next:hover:after {
+	margin-top: 18px;
+	margin-top: 1.8rem;
+}
+.slick-prev {
+	left: -7px;
+	left: 1em;
+}
+.slick-prev:before {
+	-webkit-transform: rotate(-60deg);
+	-ms-transform: rotate(-60deg);
+	transform: rotate(-60deg);
+}
+.slick-prev:after {
+	-webkit-transform: rotate(60deg);
+	-ms-transform: rotate(60deg);
+	transform: rotate(60deg);
+}
+.slick-prev:hover:before {
+	-webkit-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+.slick-prev:hover:after {
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+.slick-next {
+	right: -7px;
+	right: 1rem;
+}
+.slick-next:before {
+	-webkit-transform: rotate(60deg);
+	-ms-transform: rotate(60deg);
+	transform: rotate(60deg);
+}
+.slick-next:after {
+	-webkit-transform: rotate(-60deg);
+	-ms-transform: rotate(-60deg);
+	transform: rotate(-60deg);
+}
+.slick-next:hover:before {
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+.slick-next:hover:after {
+	-webkit-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+.ct-slick-arrows--type2 .slick-prev,
+.ct-slick-arrows--type2 .slick-next {
+	opacity: 0.85;
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=85);
+	-webkit-transition: all 250ms ease-in-out;
+	transition: all 250ms ease-in-out;
+}
+.ct-slick-arrows--type2 .slick-prev:before,
+.ct-slick-arrows--type2 .slick-next:before,
+.ct-slick-arrows--type2 .slick-prev:after,
+.ct-slick-arrows--type2 .slick-next:after {
+	background-color: #fff;
+	height: 15px;
+	height: 1.5rem;
+	width: 70px;
+	width: 7rem;
+}
+.ct-slick-arrows--type2 .slick-prev:before,
+.ct-slick-arrows--type2 .slick-next:before {
+	margin-top: -20px;
+	margin-top: -2rem;
+}
+.ct-slick-arrows--type2 .slick-prev:after,
+.ct-slick-arrows--type2 .slick-next:after {
+	margin-top: 20px;
+	margin-top: 2rem;
+}
+.ct-slick-arrows--type2 .slick-prev:hover:before,
+.ct-slick-arrows--type2 .slick-next:hover:before {
+	margin-top: -20px;
+	margin-top: -2rem;
+}
+.ct-slick-arrows--type2 .slick-prev:hover:after,
+.ct-slick-arrows--type2 .slick-next:hover:after {
+	margin-top: 20px;
+	margin-top: 2rem;
+}
+.ct-slick-arrows--type2 .slick-prev:hover:active,
+.ct-slick-arrows--type2 .slick-next:hover:active {
+	opacity: 1;
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+}
+.ct-slick-arrows--type2 .slick-prev {
+	left: 10px;
+	left: 1rem;
+}
+.ct-slick-arrows--type2 .slick-prev:before {
+	-webkit-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+.ct-slick-arrows--type2 .slick-prev:after {
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+.ct-slick-arrows--type2 .slick-prev:hover:before {
+	margin-top: -27px;
+	margin-top: -2.7rem;
+	-webkit-transform: rotate(-60deg);
+	-ms-transform: rotate(-60deg);
+	transform: rotate(-60deg);
+}
+.ct-slick-arrows--type2 .slick-prev:hover:after {
+	margin-top: 27px;
+	margin-top: 2.7rem;
+	-webkit-transform: rotate(60deg);
+	-ms-transform: rotate(60deg);
+	transform: rotate(60deg);
+}
+.ct-slick-arrows--type2 .slick-next {
+	right: 10px;
+	right: 1rem;
+}
+.ct-slick-arrows--type2 .slick-next:before,
+.ct-slick-arrows--type2 .slick-next:after {
+	left: auto;
+	right: 0;
+}
+.ct-slick-arrows--type2 .slick-next:before {
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+.ct-slick-arrows--type2 .slick-next:after {
+	-webkit-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+.ct-slick-arrows--type2 .slick-next:hover:before {
+	margin-top: -27px;
+	margin-top: -2.7rem;
+	-webkit-transform: rotate(60deg);
+	-ms-transform: rotate(60deg);
+	transform: rotate(60deg);
+}
+.ct-slick-arrows--type2 .slick-next:hover:after {
+	margin-top: 27px;
+	margin-top: 2.7rem;
+	-webkit-transform: rotate(-60deg);
+	-ms-transform: rotate(-60deg);
+	transform: rotate(-60deg);
+}

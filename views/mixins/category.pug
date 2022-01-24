@@ -9,7 +9,7 @@ mixin category(category)
                 each categories in category
                     .media-29101
                         a(href=`/categories/${categories._id}` target="_blank" )
-                            img.deneme.img-fluid.rounded(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-srcset=`/img/resized/${categories.categoryImg}` alt=`${categories.name}` style="width:75px; height:75px;")
+                            img.deneme.img-fluid.rounded(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${categories.categoryImg}` alt=`${categories.name}` style="width:75px; height:75px;")
                         h3(style="font-size:16px;")
                             a(href=`/categories/${categories._id}` target="_blank" style="text-decoration:none;") #{categories.name}
 
