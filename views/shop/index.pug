@@ -37,9 +37,9 @@ block content
                       p.h6.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
                         a(href=`${slide.slide.buttonLink.toString().split(",")[0]}`)
                           button.btn.btn-warning(style="font-size: 1rem;") #{slide.slide.buttonName}
-                if index==1
-                  script.
-                      $("#slide").first().attr("src",`data:image/gif;base64,R0lGODlhAgABAIAAAP///wAAACH5BAAAAAAALAAAAAACAAEAAAICBAoAOw==`)
+                //- if index==1
+                //-   script.
+                //-       $("#slide").first().attr("src",`data:image/gif;base64,R0lGODlhAgABAIAAAP///wAAACH5BAAAAAAALAAAAAACAAEAAAICBAoAOw==`)
 
     .container
       h2.text-center.mt-5
