@@ -32,8 +32,18 @@ head
       -var fav="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAFfKj/FAAAAGFBMVEX///+bw+F9sdi71utPlsvZ6PTv9vsRb7dsu4z0AAAACXBIWXMAAC4jAAAuIwF4pT92AAAAb0lEQVQYlWVPSxbEIAjLT7n/jechtrNoFgoSkggAqD4SoEKA2d0DWAZCdrvOw85cS9SpLNaM8Cy90AzM+BhAlJsVldoNq0xeHUzxlfnDC8oJdeOxWrJ4E0gxq+Rocq5tSxK9L8VFp1nXbT6VO/3gB93jAYsF5wZjAAAAAElFTkSuQmCC"
       link(type="image/x-icon" rel='shortcut icon' href=`${fav}` loading="lazy")
 
-
+      script(type="text/javascript").
+            function jqueyscript(url) {
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = url;
+            var x = document.getElementsByTagName('head')[0];
+            x.appendChild(s);
+            }
       span !{system.googleAnalitcs}
+      script(type='text/javascript').
+            jqueyscript("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js")
 
 
 
