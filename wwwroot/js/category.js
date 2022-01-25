@@ -1,92 +1,76 @@
 
 $(function() {
-	// if ( $('.owl-2').length > 0 ) {
-  //       $('.owl-2').owlCarousel({
-  //           center: true,
-  //           items:3,
-  //           lazyLoad:true,
-  //           responsiveClass:true,
-  //           loop: true,
-  //           stagePadding: 0,
-  //           margin: 20,
-  //           smartSpeed: 800,
-  //           autoPlay: 750,
-  //           nav: true,
-  //           dots: false,
-  //           pauseOnHover: false,
-  //           responsive:{
-  //               700:{
-  //                   margin: 20,
-  //                   nav: true,
-  //                 items: 4
-  //               },
-  //               1000:{
-  //                   margin: 20,
-  //                   stagePadding: 0,
-  //                   nav: true,
-  //                 items: 6
-  //               }
-  //           }
-  //       });            
-  //   }
-
-    if ( $('.owl-3').length > 0 ) {
-      $('.owl-3').slick({
-        infinite: true,
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        speed: 300,
+	if ( $('.owl-2').length > 0 ) {
+        $('.owl-2').slick({
+          centerMode: true,
+        centerPadding: '60px',
+        slidesToShow: 5,
+        // autoplay: true,
+        arrows: false,
+        autoplaySpeed: 500,
         responsive: [
           {
-            breakpoint: 1024,
+            breakpoint: 980,
             settings: {
-              slidesToShow: 3,
-              slidesToScroll: 3,
-              infinite: true,
-              dots: true
+              arrows: false,
+              centerMode: true,
+              centerPadding: '40px',
+              slidesToShow: 4
             }
           },
           {
-            breakpoint: 600,
+            breakpoint: 780,
             settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1
+              arrows: false,
+              centerMode: true,
+              centerPadding: '40px',
+              slidesToShow: 3
             }
           },
           {
             breakpoint: 480,
             settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1
+              arrows: false,
+              centerMode: true,
+              centerPadding: '40px',
+              slidesToShow: 2
             }
-          }
+          },
+          
         ]
-      });
-        // $('.owl-3').owlCarousel({
-        //     center: true,
-        //     items:1,
-        //     loop: true,
-        //     stagePadding: 0,
-        //     margin: 20,
-        //     smartSpeed: 600,
-        //     autoPlay: 750,
-        //     nav: true,
-        //     dots: true,
-        //     pauseOnHover: true,
-        //     responsive:{
-        //         700:{
-        //             margin: 20,
-        //             nav: true,
-        //           items: 2
-        //         },
-        //         1000:{
-        //             margin: 20,
-        //             stagePadding: 0,
-        //             nav: true,
-        //           items: 3
-        //         }
-        //     }
-        // });            
+        });            
+    }
+
+    if ( $('.owl-3').length > 0 ) {
+      $('.owl-3').slick({
+        centerMode: true,
+        centerPadding: '60px',
+        slidesToShow: 3,
+        autoplay: true,
+        arrows: false,
+        autoplaySpeed: 500,
+        responsive: [
+          {
+            breakpoint: 1200,
+            settings: {
+              arrows: false,
+              centerMode: true,
+              centerPadding: '100px',
+              slidesToShow: 2
+            }
+          },
+          {
+            breakpoint: 980,
+            settings: {
+              arrows: false,
+              centerMode: true,
+              centerPadding: '40px',
+              slidesToShow: 1
+            }
+          },
+          
+        ]
+      });            
     }
 
 })

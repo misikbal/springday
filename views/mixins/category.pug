@@ -4,14 +4,13 @@ mixin category(category)
     
 
     .owl-2-style.text-center.bg-light
-        .owl-carousel.owl-2
+        .ct-header.tablex.item.owl-2.pt-3
             if category.length>0
                 each categories in category
                     .media-29101
-                        a(href=`/categories/${categories._id}` target="_blank" )
+                        a(href=`/categories/${categories._id}` target="_blank" style="text-decoration:none;")
                             img.deneme.img-fluid.rounded(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${categories.categoryImg}` loading="lazy" alt=`${categories.name}` style="width:75px; height:75px;")
-                        h3(style="font-size:16px;")
-                            a(href=`/categories/${categories._id}` target="_blank" style="text-decoration:none;") #{categories.name}
+                            h3(style="font-size:16px;").text-center #{categories.name}
 
             else
                 .media-29101(style="width: 5rem; margin-left:25rem;")

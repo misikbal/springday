@@ -13,7 +13,6 @@ include ../mixins/shortservices.pug
 block styles
   script(type='text/javascript').
     link('/css/otherproduct.min.css')
-
     link('/css/project.css')
 
 block content
@@ -42,7 +41,7 @@ block content
           .carousel-inner
             .ct-header.tablex.item
 
-                img#slide.animated.w-100.h-auto(src="/img/loadmin.webp" data-lazy=`/img/resized/${slide.slide.image}` loading="lazy" alt=`${slide.slide.title}`)
+                img#slide.animated.w-100.h-auto(src="/img/loadmin.webp" data-lazy=`/img/resized/${slide.slide.image}` alt=`${slide.slide.title}`)
                 -index++;
                 span.carousel-caption
                   if slide.slide.title!=""
@@ -57,8 +56,7 @@ block content
                           button.btn.btn-warning.m-2(style="font-size: 1rem;") #{slide.slide.buttonName}
                 if index==1
                   script.
-                      $("#slide").first().attr("src",`data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7`)
-
+                      $("#slide").first().attr("src",`/img/resized/!{slide.slide.image}`)
 
 
 
@@ -95,7 +93,7 @@ block content
     //-       });
 
     .container
-      h2.text-center
+      h2.text-center.mt-5
         strong ÜRÜNLERİMİZ
 
       .row
@@ -111,10 +109,10 @@ block content
     +shortservices(posts)
     br
     +project(posts)
-    
     br
     
     +aboutservices(posts)
+    .slide-for
     br
     +client(globalvalue) 
     br
