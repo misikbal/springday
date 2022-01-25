@@ -3,13 +3,13 @@ mixin aboutservices(posts)
         header
             h1 HİZMETLERİMİZ
         .container.owl-3-style.text-center
-                .owl-carousel.owl-3.pt-3
+                .ct-header.tablex.item.owl-3.pt-3
                     each post in posts
                         if post.type=="aboutservices" && post.isHome
                             .media-29101(style="height:auto;")
                                 .item-4(style="height:auto;")
                                     a.card(href=`/aboutservices/${post.url}` style="height:auto;").bg-light
-                                        img.deneme(data-src=`/img/resized/${post.aboutservices.imageUrl}` style="width:300px; height:160px;" alt=post.aboutservices.name)
+                                        img.deneme(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="  data-src=`/img/resized/${post.aboutservices.imageUrl}` style="width:300px; height:160px;" loading="lazy" alt=post.aboutservices.name)
                                         article                                 
                                             h2 #{post.aboutservices.name}
                                             span

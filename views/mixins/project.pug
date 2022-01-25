@@ -4,14 +4,14 @@ mixin project(posts)
             header.mb-5
                 h1 PROJELERİMİZ
             .container.owl-3-style.text-center
-                    .owl-carousel.owl-3.pt-3
+                    .ct-header.tablex.item.owl-3.pt-3
                         
                         each projects in posts
                             if projects.type=="project" && projects.isHome
                                 .media-29101
                                     .item-4
                                         a.card(href=`/project/${projects.url}` style="height:auto;").bg-light
-                                            img.deneme(data-src=`/img/resized/${projects.project.imageUrl}` style="width:300px; height:160px;" alt=projects.project.name)
+                                            img.deneme(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${projects.project.imageUrl}` loading="lazy" style="width:300px; height:160px;" alt=projects.project.name)
                                             article                                    
                                                 h2 #{projects.project.name}
                                                 span

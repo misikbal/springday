@@ -4,7 +4,7 @@ mixin productcard(product)
                 .wsk-cp-product
                     .wsk-cp-img.text-center
                         form(action="/product/details" method="POST")
-                            img.img-fluid.deneme(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${product.imageUrl}` alt=`${product.name}` width="300" height="300").card-img-top
+                            img.img-fluid.deneme(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${product.imageUrl}` loading="lazy" alt=`${product.name}` width="300" height="300").card-img-top
                     .portfolio-info.wsk-cp-text
                         .category
                             span

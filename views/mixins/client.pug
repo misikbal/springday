@@ -8,4 +8,4 @@ mixin client(posts)
                         if post.type=="client"
                                 .media-29101
                                     a(href="/client" target="_blank")
-                                        img.deneme.img-fluid.rounded(data-src= `/img/resized/${post.client.clientlogo}` alt=post.client.name style="width:100px; height:25px;")
+                                        img.deneme.img-fluid.rounded(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src= `/img/resized/${post.client.clientlogo}` loading="lazy" alt=post.client.name style="width:100px; height:25px;")

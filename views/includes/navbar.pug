@@ -58,7 +58,7 @@ if system.contactnavbar_isActive
 
                         nav.navbar.navbar-expand-lg.site-navigation
                             a(href='/')
-                                img(src=`/img/resized/${system.logo}` width="150px" height="68px" alt="Springday Logo")
+                                img(src=`/img/resized/${system.logo}` width="150px" height="68px" loading="lazy" alt="Springday Logo")
                             button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
                                 span.navbar-toggler-icon.mr-1.mt-1.pt-2
                                     i(style="font-size:2rem;").icon-th-menu-outline
@@ -91,7 +91,7 @@ if system.contactnavbar_isActive
                                                                     .col-4.text-center
                                                                         a.dropdown-item(href=`/categories/${menucategories._id}`).nav-link
 
-                                                                            img.deneme(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="50" height="50" data-src=`/img/resized/${menucategories.categoryImg}` alt=menucategories.name style="background-color:#fff" )
+                                                                            img.deneme(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="50" height="50" data-src=`/img/resized/${menucategories.categoryImg}` loading="lazy" alt=menucategories.name style="background-color:#fff" )
                                                                             
                                                                             p #{menucategories.name}
                                     //- li(class=(path==='/admin/categories' ? 'active':''))
@@ -171,7 +171,7 @@ if system.contactnavbar_isActive
                                                                 .col
                                                                     a.dropdown-item.gflag.nturl(onclick=`doGTranslate('${system.language}|${langs.lang.value}');return false;` title=`${langs.lang.lang}` )
                                                                     
-                                                                        img.deneme.text-start(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${langs.lang.imageUrl}` height='30' width='30' alt=langs.lang.lang)
+                                                                        img.deneme.text-start(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${langs.lang.imageUrl}` loading="lazy" height='30' width='30' alt=langs.lang.lang)
                                                                         p(style="font-size:10px" translate="no") #{langs.lang.lang}
 
 
