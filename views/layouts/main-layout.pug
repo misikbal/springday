@@ -14,30 +14,23 @@ html(lang=`${system.language}`)
     include ../includes/head.pug
 
     body(style="min-height:400px; width:100%;")
-
+        script(type="text/javascript").
+                    function link(url) {
+                    var s = document.createElement('link');
+                    s.type = 'text/css';
+                    s.rel = 'stylesheet';
+                    s.async = true;
+                    s.href = url;
+                    var x = document.getElementsByTagName('head')[0];
+                    x.appendChild(s);
+                    }
         style.
             @import url("https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap");
-        link(rel='stylesheet' href='/css/icomoon/icon.min.css' media='none' onload="if(media!='all')media='all'")
-        noscript
-            link(rel='stylesheet' href='/css/icomoon/icon.min.css')
-        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css' media='none' onload="if(media!='all')media='all'")
-        noscript
-            link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css')
-        
-        link(rel='stylesheet' href='/css/style.min.css' media='none' onload="if(media!='all')media='all'")
-        noscript
-            link(rel='stylesheet' href='/css/style.min.css')
-        script(type="text/javascript").
-            function link(url) {
-            var s = document.createElement('link');
-            s.type = 'text/css';
-            s.rel = 'stylesheet';
-            s.async = true;
-            s.href = url;
-            var x = document.getElementsByTagName('head')[0];
-            x.appendChild(s);
-            }
+        link(rel="stylesheet" type="text/css" href="/css/icomoon/icon.min.css")
+        link(rel="stylesheet" type="text/css" href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css')
+        link(rel="stylesheet" type="text/css" href="/css/style.min.css")  
         script(type='text/javascript').
+            
             link("/css/slick.min.css")
         //- script(type="text/javascript").
         //-         link("/plugins/animate-css/animate.min.css")
