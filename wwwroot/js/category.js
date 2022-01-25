@@ -5,7 +5,7 @@ $(function() {
           centerMode: true,
         centerPadding: '60px',
         slidesToShow: 5,
-        // autoplay: true,
+        autoplay: true,
         arrows: false,
         autoplaySpeed: 500,
         responsive: [
