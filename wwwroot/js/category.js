@@ -68,6 +68,15 @@ $(function() {
               slidesToShow: 1
             }
           },
+          {
+            breakpoint: 480,
+            settings: {
+              arrows: false,
+              centerMode: true,
+              centerPadding: '5px',
+              slidesToShow: 1
+            }
+          },
           
         ]
       });            

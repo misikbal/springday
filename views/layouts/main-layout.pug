@@ -14,7 +14,8 @@ html(lang=`${system.language}`)
     include ../includes/head.pug
 
     body
-
+        
+        link(rel='stylesheet' href='/css/login.css' media='print' onload="this.media='all'; this.onload = null")
         style.
             @import url("https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap");
         //- link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css' media='print' onload="this.media='all'; this.onload = null")
@@ -24,15 +25,17 @@ html(lang=`${system.language}`)
         link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css')
         link(rel='stylesheet' href='/css/style.min.css')
         script(type="text/javascript").
-            function link(url) {
-            var s = document.createElement('link');
-            s.type = 'text/css';
-            s.rel = 'stylesheet';
-            s.async = true;
-            s.href = url;
-            var x = document.getElementsByTagName('head')[0];
-            x.appendChild(s);
-            }
+                    function link(url) {
+                    var s = document.createElement('link');
+                    s.type = 'text/css';
+                    s.rel = 'stylesheet';
+                    s.async = true;
+                    s.href = url;
+                    var x = document.getElementsByTagName('head')[0];
+                    x.appendChild(s);
+                    }
+        block styles
+        
         //- script(type='text/javascript').
         //-     link('/css/icomoon/icon.min.css')      
         //-     link("/css/slick.min.css")
@@ -60,7 +63,6 @@ html(lang=`${system.language}`)
 
 
         link(data-href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css")
-        block styles
 
         script(type='text/javascript').
             let root=document.documentElement.style

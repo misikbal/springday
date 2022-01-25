@@ -2,8 +2,7 @@ extends ../layouts/main-layout.pug
 include ../mixins/client.pug
 
 block styles
-    script(type='text/javascript').
-        link('/css/project.min.css')
+    link(rel='stylesheet' href='/css/project.css' media='print' onload="this.media='all'; this.onload = null")
 
 
 block content
