@@ -27,11 +27,11 @@ html(lang=`${system.language}`)
             scriptbody("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js")
 
 
-        link(rel="preload" href='https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap'  as="style" onload="this.rel='stylesheet'")
+        //- link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap' media='print' onload="this.media='all'; this.onload = null")
         style.
-            @import url("https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap" );
-        link(rel="preload" href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css'  as="style" onload="this.rel='stylesheet'")
-        link(rel="preload" href='/css/style.min.css'  as="style" onload="this.rel='stylesheet'")
+            @import url("https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap");
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/css/style.min.css')
 
         script(type="text/javascript").
                     function link(url) {
