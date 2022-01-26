@@ -9,7 +9,7 @@ mixin aboutservices(posts)
                             .media-29101(style="height:auto;")
                                 .item-4(style="height:auto;")
                                     a.card(href=`/aboutservices/${post.url}` style="height:auto;").bg-light
-                                        img.deneme(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="  data-src=`/img/resized/${post.aboutservices.imageUrl}` style="width:300px; height:160px;" loading="lazy" alt=post.aboutservices.name)
+                                        img.deneme(src=system.itemload  data-src=`/img/resized/${post.aboutservices.imageUrl}` style="width:300px; height:auto;" loading="lazy" alt=post.aboutservices.name)
                                         article                                 
                                             h2 #{post.aboutservices.name}
                                             span

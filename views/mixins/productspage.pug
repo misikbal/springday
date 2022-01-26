@@ -4,7 +4,7 @@ mixin productspage(product)
                 .wsk-cp-product
                     .wsk-cp-img.text-center
                         form(action="/product/details" method="POST")
-                            img.img-fluid.deneme(src=`/img/2.webp` data-src=`/img/resized/${product.imageUrl}` alt=`${product.name}` width="300" height="300").card-img-top
+                            img.img-fluid.deneme(src=system.itemload data-src=`/img/resized/${product.imageUrl}` alt=`${product.name}` width="300" height="300").card-img-top
                     .portfolio-info.wsk-cp-text
                         .category
                             span

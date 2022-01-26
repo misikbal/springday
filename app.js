@@ -131,9 +131,11 @@ app.use((req,res,next)=>{
 
 })
 
-app.use((req,res,next)=>{    
+app.use( (req,res,next)=>{    
     System.findOne()
         .then((system)=>{
+            // const read=fs.readFileSync( path.join(__dirname,"." ,"wwwroot/img/",system.logo),{encoding: 'base64'});
+            // console.log(read)
                     Category.find()
                         .where({ isActive: true })
                         .then((menucategory) => {
@@ -143,6 +145,8 @@ app.use((req,res,next)=>{
                                         .sort({date: -1})
                                         .lean()
                                         .then(globalvalue=>{
+                                            req.baselogo=fs.readFileSync( path.join(__dirname,"." ,"wwwroot/img/",system.logo).toString()),
+                                            req.basefav=fs.readFileSync( path.join(__dirname,"." ,"wwwroot/img/",system.favico).toString()),
                                             req.system = system;
                                             req.menucategory = menucategory;
                                             req.globalvalue = globalvalue;

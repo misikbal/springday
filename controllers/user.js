@@ -16,7 +16,6 @@ exports.getSlide = (req, res, next) => {
         .sort({date:-1})
         .populate("userId","name -_id")
         .then(slide => {
-
                 res.render('admin/slide', {
                     title: 'Admin Slide',
                     slide: slide,
@@ -64,7 +63,7 @@ exports.getAddSlide = (req, res, next) => {
 }
 
 exports.postAddSlide = async(req, res, next) => {
-    
+    // const writeFileAsync = require('util').promisify(require('fs').writeFile);
     const {filename:image}=req.files.slideimg[0];
 
     
@@ -80,7 +79,6 @@ exports.postAddSlide = async(req, res, next) => {
             path: '/admin/add-slide',
             errorMessage:"Lüften bir resim seçiniz",
             inputs:{
-                image:image.file,
                 title:title,
                 description:description,
                 buttonName:buttonName,
@@ -90,15 +88,13 @@ exports.postAddSlide = async(req, res, next) => {
         });
     }
     
-    await sharp(req.files.slideimg[0].path)
+    const resizedImageBuf=await sharp(req.files.slideimg[0].path)
     .resize(540)
     .webp({quality:10,alphaQuality:10,lossless:false,progressive:true})
     .jpeg({quality:10,alphaQuality:10,lossless:false,progressive:true})
     .png({quality:10,alphaQuality:10,lossless:false,progressive:true})
-    .toFile(
-        path.resolve(req.files.slideimg[0].destination,'resized',image)
-    )
-    fs.unlinkSync(req.files.slideimg[0].path)
+    .toBuffer()
+    // await writeFileAsync(req.files.slideimg[0].destination+"/"+req.files.slideimg[0].filename.toString().split(".webp")[0]+".txt", "data:"+req.files.slideimg[0].mimetype+";base64,"+resizedImageBuf.toString('base64'), 'utf-8');
     const slide = new Post(
         {   
             type:"slide",
@@ -106,7 +102,7 @@ exports.postAddSlide = async(req, res, next) => {
             userId:req.user,
             date:Date.now(),
             slide:{
-                image: image,
+                image: "data:"+req.files.slideimg[0].mimetype+";base64,"+resizedImageBuf.toString('base64'),
                 title:title,
                 description:description,
                 buttonName:buttonName,
@@ -141,7 +137,6 @@ exports.postAddSlide = async(req, res, next) => {
                     errorMessage:message,
                     inputs:{
                         title:title,
-                        image:image,
                         description:description,
                         buttonName:buttonName,
                         animate:animate,
@@ -200,7 +195,6 @@ exports.getEditSlide = (req, res, next) => {
 
 exports.postEditSlide = async (req, res, next) => {
 
-
     const id = req.body.slideid;
     const title = req.body.title;
     const description = req.body.description;
@@ -209,19 +203,8 @@ exports.postEditSlide = async (req, res, next) => {
     const animate = req.body.animate;
     const isActive = Boolean(req.body.isActive);
     const image=req.files.slideimg;
-    if(image){
-        await sharp(req.files.slideimg[0].path)
-        .resize(540)
-        .webp({quality:10,alphaQuality:10,lossless:true,progressive:true})
-        .jpeg({quality:10,alphaQuality:10,lossless:true,progressive:true})
-        .png({quality:10,alphaQuality:10,lossless:true,progressive:true})
-        .toFile(
-            path.resolve(req.files.slideimg[0].destination,'resized',image[0].filename)
-        )
-        fs.unlinkSync(req.files.slideimg[0].path)
-    }
     Post.findOne({_id:id})
-        .then(slide=>{
+        .then(async(slide)=>{
             if(!slide){
                 return res.redirect("/");
             }
@@ -232,12 +215,15 @@ exports.postEditSlide = async (req, res, next) => {
             slide.slide.animate=animate,
             slide.isActive=isActive
             if (image) {
-                fs.unlink("wwwroot/img/resized/"+slide.slide.image,err=>{
-                    if(err){
-                    console.log(err);
-                    }
-                });
-                slide.slide.image = image[0].filename;
+                const writeFileAsync = require('util').promisify(require('fs').writeFile);                
+                const resizedImageBuf= await sharp(req.files.slideimg[0].path)
+                .resize(540)
+                .webp({quality:10,alphaQuality:10,lossless:true,progressive:true})
+                .jpeg({quality:10,alphaQuality:10,lossless:true,progressive:true})
+                .png({quality:10,alphaQuality:10,lossless:true,progressive:true})
+                .toBuffer()
+                await writeFileAsync(req.files.slideimg[0].destination+"/"+req.files.slideimg[0].filename.toString().split(".webp")[0]+".txt", "data:"+req.files.slideimg[0].mimetype+";base64,"+resizedImageBuf.toString('base64'), 'utf-8');
+                slide.slide.image =  "data:"+req.files.slideimg[0].mimetype+";base64,"+resizedImageBuf.toString('base64');
             }
             const progress=new Process(
                 { 
@@ -264,11 +250,6 @@ exports.postDeleteSlide = (req, res, next) => {
             if(!slide){
                 return next(new Error("Silinmek istenen slide bulumadı."));
             }
-            fs.unlink("wwwroot/img/resized/"+slide.slide.image,err=>{
-                if(err){
-                console.log(err);
-                }
-            });
             const progress=new Process(
                 { 
                     userId:req.user,

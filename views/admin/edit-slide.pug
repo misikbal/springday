@@ -54,7 +54,7 @@ block content
                                     small.text-info
                                         | Bir Tane Resim Seçilebilir
                             .text-center
-                                img(src=`/img/resized/${slide.slide.image}` style="width:200px;").card-img-top.mt-3                            
+                                img(src=`${slide.slide.image}` style="width:200px;").card-img-top.mt-3                            
                             .body.bg-blue-grey
                                 .fileupload.fileupload-new(data-provides='fileupload')
                                     span.btn.btn-warning.btn-file
@@ -149,7 +149,7 @@ block content
                             small.text-danger
                                 | Gerekli
                     .body
-                        img.js-animating-object.img-responsive(src=`/img/resized/${slide.slide.image}`).w-75
+                        img.js-animating-object.img-responsive(src=`${slide.slide.image}`).w-75
                         .form-line                
                             select(name="animate").js-animations.form-control.show-tick#animate
                                 optgroup(label='Seçilen Animasyon')

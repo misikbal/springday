@@ -64,11 +64,11 @@ block content
                                             th  
                                 tbody
                                     -var index=1;
-                                    each slides in slide              
+                                    each slides in slide           
                                         tr
                                             td(scope="row").align-middle #{index++}
                                             td 
-                                                img(src=`/img/resized/${slides.slide.image}` width='180')
+                                                img(src=`${slides.slide.image}` width='180')
                                             td.align-middle #{slides.slide.title}
                                             td.align-middle.text-center
                                                 a.btn.bg-blue-grey.btn-sm.mr-2(href=`${slides.slide.buttonLink.toString().split(",")[0]}` target="_blank")

@@ -15,7 +15,7 @@ exports.getIndex = async (req, res, next) => {
         .sort({date:-1})
         .where({isActive:true})
         .select("slide.image slide.title slide.description slide.buttonName slide.buttonLink slide.animate shortservices.icon shortservices.name shortservices.description aboutservices.name aboutservices.imageUrl project.name project.imageUrl url type isHome")
-        // .lean()
+        .lean()
         .then(posts=>{
         Product.find({isHome:true})
             .where({isActive:true})

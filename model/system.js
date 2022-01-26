@@ -97,7 +97,7 @@ const settingsSchema = mongoose.Schema({
     contactmail:String,
     contactphone:String,
 
-
+    itemload:String,
 
     //Logo
     logo:{

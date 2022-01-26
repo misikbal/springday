@@ -1,6 +1,5 @@
 extends ../layouts/admin-layout.pug
 block styles
-    link(rel="stylesheet" href="/css/form.css")
     link(rel="stylesheet" href="/css/themes/image.css")
     script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
 
@@ -31,7 +30,7 @@ block content
                         .card(style="height:19rem;")
                             .card-header
                                 .text-center
-                                    img.card-image(src=`/img/resized/${logo.logo}` width="200")
+                                    img.card-image(src=`${baselogo}` width="200")
 
                             .card-footer.bg-blue-grey
                                 h2.text-center
@@ -50,7 +49,7 @@ block content
                         .card(style="height:19rem;")
                             .card-header
                                 .text-center
-                                    img.card-image(src=`/img/resized/${logo.favico}` width="50")
+                                    img.card-image(src=`${basefav}` width="50")
 
                             .card-footer.bg-blue-grey
                                 h2.text-center
@@ -130,8 +129,12 @@ block content
                                     .card-header.bg-blue-grey
                                         h6
                                             | İster Kendiniz Loading Gif Yükleyin İstersenizde Aşağıdaki Hazır Loading Giflerden Birini Seçin
+
                                         h6.text-info
                                             | Hem resim yükleyip hem de aşağıdan gif seçtiyseniz sadece yükelenen dosya kaydedilecektir.
+                                        h6.text-info
+                                            | Loading Logosu Oluşturun Güzel Bir Site 
+                                            a(href="https://loading.io/").text-dark https://loading.io/
                                     .card-body
                                         h5.text-dark Animasyonlu Yükleme Logoları
                                         .row.mt-5

@@ -732,6 +732,8 @@ Systems.findOne()
         title: "Admin Logo",
         path: "/admin/logo",
         logo: logo,
+        baselogo:fs.readFileSync( path.join(__dirname,".." ,"wwwroot/img/",logo.logo).toString()),
+        basefav:fs.readFileSync( path.join(__dirname,".." ,"wwwroot/img/",logo.favico).toString()),
         action: req.query.action,
     });
     })
@@ -742,13 +744,15 @@ Systems.findOne()
 };
 
 exports.postEditLogo = async (req, res, next) => {
+const writeFileAsync = require('util').promisify(require('fs').writeFile);
+
 const file = req.files;
 const loadingisActive = Boolean(req.body.loadingisActive);
 const loadingtext = req.body.loadingtext;
 const loadingLogo = req.body.loadingLogo;
 
 if (file.logo) {
-    await sharp(req.files.logo[0].path)
+    const resizedImageBuf=await sharp(req.files.logo[0].path)
     .resize(150)
     .webp({
         quality: 50,
@@ -763,18 +767,14 @@ if (file.logo) {
         progressive: true,
     })
     .png({ quality: 50, alphaQuality: 50, lossless: true, progressive: true })
+    .toBuffer()
+    await writeFileAsync(req.files.logo[0].destination+"/"+file.logo[0].filename.toString().split(".webp")[0]+".txt", "data:"+req.files.logo[0].mimetype+";base64,"+resizedImageBuf.toString('base64'), 'utf-8');
 
-    .toFile(
-        path.resolve(
-        req.files.logo[0].destination,
-        "resized",
-        file.logo[0].filename
-        )
-    );
-    fs.unlinkSync(req.files.logo[0].path);
+
+    // fs.unlinkSync(req.files.logo[0].path);
 } else if (file.favico) {
-    await sharp(req.files.favico[0].path)
-    .resize(16)
+    const resizedImageBuf= await sharp(req.files.favico[0].path)
+    .resize(50)
     .webp({
         quality: 10,
         alphaQuality: 10,
@@ -788,15 +788,9 @@ if (file.logo) {
         progressive: true,
     })
     .png({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
+    .toBuffer();
+    await writeFileAsync(req.files.favico[0].destination+"/"+file.favico[0].filename.toString().split(".webp")[0]+".txt", "data:"+req.files.favico[0].mimetype+";base64,"+resizedImageBuf.toString('base64'), 'utf-8');
 
-    .toFile(
-        path.resolve(
-        req.files.favico[0].destination,
-        "resized",
-        file.favico[0].filename
-        )
-    );
-    fs.unlinkSync(req.files.favico[0].path);
 } else if (file.footerLogo) {
     await sharp(req.files.footerLogo[0].path)
     .resize(150)
@@ -854,12 +848,13 @@ Systems.findOne()
     .select("logo favico footerLogo loadingLogo loadingisActive loadingtext")
     .then((logoSetting) => {
     if (file.logo) {
-        fs.unlink("wwwroot/img/resized/" + logoSetting.logo, (err) => {
+        fs.unlink("wwwroot/img/" + logoSetting.logo, (err) => {
         if (err) {
             console.log(err);
         }
         });
-        logoSetting.logo = file.logo[0].filename;
+        
+        logoSetting.logo = file.logo[0].filename.toString().split(".webp")[0]+".txt";
         const progress = new Process({
         userId: req.user,
         type: "edit",
@@ -867,12 +862,12 @@ Systems.findOne()
         });
         progress.save();
     } else if (file.favico) {
-        fs.unlink("wwwroot/img/resized/" + logoSetting.favico, (err) => {
+        fs.unlink("wwwroot/img/" + logoSetting.favico, (err) => {
         if (err) {
             console.log(err);
         }
         });
-        logoSetting.favico = file.favico[0].filename;
+        logoSetting.favico =  file.favico[0].filename.toString().split(".webp")[0]+".txt";;
         const progress = new Process({
         userId: req.user,
         type: "edit",
