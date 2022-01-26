@@ -11,30 +11,25 @@ const Post = require('../model/post');
 
 
 exports.getIndex = async (req, res, next) => {
-    Post.find({$or: [{type:"project"} , {type:"aboutservices"}, {type:"shortservices"},{type:"slide"}]})
+    await Post.find({$or: [{type:"project"} , {type:"aboutservices"}, {type:"shortservices"},{type:"slide"}]})
         .sort({date:-1})
         .where({isActive:true})
         .select("slide.image slide.title slide.description slide.buttonName slide.buttonLink slide.animate shortservices.icon shortservices.name shortservices.description aboutservices.name aboutservices.imageUrl project.name project.imageUrl url type isHome")
         .lean()
-        .then(posts=>{
-        Product.find({isHome:true})
+        .then(async(posts)=>{
+        await Product.find({isHome:true})
             .where({isActive:true})
             .sort({date:-1})
             .populate("categories.0",{"_id":{"$slice":1}})
             .select(['-description',"-date","-userId","-__v","-tags"])
             .lean()
-            .then(products=>{
-                return products;
-            }).then((products) => {
-                Category.find()
+            .then(async(products) => {
+                await Category.find()
                 .where({isActive:true})
                 .sort("name")
                 .lean()
-                .then(categories=>{
-                    return categories;
-                }).then((categories)=>{ 
-                            
-                            res.render("shop/index", {
+                .then(async(categories)=>{                            
+                            await res.render("shop/index", {
                                 title: "Springday", 
                                 products: products,
                                 path: '/',

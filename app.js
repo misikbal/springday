@@ -131,25 +131,23 @@ app.use((req,res,next)=>{
 
 })
 
-app.use( (req,res,next)=>{    
-    System.findOne()
-        .then((system)=>{
-            // const read=fs.readFileSync( path.join(__dirname,"." ,"wwwroot/img/",system.logo),{encoding: 'base64'});
-            // console.log(read)
-                    Category.find()
+app.use( async(req,res,next)=>{    
+    await System.findOne()
+        .then(async(system)=>{
+                    await Category.find()
                         .where({ isActive: true })
-                        .then((menucategory) => {
-                                    Post.find({$or: [{type:"client"} , {type:"about"},{type:"lang"},{type:"news"}]})
+                        .then(async(menucategory) => {
+                                    await Post.find({$or: [{type:"client"} , {type:"about"},{type:"lang"},{type:"news"}]})
                                         .select("client.clientlogo client.name about.name lang.lang lang.value lang.imageUrl news.title isHome isActive url type")
                                         .where({isActive: true})
                                         .sort({date: -1})
                                         .lean()
-                                        .then(globalvalue=>{
-                                            req.baselogo=fs.readFileSync( path.join(__dirname,"." ,"wwwroot/img/",system.logo).toString()),
-                                            req.basefav=fs.readFileSync( path.join(__dirname,"." ,"wwwroot/img/",system.favico).toString()),
-                                            req.system = system;
-                                            req.menucategory = menucategory;
-                                            req.globalvalue = globalvalue;
+                                        .then(async(globalvalue)=>{
+                                            req.baselogo=await fs.readFileSync( path.join(__dirname,"." ,"wwwroot/img/",system.logo).toString()),
+                                            req.basefav=await fs.readFileSync( path.join(__dirname,"." ,"wwwroot/img/",system.favico).toString()),
+                                            req.system = await system;
+                                            req.menucategory =await menucategory;
+                                            req.globalvalue =await globalvalue;
                                             next();
 
                         });
