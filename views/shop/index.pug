@@ -23,7 +23,7 @@ block content
           .carousel-inner
             .ct-header.tablex.item
                 
-                img#slide.animated.w-100.h-25(src=`${load}` data-lazy=slide.slide.image alt=`${slide.slide.title}`)
+                img#slide.animated.w-100.h-auto(src=`${load}` data-lazy=`/img/resized/${slide.slide.image}` alt=`${slide.slide.title}`)
                 //-  data-lazy=`/img/resized/${slide.slide.image}` 
                 -index++;
                 span.carousel-caption

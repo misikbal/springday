@@ -215,15 +215,24 @@ exports.postEditSlide = async (req, res, next) => {
             slide.slide.animate=animate,
             slide.isActive=isActive
             if (image) {
-                const writeFileAsync = require('util').promisify(require('fs').writeFile);                
+                // const writeFileAsync = require('util').promisify(require('fs').writeFile);                
                 const resizedImageBuf= await sharp(req.files.slideimg[0].path)
                 .resize(540)
                 .webp({quality:10,alphaQuality:10,lossless:true,progressive:true})
                 .jpeg({quality:10,alphaQuality:10,lossless:true,progressive:true})
                 .png({quality:10,alphaQuality:10,lossless:true,progressive:true})
-                .toBuffer()
-                await writeFileAsync(req.files.slideimg[0].destination+"/"+req.files.slideimg[0].filename.toString().split(".webp")[0]+".txt", "data:"+req.files.slideimg[0].mimetype+";base64,"+resizedImageBuf.toString('base64'), 'utf-8');
-                slide.slide.image =  "data:"+req.files.slideimg[0].mimetype+";base64,"+resizedImageBuf.toString('base64');
+                // .toBuffer()
+                // await writeFileAsync(req.files.slideimg[0].destination+"/"+req.files.slideimg[0].filename.toString().split(".webp")[0]+".txt", "data:"+req.files.slideimg[0].mimetype+";base64,"+resizedImageBuf.toString('base64'), 'utf-8');
+                .toFile(
+                    path.resolve(
+                    req.files.slideimg[0].destination,
+                    "resized",
+                    req.files.slideimg[0].filename
+                    )
+                );
+                fs.unlinkSync(req.files.slideimg[0].path);
+                // slide.slide.image =  "data:"+req.files.slideimg[0].mimetype+";base64,"+resizedImageBuf.toString('base64');
+                slide.slide.image=req.files.slideimg[0].filename;
             }
             const progress=new Process(
                 { 
