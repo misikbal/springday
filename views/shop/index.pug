@@ -32,7 +32,7 @@ block content
 
                 span.carousel-caption
                     if slide.slide.title!=""
-                        h6.animated(style='animation-delay: 0.5s' class=`${slide.slide.animate}`) #{slide.slide.title}
+                        p.h6.animated(style='animation-delay: 0.5s' class=`${slide.slide.animate}`) #{slide.slide.title}
                     if slide.slide.description!=""
                     
                         p.animated(style='animation-delay: 1s; font-size:0.8rem' class=`${slide.slide.animate}`)
@@ -41,16 +41,16 @@ block content
                         p.animated(style='animation-delay: 1.5s' class=`${slide.slide.animate}`)
                         
                             a(href=`${slide.slide.buttonLink.toString().split(",")[0]}`)
-                                button.btn.btn-warning.m-2(style="font-size: 10px;") #{slide.slide.buttonName}
+                                button.btn.btn-warning(style="font-size: 1rem;") #{slide.slide.buttonName}
           script.
               $(".carousel-inner .carousel-item").first().addClass("active");
 
-      a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev')
-        span.carousel-control-prev-icon(aria-hidden='true')
-        span.sr-only Previous
-      a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next')
-        span.carousel-control-next-icon(aria-hidden='true')
-        span.sr-only Next
+        a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev')
+          span(aria-hidden='true')
+            i(style="font-size:2.1rem;").icon-chevron-circle-left
+        a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next')
+          span(aria-hidden='true')
+            i(style="font-size:2.1rem;").icon-chevron-circle-right
 
     //- .w-auto
     //-   #carouselExampleIndicators.carousel.slide.lazy-load(data-ride='carousel',data-interval="2500")
