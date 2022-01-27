@@ -1,17 +1,18 @@
 mixin category(category)
-    .section-title.pt-2
-        p KATEGORİLER
-    
+    if category.length>0
+        .section-title.pt-2
+            p KATEGORİLER        
 
-    .owl-2-style.text-center.bg-light
-        .ct-header.tablex.item.owl-2.pt-3
-            if category.length>0
-                each categories in category
-                    .media-29101
-                        a(href=`/categories/${categories._id}` target="_blank" style="text-decoration:none;")
-                            img.deneme.img-fluid.rounded(src=system.itemload data-src=`/img/resized/${categories.categoryImg}` loading="lazy" alt=`${categories.name}` style="width:75px; height:75px;")
-                            h3(style="font-size:16px;").text-center #{categories.name}
-
-            else
-                .media-29101(style="width: 5rem; margin-left:25rem;")
-                    h3 Kategori Mevcut Değil
+        .container.text-center.bg-light.pt-4
+            .glider-contain.multiple
+                .ref.mb-3
+                    each categories in category
+                        .media-29101
+                            a(href=`/categories/${categories._id}` target="_blank" style="text-decoration:none;")
+                                img.deneme.img-fluid.rounded.p-1(src=system.itemload data-src=`/img/resized/${categories.categoryImg}` loading="lazy" alt=`${categories.name}` style="width:75px; height:75px; background-color:#fff;")
+                            p(style="font-size:16px;").text-center #{categories.name}
+                button.glider-prev.ml-3
+                    i(style="font-size:2.5rem;").icon-chevron-circle-left
+                button.glider-next.mr-3
+                    i(style="font-size:2.5rem;").icon-chevron-circle-right
+                .dots

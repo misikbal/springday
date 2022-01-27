@@ -3,16 +3,26 @@ mixin project(posts)
         if posts.length>0
             header.mb-5
                 h1 PROJELERİMİZ
-            .container.owl-3-style.text-center
-                    .ct-header.tablex.item.owl-3.pt-3
-                        
+            .container.text-center
+                .glider-contain.multiple
+
+
+                    .glider
                         each projects in posts
                             if projects.type=="project" && projects.isHome
                                 .media-29101
                                     .item-4
                                         a.card(href=`/project/${projects.url}` style="height:auto;").bg-light
-                                            img.deneme(src=system.itemload data-src=`/img/resized/${projects.project.imageUrl}` loading="lazy" style="width:300px; height:auto;" alt=projects.project.name)
+                                            div
+                                                img.deneme(src=system.itemload data-src=`/img/resized/${projects.project.imageUrl}` loading="lazy" style="width:300px; height:auto;" alt=projects.project.name)
                                             article                                    
                                                 h2 #{projects.project.name}
                                                 span
                                                     button.btn.btn-dark(style="text-decoration: none") İncele
+                    button.glider-prev.m-5 
+                        i(style="font-size:2rem;").icon-chevron-circle-left
+                    button.glider-next.m-5
+                        i(style="font-size:2rem;").icon-chevron-circle-right
+                
+                    .dots
+            

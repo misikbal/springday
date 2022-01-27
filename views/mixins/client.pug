@@ -2,10 +2,14 @@ mixin client(posts)
     if posts.length >0
         section#clients.clients
             h2.mb-4.text-center Referanslar
-            .container.owl-2-style.text-center
-                .ct-header.tablex.item.owl-2.pt-3
-                    each post in posts
-                        if post.type=="client"
-                                .media-29101
-                                    a(href="/client" target="_blank")
-                                        img.deneme.img-fluid.rounded(src=system.itemload data-src= `/img/resized/${post.client.clientlogo}` loading="lazy" alt=post.client.name style="width:100px; height:auto;")
+            .container.text-center
+                .glider-contain.multiple
+                    .ref
+                        each post in posts
+                            if post.type=="client"
+                                    .media-29101
+                                        a(href="/client" target="_blank")
+                                            img.deneme.img-fluid.rounded(src=system.itemload data-src= `/img/resized/${post.client.clientlogo}` loading="lazy" alt=post.client.name style="width:100px; height:auto;")
+
+                
+                    .dots

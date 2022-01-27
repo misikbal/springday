@@ -2,15 +2,22 @@ mixin aboutservices(posts)
     if posts.length>0
         header
             h1 HİZMETLERİMİZ
-        .container.owl-3-style.text-center
-                .ct-header.tablex.item.owl-3.pt-3
-                    each post in posts
-                        if post.type=="aboutservices" && post.isHome
-                            .media-29101(style="height:auto;")
-                                .item-4(style="height:auto;")
-                                    a.card(href=`/aboutservices/${post.url}` style="height:auto;").bg-light
-                                        img.deneme(src=system.itemload  data-src=`/img/resized/${post.aboutservices.imageUrl}` style="width:300px; height:auto;" loading="lazy" alt=post.aboutservices.name)
-                                        article                                 
-                                            h2 #{post.aboutservices.name}
-                                            span
-                                                button.btn.btn-dark(style="text-decoration: none") İncele
+        .container.text-center
+                .glider-contain.multiple
+                    .glider
+                        each post in posts
+                            if post.type=="aboutservices" && post.isHome
+                                .media-29101(style="height:auto;")
+                                    .item-4(style="height:auto;")
+                                        a.card(href=`/aboutservices/${post.url}` style="height:auto;").bg-light
+                                            img.deneme(src=system.itemload  data-src=`/img/resized/${post.aboutservices.imageUrl}` style="width:300px; height:auto;" loading="lazy" alt=post.aboutservices.name)
+                                            article                                 
+                                                h2 #{post.aboutservices.name}
+                                                span
+                                                    button.btn.btn-dark(style="text-decoration: none") İncele
+                    button.glider-prev.m-5 
+                        i(style="font-size:2rem;").icon-chevron-circle-left
+                    button.glider-next.m-5
+                        i(style="font-size:2rem;").icon-chevron-circle-right
+                
+                    .dots

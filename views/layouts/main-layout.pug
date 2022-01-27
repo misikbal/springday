@@ -22,9 +22,8 @@ html(lang=`${system.language}`)
             @import url("https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap");
         link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css')
         link(rel='stylesheet' href='/css/style.min.css')
-        link(rel="stylesheet" href="/plugins/animate-css/animate.min.css")
 
-        
+
         script(type="text/javascript").
                     function link(url) {
                     var s = document.createElement('link');
@@ -36,9 +35,10 @@ html(lang=`${system.language}`)
                     x.appendChild(s);
                     }
         script(type="text/javascript").
-
+            link("/plugins/animate-css/animate.min.css")
             link('/css/icomoon/icon.min.css')
-        
+            link("https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.css" )
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery-compat/3.0.0-alpha1/jquery.min.js" integrity="sha512-4GsgvzFFry8SXj8c/VcCjjEZ+du9RZp/627AEQRVLatx6d60AUnUYXg0lGn538p44cgRs5E2GXq+8IOetJ+6ow==" crossorigin="anonymous" referrerpolicy="no-referrer")
         script(type="text/javascript").
             function script(url) {
             var s = document.createElement('script');
@@ -48,15 +48,10 @@ html(lang=`${system.language}`)
             var x = document.getElementsByTagName('body')[0];
             x.appendChild(s);
             }
-
         script(type='text/javascript').
             script("/js/lazy.min.js")
-        block styles
-        
-        //- script(type='text/javascript').
-        //-     link('/css/icomoon/icon.min.css')      
-        //-     link("/css/slick.min.css")
-            link("/plugins/animate-css/animate.min.css")      
+            
+        block styles 
 
         script(type='text/javascript').
             let root=document.documentElement.style

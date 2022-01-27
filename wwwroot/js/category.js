@@ -1,85 +1,100 @@
-
-$(function() {
-	if ( $('.owl-2').length > 0 ) {
-        $('.owl-2').slick({
-          centerMode: true,
-        centerPadding: '60px',
-        slidesToShow: 5,
-        autoplay: true,
-        arrows: false,
-        autoplaySpeed: 500,
+window.addEventListener('load', function () {
+  [].forEach.call(document.querySelectorAll('.glider'), function (ele) {
+      ele.addEventListener('glider-slide-visible', function (event) {
+          var glider
+              = Glider(this); 
+      });
+      new Glider(ele, {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        scrollLock: true,
+        draggable: true,
+        duration: 0.5,
+        dots: ele.parentNode.querySelector('.dots'),
+        arrows: {
+            prev: ele.parentNode.querySelector('.glider-prev'),
+            next: ele.parentNode.querySelector('.glider-next')
+        },
         responsive: [
           {
-            breakpoint: 980,
-            settings: {
-              arrows: false,
-              centerMode: true,
-              centerPadding: '40px',
-              slidesToShow: 4
-            }
+          breakpoint: 768,
+          settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              duration: 0.5,
+              arrows: {
+              prev: ele.parentNode.querySelector('.glider-prev'),
+              next: ele.parentNode.querySelector('.glider-next')
+              },
+              dots: ele.parentNode.querySelector('.dots'),
+  
+          }
           },
           {
-            breakpoint: 780,
-            settings: {
-              arrows: false,
-              centerMode: true,
-              centerPadding: '40px',
-              slidesToShow: 3
-            }
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              arrows: false,
-              centerMode: true,
-              centerPadding: '40px',
-              slidesToShow: 2
-            }
-          },
-          
-        ]
-        });            
-    }
+          // If Screen Size More than 1024px
+          breakpoint: 1024,
+          settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              duration: 0.5,
+              arrows: {
+                prev: ele.parentNode.querySelector('.glider-prev'),
+              next: ele.parentNode.querySelector('.glider-next')
+              },
+              dots: ele.parentNode.querySelector('.dots'),
+  
+          }
+          }
+      ]
+    });
+  });
+  [].forEach.call(document.querySelectorAll('.ref'), function (ele) {
+    ele.addEventListener('glider-slide-visible', function (event) {
+        var glider
+            = Glider(this); 
+    });
+    new Glider(ele, {
+      slidesToShow: 3.5,
+      slidesToScroll: 1,
+      scrollLock: true,
+      draggable: true,
+      duration: 0.5,
+      dots: ele.parentNode.querySelector('.dots'),
+      arrows: {
+          prev: ele.parentNode.querySelector('.glider-prev'),
+          next: ele.parentNode.querySelector('.glider-next')
+      },
+      responsive: [
+        {
+        breakpoint: 768,
+        settings: {
+            slidesToShow: 4.5,
+            slidesToScroll: 1,
+            duration: 0.5,
+            arrows: {
+            prev: ele.parentNode.querySelector('.glider-prev'),
+            next: ele.parentNode.querySelector('.glider-next')
+            },
+            dots: ele.parentNode.querySelector('.dots'),
 
-    if ( $('.owl-3').length > 0 ) {
-      $('.owl-3').slick({
-        centerMode: true,
-        centerPadding: '60px',
-        slidesToShow: 3,
-        autoplay: true,
-        arrows: false,
-        autoplaySpeed: 500,
-        responsive: [
-          {
-            breakpoint: 1200,
-            settings: {
-              arrows: false,
-              centerMode: true,
-              centerPadding: '100px',
-              slidesToShow: 2
-            }
-          },
-          {
-            breakpoint: 980,
-            settings: {
-              arrows: false,
-              centerMode: true,
-              centerPadding: '40px',
-              slidesToShow: 1
-            }
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              arrows: false,
-              centerMode: true,
-              centerPadding: '5px',
-              slidesToShow: 1
-            }
-          },
-          
-        ]
-      });            
-    }
+        }
+        },
+        {
+        // If Screen Size More than 1024px
+        breakpoint: 1024,
+        settings: {
+            slidesToShow: 5.5,
+            slidesToScroll: 1,
+            duration: 0.5,
+            arrows: {
+              prev: ele.parentNode.querySelector('.glider-prev'),
+            next: ele.parentNode.querySelector('.glider-next')
+            },
+            dots: ele.parentNode.querySelector('.dots'),
 
-})
+        }
+        }
+    ]
+  });
+});
+});

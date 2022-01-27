@@ -6,7 +6,7 @@ mixin shortservices(posts)
             .row
                 each post in posts
                     if post.type=="shortservices"
-                        .col.p-1
+                        .col-md-3.col-sm-6.col-xs-12.p-1
                             .icon-box.bg-light
                                 .icon
                                     | !{post.shortservices.icon}
