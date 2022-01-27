@@ -14,6 +14,97 @@ block styles
   link(rel='stylesheet' href='/css/otherproduct.min.css' media='print' onload="this.media='all'; this.onload = null")
   link(rel='stylesheet' href='/css/project.css' media='print' onload="this.media='all'; this.onload = null")
 block content
+    #carouselExampleIndicators.carousel.slide(data-ride='carousel')
+      ol.carousel-indicators
+        -var slideIndex=0;
+          each slide in posts
+            if slide.type=="slide"
+              li.li-white.li-slide(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
+              -slideIndex++;
+        script.
+          $(".carousel-indicators .li-slide").first().addClass("active");
+      .carousel-inner
+        each slide in posts
+          if slide.type=="slide"
+            .carousel-item
+              img.d-block.animated.item.w-100.h-auto.d-inline-block(alt=`${slide.slide.title}` src=`/img/resized/${slide.slide.image}`)
+
+              span.carousel-caption
+                  if slide.slide.title!=""
+                      h5.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`) #{slide.slide.title}
+                  if slide.slide.description!=""
+                  
+                      p.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
+                          | #{slide.slide.description}
+                  if slide.slide.buttonName!=""
+                      p.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
+                      
+                          a(href=`${slide.slide.buttonLink.toString().split(",")[0]}`)
+                              button.btn.btn-warning.m-2(style="font-size: 10px;") #{slide.slide.buttonName}
+        script.
+            $(".carousel-inner .carousel-item").first().addClass("active");
+
+      a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev')
+        span.carousel-control-prev-icon(aria-hidden='true')
+        span.sr-only Previous
+      a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next')
+        span.carousel-control-next-icon(aria-hidden='true')
+        span.sr-only Next
+
+    //- .w-auto
+    //-   #carouselExampleIndicators.carousel.slide.lazy-load(data-ride='carousel',data-interval="2500")
+      ol.carousel-indicators
+        -var slideIndex=0;
+          each slide in posts
+            if slide.type=="slide"
+              li.li-white.li-slide(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
+              -slideIndex++;
+              script.
+                $(".carousel-indicators .li-slide").first().addClass("active");
+    //-       #bigCarousel.carousel.slide
+    //-       .carousel-inner.w-100            
+    //-             each slide in posts
+    //-               if slide.type=="slide"
+    //-                 +createSlide(slide)
+    //-       a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev')
+    //-         span.carousel-control-prev-icon(aria-hidden='true')
+    //-         span.sr-only Previous
+    //-       a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next')
+    //-         span.carousel-control-next-icon(aria-hidden='true')
+    //-         span.sr-only Next
+    //- style.
+    //-   .wrap {
+    //-       max-width: 900px;
+    //-       margin: 0 auto;
+    //-     }
+    //-     .glide__slide {
+    //-       border: 1px solid black;
+    //-       line-height: 100px;
+    //-       margin: 0;
+    //-       text-align: center;
+    //-     }
+    //- -var load="data:image/gif;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsaGikdKUEmJkFCLy8vQkc/Pj4/R0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0f/2wBDAR0pKTQmND8oKD9HPzU/R0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0f/wAARCAABAAIDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AKYAH//Z";
+    
+    //- .wrap
+    //-   .glide.heropeek
+    //-     .glide__track(data-glide-el='track')
+    //-       ul.glide__slides
+    //-         img.glide__slide(src='https://s3.envato.com/files/245544225/Inner-Poster-590x300.jpg')
+    //-         img.glide__slide(src='http://teamsportbanners.com/skin/frontend/theme1/default/images/cms/softball-banner-design.JPG')
+    //-         img.glide_slide(src='https://s3.envato.com/files/245544225/Inner-Poster-590x300.jpg')
+    //- .glider-contain.multiple
+      
+    //-   button.glider-prev.m-5
+    //-     i(style="font-size:2rem;").icon-chevron-circle-left
+    //-   #glider.glider
+
+    //-       each slide in posts
+    //-         if slide.type=="slide"
+    //-           img#slide.w-50.h-auto(src=`/img/resized/${slide.slide.image}`)
+    //-   button.glider-next.m-5
+    //-     i(style="font-size:2rem;").icon-chevron-circle-right
+      
+      #dots.glider-dots
 
     //- style.
     //-       .carousel-inner > .item:not(:first-child) {
@@ -24,7 +115,7 @@ block content
     //-       }
     //- #carouselExampleIndicators.w-100.h-auto
     //-   -var index=0;
-    //-   -var load="data:image/gif;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsaGikdKUEmJkFCLy8vQkc/Pj4/R0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0f/2wBDAR0pKTQmND8oKD9HPzU/R0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0f/wAARCAABAAIDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AKYAH//Z";
+      -var load="data:image/gif;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsaGikdKUEmJkFCLy8vQkc/Pj4/R0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0f/2wBDAR0pKTQmND8oKD9HPzU/R0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0f/wAARCAABAAIDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AKYAH//Z";
 
     //-   each slide in posts
     //-     if slide.type=="slide"
