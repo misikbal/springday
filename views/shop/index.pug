@@ -14,35 +14,36 @@ block styles
   link(rel='stylesheet' href='/css/otherproduct.min.css' media='print' onload="this.media='all'; this.onload = null")
   link(rel='stylesheet' href='/css/project.css' media='print' onload="this.media='all'; this.onload = null")
 block content
-    #carouselExampleIndicators.carousel.slide(data-ride='carousel')
-      ol.carousel-indicators
-        -var slideIndex=0;
+    .w-auto
+      #carouselExampleIndicators.carousel.slide(data-ride='carousel')
+        ol.carousel-indicators
+          -var slideIndex=0;
+            each slide in posts
+              if slide.type=="slide"
+                li.li-white.li-slide(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
+                -slideIndex++;
+          script.
+            $(".carousel-indicators .li-slide").first().addClass("active");
+        .carousel-inner
           each slide in posts
             if slide.type=="slide"
-              li.li-white.li-slide(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
-              -slideIndex++;
-        script.
-          $(".carousel-indicators .li-slide").first().addClass("active");
-      .carousel-inner
-        each slide in posts
-          if slide.type=="slide"
-            .carousel-item
-              img.d-block.animated.item.w-100.h-auto.d-inline-block(alt=`${slide.slide.title}` src=`/img/resized/${slide.slide.image}`)
+              .carousel-item
+                img.d-block.w-100.h-auto.animated.item(alt=`${slide.slide.title}` src=`${slide.slide.image}` class=`${slide.slide.animate}`)
 
-              span.carousel-caption
-                  if slide.slide.title!=""
-                      h5.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`) #{slide.slide.title}
-                  if slide.slide.description!=""
-                  
-                      p.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
-                          | #{slide.slide.description}
-                  if slide.slide.buttonName!=""
-                      p.animated(style='animation-delay: 1s' class=`${slide.slide.animate}`)
-                      
-                          a(href=`${slide.slide.buttonLink.toString().split(",")[0]}`)
-                              button.btn.btn-warning.m-2(style="font-size: 10px;") #{slide.slide.buttonName}
-        script.
-            $(".carousel-inner .carousel-item").first().addClass("active");
+                span.carousel-caption
+                    if slide.slide.title!=""
+                        h6.animated(style='animation-delay: 0.5s' class=`${slide.slide.animate}`) #{slide.slide.title}
+                    if slide.slide.description!=""
+                    
+                        p.animated(style='animation-delay: 1s; font-size:0.8rem' class=`${slide.slide.animate}`)
+                            | #{slide.slide.description}
+                    if slide.slide.buttonName!=""
+                        p.animated(style='animation-delay: 1.5s' class=`${slide.slide.animate}`)
+                        
+                            a(href=`${slide.slide.buttonLink.toString().split(",")[0]}`)
+                                button.btn.btn-warning.m-2(style="font-size: 10px;") #{slide.slide.buttonName}
+          script.
+              $(".carousel-inner .carousel-item").first().addClass("active");
 
       a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev')
         span.carousel-control-prev-icon(aria-hidden='true')

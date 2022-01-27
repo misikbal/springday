@@ -14,17 +14,7 @@ html(lang=`${system.language}`)
     include ../includes/head.pug
 
     body
-        script(type="text/javascript").
-                function scriptbody(url) {
-                var s = document.createElement('script');
-                s.type = 'text/javascript';
-                s.async = true;
-                s.src = url;
-                var x = document.getElementsByTagName('body')[0];
-                x.appendChild(s);
-                }
-        script(type='text/javascript').
-            scriptbody("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js")
+
 
 
         //- link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap' media='print' onload="this.media='all'; this.onload = null")
@@ -32,7 +22,7 @@ html(lang=`${system.language}`)
             @import url("https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap");
         link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css')
         link(rel='stylesheet' href='/css/style.min.css')
-        
+        link(rel="stylesheet" href="/plugins/animate-css/animate.min.css")
 
         
         script(type="text/javascript").
@@ -46,15 +36,21 @@ html(lang=`${system.language}`)
                     x.appendChild(s);
                     }
         script(type="text/javascript").
-            //- link('https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css')
 
             link('/css/icomoon/icon.min.css')
-
-            link("/css/slick.min.css")
         
+        script(type="text/javascript").
+            function script(url) {
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = url;
+            var x = document.getElementsByTagName('body')[0];
+            x.appendChild(s);
+            }
+
         script(type='text/javascript').
-            scriptbody("/js/lazy.min.js")
-            //- scriptbody("https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js")
+            script("/js/lazy.min.js")
         block styles
         
         //- script(type='text/javascript').

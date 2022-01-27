@@ -1,33 +1,22 @@
-
-script(type="text/javascript").
-    function script(url) {
-    var s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.async = true;
-    s.src = url;
-    var x = document.getElementsByTagName('body')[0];
-    x.appendChild(s);
-    }
-
 script(type="text/javascript").
     script("https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js")
-    script("/js/category.js")
-script.
-    var glideHeroPeek = new Glide('.heropeek', {
-        type: 'carousel',
-        animationDuration: 1000,
-        autoplay: 3000,
-        focusAt: '1',
-        startAt: 1,
-        perView: 1,
-        // set a value to show the previous and next slides peeking in
-        peek: {
-            before: 20,
-            after: 20
-        },
-        gap: 0
-    });
-    glideHeroPeek.mount();
+    //- script("/js/category.js")
+//- script.
+//-     var glideHeroPeek = new Glide('.heropeek', {
+//-         type: 'carousel',
+//-         animationDuration: 1000,
+//-         autoplay: 3000,
+//-         focusAt: '1',
+//-         startAt: 1,
+//-         perView: 1,
+//-         // set a value to show the previous and next slides peeking in
+//-         peek: {
+//-             before: 20,
+//-             after: 20
+//-         },
+//-         gap: 0
+//-     });
+//-     glideHeroPeek.mount();
 //- script(async src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA==" crossorigin="anonymous" referrerpolicy="no-referrer")
 script(data-src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js" integrity="sha512-F636MAkMAhtTplahL9F6KmTfxTmYcAcjcCkyu0f0voT3N/6vzAuJ4Num55a0gEJ+hRLHhdz3vDvZpf6kqgEa5w==" crossorigin="anonymous" referrerpolicy="no-referrer")
 

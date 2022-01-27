@@ -28,4 +28,15 @@ head
       //- link(rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.2.0/css/glide.core.min.css')
       //- script(src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.2.0/glide.min.js" integrity="sha512-RidPlemZ+Xtdq62dXb81kYFycgFQJ71CKg+YbKw+deBWB0TLIqCraOn6k0CWDH2rGvE1a8ruqMB+4E4OLVJ7Dg==" crossorigin="anonymous" referrerpolicy="no-referrer")
       span !{system.googleAnalitcs}
+      script(type="text/javascript").
+            function scriptbody(url) {
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = url;
+            var x = document.getElementsByTagName('body')[0];
+            x.appendChild(s);
+            }
+      script(type="text/javascript").
+            scriptbody("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js")
 
