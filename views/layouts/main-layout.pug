@@ -19,10 +19,9 @@ html(lang=`${system.language}`)
                 @import url("https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap");
         link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css')
         link(rel='stylesheet' href='/css/style.min.css')
-        script(src="https://code.jquery.com/jquery-3.2.1.slim.min.js")
-
-
-        //- link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap' media='print' onload="this.media='all'; this.onload = null")
+        //- script(src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous")
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js")
+        //- script(src="https://code.jquery.com/jquery-3.2.1.slim.min.js")
 
 
         //- script(type="text/javascript").
@@ -49,6 +48,7 @@ html(lang=`${system.language}`)
         script(type="text/javascript").
             link("/plugins/animate-css/animate.min.css")
             link('/css/icomoon/icon.min.css')
+            link("https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.css")
 
         script(type="text/javascript").
             function script(url) {
@@ -61,7 +61,7 @@ html(lang=`${system.language}`)
             }
         script(type='text/javascript').
             script("/js/lazy.min.js")
-        link(rel="stylesheet" data-href="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.css" )
+        //- link(rel="stylesheet" data-href="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.css" )
 
         block styles 
 
@@ -105,7 +105,7 @@ html(lang=`${system.language}`)
                             div(class=`${system.loadingLogo}` role='status' style="width: 3rem; height: 3rem;")
                         else
                             
-                            img(style='padding:0px;margin:0px;background-color:transparent;border:none; width:7rem;' src=`${system.loadingLogo}`  _fcksavedurl=`/img/${system.loadingLogo}`)
+                            img(style='padding:0px;margin:0px;background-color:transparent;border:none; width:7rem;' src=`${baseloading}`  _fcksavedurl=`/img/${baseloading}`)
                     br
                     br
                     

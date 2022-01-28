@@ -133,8 +133,10 @@ app.use((req,res,next)=>{
 
 app.use( async(req,res,next)=>{    
     await System.findOne()
+        .lean()
         .then(async(system)=>{
                     await Category.find()
+                        .lean()
                         .where({ isActive: true })
                         .then(async(menucategory) => {
                                     await Post.find({$or: [{type:"client"} , {type:"about"},{type:"lang"},{type:"news"}]})
@@ -145,6 +147,7 @@ app.use( async(req,res,next)=>{
                                         .then(async(globalvalue)=>{
                                             req.baselogo=await fs.readFileSync( path.join(__dirname,"." ,"wwwroot/img/",system.logo).toString()),
                                             req.basefav=await fs.readFileSync( path.join(__dirname,"." ,"wwwroot/img/",system.favico).toString()),
+                                            req.baseloading=await fs.readFileSync( path.join(__dirname,"." ,"wwwroot/img/",system.loadingLogo).toString()),
                                             req.system = await system;
                                             req.menucategory =await menucategory;
                                             req.globalvalue =await globalvalue;

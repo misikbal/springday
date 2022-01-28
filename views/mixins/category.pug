@@ -11,8 +11,8 @@ mixin category(category)
                             a(href=`/categories/${categories._id}` target="_blank" style="text-decoration:none;")
                                 img.deneme.img-fluid.rounded.p-1(src=system.itemload data-src=`/img/resized/${categories.categoryImg}` loading="lazy" alt=`${categories.name}` style="width:75px; height:75px; background-color:#fff;")
                             p(style="font-size:16px;").text-center #{categories.name}
-                button.glider-prev.ml-3
+                button(title="Geri").glider-prev.ml-3
                     i(style="font-size:2.5rem;").icon-chevron-circle-left
-                button.glider-next.mr-3
+                button(title="İleri").glider-next.mr-3
                     i(style="font-size:2.5rem;").icon-chevron-circle-right
                 .dots

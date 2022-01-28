@@ -9,7 +9,7 @@ mixin shortservices(posts)
                         .col-md-3.col-sm-6.col-xs-12.p-1
                             .icon-box.bg-light
                                 .icon
-                                    | !{post.shortservices.icon}
+                                    i(class=`${post.shortservices.icon}`)
                                 h3.text-light
                                     a(href='#' style="text-decoration:none;") #{post.shortservices.name}
                                 p #{post.shortservices.description}

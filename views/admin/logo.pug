@@ -93,23 +93,23 @@ block content
                             .card-header
                                 .text-center
                                     h5 Seçilen Logo
-                                    if system.loadingLogo.toString().split(" ")[0].split("-")[0]=="spinner"
-                                        div(class=`${system.loadingLogo}` role='status' style="width: 3rem; height: 3rem;")
+                                    if baseloading.toString().split(" ")[0].split("-")[0]=="spinner"
+                                        div(class=`${baseloading}` role='status' style="width: 3rem; height: 3rem;")
                                     else
-                                        img.card-image(src=`/img/${logo.loadingLogo}` width="100")
+                                        img.card-image(src=`${baseloading}` width="100")
 
                         .card-footer.bg-blue-grey
                             h2.text-center
                                 | Loading Logo
                                 if isAdmin
-                                    small.text-center
-                                        .fileupload.fileupload-new(data-provides='fileupload')
-                                            span.btn.btn-warning.btn-file
-                                                span.fileupload-new Yeni
-                                                span.fileupload-exists Değiştir
-                                                input#loadingLogo(type="file" name="loadingLogo")
-                                            span.fileupload-preview
-                                            a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+                                    //- small.text-center
+                                    //-     .fileupload.fileupload-new(data-provides='fileupload')
+                                    //-         span.btn.btn-warning.btn-file
+                                    //-             span.fileupload-new Yeni
+                                    //-             span.fileupload-exists Değiştir
+                                    //-             input#loadingLogo(type="file" name="loadingLogo")
+                                    //-         span.fileupload-preview
+                                    //-         a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
                                     .card.bg-light.text-center(style="height:4rem;")
                                         .body
                                             .form-group
@@ -126,102 +126,85 @@ block content
                                             .body(style="background-color: #FF9600")
                                                 input.form-control#loadingtext(type="text" name="loadingtext" value=`${logo.loadingtext==undefined ? "" : logo.loadingtext}` placeholder="Sayfa Yükleniyor...") 
                                 .card
-                                    .card-header.bg-blue-grey
-                                        h6
-                                            | İster Kendiniz Loading Gif Yükleyin İstersenizde Aşağıdaki Hazır Loading Giflerden Birini Seçin
+                                    //- .card-header.bg-blue-grey
+                                    //-     h6
+                                    //-         | İster Kendiniz Loading Gif Yükleyin İstersenizde Aşağıdaki Hazır Loading Giflerden Birini Seçin
 
-                                        h6.text-info
-                                            | Hem resim yükleyip hem de aşağıdan gif seçtiyseniz sadece yükelenen dosya kaydedilecektir.
-                                        h6.text-info
-                                            | Loading Logosu Oluşturun Güzel Bir Site 
-                                            a(href="https://loading.io/").text-dark https://loading.io/
+                                    //-     h6.text-info
+                                    //-         | Hem resim yükleyip hem de aşağıdan gif seçtiyseniz sadece yükelenen dosya kaydedilecektir.
+                                    //-     h6.text-info
+                                    //-         | Loading Logosu Oluşturun Güzel Bir Site 
+                                    //-         a(href="https://loading.io/").text-dark https://loading.io/
                                     .card-body
                                         h5.text-dark Animasyonlu Yükleme Logoları
                                         .row.mt-5
 
                                             .col
                                                 .card.bg-blue-grey.text-center(style="height:auto;")
-                                                    img.card-img-top(src="/img/2.webp" for='btnradio1'  width="100").bg-white
+                                                    img.card-img-top(src=`/img/loading/2.avif` for='btnradio1'  width="100").bg-white
                                                     .card-body
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="2.webp" ? true:false value="2.webp")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo1.txt" ? true:false value="logo1.txt")
                                                         
                                             .col
                                                 .card.bg-blue-grey.text-center(style="height:auto;")
-                                                    img.card-img-top(src="/img/3.webp" for='btnradio1' width="100").bg-white
+                                                    img.card-img-top(src=`/img/loading/3.avif` for='btnradio1' width="100").bg-white
                                                     .card-body
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="3.webp" ? true:false value="3.webp")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo2.txt" ? true:false value="logo2.txt")
                                             .col
                                                 .card.bg-blue-grey.text-center(style="height:auto;")
-                                                    img.card-img-top(src="/img/4.webp" for='btnradio1' width="100").bg-white
+                                                    img.card-img-top(src=`/img/loading/4.avif` for='btnradio1' width="100").bg-white
                                                     .card-body
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="4.webp" ? true:false value="4.webp")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo3.txt" ? true:false value="logo3.txt")
                                                         
                                             .col
                                                 .card.bg-blue-grey.text-center(style="height:auto;")
-                                                    img.card-img-top(src="/img/5.webp" for='btnradio1' width="100").bg-white
+                                                    img.card-img-top(src=`/img/loading/5.avif` for='btnradio1' width="100").bg-white
                                                     .card-body
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="5.webp" ? true:false  value="5.webp")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo4.txt" ? true:false  value="logo4.txt")
                                             .col
                                                 .card.bg-blue-grey.text-center(style="height:auto;")
-                                                    img.card-img-top(src="/img/6.webp" for='btnradio1' width="100").bg-white
+                                                    img.card-img-top(src=`/img/loading/6.avif` for='btnradio1' width="100").bg-white
                                                     .card-body
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="6.webp" ? true:false  value="6.webp")
-                                                        
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo5.txt" ? true:false  value="logo5.txt")
                                             .col
                                                 .card.bg-blue-grey.text-center(style="height:auto;")
-                                                    img.card-img-top(src="/img/7.webp" for='btnradio1' width="100").bg-white
+                                                    img.card-img-top(src=`/img/loading/7.avif` for='btnradio1' width="100").bg-white
                                                     .card-body
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="7.webp" ? true:false  value="7.webp")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo6.txt" ? true:false  value="logo6.txt")
                                             .col
                                                 .card.bg-blue-grey.text-center(style="height:auto;")
-                                                    img.card-img-top(src="/img/8.webp" for='btnradio1' width="100").bg-white
+                                                    img.card-img-top(src=`/img/loading/8.avif` for='btnradio1' width="100").bg-white
                                                     .card-body
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="8.webp" ? true:false  value="8.webp")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo7.txt" ? true:false  value="logo7.txt")
                                             .col
                                                 .card.bg-blue-grey.text-center(style="height:auto;")
-                                                    img.card-img-top(src="/img/9.webp" for='btnradio1' width="100").bg-white
+                                                    img.card-img-top(src=`/img/loading/11.avif` for='btnradio1' width="100").bg-white
                                                     .card-body
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="9.webp" ? true:false  value="9.webp")
-                                            .col
-                                                .card.bg-blue-grey.text-center(style="height:auto;")
-                                                    img.card-img-top(src="/img/10.webp" for='btnradio1' width="100").bg-white
-                                                    .card-body
-                                                        .radio.text-center
-                                                            
-                                                            label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="10.webp" ? true:false  value="10.webp")
-                                            .col
-                                                .card.bg-blue-grey.text-center(style="height:auto;")
-                                                    img.card-img-top(src="/img/11.avif" for='btnradio1' width="100").bg-white
-                                                    .card-body
-                                                        .radio.text-center
-                                                            
-                                                            label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="11.avif" ? true:false  value="11.avif")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo8.txt" ? true:false  value="logo8.txt")
                                         h5.text-dark Performanslı Yükleme Logoları
                                         .row.mt-5
                                             .col
@@ -231,7 +214,7 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-primary" ? true:false  value="spinner-border text-primary")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo9.txt" ? true:false  value="logo9.txt")
                                             .col
                                                 .card.text-center.bg-light(style="height:auto;")
                                                     .spinner-border.text-secondary(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
@@ -239,7 +222,7 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-secondary" ? true:false  value="spinner-border text-secondary")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo10.txt" ? true:false  value="logo10.txt")
                                             .col
                                                 
                                                 .card.text-center.bg-light(style="height:auto;")
@@ -248,7 +231,7 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-success" ? true:false  value="spinner-border text-success")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo11.txt" ? true:false  value="logo11.txt")
                                             .col
                                                 .card.text-center.bg-light(style="height:auto;")
                                                     .spinner-border.text-danger(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
@@ -256,7 +239,7 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-danger" ? true:false  value="spinner-border text-danger")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo12.txt" ? true:false  value="logo12.txt")
                                             .col
                                                 .card.text-center.bg-light(style="height:auto;")
                                                     .spinner-border.text-warning(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
@@ -264,7 +247,7 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-warning" ? true:false  value="spinner-border text-warning")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo13.txt" ? true:false  value="logo13.txt")
                                             .col
                                                 .card.text-center.bg-light(style="height:auto;")
                                                     .spinner-border.text-info(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
@@ -272,16 +255,8 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-info" ? true:false  value="spinner-border text-info")
-                                            .col
-                                                
-                                                .card.text-center.bg-dark(style="height:auto;")
-                                                    .spinner-border.text-light(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
-                                                    .card-body.bg-blue-grey
-                                                        .radio.text-center
-                                                            
-                                                            label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-light" ? true:false  value="spinner-border text-light")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo14.txt" ? true:false  value="logo14.txt")
+
                                             .col
                                                 .card.text-center.bg-light(style="height:auto;")
                                                     .spinner-border.text-dark(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
@@ -289,7 +264,7 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-border text-dark" ? true:false  value="spinner-border text-dark")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo15.txt" ? true:false  value="logo15.txt")
 
 
 
@@ -303,7 +278,7 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-primary" ? true:false  value="spinner-grow text-primary")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo16.txt" ? true:false  value="logo16.txt")
                                             .col
                                                 .card.text-center.bg-light(style="height:auto;")
                                                     .spinner-grow.text-secondary(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
@@ -311,7 +286,7 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-secondary" ? true:false  value="spinner-grow text-secondary")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo17.txt" ? true:false  value="logo17.txt")
                                             .col
                                                 
                                                 .card.text-center.bg-light(style="height:auto;")
@@ -320,7 +295,7 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-success" ? true:false  value="spinner-grow text-success")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo18.txt" ? true:false  value="logo18.txt")
                                             .col
                                                 .card.text-center.bg-light(style="height:auto;")
                                                     .spinner-grow.text-danger(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
@@ -328,7 +303,7 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-danger" ? true:false  value="spinner-grow text-danger")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo19.txt" ? true:false  value="logo19.txt")
                                             .col
                                                 .card.text-center.bg-light(style="height:auto;")
                                                     .spinner-grow.text-warning(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
@@ -336,7 +311,7 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-warning" ? true:false  value="spinner-grow text-warning")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo20.txt" ? true:false  value="logo20.txt")
                                             .col
                                                 .card.text-center.bg-light(style="height:auto;")
                                                     .spinner-grow.text-info(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
@@ -344,16 +319,7 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-info" ? true:false  value="spinner-grow text-info")
-                                            .col
-                                                
-                                                .card.text-center.bg-dark(style="height:auto;")
-                                                    .spinner-grow.text-light(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
-                                                    .card-body.bg-blue-grey
-                                                        .radio.text-center
-                                                            
-                                                            label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-light" ? true:false  value="spinner-grow text-light")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo21.txt" ? true:false  value="logo21.txt")
                                             .col
                                                 .card.text-center.bg-light(style="height:auto;")
                                                     .spinner-grow.text-dark(role='status' style="width: 3rem; height: 3rem;").m-3.mx-auto
@@ -361,7 +327,7 @@ block content
                                                         .radio.text-center
                                                             
                                                             label
-                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="spinner-grow text-dark" ? true:false  value="spinner-grow text-dark")
+                                                                input(type='radio' name='loadingLogo' checked=logo.loadingLogo=="logo22.txt" ? true:false  value="logo22.txt")
             if isAdmin
                 .form-group.row
                     input(type="submit" value="Kaydet").btn.btn-warning.col-md-12                  

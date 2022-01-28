@@ -728,12 +728,14 @@ exports.getLogo = (req, res, next) => {
 Systems.findOne()
     .select("logo favico footerLogo loadingLogo loadingisActive loadingtext")
     .then((logo) => {
+        
     res.render("admin/logo", {
         title: "Admin Logo",
         path: "/admin/logo",
         logo: logo,
         baselogo:fs.readFileSync( path.join(__dirname,".." ,"wwwroot/img/",logo.logo).toString()),
         basefav:fs.readFileSync( path.join(__dirname,".." ,"wwwroot/img/",logo.favico).toString()),
+        baseloading:fs.readFileSync( path.join(__dirname,".." ,"wwwroot/img/",logo.loadingLogo).toString()),
         action: req.query.action,
     });
     })
@@ -817,32 +819,6 @@ if (file.logo) {
     );
     fs.unlinkSync(req.files.footerLogo[0].path);
 }
-else if (file.loadingLogo) {
-    await sharp(req.files.loadingLogo[0].path)
-    .resize(50)
-    .webp({
-        quality: 50,
-        alphaQuality: 50,
-        lossless: true,
-        progressive: true,
-    })
-    .jpeg({
-        quality: 50,
-        alphaQuality: 50,
-        lossless: true,
-        progressive: true,
-    })
-    .png({ quality: 50, alphaQuality: 50, lossless: true, progressive: true })
-
-    .toFile(
-        path.resolve(
-        req.files.loadingLogo[0].destination,
-        "resized",
-        file.loadingLogo[0].filename
-        )
-    );
-    // fs.unlinkSync(req.files.loadingLogo[0].path);
-}
 
 Systems.findOne()
     .select("logo favico footerLogo loadingLogo loadingisActive loadingtext")
@@ -887,19 +863,8 @@ Systems.findOne()
         name: "Footer Logosunu Değiştirdi.",
         });
         progress.save();
-    } else if (file.loadingLogo) {
-        
-        logoSetting.loadingLogo = file.loadingLogo[0].filename;
-        const progress = new Process({
-        userId: req.user,
-        type: "edit",
-        name: "Loading Logosunu Değiştirdi.",
-        });
-        progress.save();
-    }
-        else if (!file.loadingLogo && loadingLogo!=null) {
-        logoSetting.loadingLogo = loadingLogo;
-        }
+    } 
+    logoSetting.loadingLogo = loadingLogo;
     logoSetting.loadingisActive = loadingisActive;
     logoSetting.loadingtext = loadingtext;
     return logoSetting.save();

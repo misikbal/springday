@@ -23,7 +23,6 @@ block content
                 li.li-white.li-slide(data-slide-to=`${slideIndex}` data-target='#carouselExampleIndicators')
                 -slideIndex++;
           script.
-            //- document.querySelector(".carousel-indicators .li-slide").first().classList.add("active");
             $(".carousel-indicators .li-slide").first().addClass("active");
         .carousel-inner(role="listbox")
           each slide in posts
@@ -44,13 +43,12 @@ block content
                             a(href=`${slide.slide.buttonLink.toString().split(",")[0]}`)
                                 button.btn.btn-warning(style="font-size: 1rem;") #{slide.slide.buttonName}
           script.
-              //- document.querySelector(".carousel-inner .carousel-item").first().classList.add("active");
               $(".carousel-inner .carousel-item").first().addClass("active");
 
-        a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev')
+        a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev' title="Bir Önceki Slayt")
           span(aria-hidden='true')
             i(style="font-size:2.1rem;").icon-chevron-circle-left
-        a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next')
+        a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next' title="Bir Sonraki Slayt")
           span(aria-hidden='true')
             i(style="font-size:2.1rem;").icon-chevron-circle-right
 

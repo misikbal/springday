@@ -48,10 +48,13 @@ block content
                                     small.text-danger
                                         | Gerekli
                                     small.text-info
-                                        a(href="https://fontawesome.com/v5.15/icons/") https://fontawesome.com/v5.15/icons/ site üzerinden istediğiniz iconu seçip yapıştırın
+                                        | Lütfen
+                                        a(href="/css/icomoon/demo.html" target="_blank")  Bu Sayfadan 
+                                        | istediğiniz iconun ismini seçip yapıştırın
                             .text-center
                                 span.card-img-top.mt-3.fa-5x
-                                    | !{services.icon}
+                                    i(class=`${services.shortservices.icon}`)
+
                             .body.bg-blue-grey
                                 input.form-control#icon(type='text' name="icon" value=`${services.shortservices.icon}`)  
 
