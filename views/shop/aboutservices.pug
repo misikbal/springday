@@ -23,7 +23,7 @@ block content
                     if aboutservice.type=="aboutservices"
                         .col-md-4
                             .item-1(style="height:auto;")
-                                a.card(href=`/aboutservices/${aboutservice.url}` style="height:auto;").bg-light
+                                a.card(href=`/aboutservices/${aboutservice.url}` style="height:auto; text-decoration:none;").bg-light
                                     img(src=`/img/resized/${aboutservice.aboutservices.imageUrl}`)
                                     article
                                         h2 #{aboutservice.aboutservices.name}

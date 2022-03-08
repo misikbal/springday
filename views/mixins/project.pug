@@ -12,7 +12,7 @@ mixin project(posts)
                             if projects.type=="project" && projects.isHome
                                 .media-29101
                                     .item-4
-                                        a.card(href=`/project/${projects.url}` style="height:auto;").bg-light
+                                        a.card(href=`/project/${projects.url}` style="height:auto; text-decoration:none;").bg-light
                                             div
                                                 img.deneme(src=system.itemload data-src=`/img/resized/${projects.project.imageUrl}` loading="lazy" style="width:300px; height:auto;" alt=projects.project.name)
                                             article                                    

@@ -13,6 +13,7 @@ include ../mixins/shortservices.pug
 block styles
   link(rel='stylesheet' href='/css/otherproduct.min.css' media='print' onload="this.media='all'; this.onload = null")
   link(rel='stylesheet' href='/css/project.css' media='print' onload="this.media='all'; this.onload = null")
+        
 block content
     .w-auto
       #carouselExampleIndicators.carousel.slide(data-ride="carousel" data-interval="4000")
@@ -61,7 +62,7 @@ block content
 
         each product in products
           +productcard(product)
-        button.btn.btn-warning.col-md-12 
+        button.btn.btn-warning.col-md-12.mt-4
           a(href="/products" style="text-decoration: none;").text-dark  Daha Fazla Ürün Göster
     br
     +category(categories)
@@ -77,3 +78,4 @@ block content
     .slide-for
     br
     +client(globalvalue) 
+block script 

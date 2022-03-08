@@ -52,8 +52,8 @@ nav.site-navbar-wrap(class=(system.isNavbar ? "sticky-wrapper is-sticky" : "") s
                                 a(href='/')
                                     img(src=`${baselogo}` width="150px" height="68px" loading="lazy" alt="Springday Logo")
                                 button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
-                                    span.navbar-toggler-icon.mr-1.mt-1.pt-2
-                                        i(style="font-size:2rem;").icon-th-menu-outline
+                                    span.navbar-toggler-icon.mr-1.mt-1
+                                        i(style="font-size:1.5rem;").icon-th-menu-outline
 
                                 
                                 #navbarSupportedContent.collapse.navbar-collapse(style="font-size:13px;")
@@ -63,51 +63,53 @@ nav.site-navbar-wrap(class=(system.isNavbar ? "sticky-wrapper is-sticky" : "") s
                                                 a(href="/" title="Anasayfa").nav-link !{system.home}
 
                                         if system.products!="" && system.products_isActive
-                                                
-                                            li(class=(path==='/products'?'active':'')).dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4
-                                                    a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true' delay=5000)
-                                                        | !{system.products}
-                                                    .dropdown-menu.megamenu.bg-light(aria-labelledby='navbarDropdown' style="opacity:0.95; height:auto; overflow:auto;")
-                                                        .row.mb-3
-                                                            .col-12
-                                                                a.dropdown-item(href='/products')
-                                                                    p Tüm Ürünlerimiz
-                                                        .row
-                                                            .col-12
+                                            li(class=(path==='/products'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                a#about.nav-link(href='/products')
+                                                    | !{system.products}
+                                            //- li(class=(path==='/products'?'active':'')).dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4
+                                            //-         a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true' delay=5000)
+                                            //-             | !{system.products}
+                                            //-         .dropdown-menu.megamenu.bg-light(aria-labelledby='navbarDropdown' style="opacity:0.95; height:auto; overflow:auto;")
+                                            //-             .row.mb-3
+                                            //-                 .col-12
+                                            //-                     a.dropdown-item(href='/products')
+                                            //-                         p Tüm Ürünlerimiz
+                                            //-             .row
+                                            //-                 .col-12
 
-                                                                hr.bg-info
-                                                                p.h5 Kategoriler
+                                            //-                     hr.bg-info
+                                            //-                     p.h5 Kategoriler
 
-                                                                .row(style="font-size: 0.6rem;")
-                                                                    each menucategories in menucategory
-                                                                        .col-4.text-center
-                                                                            a.dropdown-item(href=`/categories/${menucategories._id}`).nav-link
+                                            //-                     .row(style="font-size: 0.6rem;")
+                                            //-                         each menucategories in menucategory
+                                            //-                             .col-4.text-center
+                                            //-                                 a.dropdown-item(href=`/categories/${menucategories._id}`).nav-link
 
-                                                                                img.deneme(src=system.itemload  width="50" height="50" data-src=`/img/resized/${menucategories.categoryImg}` loading="lazy" alt=menucategories.name style="background-color:#fff" )
+                                            //-                                     img.deneme(src=system.itemload  width="50" height="50" data-src=`/img/resized/${menucategories.categoryImg}` loading="lazy" alt=menucategories.name style="background-color:#fff" )
                                                                                 
-                                                                                p #{menucategories.name}
+                                            //-                                     p #{menucategories.name}
                                         //- li(class=(path==='/admin/categories' ? 'active':''))
                                         if system.services!="" && system.services_isActive
                                         
                                             li(class=(path===('/aboutservices') ? 'active':'')).nav-item.pl-4.pl-md-0.ml-0.ml-md-4.nav-item
                                                 a(href="/aboutservices").nav-link !{system.services}
                                         if system.about!="" && system.about_isActive
-                                            li(class=(path==='/about'?'active':'')).dropdown.megamenu-li.pl-4.pl-md-0.ml-0.ml-md-4
-                                                a#about.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='false' aria-expanded='false' delay=5000)
+                                            li(class=(path==='/about'?'active':'')).nav-item.pl-4.pl-md-0.ml-0.ml-md-4.nav-item
+                                                a#about.nav-link(href='/about')
                                                     | !{system.about}
-                                                .dropdown-menu.megamenu.bg-light(aria-labelledby='about' style="opacity:0.95; height:auto;")
-                                                    .row.mb-3
-                                                        .col-12
-                                                            a.dropdown-item(href='/about')
-                                                                p !{system.about}
-                                                            hr.bg-info
-                                                    .row(style="font-size:1rem")
-                                                        each about in globalvalue
-                                                            if about.type=="about" && about.isHome==false
-                                                                .col.text-center
-                                                                    a.dropdown-item(href=`/about/${about.url}`)                                                                               
+                                                //- .dropdown-menu.megamenu.bg-light(aria-labelledby='about' style="opacity:0.95; height:auto;")
+                                                //-     .row.mb-3
+                                                //-         .col-12
+                                                //-             a.dropdown-item(href='/about')
+                                                //-                 p !{system.about}
+                                                //-             hr.bg-info
+                                                //-     .row(style="font-size:1rem")
+                                                //-         each about in globalvalue
+                                                //-             if about.type=="about" && about.isHome==false
+                                                //-                 .col.text-center
+                                                //-                     a.dropdown-item(href=`/about/${about.url}`)                                                                               
                                                                         
-                                                                        p !{about.about.name}
+                                                //-                         p !{about.about.name}
                                                                     
                                         if system.project!="" && system.project_isActive
                                         
@@ -143,10 +145,6 @@ nav.site-navbar-wrap(class=(system.isNavbar ? "sticky-wrapper is-sticky" : "") s
                                                             a.nav-link.cart.position-relative.d-inline-flex(href="/cart",class=(path==='/cart'?'active nav-link':'nav-link') aria-label='View your shopping cart')
                                                                 span
                                                                     | !{system.cart}
-
-                                        else if !isAuthenticated
-                                            li(class=(path==='/login'?'active':'')).pl-4.pl-md-0.ml-0.ml-md-4
-                                                a.nav-link(href="/login") GİRİŞ
                                         if isAdmin || isLimited
                                             li.pl-4.pl-md-0.ml-0.ml-md-4
                                                 a(href="/admin/").nav-link
@@ -161,9 +159,20 @@ nav.site-navbar-wrap(class=(system.isNavbar ? "sticky-wrapper is-sticky" : "") s
                                                             each langs in globalvalue
                                                                 if langs.type=="lang"
                                                                     .col
+                                                                        style.
+                                                                            .foot-link-icon-das {
+                                                                                width: 30px;
+                                                                                height: 30px;
+                                                                                display: inline-block;
+                                                                                background-image: url('https://da.systems/images/ic-registrar-das.svg');
+                                                                                margin-right: 0.5rem;
+                                                                                background-size: contain;
+                                                                                background-repeat: no-repeat;
+                                                                                }
+
                                                                         a.dropdown-item.gflag.nturl(onclick=`doGTranslate('${system.language}|${langs.lang.value}');return false;` title=`${langs.lang.lang}` )
-                                                                        
-                                                                            img.deneme.text-start(src=system.itemload data-src=`/img/resized/${langs.lang.imageUrl}` loading="lazy" height='30' width='30' alt=langs.lang.lang)
+                                                                            span.foot-link-icon-da
+                                                                            //- img.deneme.text-start(src=system.itemload data-src=`/img/resized/${langs.lang.imageUrl}` loading="lazy" height='30' width='30' alt=langs.lang.lang)
                                                                             p(style="font-size:10px" translate="no") #{langs.lang.lang}
 
 

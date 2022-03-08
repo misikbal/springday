@@ -9,7 +9,7 @@ mixin aboutservices(posts)
                             if post.type=="aboutservices" && post.isHome
                                 .media-29101(style="height:auto;")
                                     .item-4(style="height:auto;")
-                                        a.card(href=`/aboutservices/${post.url}` style="height:auto;").bg-light
+                                        a.card(href=`/aboutservices/${post.url}` style="height:auto; text-decoration:none;").bg-light
                                             img.deneme(src=system.itemload  data-src=`/img/resized/${post.aboutservices.imageUrl}` style="width:300px; height:auto;" loading="lazy" alt=post.aboutservices.name)
                                             article                                 
                                                 h2 #{post.aboutservices.name}

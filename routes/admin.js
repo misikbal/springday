@@ -185,13 +185,13 @@ router.get('/bank/:bankid',locals,isAdmin, adminController.getEditBank);
 router.post('/bank',locals,isAdmin, adminController.postEditBank);
 router.post('/delete-bank',locals,isAdmin, adminController.postDeleteBank);
 
-router.get("/password",locals,isAdmin,adminController.getReset);
-router.post("/password",locals,isAdmin,adminController.postReset );
+// router.get("/password",locals,isAdmin,adminController.getReset);
+// router.post("/password",locals,isAdmin,adminController.postReset );
 
-router.get("/password",locals,isAdmin,adminController.getReset);
-router.post("/password",locals,isAdmin,adminController.postReset );
-router.get("/new-password/:token",isAdmin,locals,adminController.getNewPassword);
-router.post("/new-password",locals,isAdmin,adminController.postNewPassword );
+router.get("/password",locals,isLimited,adminController.getReset);
+router.post("/password",locals,isLimited,adminController.postReset );
+router.get("/new-password/:token",isLimited,locals,adminController.getNewPassword);
+router.post("/new-password",locals,isLimited,adminController.postNewPassword );
 
 
 router.get("/footer",locals,isLimited,adminController.getFooter);

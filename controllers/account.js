@@ -25,7 +25,7 @@ exports.getLogin=(req,res,next)=>{
     var errorMessage=req.session.errorMessage;
     delete req.session.errorMessage;
     res.render("account/login",{
-        path:"/login",
+        path:"/admin-login",
         title:"Login",
         errorMessage:errorMessage,
         action:req.query.action
@@ -47,7 +47,7 @@ exports.postLogin =(req,res,next)=> {
                 if(!user){
                     req.session.errorMessage="Bu mail adresi ile bir kayıt bulunamamıştır.";
                     req.session.save(function(err) {
-                        return res.redirect("/login");
+                        return res.redirect("/admin-login");
                     })                    
                 }
 
@@ -107,13 +107,13 @@ exports.postLogin =(req,res,next)=> {
                         }
                         req.session.errorMessage="Hatalı Eposta ya da Parola Girdiniz";
                         req.session.save(function(err) {
-                        return res.redirect("/login");
+                        return res.redirect("/admin-login");
                     })
                     })
                     .catch(err=>{
                         req.session.errorMessage="Şifre alanını boş bırakmayınız";
                         req.session.save(function(err) {
-                        return res.redirect("/login");
+                        return res.redirect("/admin-login");
                     })
                         console.log(err);
                     })
@@ -133,7 +133,7 @@ exports.postLogin =(req,res,next)=> {
                     message+=err.errors[field].message+"<br>";
                 }
                 res.render("account/login",{
-                    path:"/login",
+                    path:"/admin-login",
                     title:"Login",
                     errorMessage:message
                 });
@@ -244,7 +244,7 @@ exports.postRegister=(req,res,next)=>{
                             .send(msg)
                             console.log(email);
                             console.log(apikey.mail);
-                            res.redirect("/login?action=registered");
+                            res.redirect("/admin-login?action=registered");
     
                         }).catch(err => next(err));  
                 
@@ -396,7 +396,7 @@ exports.postNewPassword=(req,res,next)=>{
         _user.resetTokenExpiration=undefined;
         return _user.save();
     }).then(()=>{
-        res.redirect("/login?action=success");
+        res.redirect("/admin-login?action=success");
     }).catch(err=>{
         console.log(err);
     })

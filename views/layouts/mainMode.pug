@@ -4,11 +4,13 @@ html(lang="en")
     include ../includes/head.pug
 
     body
-        .text-center.mt-5
-            img(src="/img/mainMode.webp" width="75%" height="auto")
-            h3.mt-2
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css')
+
+        .mt-5
+            img(src="/img/mainMode.webp" width="75%" height="auto").mx-auto.d-block
+            h3.mt-2.text-center
                 strong Verdiğimiz Rahatsızlıktan Dolayı Özür Dileriz.
-            h5  En Yakın Zamanda Web Sitemiz Aktif Olacaktır.
+            h5.text-center  En Yakın Zamanda Web Sitemiz Aktif Olacaktır.
 
     include ../includes/script.pug
 

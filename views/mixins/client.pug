@@ -3,6 +3,7 @@ mixin client(posts)
         section#clients.clients
             h2.mb-4.text-center Referanslar
             .container.text-center
+
                 .glider-contain.multiple
                     .ref
                         each post in posts
@@ -13,3 +14,11 @@ mixin client(posts)
 
                 
                     .dots
+                //- .carousel-wrap
+                //-     .owl-1.owl-theme
+                //-         each post in posts
+                //-             if post.type=="client"
+                //-                 .item
+                //-                     .media-29101
+                //-                         a(href="/client" target="_blank")
+                //-                             img.deneme.img-fluid.rounded(src=system.itemload data-src= `/img/resized/${post.client.clientlogo}` loading="lazy" alt=post.client.name style="width:100px; height:auto;")

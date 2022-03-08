@@ -161,7 +161,7 @@ block content
                                         | KARGO FİRMASI
                                 .body
                                     .form-line
-                                        input.form-control#cargocompany(type="text" name="cargocompany" value=`${orders.cargocompany===null ?"":orders.cargocompany==="undefined" ? "":orders.cargocompany}` placeholder="Aras Kargo")
+                                        input.form-control#cargocompany(type="text" name="cargocompany" value=`${orders.cargocompany==null ?"":orders.cargocompany=="undefined" ? "":orders.cargocompany}` placeholder="Aras Kargo")
                 .col-md-6
                     .form-group.row
                         .col-sm-12
@@ -171,6 +171,6 @@ block content
                                         | KARGO TAKİP NUMARASI
                                 .body
                                     .form-line
-                                        input.form-control#cargonumber(type="text" name="cargonumber" value=`${orders.cargonumber===null ?"":orders.cargocompan==="undefined" ? "":orders.cargonumber}` placeholder="1622603546123") 
+                                        input.form-control#cargonumber(type="text" name="cargonumber" value=`${orders.cargonumber==null ?"":orders.cargocompan=="undefined" ? "":orders.cargonumber}` placeholder="1622603546123") 
             .form-group.row
                 input(type="submit" value="Kaydet").btn.btn-warning.col-md-12     

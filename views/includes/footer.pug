@@ -8,36 +8,35 @@ footer
           p #{system.footerdescription}
         .col-md-4.col-sm-6
           //- if system.footerLogo.length > 0
-          img(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${system.footerLogo}` loading="lazy" height="90" width="200" alt="Springday Logo").deneme
+          img.mx-auto.d-block(src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src=`/img/resized/${system.footerLogo}` loading="lazy" height="90" width="200" alt="Springday Logo").deneme
         .col-md-4.col-sm-6
-            .col-md-12
-              .standard_social_links
-                div
-                  ul
-                    if system.facebook !==""
-                      li.round-btn.btn-facebook
-                        a(href=`${system.facebook}` target="_blank" rel="noopener" title=`${system.facebook}`)
-                          i.icon-facebook(aria-hidden='true')
-                    if system.linkedin !==""                
-                      li.round-btn.btn-linkedin
-                        a(href=`${system.linkedin}` target="_blank" rel="noopener" title=`${system.linkedin}`)
-                          i.icon-linkedin(aria-hidden='true')
-                    if system.twitter !==""                  
-                      li.round-btn.btn-twitter
-                        a(href=`${system.twitter}` target="_blank" rel="noopener" title=`${system.twitter}`)
-                          i.icon-twitter(aria-hidden='true')
-                    if system.instagram !==""                
-                      li.round-btn.btn-instagram
-                        a(href=`${system.instagram}` target="_blank" rel="noopener" title=`${system.instagram}`)
-                          i.icon-instagram(aria-hidden='true')
-                    if system.phone !==""                
-                      li.round-btn.btn-whatsapp
-                        a(href=`https://api.whatsapp.com/send?phone=${system.phone}` rel="noopener" target="_blank" title=`${system.phone}`)
-                          i.icon-phone(aria-hidden='true')
-                    if system.contactmail !==""                
-                      li.round-btn.btn-envelop
-                        a(href=`mailto:${system.contactmail}` target="_blank" rel="noopener" title=`${system.contactmail}`)
-                          i.icon-gmail(aria-hidden='true')
+              ul(style="font-size:2rem;").mt-4
+                .d-flex.justify-content-between
+
+                  if system.facebook !==""
+                    li
+                      a(href=`${system.facebook}` target="_blank" rel="noopener" title=`${system.facebook}`)
+                        i.icon-facebook(aria-hidden='true')
+                  if system.linkedin !==""                
+                    li
+                      a(href=`${system.linkedin}` target="_blank" rel="noopener" title=`${system.linkedin}`)
+                        i.icon-linkedin(aria-hidden='true')
+                  if system.twitter !==""                  
+                    li
+                      a(href=`${system.twitter}` target="_blank" rel="noopener" title=`${system.twitter}`)
+                        i.icon-twitter(aria-hidden='true')
+                  if system.instagram !==""                
+                    li
+                      a(href=`${system.instagram}` target="_blank" rel="noopener" title=`${system.instagram}`)
+                        i.icon-instagram(aria-hidden='true')
+                  if system.phone !==""                
+                    li
+                      a(href=`https://api.whatsapp.com/send?phone=${system.phone}` rel="noopener" target="_blank" title=`${system.phone}`)
+                        i.icon-phone(aria-hidden='true')
+                  if system.contactmail !==""                
+                    li
+                      a(href=`mailto:${system.contactmail}` target="_blank" rel="noopener" title=`${system.contactmail}`)
+                        i.icon-gmail(aria-hidden='true')
     .second_class
       .container.second_class_bdr
         .row
