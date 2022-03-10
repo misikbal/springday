@@ -2649,29 +2649,11 @@ res.render("admin/add-lang", {
 };
 
 exports.postAddLang = async (req, res, next) => {
-const { filename: image } = req.files.image[0];
+// const { filename: image } = req.files.image[0];
 const lang = req.body.lang;
 const value = req.body.value;
 const isActive = Boolean(req.body.isActive);
 
-if (!image) {
-    return res.render("admin/add-product", {
-    title: "New Product",
-    path: "/admin/add-product",
-    errorMessage: "Lüften bir resim seçiniz",
-    inputs: {
-        lang: lang,
-        value: value,
-    },
-    });
-}
-await sharp(req.files.image[0].path)
-    .resize(50)
-    .webp({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
-    .jpeg({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
-    .png({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
-    .toFile(path.resolve(req.files.image[0].destination, "resized", image));
-fs.unlinkSync(req.files.image[0].path);
 const language = new Post({
     isActive: isActive,
     userId: req.user,
@@ -2680,7 +2662,6 @@ const language = new Post({
     lang:{
         lang: lang,
         value: value,
-        imageUrl: image,
     },
 
 

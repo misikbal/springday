@@ -1,5 +1,6 @@
 extends ../layouts/admin-layout.pug
 
+
 block content
     if(action!=="undefined" && action==="create")
         .alert.alert-success.alert-dismissible.fade.show(role='alert')
@@ -18,7 +19,7 @@ block content
                 $(this).remove(); 
             });
         }, 2000);
-
+        //- onchange='top.location.href=this.options[this.selectedIndex].value;
     .row.clearfix
         .col-lg-12.col-md-12.col-sm-12.col-xs-12
             .form-group.row

@@ -152,6 +152,6 @@ block content
                                     input(type="submit" value="Kaydet").btn.btn-primary.col-lg-12.col-md-12.col-sm-12.col-xs-12
 block script
     include ../admin/includes/formscript.pug
-    script(src='/plugins/jquery/jquery.min.js')
-    script(src='/plugins/nestable/jquery.nestable.js')
-    script(src='/js/pages/ui/sortable-nestable.js')
+    script.
+        requireScript('nestable', '1.1.1', '/plugins/nestable/jquery.nestable.js');
+        requireScript('sorttable', '1.1.1', '/js/pages/ui/sortable-nestable.js');

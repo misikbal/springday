@@ -168,32 +168,32 @@ $.AdminBSB.leftSideBar = {
 *  You can manage the right sidebar menu options
 *  
 */
-$.AdminBSB.rightSideBar = {
-    activate: function () {
-        var _this = this;
-        var $sidebar = $('#rightsidebar');
-        var $overlay = $('.overlay');
+// $.AdminBSB.rightSideBar = {
+//     activate: function () {
+//         var _this = this;
+//         var $sidebar = $('#rightsidebar');
+//         var $overlay = $('.overlay');
 
-        //Close sidebar
-        $(window).click(function (e) {
-            var $target = $(e.target);
-            if (e.target.nodeName.toLowerCase() === 'i') { $target = $(e.target).parent(); }
+//         //Close sidebar
+//         $(window).click(function (e) {
+//             var $target = $(e.target);
+//             if (e.target.nodeName.toLowerCase() === 'i') { $target = $(e.target).parent(); }
 
-            if (!$target.hasClass('js-right-sidebar') && _this.isOpen() && $target.parents('#rightsidebar').length === 0) {
-                if (!$target.hasClass('bars')) $overlay.fadeOut();
-                $sidebar.removeClass('open');
-            }
-        });
+//             if (!$target.hasClass('js-right-sidebar') && _this.isOpen() && $target.parents('#rightsidebar').length === 0) {
+//                 if (!$target.hasClass('bars')) $overlay.fadeOut();
+//                 $sidebar.removeClass('open');
+//             }
+//         });
 
-        $('.js-right-sidebar').on('click', function () {
-            $sidebar.toggleClass('open');
-            if (_this.isOpen()) { $overlay.fadeIn(); } else { $overlay.fadeOut(); }
-        });
-    },
-    isOpen: function () {
-        return $('.right-sidebar').hasClass('open');
-    }
-}
+//         $('.js-right-sidebar').on('click', function () {
+//             $sidebar.toggleClass('open');
+//             if (_this.isOpen()) { $overlay.fadeIn(); } else { $overlay.fadeOut(); }
+//         });
+//     },
+//     isOpen: function () {
+//         return $('.right-sidebar').hasClass('open');
+//     }
+// }
 //==========================================================================================================================
 
 /* Searchbar - Function ================================================================================================
@@ -306,11 +306,11 @@ $.AdminBSB.input = {
 *  You can manage the 'select' of form elements
 *  
 */
-$.AdminBSB.select = {
-    activate: function () {
-        if ($.fn.selectpicker) { $('select:not(.ms)').selectpicker(); }
-    }
-}
+// $.AdminBSB.select = {
+//     activate: function () {
+//         if ($.fn.selectpicker) { $('select:not(.ms)').selectpicker(); }
+//     }
+// }
 //==========================================================================================================================
 
 /* DropdownMenu - Function =================================================================================================
@@ -453,16 +453,17 @@ $.AdminBSB.browser = {
         }
     }
 }
+
 //==========================================================================================================================
 
 $(function () {
-    $.AdminBSB.browser.activate();
+    // $.AdminBSB.browser.activate();
     $.AdminBSB.leftSideBar.activate();
-    $.AdminBSB.rightSideBar.activate();
+    // $.AdminBSB.rightSideBar.activate();
     $.AdminBSB.navbar.activate();
     $.AdminBSB.dropdownMenu.activate();
     $.AdminBSB.input.activate();
-    $.AdminBSB.select.activate();
+    // $.AdminBSB.select.activate();
     $.AdminBSB.search.activate();
 
     setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);

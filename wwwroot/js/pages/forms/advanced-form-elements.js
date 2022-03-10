@@ -43,32 +43,32 @@ $(function () {
     //===========================================================================================================================================
 
     //Multi-select
-    $('#optgroup').multiSelect({ selectableOptgroup: true });
+    // $('#optgroup').multiSelect({ selectableOptgroup: true });
 
     //noUISlider
-    var sliderBasic = document.getElementById('nouislider_basic_example');
-    noUiSlider.create(sliderBasic, {
-        start: [30],
-        connect: 'lower',
-        step: 1,
-        range: {
-            'min': [0],
-            'max': [100]
-        }
-    });
-    getNoUISliderValue(sliderBasic, true);
+    // var sliderBasic = document.getElementById('nouislider_basic_example');
+    // noUiSlider.create(sliderBasic, {
+    //     start: [30],
+    //     connect: 'lower',
+    //     step: 1,
+    //     range: {
+    //         'min': [0],
+    //         'max': [100]
+    //     }
+    // });
+    // getNoUISliderValue(sliderBasic, true);
 
-    //Range Example
-    var rangeSlider = document.getElementById('nouislider_range_example');
-    noUiSlider.create(rangeSlider, {
-        start: [32500, 62500],
-        connect: true,
-        range: {
-            'min': 25000,
-            'max': 100000
-        }
-    });
-    getNoUISliderValue(rangeSlider, false);
+    // //Range Example
+    // var rangeSlider = document.getElementById('nouislider_range_example');
+    // noUiSlider.create(rangeSlider, {
+    //     start: [32500, 62500],
+    //     connect: true,
+    //     range: {
+    //         'min': 25000,
+    //         'max': 100000
+    //     }
+    // });
+    // getNoUISliderValue(rangeSlider, false);
 });
 
 //Get noUISlider Value and write on

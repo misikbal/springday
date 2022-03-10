@@ -19,15 +19,14 @@ html(lang=`${system.language}`)
                 @import url("https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap");
         link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css')
         link(rel='stylesheet' href='/css/style.min.css')
-        link(rel='stylesheet' href='/css/owl.carousel.min.css')
         
         //- script(src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous")
         script.
             var t1 = new Date();
             function _cacheScript(c,a,b){var d=new XMLHttpRequest();d.onreadystatechange=function(){if(d.readyState==4){if(d.status==200){localStorage.setItem(c,JSON.stringify({content:d.responseText,version:a}))}else{console.warn("error loading "+b)}}};d.open("GET",b,true);d.send()}function _loadScript(c,b,a,e){var d=document.createElement("script");if(d.readyState){d.onreadystatechange=function(){if(d.readyState=="loaded"||d.readyState=="complete"){d.onreadystatechange=null;_cacheScript(b,a,c);if(e){e()}}}}else{d.onload=function(){_cacheScript(b,a,c);if(e){e()}}}d.setAttribute("src",c);document.getElementsByTagName("head")[0].appendChild(d)}function _injectScript(g,e,d,b,i){var h=JSON.parse(g);if(h.version!=b){localStorage.removeItem(d);_loadScript(e,d,b,i);return}var f=document.createElement("script");f.type="text/javascript";var a=document.createTextNode(h.content);f.appendChild(a);document.getElementsByTagName("head")[0].appendChild(f);if(i){i()}}function requireScript(d,a,b,f){var e=localStorage.getItem(d);if(e==null){_loadScript(b,d,a,f)}else{_injectScript(e,b,d,a,f)}};
-        script.
-            requireScript('jquery', '3.6.0', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js');
-
+        //- script.
+        //-     requireScript('jquery', '3.6.0', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js');
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js")
         script(type="text/javascript").
                     function link(url) {
                     var s = document.createElement('link');
@@ -42,6 +41,7 @@ html(lang=`${system.language}`)
             link("/plugins/animate-css/animate.min.css")
             link('/css/icomoon/icon.min.css')
             link("https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.css")
+            link('/css/owl.carousel.min.css')
 
         //- link(rel="stylesheet" data-href="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.css" )
 

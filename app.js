@@ -4,10 +4,10 @@ const express = require("express");
 const app = express();
 const bodyparser = require("body-parser");
 const path = require("path");
+var minimonster = require('minimonster').middleware;
 app.use(compression())
 app.set("view engine", "pug");
 app.set("views", "./views");
-
 const mainModeRoutes = require("./routes/mainMode");
 
 const adminRoutes = require("./routes/admin");
@@ -37,7 +37,7 @@ const Post=require("./model/post");
 //  mongodb+srv://misikbal:A1b2c3d4.@cluster0.jajbp.mongodb.net/sptrindDay?retryWrites=true&w=majority
 const connectionString="mongodb+srv://springdayAdmin:A1b2c3d4.@cluster0.pwmu2.mongodb.net/node?retryWrites=true&w=majority";
 const mongoose =require("mongoose");
-
+const cookieParser = require('cookie-parser');
 const session=require("express-session");
 const mongoDbStore=require("connect-mongodb-session")(session);
 const csurf= require("csurf");
@@ -66,7 +66,18 @@ app.on('ready', () => {
         }
     });
 });
-
+app.use(cookieParser());
+app.use(minimonster.minify({ 
+    src: __dirname + '/public/wwwroot', // required
+    useInMemoryCache: true, // defaults to true
+    inMemoryCacheTTL: 108000, // defaults to 3 hours
+    cacheDirectoryName:  "_mm", // defaults to "_mm"
+    cacheExtension: ".mini", // defaults to ".mini"
+    debugMode: false, // defaults to false
+    cssCompressor: 'yui-css', // defaults to "yui-css"
+    // jsCompressor:  'uglifyjs', // defaults to "uglifyjs"
+    maxAge: 864000000 // default to 1 day
+}));
 app.use(
     
     session({
@@ -79,7 +90,7 @@ app.use(
         store:store
     }));
 app.use(bodyparser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "wwwroot")));
+app.use(express.static(path.join(__dirname, "wwwroot"), { maxAge: 86400000 }));
 app.use(express.json())
 const multerFilter = (req, file, cb) => {
     if (file.mimetype.startsWith("image")) {
@@ -119,8 +130,14 @@ app.use(multer({storage:storage,fileFilter: multerFilter}).fields([
 
 app.use((req,res,next)=>{
     if(!req.session.user){
+        res.cookie('lang', 'tr', {
+            expires: new Date(Date.now() + 2592000000)
+        });
         return next();
     }
+    res.cookie('lang', 'tr', {
+        expires: new Date(Date.now() + 2592000000)
+    });
     User.findById(req.session.user._id)
         .then(user=>{
             req.user=user;

@@ -9,6 +9,10 @@ const productSchema = mongoose.Schema({
         lowercase:true,
         trim:true
     },
+    
+    url:String,
+    currency:String,
+
     price: {
         type: Number,
     },
@@ -47,5 +51,32 @@ const productSchema = mongoose.Schema({
     popular:{
         type:Boolean,
     },
+    lang:[{
+            translate:{
+                type:String,
+                ref:"lang",
+            },
+            
+            name:String,
+            url:String,
+            price:String,
+            description:String,
+            currency:String,
+            userId:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"User",
+                required:true
+            },
+            tags:{
+                type:Array,
+                validate:{
+                    validator:function(value) {
+                        return value && value.length>0;
+                    },
+                    message:"ürün için en az bir etikten giriniz."
+                }
+            },
+        }
+    ]
 });
 module.exports = mongoose.model('Product', productSchema);
