@@ -14,3 +14,4 @@ $('#flagstrap3').flagStrap({
 });
 $(".flagstrap").find("select").change(function(){ $("i[name=selecticon]").removeClass().addClass("flag-icon flag-icon-"+$(this).val().toLowerCase())})
 $(".flagstrap").find("select").change(function(){ $('input[name=value]').val($(this).val().toLowerCase())})
+$(".flagstrap").find("select").change(function(){ $("input[name=imageUrl]").val("flag-icon flag-icon-"+$(this).val().toLowerCase())})

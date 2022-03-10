@@ -14,7 +14,7 @@ block content
     if errorMessage
         div.alert.alert-danger.col-sm-12 !{errorMessage}
     form(action="/admin/add-lang"  method="POST" enctype="multipart/form-data")
-        input(type="hidden" name="_csrf" value=`${csrfToken}`)               
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)            
         .row.clearfix
             .col-md-12
                 .form-group.row
@@ -48,13 +48,6 @@ block content
                                         label Bir Ülkenin Bayrağını Seçiniz
                                         br
                                         #flagstrap3.flagstrap(data-input-name='country')
-                                //- .fileupload.fileupload-new(data-provides='fileupload')
-                                //-     span.btn.btn-warning.btn-file
-                                //-         span.fileupload-new Yeni
-                                //-         span.fileupload-exists Değiştir
-                                //-         input#imageUrl(type="file" name="image" accept="image/*")
-                                //-     span.fileupload-preview
-                                //-     a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
         .row
             .col-md-6
                 .form-group.row
@@ -80,13 +73,17 @@ block content
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.text-center.form-control#value(type="text" name="value" placeholder="en" required oninvalid="this.setCustomValidity('Lüften Dilin Kodu Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')")  
+                                    input.text-center.form-control#value(type="text" name="value" placeholder="en" required oninvalid="this.setCustomValidity('Lüften Dilin Kodu Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')")
+                                    input.text-center.form-control#value(type="hidden" name="imageUrl")  
 
         .form-group.row
             input(type="submit" value="Dili Kaydet")#export-btn.col-md-12.btn.btn-warning
 block script
-    script.
-        //- requireScript('slimjquery', '1.1.1', 'https://code.jquery.com/jquery-3.2.1.slim.min.js');
-        requireScript('bundle', '1.1.1', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js');
-        requireScript('flagstrap', '1.1.1', 'https://cdnjs.cloudflare.com/ajax/libs/flagstrap/1.0/js/jquery.flagstrap.min.js');
-        requireScript("flagselect","1.10.28","/js/flagselect.js")
+    //- script.
+    //-     //- requireScript('slimjquery', '1.1.1', 'https://code.jquery.com/jquery-3.2.1.slim.min.js');
+    //-     requireScript('bundle', '1.1.1', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js');
+    //-     requireScript('flagstrap', '1.1.1', 'https://cdnjs.cloudflare.com/ajax/libs/flagstrap/1.0/js/jquery.flagstrap.min.js');
+    //-     requireScript("flagselect","1.13.34","/js/flagselect.js")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/flagstrap/1.0/js/jquery.flagstrap.min.js')
+    script(src="/js/flagselect.js?v=3")

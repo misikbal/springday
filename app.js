@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const bodyparser = require("body-parser");
 const path = require("path");
-var minimonster = require('minimonster').middleware;
+// var minimonster = require('minimonster').middleware;
 app.use(compression())
 app.set("view engine", "pug");
 app.set("views", "./views");
@@ -67,17 +67,17 @@ app.on('ready', () => {
     });
 });
 app.use(cookieParser());
-app.use(minimonster.minify({ 
-    src: __dirname + '/public/wwwroot', // required
-    useInMemoryCache: true, // defaults to true
-    inMemoryCacheTTL: 108000, // defaults to 3 hours
-    cacheDirectoryName:  "_mm", // defaults to "_mm"
-    cacheExtension: ".mini", // defaults to ".mini"
-    debugMode: false, // defaults to false
-    cssCompressor: 'yui-css', // defaults to "yui-css"
-    // jsCompressor:  'uglifyjs', // defaults to "uglifyjs"
-    maxAge: 864000000 // default to 1 day
-}));
+// app.use(minimonster.minify({ 
+//     src: __dirname + '/public/wwwroot/css', // required
+//     useInMemoryCache: true, // defaults to true
+//     inMemoryCacheTTL: 108000, // defaults to 3 hours
+//     cacheDirectoryName:  "_mm", // defaults to "_mm"
+//     cacheExtension: ".mini", // defaults to ".mini"
+//     debugMode: true, // defaults to false
+//     cssCompressor: 'yui-css', // defaults to "yui-css"
+//     jsCompressor:  'uglifyjs', // defaults to "uglifyjs"
+//     maxAge: 864000000 // default to 1 day
+// }));
 app.use(
     
     session({

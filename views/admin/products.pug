@@ -26,79 +26,93 @@ block content
                     .header
                         h2.text-white
                             | ÜRÜNLER
-    .row.clearfix
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-            
-            .card
-                if isAdmin
-                    a(href="/admin/add-product").btn.bg-blue-grey.btn-sm
-                        span 
-                            i.fas.fa-plus.fa-xs.mr-2
-                        | Yeni Ürün Ekleme
-
-                if products.length > 0
-                        
-                    .body.justify-content-between
-                        .table-responsive
-                            table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
-                                thead.bg-blue-grey
-                                    tr
-                                        th(scope="col").align-middle #
-                                        th Ürün Resmi
-                                        th Ürün Adı
-                                        th Ürün Fiyatı
-                                        th Yazar
-                                        th Tarih
-                                        th Aktif
-                                        th Popüler
-                                        th Anasayfada
-                                        if isAdmin
-                                            th
-                                tfoot.bg-blue-grey
-                                    tr
-                                        th(scope="col").align-middle #
-                                        th Ürün Resmi
-                                        th Ürün Adı
-                                        th Ürün Fiyatı
-                                        th Yazar
-                                        th Tarih
-                                        th Aktif
-                                        th Popüler
-                                        th Anasayfada
-                                        if isAdmin
-                                            th
-                                tbody
-                                    -var index=1;
-                                    each product in products                
-                                        tr
-                                            td(scope="row").align-middle #{index++}
-                                            td 
-                                                img(src=`/img/resized/${product.imageUrl}` width='80')
-                                            td.align-middle #{product.name}
-                                            td.align-middle #{product.price===null ? "Fiyat Biligisi Yok":product.price+" TL" } 
-                                            td.align-middle #{product.userId.name}
-                                            td.align-middle #{product.date.getHours()+":"+ product.date.getMinutes()+" "}
-                                                br                                            
-                                                | #{product.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
-                                            td.align-middle 
-                                                i(class=(product.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
-                                            td.align-middle 
-                                                i(class=(product.popular ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
-                                            td.align-middle 
-                                                i(class=(product.isHome ? "fas fa-eye text-success" : "fas fa-eye-slash text-danger")).fa-2x
+    #accordion
+        each lang in globalvalue
+            if lang.type=="lang"
+                .card
+                    button.btn.btn-link(data-toggle='collapse' data-target=`#${lang.lang.lang}` aria-expanded='true' aria-controls=`${lang.lang.lang}`)
+                        .card-header(id=`${lang.lang.value}`)
+                            h2.mb-0.text-center                    
+                                i(class=`${lang.lang.imageUrl}`)
+                                b.m-4 #{lang.lang.lang}
+                    .collapse.show(id=`${lang.lang.lang}` aria-labelledby=`${lang.lang.value}` data-parent='#accordion')
+                        .card-body.bg-blue-grey
+                                .row.clearfix
+                                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                                        
+                                        .card
                                             if isAdmin
-                                            
-                                                td.align-middle.position-relative
-                                                    a.btn.btn-warning.btn-sm(href=`/admin/products/${product._id}`) 
-                                                        span 
-                                                            i.fas.fa-edit.fa-xs
-                                                    form(action="/admin/delete-product" method="POST")
-                                                        input(type="hidden" name="_csrf" value=`${csrfToken}`)  
-                                                        input(type="hidden" name="productid" value=`${product._id}`)
-                                                        button(type="submit" style="height:40px; width:40px;").btn.btn-danger.btn-sm
-                                                            span 
-                                                                i.fas.fa-trash-alt.fa-xs
-                else
-                    p.text-center.align-middle Herhangi Bir Ürün Mevcut Değil
+                                                a(href="/admin/add-product").btn.bg-warning.btn-sm
+                                                    span 
+                                                        i.fas.fa-plus.fa-xs.mr-2
+                                                    | Yeni Ürün Ekleme
+
+                                            if products.length > 0
+                                                    
+                                                .body.justify-content-between
+                                                    .table-responsive
+                                                        table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
+                                                            thead.bg-blue-grey
+                                                                tr
+                                                                    th(scope="col").align-middle #
+                                                                    th Ürün Resmi
+                                                                    th Ürün Adı
+                                                                    th Ürün Fiyatı
+                                                                    th Yazar
+                                                                    th Tarih
+                                                                    th Aktif
+                                                                    th Popüler
+                                                                    th Anasayfada
+                                                                    if isAdmin
+                                                                        th
+                                                            tfoot.bg-blue-grey
+                                                                tr
+                                                                    th(scope="col").align-middle #
+                                                                    th Ürün Resmi
+                                                                    th Ürün Adı
+                                                                    th Ürün Fiyatı
+                                                                    th Yazar
+                                                                    th Tarih
+                                                                    th Aktif
+                                                                    th Popüler
+                                                                    th Anasayfada
+                                                                    if isAdmin
+                                                                        th
+                                                            tbody
+                                                                -var index=1;
+                                                                each product in products               
+                                                                    tr
+                                                                        td(scope="row").align-middle #{index++}
+                                                                        td 
+                                                                            img(src=`/img/resized/${product.imageUrl}` width='80')
+                                                                        td.align-middle #{product.name}
+                                                                        td.align-middle #{product.price===null ? "Fiyat Biligisi Yok":product.price+" TL" } 
+                                                                        td.align-middle #{product.userId.name}
+                                                                        td.align-middle #{product.date.getHours()+":"+ product.date.getMinutes()+" "}
+                                                                            br                                            
+                                                                            | #{product.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
+                                                                        td.align-middle 
+                                                                            i(class=(product.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
+                                                                        td.align-middle 
+                                                                            i(class=(product.popular ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
+                                                                        td.align-middle 
+                                                                            i(class=(product.isHome ? "fas fa-eye text-success" : "fas fa-eye-slash text-danger")).fa-2x
+                                                                        if isAdmin
+                                                                        
+                                                                            td.align-middle.position-relative
+                                                                                a.btn.btn-warning.btn-sm(href=`/admin/products/${product._id}`) 
+                                                                                    span 
+                                                                                        i.fas.fa-edit.fa-xs
+                                                                                form(action="/admin/delete-product" method="POST")
+                                                                                    input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                                                                                    input(type="hidden" name="productid" value=`${product._id}`)
+                                                                                    button(type="submit" style="height:40px; width:40px;").btn.btn-danger.btn-sm
+                                                                                        span 
+                                                                                            i.fas.fa-trash-alt.fa-xs
+                                            else
+                                                p.text-center.align-middle Herhangi Bir Ürün Mevcut Değil
+
+
 block script    
     include ../admin/includes/tablescript.pug
+    

@@ -45,7 +45,7 @@ block content
                     .icon
                         i.fas.fa-sign-in-alt
                     .content
-                        .text Giriş Sayısı
+                        .text Topalm Giriş
                         .number.count-to(data-from='0' data-to=`${alladvanced.length}` data-speed='1000' data-fresh-interval='20')
         .col-lg-3.col-md-3.col-sm-6.col-xs-12
             a(href="/admin/process" style="text-decoration: none;")
@@ -53,7 +53,7 @@ block content
                     .icon
                         i.fas.fa-clipboard-list
                     .content
-                        .text Yapılan İşlem Sayısı
+                        .text Toplam Yapılan İşlem
                         .number.count-to(data-from='0' data-to=`${allprocess.length}` data-speed='1000' data-fresh-interval='20')
 
         if ecommerce.ecommarce_isActive
@@ -63,15 +63,15 @@ block content
                         .icon
                             i.fas.fa-shopping-cart
                         .content
-                            .text Toplam Sipariş Sayısı
+                            .text Toplam Sipariş
                             .number.count-to(data-from='0' data-to=`${order.length}` data-speed='1000' data-fresh-interval='20')
             .col-lg-3.col-md-3.col-sm-6.col-xs-12
                 a(href="/admin/orders" style="text-decoration: none;")
-                    div(style="height:6rem;").info-box.bg-teal.hover-zoom-effect
+                    div.info-box.bg-teal.hover-zoom-effect
                         .icon
                             i.fas.fa-hand-holding-usd
                         .content
-                            .text Şuanki Sipariş İsteği Sayısı
+                            .text Beklenen Sipariş İsteği
                             .number.count-to(data-from='0' data-to=`${ordercount.length}` data-speed='1000' data-fresh-interval='20')
             .col-lg-3.col-md-3.col-sm-6.col-xs-12
                 a(href="/admin/orders" style="text-decoration: none;")
@@ -79,7 +79,7 @@ block content
                         .icon
                             i.fas.fa-clipboard-check
                         .content
-                            .text Şuanki Onaylanan Sipariş Sayısı 
+                            .text Onaylanan Sipariş 
                             .number.count-to(data-from='0' data-to=`${approval.length}` data-speed='1000' data-fresh-interval='20')
             .col-lg-3.col-md-3.col-sm-6.col-xs-12
                 a(href="/admin/orders" style="text-decoration: none;")
@@ -87,7 +87,7 @@ block content
                         .icon
                             i.fas.fa-truck
                         .content
-                            .text Kargoya Verilen Sipariş Sayısı
+                            .text Kargoya Verilen Sipariş
                             .number.count-to(data-from='0' data-to=`${cargo.length}` data-speed='1000' data-fresh-interval='20')
             .col-lg-3.col-md-3.col-sm-6.col-xs-12
                 a(href="/admin/orders" style="text-decoration: none;")
@@ -95,7 +95,7 @@ block content
                         .icon
                             i.fas.fa-thumbs-up
                         .content
-                            .text Teslim Edilen Sipariş Sayısı
+                            .text Teslim Edilen Sipariş
                             .number.count-to(data-from='0' data-to=`${done.length}` data-speed='1000' data-fresh-interval='20')
     if system.isMemory==false
         .row.clearfix 

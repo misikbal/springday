@@ -2,9 +2,6 @@ extends ../layouts/admin-layout.pug
 
 block styles
     link(rel="stylesheet" href="/css/themes/image.css")
-    link(href='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' rel='stylesheet')
-    script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
-    script(src="/plugins/ckeditor/ckeditor.js")
     
 block content
     if errorMessage
@@ -21,15 +18,35 @@ block content
                                     h2.text-white
                                         | #{lang.lang.lang} DİLİNİN GÜNCELLEME SAYFASI
         .row.clearfix
-            .col-md-2
+            .col-md-12
 
                 .card.bg-light.text-center
                     .body
                         .form-group
-                            label.form-check-label.mb-5 Aktif
+                            label.form-check-label Aktif
                             .form-check.form-switch.d-flex.justify-content-center
                                 input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive" value=`${lang.isActive}` checked=lang.isActive)
-            .col-md-10
+
+        .row
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | DİLİN BAYRAĞI
+                            .body.bg-blue-grey
+                                span(style="font-size:7rem;").text-center
+                                    i(name="selecticon" class=`${lang.lang.imageUrl}`)
+                                br
+                                button.btn.btn-warning(type="button" onclick='document.querySelector(".form-horizontal").style.display="block"; this.style.display="none";') Bayrağı Değiştir
+                                .form-horizontal(style="display:none;")
+                                    .form-group
+                                        label Bir Ülkenin Bayrağını Seçiniz
+                                        br
+                                        #flagstrap3.flagstrap(data-input-name='country')
+        .row
+            .col-md-6
                 .form-group.row
                     .col-sm-12
                         .card.text-center.bg-blue-grey
@@ -40,27 +57,7 @@ block content
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.form-control#lang(type="text" name="lang" placeholder="English" value=`${lang.lang.lang}`)  
-        .row
-            .col-md-6
-                .form-group.row
-                    .col-sm-12
-                        .card.text-center.bg-blue-grey
-                            .header.bg-white
-                                h2
-                                    | DİLİN BAYRAĞI
-                                    small.text-info
-                                        | Bir Tane Resim Seçilebilir
-                                .text-center
-                                    img(src=`/img/resized/${lang.lang.imageUrl}` style="width:50px;").card-img-top.mt-3  
-                            .body.bg-blue-grey
-                                .fileupload.fileupload-new(data-provides='fileupload')
-                                    span.btn.btn-warning.btn-file
-                                        span.fileupload-new Yeni
-                                        span.fileupload-exists Değiştir
-                                        input#imageUrl(type="file" name="image" accept="image/*")
-                                    span.fileupload-preview
-                                    a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+                                    input.text-center.form-control#lang(type="text" name="lang" placeholder="English" value=`${lang.lang.lang}`)  
             .col-md-6
                 .form-group.row
                     .col-sm-12
@@ -70,16 +67,16 @@ block content
                                     | DİLİN KODU
                                     small.text-danger
                                         | Gerekli
-                                    small.text-info
-                                        | Dil Kodunu Öğrenin
-                                        br
-                                        a(href="https://tr.wiktionary.org/wiki/Vikis%C3%B6zl%C3%BCk:Diller_listesi" style="text-decoration: none") https://tr.wiktionary.org/wiki/Vikis%C3%B6zl%C3%BCk:Diller_listesi
                             .body
                                 .form-line
-                                    input.form-control#value(type="text" name="value" placeholder="en" value=`${lang.lang.value}`)  
+                                    input.text-center.form-control#value(type="text" name="value" placeholder="en" value=`${lang.lang.value}`)  
+                                    input.form-control#value(type="hidden" name="imageUrl" value=`${lang.lang.imageUrl}`)  
+        
+
+
         .form-group.row
             input(type="submit" value="Dili Güncelle")#export-btn.col-md-12.btn.btn-warning
 block script
-    script(src='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')
-    script(src='/js/image.js')
-    script(src="/js/script.js") 
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/flagstrap/1.0/js/jquery.flagstrap.min.js')
+    script(src="/js/flagselect.js?v=3")

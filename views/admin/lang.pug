@@ -70,7 +70,8 @@ block content
                                         tr
                                             td(scope="row").align-middle #{index++}
                                             td.align-middle
-                                                img(src=`/img/resized/${langs.lang.imageUrl}` width='50')
+                                                span.text-center.h1
+                                                    i(class=`flag-icon flag-icon-${langs.lang.imageUrl}`)
                                             td.align-middle #{langs.lang.lang}
                                             td.align-middle #{langs.lang.value}
                                             td.align-middle #{langs.userId.name}

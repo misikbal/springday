@@ -18,7 +18,7 @@ html(lang=`${system.language}`)
         style.
                 @import url("https://fonts.googleapis.com/css?family=Poppins:400&subset=devanagari,latin-ext&display=swap");
         link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css')
-        link(rel='stylesheet' href='/css/style.min.css')
+        link(rel='stylesheet' href='/css/style.min.css?v=3')
         
         //- script(src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous")
         script.
@@ -93,32 +93,12 @@ html(lang=`${system.language}`)
         if system.tawktoscript!="" && system.tawktoscript!=null && system.tawkto_isActive==true
             span !{system.tawktoscript}
         if system.darkmode_isActive
-            style.
-                .mode{
-                    position:fixed;
-                    bottom:7rem;
-                    left:2.5rem;
-                    text-align:center;
-                    font-size:3rem;
-                    z-index:100;
-                }
             .switch.mode
                 i.icon-night
                 div
                     input(type="checkbox" title="Koyu veya Açık Tema")
         if system.whatsapp_isActive
         
-            style.
-                .float{
-                position:fixed;
-                bottom:2.5rem;
-                left:2.5rem;
-                border-radius:50px;
-                text-align:center;
-                font-size:3.3rem;
-                z-index:100;
-                }
-            
             a.float(href=`https://api.whatsapp.com/send?phone=${system.phone}` rel="noopener" target='_blank' title=`${system.phone}`)
                 i.icon-whatsapp1.bg-light(style="border-radius:50%;")
             

@@ -62,22 +62,26 @@ Product.find()
 exports.getTasks = (req, res, next) => {
 Product.find()
     .select("_id")
+    .lean()
     .then((products) => {
     Contact.find()
         .select("_id")
+        .lean()
         .then((contact) => {
         User.find()
             .where({ isAdmin: false })
+            .select("_id")
+            .lean()
             .then((user) => {
             Process.find()
                 .sort({ date: -1 })
-                .limit(5)
                 .populate("userId", "name -_id")
+                .lean()
                 .then((process) => {
                 Advanced.find()
                     .sort({ date: -1 })
-                    .limit(5)
                     .populate("userId", "name -_id")
+                    .lean()
                     .then((advanced) => {
                     Advanced.find()
                         .select("name")
@@ -87,28 +91,39 @@ Product.find()
                             .then((allprocess) => {
                                 Category.find()
                                 .select("name")
+                                .lean()
                                 .then(category=>{
                                     Order.find()
                                     .select("date")
+                                    .lean()
+
                                     .then(order=>{
                                         Order.find()
                                         .where({approval:true})
                                         .select("date")
+                                        .lean()
+
                                         .then(approval=>{
                                             Order.find()
                                             .where({cargo:true})
                                             .select("date")
+                                            .lean()
+
                                             .then(cargo=>{
                                                 Order.find()
                                                 .where({done:true})
                                                 .select("date")
+                                                .lean()
+
                                                 .then(done=>{
                                                     Order.find()
                                                     .where({approval:false})
                                                     .select("date")
+                                                    .lean()
                                                     .then(ordercount=>{
                                                             Systems.findOne()
                                                             .select("ecommarce_isActive")
+                                                            .lean()
                                                             .then(ecommerce=>{
                                                                 res.render("admin/home", {
                                                                     title: "Admin Dasboard",
@@ -2653,13 +2668,14 @@ exports.postAddLang = async (req, res, next) => {
 const lang = req.body.lang;
 const value = req.body.value;
 const isActive = Boolean(req.body.isActive);
-
+const imageUrl=req.body.imageUrl;
 const language = new Post({
     isActive: isActive,
     userId: req.user,
     date:Date.now(),
     type:"lang",
     lang:{
+        imageUrl:imageUrl,
         lang: lang,
         value: value,
     },
@@ -2727,33 +2743,9 @@ exports.postEditLang = async (req, res, next) => {
 const id = req.body.langid;
 const lang = req.body.lang;
 const value = req.body.value;
-const image = req.files.image;
+const imageUrl = req.body.imageUrl;
+
 const isActive = Boolean(req.body.isActive);
-if (image) {
-    await sharp(req.files.image[0].path)
-    .resize(50)
-    .webp({
-        quality: 10,
-        alphaQuality: 10,
-        lossless: true,
-        progressive: true,
-    })
-    .jpeg({
-        quality: 10,
-        alphaQuality: 10,
-        lossless: true,
-        progressive: true,
-    })
-    .png({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
-    .toFile(
-        path.resolve(
-        req.files.image[0].destination,
-        "resized",
-        image[0].filename
-        )
-    );
-    fs.unlinkSync(req.files.image[0].path);
-}
 Post.findOne({ _id: id })
     .then((language) => {
     if (!language) {
@@ -2767,15 +2759,9 @@ Post.findOne({ _id: id })
     language.lang.lang = lang;
     language.lang.value = value;
     language.isActive = isActive;
+    language.lang.imageUrl = imageUrl;
 
-    if (image) {
-        fs.unlink("wwwroot/img/resized/" + language.lang.imageUrl, (err) => {
-        if (err) {
-            console.log(err);
-        }
-        });
-        language.lang.imageUrl = image[0].filename;
-    }
+
     progress.save();
     return language.save();
     })
@@ -2798,11 +2784,6 @@ Post.findOne({ _id: id })
         userId: req.user,
         type: "delete",
         name: lang.name + " dilini sildi.",
-    });
-    fs.unlink("wwwroot/img/resized/" + lang.lang.imageUrl, (err) => {
-        if (err) {
-        console.log(err);
-        }
     });
     progress.save();
     return lang.deleteOne({ _id: id });
