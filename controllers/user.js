@@ -221,18 +221,18 @@ exports.postEditSlide = async (req, res, next) => {
                 .webp({quality:10,alphaQuality:10,lossless:true,progressive:true})
                 .jpeg({quality:10,alphaQuality:10,lossless:true,progressive:true})
                 .png({quality:10,alphaQuality:10,lossless:true,progressive:true})
-                // .toBuffer()
+                .toBuffer()
                 // await writeFileAsync(req.files.slideimg[0].destination+"/"+req.files.slideimg[0].filename.toString().split(".webp")[0]+".txt", "data:"+req.files.slideimg[0].mimetype+";base64,"+resizedImageBuf.toString('base64'), 'utf-8');
-                .toFile(
-                    path.resolve(
-                    req.files.slideimg[0].destination,
-                    "resized",
-                    req.files.slideimg[0].filename
-                    )
-                );
-                fs.unlinkSync(req.files.slideimg[0].path);
-                // slide.slide.image =  "data:"+req.files.slideimg[0].mimetype+";base64,"+resizedImageBuf.toString('base64');
-                slide.slide.image=req.files.slideimg[0].filename;
+                // .toFile(
+                //     path.resolve(
+                //     req.files.slideimg[0].destination,
+                //     "resized",
+                //     req.files.slideimg[0].filename
+                //     )
+                // );
+                // fs.unlinkSync(req.files.slideimg[0].path);
+                slide.slide.image =  "data:"+req.files.slideimg[0].mimetype+";base64,"+resizedImageBuf.toString('base64');
+                // slide.slide.image=req.files.slideimg[0].filename;
             }
             const progress=new Process(
                 { 

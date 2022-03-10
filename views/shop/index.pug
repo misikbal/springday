@@ -29,7 +29,7 @@ block content
           each slide in posts
             if slide.type=="slide"
               .carousel-item
-                img.d-block.w-100.h-auto.animated.item(alt=`${slide.slide.title}` src=`/img/resized/${slide.slide.image}` class=`${slide.slide.animate}` loading="lazy")
+                img.d-block.w-100.h-auto.animated.item(alt=`${slide.slide.title}` src=`${slide.slide.image}` class=`${slide.slide.animate}` loading="lazy")
 
                 span.carousel-caption
                     if slide.slide.title!=""
