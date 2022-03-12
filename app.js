@@ -85,7 +85,7 @@ app.use(
         resave: true,
         saveUninitialized:false,
         cookie:{
-            maxAge:36000000
+            maxAge:360000000
         },
         store:store
     }));
@@ -120,6 +120,8 @@ app.use(multer({storage:storage,fileFilter: multerFilter}).fields([
     { name: 'projectImg', maxCount: 1 },  
     { name: 'newsImg', maxCount: 1 },
     { name: 'clientlogo', maxCount: 1 },
+    { name: 'brandImg', maxCount: 1 },
+
 
     { name: 'flFileUpload', maxCount: 12 }, 
 

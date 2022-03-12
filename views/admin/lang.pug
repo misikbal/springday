@@ -86,12 +86,6 @@ block content
                                                     a.btn.btn-warning.btn-sm(href=`/admin/lang/${langs._id}`) 
                                                         span 
                                                             i.fas.fa-edit.fa-xs
-                                                    form(action="/admin/delete-lang" method="POST")
-                                                        input(type="hidden" name="_csrf" value=`${csrfToken}`)  
-                                                        input(type="hidden" name="langid" value=`${langs._id}`)
-                                                        button(type="submit" style="height:40px; width:40px;").btn.btn-danger.btn-sm
-                                                            span 
-                                                                i.fas.fa-trash-alt.fa-xs
                 else
                     p.text-center.align-middle Herhangi Bir Dil Eklenmedi
 block script    

@@ -20,12 +20,19 @@ router.get('/',locals,isLimited,adminController.getTasks);
 
 
 router.get('/products',locals,isLimited,adminController.getProducts);
-router.get('/add-product',locals,isAdmin,adminController.getAddProduct);
-router.post('/add-product',locals,isAdmin, adminController.postAddProduct);
-router.get('/products/:productid',locals,isAdmin, adminController.getEditProduct);
+router.get('/add-product/:lang/:value',locals,isAdmin,adminController.getAddProduct);
+router.post('/add-product/:value',locals,isAdmin, adminController.postAddProduct);
+router.get('/products/:lang/:productid/:value',locals,isAdmin, adminController.getEditProduct);
 router.post('/products',locals,isAdmin,adminController.postEditProduct);
 router.post('/delete-product',locals,isAdmin,adminController.postDeleteProduct);
+router.post('/clone-product',locals,isAdmin, adminController.postCloneProduct);
 
+router.get('/brand',locals,isLimited, adminController.getBrand);
+router.get('/add-brand',locals,isAdmin, adminController.getAddBrand);
+router.post('/add-brand',locals,isAdmin, adminController.postAddBrand);
+router.get('/brand/:brandid',locals, isAdmin,adminController.getEditBrand);
+router.post('/brand',locals,isAdmin, adminController.postEditBrand);
+router.post('/delete-brand',locals,isAdmin, adminController.postDeleteBrand);
 
 
 router.get('/add-category',locals,isAdmin, adminController.getAddCategory);

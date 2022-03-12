@@ -11,6 +11,7 @@ const sgMail = require("@sendgrid/mail");
 const Mail = require("../model/mail");
 const Bank = require("../model/bank");
 const Post = require("../model/post");
+const Brand = require("../model/brand");
 const crypto = require("crypto");
 const path = require("path");
 const fs = require("fs");
@@ -39,129 +40,113 @@ var slugify = function(text) {
                 .toLowerCase();
 
 }
-exports.getProducts = (req, res, next) => {
-Product.find()
-    .sort({ date: -1 })
-    .populate("userId", "name -_id")
-    .populate("categories", "name -_id")
-    .select(
-    "name price imageUrl userId categories date isActive popular isHome"
-    )
-    .then((products) => {
-    res.render("admin/products", {
-        title: "Admin Products",
-        products: products,
-        path: "/admin/products",
-        action: req.query.action,
-    });
-    })
-    .catch((err) => {
-    next(err);
-    });
-};
 exports.getTasks = (req, res, next) => {
-Product.find()
-    .select("_id")
-    .lean()
-    .then((products) => {
-    Contact.find()
+    Product.find()
         .select("_id")
         .lean()
-        .then((contact) => {
-        User.find()
-            .where({ isAdmin: false })
+        .then((products) => {
+        Contact.find()
             .select("_id")
             .lean()
-            .then((user) => {
-            Process.find()
-                .sort({ date: -1 })
-                .populate("userId", "name -_id")
+            .then((contact) => {
+            User.find()
+                .where({ isAdmin: false })
+                .select("_id")
                 .lean()
-                .then((process) => {
-                Advanced.find()
+                .then((user) => {
+                Process.find()
+                    .limit(5)                
                     .sort({ date: -1 })
                     .populate("userId", "name -_id")
                     .lean()
-                    .then((advanced) => {
+                    .then((process) => {
                     Advanced.find()
-                        .select("name")
-                        .then((alladvanced) => {
-                        Process.find()
+                        .limit(5)
+    
+                        .sort({ date: -1 })
+                        .populate("userId", "name -_id")
+                        .lean()
+                        .then((advanced) => {
+                        Advanced.find()
+                            
                             .select("name")
-                            .then((allprocess) => {
-                                Category.find()
+                            .then((alladvanced) => {
+                            Process.find()
                                 .select("name")
-                                .lean()
-                                .then(category=>{
-                                    Order.find()
-                                    .select("date")
+                                .then((allprocess) => {
+                                    Category.find()
+                                    .select("name")
                                     .lean()
-
-                                    .then(order=>{
+                                    .then(category=>{
                                         Order.find()
-                                        .where({approval:true})
                                         .select("date")
                                         .lean()
-
-                                        .then(approval=>{
+    
+                                        .then(order=>{
                                             Order.find()
-                                            .where({cargo:true})
+                                            .where({approval:true})
                                             .select("date")
                                             .lean()
-
-                                            .then(cargo=>{
+    
+                                            .then(approval=>{
                                                 Order.find()
-                                                .where({done:true})
+                                                .where({cargo:true})
                                                 .select("date")
                                                 .lean()
-
-                                                .then(done=>{
+    
+                                                .then(cargo=>{
                                                     Order.find()
-                                                    .where({approval:false})
+                                                    .where({done:true})
                                                     .select("date")
                                                     .lean()
-                                                    .then(ordercount=>{
-                                                            Systems.findOne()
-                                                            .select("ecommarce_isActive")
-                                                            .lean()
-                                                            .then(ecommerce=>{
-                                                                res.render("admin/home", {
-                                                                    title: "Admin Dasboard",
-                                                                    products: products,
-                                                                    path: "/admin/",
-                                                                    contact: contact,
-                                                                    process: process,
-                                                                    advanced: advanced,
-                                                                    user: user,
-                                                                    alladvanced: alladvanced,
-                                                                    allprocess: allprocess,
-                                                                    category:category,
-                                                                    order:order,
-                                                                    approval:approval,
-                                                                    cargo:cargo,
-                                                                    done:done,
-                                                                    ordercount:ordercount,
-                                                                    ecommerce:ecommerce,
-                                                                    action: req.query.action,
+    
+                                                    .then(done=>{
+                                                        Order.find()
+                                                        .where({approval:false})
+                                                        .select("date")
+                                                        .lean()
+                                                        .then(ordercount=>{
+                                                                Systems.findOne()
+                                                                .select("ecommarce_isActive")
+                                                                .lean()
+                                                                .then(ecommerce=>{
+                                                                    res.render("admin/home", {
+                                                                        title: "Admin Dasboard",
+                                                                        products: products,
+                                                                        path: "/admin/",
+                                                                        contact: contact,
+                                                                        process: process,
+                                                                        advanced: advanced,
+                                                                        user: user,
+                                                                        alladvanced: alladvanced,
+                                                                        allprocess: allprocess,
+                                                                        category:category,
+                                                                        order:order,
+                                                                        approval:approval,
+                                                                        cargo:cargo,
+                                                                        done:done,
+                                                                        ordercount:ordercount,
+                                                                        ecommerce:ecommerce,
+                                                                        action: req.query.action,
+                                                                    });
                                                                 });
                                                             });
                                                         });
                                                     });
                                                 });
-                                            });
-                                        });         
+                                            });         
+                                    });
                                 });
                             });
                         });
                     });
                 });
             });
+        })
+        .catch((err) => {
+        next(err);
         });
-    })
-    .catch((err) => {
-    next(err);
-    });
-};
+    };
 exports.getThemes = (req, res, next) => {
 Systems.findOne()
     .select("bodyDark bodyLight cardLight cardrDark footerDark footerLight infoDark infoLight navbarDark navbarLight")
@@ -217,20 +202,63 @@ Systems.findOne()
     .catch((err) => next(err));
 };
 
+exports.getProducts = (req, res, next) => {
+Product.find()
+    .sort({ date: -1 })
+    .populate("userId", "name -_id")
+    .populate("categories", "name -_id")
+    .populate("brand", "name -_id")
+
+
+    .select(
+    "imageUrl userId brand date isActive popular name translate tags price currency isHome"
+    )
+    .then((products) => {
+    res.render("admin/products", {
+        title: "Admin Products",
+        products: products,
+        path: "/admin/products",
+        action: req.query.action,
+        inputs:{
+            name:"",
+            description:"",
+            price:""
+        }
+    });
+    })
+    .catch((err) => {
+    next(err);
+    });
+};
+
 exports.getAddProduct = (req, res, next) => {
+const lang=req.params.lang;
+const value=req.params.value;
+
 Category.find()
     .where({ isActive: true })
     .then((categories) => {
-    res.render("admin/add-product", {
-        title: "New Product",
-        path: "/admin/add-product",
-        categories: categories,
-        inputs: {
-        name: "",
-        price: "",
-        description: "",
-        },
-    });
+        Brand.find()
+        .where({ isActive: true })
+        .then((brand) => {
+            res.render("admin/add-product", {
+
+                title: "New Product",
+                path: "/admin/add-product",
+                categories: categories,
+                value:value,
+                lang:lang,
+                brand:brand,
+                inputs: {
+                name: "",
+                price: "",
+                description: "",
+                tags: "",
+
+                },
+            });
+            });
+
     });
 };
 
@@ -238,9 +266,11 @@ exports.postAddProduct = async (req, res, next) => {
 const { filename: image } = req.files.image[0];
 const name = req.body.name;
 const price = req.body.price;
-
 const description = req.body.description;
 const tags = req.body.tags;
+const langs = req.params.value;
+const currency = req.body.currency;
+const brand = req.body.brandid;
 
 const isActive = Boolean(req.body.isActive);
 const popular = Boolean(req.body.popular);
@@ -248,16 +278,33 @@ const isHome = Boolean(req.body.isHome);
 
 const ids = req.body.categoryids;
 if (!image) {
-    return res.render("admin/add-product", {
-    title: "New Product",
-    path: "/admin/add-product",
-    errorMessage: "Lüften bir resim seçiniz",
-    inputs: {
-        name: name,
-        price: price,
-        description: description,
+    const lang=req.params.lang;
+    const value=req.params.value;
+    Category.find()
+    .where({ isActive: true })
+    .then((categories) => {
+        Brand.find()
+        .where({ isActive: true })
+        .then((brand) => {
+        return res.render("admin/add-product", {
+        title: "New Product",
+        path: "/admin/add-product",
+        errorMessage: "Lüften bir resim seçiniz",
+        brand:brand,
+        categories:categories,
+        lang:lang,
+        value:value,
+        inputs: {
+            name: name,
+            tags:tags,
+            price: price,            
+            description: description,
+
     },
     });
+});
+});
+
 }
 await sharp(req.files.image[0].path)
     .resize(300)
@@ -265,18 +312,26 @@ await sharp(req.files.image[0].path)
     .jpeg({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
     .png({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
     .toFile(path.resolve(req.files.image[0].destination, "resized", image));
-fs.unlinkSync(req.files.image[0].path);
+    if(req.files.image[0].originalname.toString().split(".")[1]!="webp"){
+        fs.unlinkSync(req.files.image[0].path);
+    }
+const urlresult=tags.toString().split(",")[0]
 const product = new Product({
-    name: name,
-    price: price,
+
     imageUrl: image,
-    description: description,
     userId: req.user,
     categories: ids,
     isActive: isActive,
     popular: popular,
-    tags: tags,
     isHome: isHome,
+    brand:brand,
+    currency:currency,
+    url:urlresult+"-"+slugify(name),
+    translate:langs,
+    name: name,
+    price: price,
+    tags: tags,
+    description: description,
 });
 const progress = new Process({
     userId: req.user,
@@ -311,10 +366,87 @@ progress.save().then(() => {
     });
 });
 };
+
+
+exports.postCloneProduct = async(req, res, next) => {
+    const langid=req.body.langid;
+    const selected=req.body.selected;
+    Post.findOne({_id:langid}).select("lang.lang").lean().then(langname=>{
+    Product.find({_id:selected})
+    .then(product=>{
+        if(product==null){
+            res.redirect("/admin/products?action=none")
+        }
+
+        product.forEach(async(element)=>{
+            // await sharp(path.resolve(__dirname,"." ,"wwwroot/img/",element.imageUrl))
+            // .resize(300)
+            // .webp({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
+            // .jpeg({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
+            // .png({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
+            // .toFile(path.resolve(__dirname,"." ,"wwwroot/img/resized/","clone-"+element.imageUrl));
+            const clone =new Product({
+                translate:langid,
+                imageUrl:element.imageUrl,
+                name:"clone-"+element.name,
+                price:element.price,
+                description:element.description,
+                currency:element.currency,
+                tags:element.tags,
+                userId:req.user,
+                isActive:element.isActive,
+                isHome:element.isHome,
+                popular:element.popular,
+                brand:element.brand,
+                categories:element.categories,
+                url:"clone-"+element.url              
+
+            })
+
+                    const progress = new Process({
+                        userId: req.user,
+                        type: "clone",
+                        name:element.name + " ürününü "+ langname.lang.lang+ " diline klonladı",
+                    });
+                    await Promise.all([progress.save(),clone.save()])
+                        
+                })
+            })
+            
+
+            }).then((success) => {
+                res.redirect("/admin/products?action=clone");
+            })
+            .catch((err) => {
+                if (err.name == "ValidationError") {
+                let message = "";
+                for (field in err.errors) {
+                    message += err.errors[field].message + "<br/>";
+                }
+                res.render("admin/products", {
+                    title: "Products",
+                    path: "/admin/products",
+                    errorMessage: message,
+                    inputs: {
+                    name: name,
+                    price: price,
+                    description: description,
+                    },
+                });
+                } else {
+                next(err);
+                }
+            });
+
+        
+    };
 exports.getEditProduct = (req, res, next) => {
 if (req.params.productid === "favicon.ico") {
     return res.status(404);
 }
+const lang=req.params.lang;
+const value=req.params.value;
+
 Product.findOne({ _id: req.params.productid })
 
     .then((product) => {
@@ -327,22 +459,40 @@ Product.findOne({ _id: req.params.productid })
     Category.find()
         .where({ isActive: true })
         .then((categories) => {
-        categories = categories.map((category) => {
-            if (product.categories) {
-            product.categories.find((item) => {
-                if (item.toString() === category._id.toString()) {
-                category.selected = true;
+            categories = categories.map((category) => {
+                if (product.categories) {
+                product.categories.find((item) => {
+                    if (item.toString() === category._id.toString()) {
+                    category.selected = true;
+                    }
+                });
                 }
+                return category;
             });
-            }
-            return category;
-        });
-        res.render("admin/edit-product", {
-            title: "Edit Product",
-            path: "/admin/products",
-            product: product,
-            categories: categories,
-        });
+            Brand.find()
+            .where({ isActive: true })
+            .then((brand) => {
+                brand = brand.map((brands) => {
+                    if (product.brand) {
+                    product.brand.find((item) => {
+                        if (item.toString() === brands._id.toString()) {
+                        brands.selected = true;
+                        }
+                    });
+                    }
+                    return brands;
+                });
+                res.render("admin/edit-product", {
+                    title: "Edit Product",
+                    path: "/admin/products",
+                    product: product,
+                    brand: brand,
+                    lang:lang,
+                    value:value,
+                    categories:categories
+                });
+            })
+
         });
     })
     .catch((err) => {
@@ -358,6 +508,9 @@ const image = req.files.image;
 const description = req.body.description;
 const tags = req.body.tags;
 const ids = req.body.categoryids;
+const brand = req.body.brandid;
+const currency = req.body.currency;
+
 const isActive = Boolean(req.body.isActive);
 const popular = Boolean(req.body.popular);
 const isHome = Boolean(req.body.isHome);
@@ -384,7 +537,9 @@ if (image) {
         image[0].filename
         )
     );
-    fs.unlinkSync(req.files.image[0].path);
+    if(req.files.image[0].originalname.toString().split(".")[1]!="webp"){
+        fs.unlinkSync(req.files.image[0].path);
+    }
 }
 Product.findOne({ _id: id })
     .then((product) => {
@@ -402,8 +557,9 @@ Product.findOne({ _id: id })
     product.categories = ids;
     product.isActive = isActive;
     product.isHome = isHome;
+    product.brand = brand;
     product.tags = tags;
-
+    product.currency=currency;
     product.popular = popular;
 
     if (image) {
@@ -437,11 +593,11 @@ Product.findOne({ _id: id })
         type: "delete",
         name: product.name + " ürününü sildi.",
     });
-    fs.unlink("wwwroot/img/resized/" + product.imageUrl, (err) => {
-        if (err) {
-        console.log(err);
-        }
-    });
+    // fs.unlink("wwwroot/img/resized/" + product.imageUrl, (err) => {
+    //     if (err) {
+    //     console.log(err);
+    //     }
+    // });
     progress.save();
     return Product.deleteOne({ _id: id });
     })
@@ -647,6 +803,198 @@ Category.findOne({ _id: id })
     next(err);
     });
 };
+
+
+exports.getBrand = (req, res, next) => {
+    Brand.find()
+        .populate("userId", "name -_id")
+        .sort({ date: -1 })
+        .then((brand) => {
+        res.render("admin/brand", {
+            title: "Brands",
+            path: "/admin/brand",
+            brand: brand,
+            action: req.query.action,
+        });
+        })
+        .catch((err) => console.log(err));
+};
+exports.getAddBrand = (req, res, next) => {
+    res.render("admin/add-brand", {
+        title: "New Brand",
+        path: "/admin/add-brand",
+    });
+};
+    
+exports.postAddBrand = async (req, res, next) => {
+const { filename: image } = req.files.brandImg[0];
+const name = req.body.name;
+const isActive = Boolean(req.body.isActive);
+if (!image) {
+    return res.render("admin/add-brand", {
+    title: "New Brand",
+    path: "/admin/add-brand",
+    errorMessage: "Lüften bir logo seçiniz",
+    });
+}
+await sharp(req.files.brandImg[0].path)
+    .resize(300)
+    .webp({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
+    .jpeg({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
+    .png({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
+    .toFile(
+    path.resolve(req.files.brandImg[0].destination, "resized", image)
+    );
+fs.unlinkSync(req.files.brandImg[0].path);
+const brand = new Brand({
+    name: name,
+    brandImg: image,
+    userId: req.user,
+    isActive: isActive,
+});
+const progress = new Process({
+    userId: req.user,
+    type: "insert",
+    name: brand.name + " markasını ekledi",
+});
+progress.save().then(() => {
+    brand
+    .save()
+    .then(() => {
+        res.redirect("/admin/brand?action=create");
+    })
+    .catch((err) => {
+        if (err.name == "ValidationError") {
+        let message = "";
+        for (field in err.errors) {
+            message += err.errors[field].message + "<br/>";
+        }
+        res.render("admin/add-brand", {
+            title: "New Brand",
+            path: "/admin/add-brand",
+            errorMessage: message,
+        });
+        } else {
+        next(err);
+        }
+    });
+});
+};
+
+
+    
+exports.getEditBrand = (req, res, next) => {
+if (req.params.brandid === "favicon.ico") {
+    return res.status(404);
+}
+Brand.findById(req.params.brandid)
+
+    .then((brand) => {
+    res.render("admin/edit-brand", {
+        title: "Edit Brand",
+        path: "/admin/brand",
+        brand: brand,
+    });
+    })
+    .catch((err) => next(err));
+};
+    
+exports.postEditBrand = async (req, res, next) => {
+const id = req.body.id;
+const name = req.body.name;
+const image = req.files.brandImg;
+const isActive = Boolean(req.body.isActive);
+if (image) {
+    await sharp(req.files.brandImg[0].path)
+    .resize(300)
+    .webp({
+        quality: 10,
+        alphaQuality: 10,
+        lossless: true,
+        progressive: true,
+    })
+    .jpeg({
+        quality: 10,
+        alphaQuality: 10,
+        lossless: true,
+        progressive: true,
+    })
+    .png({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
+    .toFile(
+        path.resolve(
+        req.files.brandImg[0].destination,
+        "resized",
+        image[0].filename
+        )
+    );
+    fs.unlinkSync(req.files.brandImg[0].path);
+}
+Brand.findOne({ _id: id })
+    .then((brand) => {
+    if (!brand) {
+        return res.redirect("/");
+    }
+    brand.name = name;
+    brand.isActive = isActive;
+    const progress = new Process({
+        userId: req.user,
+        type: "edit",
+        name: brand.name + " markasını güncelledi.",
+    });
+    if (image) {
+        fs.unlink("wwwroot/img/resized/" + brand.brandImg, (err) => {
+        if (err) {
+            console.log(err);
+        }
+        });
+        brand.brandImg = image[0].filename;
+    }
+    progress.save();
+    return brand.save();
+    })
+    .then((result) => {
+    res.redirect("/admin/brand?action=edit");
+    })
+    .catch((err) => next(err));
+};
+    
+exports.postDeleteBrand = (req, res, next) => {
+const id = req.body.brandid;
+
+Brand.findOne({ _id: id })
+    .then((brand) => {
+    if (!brand) {
+        return next(new Error("Silinmek istenen brand bulunmadı."));
+    }
+    fs.unlink("wwwroot/img/" + brand.brandImg, (err) => {
+        if (err) {
+        console.log(err);
+        }
+    });
+    const progress = new Process({
+        userId: req.user,
+        type: "delete",
+        name: brand.name + " markasını sildi.",
+    });
+
+    progress.save();
+    return Brand.deleteOne({ _id: id });
+    })
+    .then((result) => {
+    if (result.deletedCount === 0) {
+        return next(new Error("Silinmek istenen marka bulunmadı."));
+    }
+    res.redirect("/admin/brand?action=delete");
+    })
+    .catch((err) => {
+    next(err);
+    });
+};
+
+
+
+
+
 exports.getMainMode = (req, res, next) => {
 Systems.findOne()
     .select("mainMode")
@@ -2851,7 +3199,9 @@ await sharp(req.files.image[0].path)
     .jpeg({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
     .png({ quality: 10, alphaQuality: 10, lossless: true, progressive: true })
     .toFile(path.resolve(req.files.image[0].destination, "resized", image));
-fs.unlinkSync(req.files.image[0].path);
+    if(req.files.image[0].originalname.toString().split(".")[1]!="webp"){
+        fs.unlinkSync(req.files.image[0].path);
+    }
 const bank = new Bank({
     iban: iban,
     holder: holder,
@@ -2948,7 +3298,9 @@ if (image) {
         image[0].filename
         )
     );
-    fs.unlinkSync(req.files.image[0].path);
+    if(req.files.image[0].originalname.toString().split(".")[1]!="webp"){
+        fs.unlinkSync(req.files.image[0].path);
+    }
 }
 Bank.findOne({ _id: id })
     .then((bank) => {

@@ -57,7 +57,7 @@ exports.getProducts = (req, res, next) => {
     Product.find()
     .where({isActive:true})
     .populate("categories.0",{"_id":{"$slice":1}})
-    .select("name price imageUrl categories description isActive popular tags")
+    .select("name price imageUrl categories url currency isActive popular tags")
     .lean()
     .then(products=>{
         return products; 

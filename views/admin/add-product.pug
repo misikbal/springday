@@ -10,10 +10,9 @@ block styles
 
 
 block content
-    
     if errorMessage
         div.alert.alert-danger.col-sm-7 !{errorMessage}
-    form(action="/admin/add-product" method="POST" enctype="multipart/form-data")
+    form(action=`/admin/add-product/${value}` method="POST" enctype="multipart/form-data")
         input(type="hidden" name="_csrf" value=`${csrfToken}`) 
         .row.clearfix
             .col-md-12
@@ -21,13 +20,18 @@ block content
                     .col-sm-12
                         .card.text-center.bg-blue-grey
                             .header
-                                h2.text-white
-                                    | ÜRÜN EKLEME SAYFASI 
+                                .row
+                                    h2.text-white
+                                        | ÜRÜN EKLEME SAYFASI 
+        
         .row.clearfix
             .col-md-12
                 .form-group.row
-                    .col-sm-12
+                    .col-sm-12.text-center 
+                        i(class=`flag-icon flag-icon-${lang}`).fa-5x.mb-2
+
                         .card.text-center.bg-blue-grey
+
                             .header.bg-white
                                 h2
                                     | İŞLEMLER
@@ -55,7 +59,7 @@ block content
                                                     .form-check.form-switch.d-flex.justify-content-center
                                                         input.form-check-input.mt-auto.p-2.bd-highlight#isHome(type="checkbox" name="isHome") 
         .row.clearfix
-            .col-md-6
+            .col-md-4
                 .form-group.row
                     .col-sm-12
                         .card.text-center.bg-blue-grey
@@ -66,8 +70,8 @@ block content
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.form-control#name(type="text" name="name" value=`${inputs.name}` required oninvalid="this.setCustomValidity('Lüften Ürün İsmi Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')" placeholder="springday s400 sulu klima")  
-            .col-md-6
+                                    input.text-center.form-control#name(type="text" name="name" value=`${inputs.name}` required oninvalid="this.setCustomValidity('Lüften Ürün İsmi Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')" placeholder="springday s400 sulu klima")  
+            .col-md-4
                 .form-group.row
                     .col-sm-12
                         .card.text-center.bg-blue-grey
@@ -78,7 +82,27 @@ block content
                                         | İsteğe Bağlı
                             .body
                                 .form-line
-                                    input.form-control#price(type="text" name="price" placeholder="1000") 
+                                    input.text-center.form-control#price(type="number" name="price" value=`${inputs.price}` placeholder="1000") 
+            .col-md-4
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | PARA BİRİMİ
+                                    small.text-info
+                                        | İsteğe Bağlı
+                            .body
+                                .form-line
+                                    select#sample.fas(name='currency').form-select.text-center
+                                        option(value='') ----
+                                        option.fas(value='fas fa-lira-sign') &#xf195; TÜRK LİRASI
+                                        option.fas(value='fas fa-dollar-sign') &#xf155; ABD DOLARI
+                                        option.fas(value='fas fa-euro-sign') &#xf153; EURO
+                                        option.fas(value='fas fa-ruble-sign') &#xf158; RUS RUBLESİ
+                                        option.fas(value='fas fa-yen-sign') &#xf157; ÇİN YENİ
+
+
         .row
             if categories.length>0
                 .col-md-12
@@ -97,9 +121,37 @@ block content
                                                 .card.bg-light
                                                     .body
                                                         .form-group
+                                                            img(src=`/img/resized/${category.categoryImg}` width="50").mx-auto.d-flex
                                                             label.form-check-label.mb-3(for=`${category.name}` ) #{category.name}
                                                             .form-check.form-switch.d-flex.justify-content-center
-                                                                input.form-check-input.mt-auto.p-2.bd-highlight(id=`${category._id}` type="checkbox" name="categoryids" value=`${category._id}` checked=category.selected)
+                                                                input.form-check-input.mt-auto.p-2.bd-highlight(id=`${category._id}` type="checkbox" name="categoryids" value=`${category._id}`)
+            else
+                p.text-white Herhangi Bir Kategori Eklemediniz İsterseniz Kategori 
+                    a.text-white(href="/admin/add-brand") Ekleyebilirsiniz.
+
+        .row
+            if brand.length>0
+                .col-md-12
+                    .form-group.row
+                        .col-sm-12
+                            .card.text-center.bg-blue-grey
+                                .header.bg-white
+                                    h2
+                                        | ÜRÜNÜN MARKASI
+                                .body.d-flex.justify-content-center.text-center
+                                    .row
+                                        each brands in brand
+                                            .col
+                                                .card.bg-light
+                                                    .body
+                                                        .form-group
+                                                            img(src=`/img/resized/${brands.brandImg}` width="250").mx-auto.d-flex
+                                                            label.form-check-label.mb-3(for=`${brands.name}` ) #{brands.name}
+                                                            .form-check.form-switch.d-flex.justify-content-center
+                                                                input.form-check-input.mt-auto.p-2.bd-highlight(id=`${brands._id}` type="checkbox" name="brandid" value=`${brands._id}`)
+            else
+                p.text-white Herhangi Bir Marka Eklemediniz İsterseniz Marka 
+                    a.text-white(href="/admin/add-brand") Ekleyebilirsiniz.
         .row
             .col-md-12
                 .form-group.row
@@ -130,7 +182,7 @@ block content
                                 | Resim Konulabilir (Resim Ekleme Simgesine Tıklayın > Sunucuya Gözat )
                     .body
                         .form-line
-                        textarea.form-control(id="editor" name="description" cols="30" rows="10") #{inputs.description}
+                        textarea.form-control(id="editor" name="description" value=`${inputs.description}` cols="30" rows="10") #{inputs.description}
         .form-group.row.demo-tagsinput-area
             .col-sm-12.bg-blue-grey
                 .card.text-center
@@ -144,7 +196,7 @@ block content
                                 a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
                         .body
                             .form-line
-                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value='' placeholder="Taglerinizi Buraya Giriniz")
+                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value=`${inputs.tags}` placeholder="Taglerinizi Buraya Giriniz")
 
         .form-group.row
             input(type="submit" value="Ürünü Kaydet")#export-btn.col-md-12.btn.btn-warning

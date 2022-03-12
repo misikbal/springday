@@ -121,10 +121,10 @@ block content
                         h2.text-center
                             | Giriş İşlemleri
                     if advanced.length>0
-                        .body
-                            .table-responsive
+                        .body.bg-blue-grey
+                            .table-responsive.bg-white
                                 table.table.table-hover.text-center
-                                    thead.thead-dark
+                                    thead.bg-dark.text-white
                                         tr
                                             th(scope="col").align-middle #
                                             th(scope="col").align-middle Ad Soyad
@@ -147,8 +147,8 @@ block content
                                                     br
                                                     |#{advanceds.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
                             if isAdmin
-                                a(href="/admin/advanced" style="text-decoration: none;").text-dark
-                                    button.btn.btn-outline-warning.col-md-12 
+                                a(href="/admin/advanced" style="text-decoration: none;")
+                                    button.btn.btn-dark.col-md-12 
                                         |Daha Fazla Göster
                     else
                         p.text-center.align-middle Herhangi Bir Giriş Yapılmadı
@@ -162,10 +162,10 @@ block content
                             | Yapılan İşlemler
                     if process.length>0
                     
-                        .body
-                            .table-responsive
+                        .body.bg-blue-grey
+                            .table-responsive.bg-white
                                 table.table.table-hover.text-center
-                                    thead.thead-dark
+                                    thead.bg-dark.text-white
                                         tr
                                             th(scope="col").align-middle #
                                             th(scope="col").align-middle Yapılan İşlem
@@ -180,7 +180,7 @@ block content
                                                 td(scope="row").align-middle #{index++}
                                                 td.align-middle #{processes.name}
                                                 td.align-middle 
-                                                    button.btn(class=(`${processes.type}`==="delete" ? "btn-outline-danger" : `${processes.type}`==="edit" ? "btn-outline-warning" : `${processes.type}`==="insert" ? "btn-outline-success":"") style="border-radius:50px;") #{processes.type}
+                                                    button.btn(class=(`${processes.type}`==="delete" ? "btn-outline-danger" : `${processes.type}`==="edit" ? "btn-outline-warning" : `${processes.type}`==="insert" ? "btn-outline-success":`${processes.type}`==="clone" ? "btn-outline-info":"") style="border-radius:50px;") #{processes.type}
                                                 td.align-middle #{processes.userId.name}
                                                 
                                                 td.align-middle #{processes.date.getHours()+":"+ processes.date.getMinutes()}
@@ -188,7 +188,7 @@ block content
                                                     |#{processes.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
                             if isAdmin                            
                                 a(href="/admin/process" style="text-decoration: none;").text-dark
-                                    button.btn.btn-outline-warning.col-md-12 
+                                    button.btn.btn-dark.col-md-12 
                                         |Daha Fazla Göster
                     else
                         p.text-center.align-middle Herhangi Bir İşlem Yapılmadı

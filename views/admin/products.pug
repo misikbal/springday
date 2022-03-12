@@ -1,6 +1,14 @@
 extends ../layouts/admin-layout.pug
 
 block content
+
+    .row.clearfix
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .form-group.row
+                .card.text-center.bg-blue-grey
+                    .header
+                        h2.text-white
+                            | ÜRÜNLER
     if(action!=="undefined" && action==="create")
         .alert.alert-success.alert-dismissible.fade.show(role='alert')
             strong Ürün Başarılı Bir Şekilde Eklendi
@@ -10,109 +18,283 @@ block content
     if(action!=="undefined" && action==="edit")
         .alert.alert-info.alert-dismissible.fade.show(role='alert')
             strong Ürün Ayarları Başarılı Bir Şekilde Güncellendi
-
-        
+    if(action!=="undefined" && action==="clone")
+        .alert.alert-success.alert-dismissible.fade.show(role='alert')
+            strong Veriler Başarılı Bir Şekilde Klonlandı
     script.
         window.setTimeout(function() {
             $(".alert").fadeTo(500, 0).slideUp(500, function(){
                 $(this).remove(); 
             });
-        }, 2000);
-
-    .row.clearfix
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-            .form-group.row
-                .card.text-center.bg-blue-grey
-                    .header
-                        h2.text-white
-                            | ÜRÜNLER
+        }, 5000);
     #accordion
         each lang in globalvalue
             if lang.type=="lang"
-                .card
-                    button.btn.btn-link(data-toggle='collapse' data-target=`#${lang.lang.lang}` aria-expanded='true' aria-controls=`${lang.lang.lang}`)
-                        .card-header(id=`${lang.lang.value}`)
-                            h2.mb-0.text-center                    
-                                i(class=`${lang.lang.imageUrl}`)
-                                b.m-4 #{lang.lang.lang}
-                    .collapse.show(id=`${lang.lang.lang}` aria-labelledby=`${lang.lang.value}` data-parent='#accordion')
-                        .card-body.bg-blue-grey
-                                .row.clearfix
-                                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
-                                        
-                                        .card
-                                            if isAdmin
-                                                a(href="/admin/add-product").btn.bg-warning.btn-sm
-                                                    span 
-                                                        i.fas.fa-plus.fa-xs.mr-2
-                                                    | Yeni Ürün Ekleme
+                    .card
+                        button.btn.btn-link(data-toggle='collapse' data-target=`#${lang.lang.lang}` aria-expanded='true' aria-controls=`${lang.lang.lang}`)
+                            .card-header(id=`${lang.lang.value}`)
+                                h2.mb-0.text-center                    
+                                    i(class=`${lang.lang.imageUrl}`)
+                                    b.m-4 #{lang.lang.lang}
+                        .collapse.show(id=`${lang.lang.lang}` aria-labelledby=`${lang.lang.value}` data-parent='#accordion')
+                            .card-body.bg-blue-grey
+                                    
+                                    .row.clearfix
+                                        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                                            
+                                            .card
 
-                                            if products.length > 0
-                                                    
-                                                .body.justify-content-between
-                                                    .table-responsive
-                                                        table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
-                                                            thead.bg-blue-grey
-                                                                tr
-                                                                    th(scope="col").align-middle #
-                                                                    th Ürün Resmi
-                                                                    th Ürün Adı
-                                                                    th Ürün Fiyatı
-                                                                    th Yazar
-                                                                    th Tarih
-                                                                    th Aktif
-                                                                    th Popüler
-                                                                    th Anasayfada
-                                                                    if isAdmin
-                                                                        th
-                                                            tfoot.bg-blue-grey
-                                                                tr
-                                                                    th(scope="col").align-middle #
-                                                                    th Ürün Resmi
-                                                                    th Ürün Adı
-                                                                    th Ürün Fiyatı
-                                                                    th Yazar
-                                                                    th Tarih
-                                                                    th Aktif
-                                                                    th Popüler
-                                                                    th Anasayfada
-                                                                    if isAdmin
-                                                                        th
-                                                            tbody
-                                                                -var index=1;
-                                                                each product in products               
+                                                if isAdmin
+                                                    .d-flex.justify-content-end
+                                                        a(href=`/admin/add-product/${lang.lang.imageUrl}/${lang._id}`).btn.btn-warning.btn-sm.p-1.m-1
+
+                                                            i.fas.fa-plus.fa-2x
+                                                                b Yeni Ürün Ekle
+                                                        
+                                                        button(type='button' data-toggle='modal' data-target=`#allLang` onclick=`document.querySelectorAll(".selectlangid").forEach(function(element){element.value = "${lang._id}";})`).btn.btn-info.btn-sm.p-1.m-1
+                                                            i.fas.fa-clone.fa-2x
+                                                                b Verileri İçe Aktar
+                                                if products.length > 0
+                                                        
+                                                    .body.justify-content-between
+                                                        .table-responsive
+                                                            table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
+                                                                thead.bg-blue-grey
                                                                     tr
-                                                                        td(scope="row").align-middle #{index++}
-                                                                        td 
-                                                                            img(src=`/img/resized/${product.imageUrl}` width='80')
-                                                                        td.align-middle #{product.name}
-                                                                        td.align-middle #{product.price===null ? "Fiyat Biligisi Yok":product.price+" TL" } 
-                                                                        td.align-middle #{product.userId.name}
-                                                                        td.align-middle #{product.date.getHours()+":"+ product.date.getMinutes()+" "}
-                                                                            br                                            
-                                                                            | #{product.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'})}
-                                                                        td.align-middle 
-                                                                            i(class=(product.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
-                                                                        td.align-middle 
-                                                                            i(class=(product.popular ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
-                                                                        td.align-middle 
-                                                                            i(class=(product.isHome ? "fas fa-eye text-success" : "fas fa-eye-slash text-danger")).fa-2x
+                                                                        th(scope="col").align-middle #
+                                                                        th Ürün Resmi
+                                                                        th Ürün Adı
+                                                                        th Ürün Fiyatı
+                                                                        th Yazar
+                                                                        th Tarih
+                                                                        th Aktif
+                                                                        th Popüler
+                                                                        th Anasayfada
                                                                         if isAdmin
-                                                                        
-                                                                            td.align-middle.position-relative
-                                                                                a.btn.btn-warning.btn-sm(href=`/admin/products/${product._id}`) 
-                                                                                    span 
-                                                                                        i.fas.fa-edit.fa-xs
-                                                                                form(action="/admin/delete-product" method="POST")
-                                                                                    input(type="hidden" name="_csrf" value=`${csrfToken}`)  
-                                                                                    input(type="hidden" name="productid" value=`${product._id}`)
-                                                                                    button(type="submit" style="height:40px; width:40px;").btn.btn-danger.btn-sm
-                                                                                        span 
-                                                                                            i.fas.fa-trash-alt.fa-xs
-                                            else
-                                                p.text-center.align-middle Herhangi Bir Ürün Mevcut Değil
+                                                                            th
+                                                                                i.fas.fa-wrench
+                                                                tfoot.bg-blue-grey
+                                                                    tr
+                                                                        th(scope="col").align-middle #
+                                                                        th Ürün Resmi
+                                                                        th Ürün Adı
+                                                                        th Ürün Fiyatı
+                                                                        th Yazar
+                                                                        th Tarih
+                                                                        th Aktif
+                                                                        th Popüler
+                                                                        th Anasayfada
+                                                                        if isAdmin
+                                                                            th  
+                                                                                i.fas.fa-wrench
+                                                                tbody
+                                                                    -var index=1;
+                                                                    each product in products   
+                                                                        if product.translate.toString()==lang._id.toString()
+                                                                            tr
+                                                                                td(scope="row").align-middle #{index++}
+                                                                                td 
+                                                                                    img(src=`/img/resized/${product.imageUrl}` width='100')
+                                                                                td.align-middle #{product.name}
+                                                                                td.align-middle #{product.price=="" ? "Fiyat Biligisi Yok":product.price+" "}
+                                                                                    i(class=`${product.price=="" ? "" : product.currency}`)
+                                                                                td.align-middle #{product.userId.name}
+                                                                                td.align-middle #{product.date.getHours()+":"+ product.date.getMinutes().toString().replace(/(^|\D)(\d)(?!\d)/g, '$10$2')}
+                                                                                    br                                            
+                                                                                    | #{product.date.toLocaleDateString("tr-TR",option={year: 'numeric',month: 'long',day: 'numeric'}).toString().replace(/(^|\D)(\d)(?!\d)/g, '$10$2')}
+                                                                                td.align-middle 
+                                                                                    i(class=(product.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
+                                                                                td.align-middle 
+                                                                                    i(class=(product.popular ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle")).fa-2x
+                                                                                td.align-middle 
+                                                                                    i(class=(product.isHome ? "fas fa-eye text-success" : "fas fa-eye-slash text-danger")).fa-2x
+                                                                                if isAdmin
+                                                                                
+                                                                                    td.align-middle.position-relative
+                                                                                        p(style="display:none;")#p1 #{product.tags}
+                                                                                        p(id=`copy${product._id}`).copytexthide
+                                                                                        button(onclick=`copyToClipboard('#p1'); this.style.color='white'; document.querySelector('#copy${product._id}').innerText='Tagler Kopyalandı.';` title="Ürünün Taglerini Koypala").btn.btn-info
+                                                                                            i.fas.fa-copy
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                        a.btn.btn-warning.btn-sm(href=`/admin/products/${lang.lang.imageUrl}/${product._id}/${lang.lang.value}` title="Düzenle") 
+                                                                                            span 
+                                                                                                i.fas.fa-edit.fa-xs
+                                                                                        form(action="/admin/delete-product" method="POST")
+                                                                                            input(type="hidden" name="_csrf" value=`${csrfToken}`)  
+                                                                                            input(type="hidden" name="productid" value=`${product._id}`)
+                                                                                            button(type="submit" style="height:40px; width:40px;" title="Sil").btn.btn-danger.btn-sm
+                                                                                                span 
+                                                                                                    i.fas.fa-trash-alt.fa-xs
+                                                                                    
+                                                    
+                                                else
+                                                    img(src="/img/notfound.gif").m-2.mx-auto.d-flex
+                                                    p.text-center.align-middle.text-dark.mt-3 Herhangi Bir Ürün Mevcut Değil
+    //- script.
+    //-     window.setTimeout(function() {
+    //-         $(".copytexthide").fadeTo(500, 0).slideUp(500, function(){
+    //-             $(this).remove(); 
+    //-         });
+    //-     }, 7000);
+        //- else
+        //-     .card.text-center
+        //-         .card-head
+        //-             .card-title
+        //-                 img(src="/img/notfound.gif").m-2.mx-auto.d-flex
+        //-                 p Herhangi Bir Dil Mevcut Değil
+        //-         .card-body
+        //-             a(href="/admin/add-lang").btn.btn-outline-warning.btn-lg 
+        //-                 h3 Dil Ekle 
+    
+    if isAdmin
+        #allLang.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true')
+            .modal-dialog.modal-dialog-centered.modal-lg(role='document')
+                .modal-content
+                    .modal-header
+                        h5#exampleModalLongTitle.modal-title Diğer Dillerden Verileri Aktar
+                        button.btn.btn-outline-danger.rounded-circle.close(type='button' data-dismiss='modal' aria-label='Close')
+                            span(aria-hidden='true') ×
+                    .modal-body
+                        h6.text-dark.text-center İstediğiniz bir dilin verilerini bu dile aktarın.
+                        .row.mt-3
+                            each lang in globalvalue
+                                if lang.type=="lang"
+                                    .col.text-center
+                                        button.close(type='button' data-toggle='modal' data-target=`#modal${lang._id}`).btn.btn-lg.p-5.m-1
+                                            i(class=`${lang.lang.imageUrl}`  style="font-size:5rem;")
+                                            p.h3(style="text-decoration:none;").text-dark #{lang.lang.lang}
+
+                    .modal-footer
+                        button.btn.btn-secondary(type='button' data-dismiss='modal') Kapat
+        each lang in globalvalue
+            if lang.type=="lang"
+                .modal.fade(id=`modal${lang._id}` tabindex='-1' role='dialog' aria-labelledby='langtitle' aria-hidden='true')
+                    .modal-dialog.modal-dialog-centered.modal-lg(role='document')
+                        .modal-content
+                            form(action=`/admin/clone-product` method="POST" enctype="multipart/form-data")
+
+                                input(type="hidden" name="_csrf" value=`${csrfToken}`) 
+
+                                input(name="langid" type="hidden" value="").selectlangid
+                                .modal-header
+                                    h5#exampleModalLongTitle.modal-title Diğer Dillerden Verileri Aktar
+                                    button.btn.btn-outline-danger.rounded-circle.close(type='button' data-dismiss='modal' aria-label='Close')
+                                        span(aria-hidden='true') ×
+                                style.
+                                    @supports (zoom:2) {
+                                        input[type="radio"],  input[type=checkbox]{
+                                        zoom: 2;
+                                        }
+                                    }
+                                    @supports not (zoom:2) {
+                                        input[type="radio"],  input[type=checkbox]{
+                                            transform: scale(2);
+                                            margin: 15px;
+                                        }
+                                    }
+                                .modal-body
+                                    .row.mt-3
+                                        .table-responsive
+                                                table.table.table-bordered.table-striped.table-hover.dataTable.js-exportable.text-center
+                                                    thead.bg-blue-grey
+                                                        tr
+                                                            th.align-middle
+                                                                input.checkAll(type='checkbox' name='checkAll')
+                                                            th Resim
+                                                            th Ürün Adı
+                                                            th Fiyat
+                                                            th Aktif
+                                                    tfoot.bg-blue-grey
+                                                        tr  
+                                                            th.align-middle
+                                                            th Resim
+                                                            th Ürün Adı
+                                                            th Fiyat
+                                                            th Aktif
+                                                    tbody
+                                                        each product in products                                        
+                                                            if product.translate.toString()==lang._id.toString()
+                                                                tr
+                                                                    td.align-middle
+                                                                        input(type='checkbox' name='selected' value=`${product._id}`)
+                                                                    td.align-middle
+                                                                        img(src=`/img/resized/${product.imageUrl}` width='100')
+                                                                    td.align-middle #{product.name}
+                                                                    td.align-middle #{product.price==null ? "Fiyat Biligisi Yok":product.price+" "}
+                                                                        i(class=`${product.currency}`)
+                                                                    td.align-middle 
+                                                                        i(class=(product.isActive ? "text-success fas fa-check-circle" : "text-danger fas fa-times-circle"))
+                                            
+
+                                .modal-footer
+                                    button.btn.btn-secondary(type='button' data-dismiss='modal') Kapat
+                                    button.btn.btn-primary(type='submit') İçe Aktar
+        
+    
+    //- .modal.fade.bs-example-modal-lg(tabindex='-1' role='dialog' aria-labelledby='myLargeModalLabel' aria-hidden='true')
+    //-     .modal-dialog.modal-lg
+    //-         .modal-content
+    //-             // Modal Header
+    //-             .modal-header
+    //-                 button.close.btn.btn-outline-danger.rounded-circle(type='button' data-dismiss='modal' aria-label='Close')
+    //-                     span(aria-hidden='true') ×
+    //-                 h4#gridSystemModalLabel.modal-title Your Headings
+    //-             // Modal Body
+    //-             .modal-body
+    //-                 .body-message
+    //-                     h4 Any Heading
+    //-                     p And a paragraph with a full sentence or something else...
+    //-             // Modal Footer
+    //-             .modal-footer
+
+
+    script.
+        $(document).ready(function() {
+            $(".checkAll").on("click", function() {
+                $(this)
+                .closest("table")
+                .find("tbody :checkbox")
+                .prop("checked", this.checked)
+                .closest("tr")
+                .toggleClass("selected", this.checked);
+            });
+
+            $("tbody :checkbox").on("click", function() {
+                // toggle selected class to the checkbox in a row
+                $(this)
+                .closest("tr")
+                .toggleClass("selected", this.checked);
+
+                // add selected class on check all
+                $(this).closest("table")
+                .find(".checkAll")
+                .prop("checked",
+                    $(this)
+                    .closest("table")
+                    .find("tbody :checkbox:checked").length ==
+                    $(this)
+                        .closest("table")
+                        .find("tbody :checkbox").length
+                );
+            });
+            });
 
 
 block script    
     include ../admin/includes/tablescript.pug
-    
+    script.
+        $(document).ready(function() {
+            $('.dataTables_empty').empty().html(`
+            <img src='/img/notfound.gif' class='m-2 mx-auto d-flex' />
+            <p>Bu Dil İçin Bir Ürün Eklenmedi</p>`);
+        });
+    script.
+        function copyToClipboard(element) {
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(element).text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+        }

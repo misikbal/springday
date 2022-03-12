@@ -1,0 +1,59 @@
+extends ../layouts/admin-layout.pug
+block styles 
+    link(rel="stylesheet" href="/css/themes/image.css")
+block content
+    if errorMessage
+        div.alert.alert-danger.col-sm-12 !{errorMessage}
+    form(action="/admin/add-brand"  method="POST" enctype="multipart/form-data")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)               
+        .row.clearfix
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header
+                                h2.text-white
+                                    | MARKA EKLEME SAYFASI 
+        .row.clearfix
+            .col-md-2
+
+                .card.bg-light.text-center
+                    .body
+                        .form-group
+                            label.form-check-label.mb-5 Aktif
+                            .form-check.form-switch.d-flex.justify-content-center
+                                input.form-check-input.mt-auto.p-2.bd-highlight#isActive(type="checkbox" name="isActive")
+            .col-md-10
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | MARKA ADI
+                                    small.text-danger
+                                        | Gerekli
+                            .body
+                                .form-line
+                                    input.form-control#name(type="text" name="name" placeholder="Springday" required oninvalid="this.setCustomValidity('Lüften Kategori İsmi Alanını Boş Bırakmayınız')" oninput="this.setCustomValidity('')")  
+        .row
+            .col-md-12
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey
+                            .header.bg-white
+                                h2
+                                    | MARKA RESMİ
+                                    small.text-info
+                                        | Bir Tane Resim Seçilebilir
+                            .body.bg-blue-grey
+                                .fileupload.fileupload-new(data-provides='fileupload')
+                                    span.btn.btn-warning.btn-file
+                                        span.fileupload-new Yeni
+                                        span.fileupload-exists Değiştir
+                                        input#image(type="file" name="brandImg" accept="image/*")
+                                    span.fileupload-preview
+                                    a.close.fileupload-exists(href='#' data-dismiss='fileupload' style='float: none') ×
+        .form-group.row
+            input(type="submit" value="Markayı Kaydet")#export-btn.col-md-12.btn.btn-warning
+block script
+    script(src='/js/image.js')

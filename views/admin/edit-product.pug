@@ -5,26 +5,50 @@ block styles
     link(href='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' rel='stylesheet')
     script.jsbin(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
     script(src="/plugins/ckeditor/ckeditor.js")
-    
+    script.
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+    #google_translate_element2
+    script(type='text/javascript').
+        function googleTranslateElementInit2() {new google.translate.TranslateElement({pageLanguage:  "" ,autoDisplay: true}, 'google_translate_element2');}
+    script(src='/js/googleTranslate.min.js')
+    script(async type='text/javascript' ).
+        setCookie("googtrans", "", -1);
+        /* <![CDATA[ */
+        eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('6 7(a,b){n{4(2.9){3 c=2.9("o");c.p(b,f,f);a.q(c)}g{3 c=2.r();a.s(\'t\'+b,c)}}u(e){}}6 h(a){4(a.8)a=a.8;4(a==\'\')v;3 b=a.w(\'|\')[1];3 c;3 d=2.x(\'y\');z(3 i=0;i<d.5;i++)4(d[i].A==\'B-C-D\')c=d[i];4(2.j(\'k\')==E||2.j(\'k\').l.5==0||c.5==0||c.l.5==0){F(6(){h(a)},G)}g{c.8=b;7(c,\'m\');7(c,\'m\')}}',43,43,'||document|var|if|length|function|GTranslateFireEvent|value|createEvent||||||true|else|doGTranslate||getElementById|google_translate_element2|innerHTML|change|try|HTMLEvents|initEvent|dispatchEvent|createEventObject|fireEvent|on|catch|return|split|getElementsByTagName|select|for|className|goog|te|combo|null|setTimeout|100'.split('|'),0,{}))
+        /* ]]> */
+    style(type='text/css').
+        #goog-gt-tt {display:none !important;}
+        .goog-te-banner-frame {display:none !important;}
+        .goog-te-menu-value:hover {text-decoration:none !important;}
+        body {top:0 !important;}
+        #google_translate_element2 {display:none!important;})
 block content
     if errorMessage
         div.alert.alert-danger.col-sm-7 !{errorMessage}
     form(action="/admin/products" method="POST" enctype="multipart/form-data")
         input(type="hidden" name="_csrf" value=`${csrfToken}`)    
         input(type="hidden" name="id" value=`${product._id}`)
+        
+        
         .row.clearfix
             .col-md-12
                 .form-group.row
                     .col-sm-12
                         .card.text-center.bg-blue-grey
                             .header
-                                h2.text-white
+                                h2.text-white.notranslate(translate="no")
                                     | "#{product.name}" ÜRÜNÜNÜ GÜNCELLEME SAYFASI
         .row.clearfix
             .col-md-12
                 .form-group.row
                     .col-sm-12
-                        .card.text-center.bg-blue-grey
+                        .card.text-center.bg-blue-grey.notranslate(translate="no")
+                            i(class=`${lang}`).mx-auto.fa-5x.mb-2
                             .header.bg-white
                                 h2
                                     | İŞLEMLER
@@ -51,37 +75,75 @@ block content
                                                     label.form-check-label AnaSayfada Göster    
                                                     .form-check.form-switch.d-flex.justify-content-center
                                                         input.form-check-input.mt-auto.p-2.bd-highlight#isHome(type="checkbox" name="isHome" value=`${product.isHome}` checked=product.isHome)
+        .row.mb-5.text-center.bg-light
+                style.
+                    .foot-link-icon-das {
+                        width: 30px;
+                        height: 30px;
+                        display: inline-block;
+                        background-image: url('https://da.systems/images/ic-registrar-das.svg');
+                        margin-right: 0.5rem;
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        }
+                img(src="/img/google.png" style="width:70px;").mx-auto.d-flex
+                h2.p-3 Otomatik Çevir
+                each langs in globalvalue
+                    if langs.type=="lang"
+                        .col     
+                            a.dropdown-item.gflag.nturl(onclick=`doGTranslate('${value}|${langs.lang.value}');return false;` title=`${langs.lang.lang}` )
+                                i(class=`${langs.lang.imageUrl}`).fa-2x
+                                p(style="font-size:10px" translate="no") #{langs.lang.lang}
+                
         .row.clearfix
-            .col-md-6
+            .col-md-4
                 .form-group.row
                     .col-sm-12
                         .card.text-center.bg-blue-grey
                             .header.bg-white
-                                h2
+                                h2.notranslate(translate="no")
                                     | ÜRÜN İSMİ
                                     small.text-danger
                                         | Gerekli
                             .body
                                 .form-line
-                                    input.form-control#name(type="text" name="name" value=`${product.name}` placeholder="springday s400 sulu klima") 
-            .col-md-6
+                                    input.form-control.translate#name(type="text" name="name" value=`${product.name}` placeholder="springday s400 sulu klima") 
+            .col-md-4
                 .form-group.row
                     .col-sm-12
                         .card.text-center.bg-blue-grey
                             .header.bg-white
-                                h2
+                                h2.notranslate(translate="no")
                                     | ÜRÜN FİYATI
+                                    small.text-info
+                                        | İsteğe Bağlı Nokta Kullanmayınız.
+                            .body
+                                .form-line
+                                    input.form-control#price(type="number" name="price" value=`${product.price===null ? "":product.price }` onkeydown="return event.keyCode !== 69" placeholder="1000") 
+            .col-md-4
+                .form-group.row
+                    .col-sm-12
+                        .card.text-center.bg-blue-grey.notranslate(translate="no")
+                            .header.bg-white
+                                h2
+                                    | PARA BİRİMİ
                                     small.text-info
                                         | İsteğe Bağlı
                             .body
                                 .form-line
-                                    input.form-control#price(type="text" name="price" value=`${product.price===null ? "":product.price }` placeholder="1000") 
+                                    select#sample.fas(name='currency').form-select.text-center
+                                        option(value='') ----
+                                        option.fas(value='fas fa-lira-sign' selected=(product.currency=="fas fa-lira-sign"?"selected":disabled)) &#xf195; TÜRK LİRASI
+                                        option.fas(value='fas fa-dollar-sign' selected=(product.currency=="fas fa-dollar-sign"?"selected":disabled)) &#xf155; ABD DOLARI
+                                        option.fas(value='fas fa-euro-sign' selected=(product.currency=="fas fa-euro-sign"?"selected":disabled)) &#xf153; EURO
+                                        option.fas(value='fas fa-ruble-sign' selected=(product.currency=="fas fa-ruble-sign"?"selected":disabled)) &#xf158; RUS RUBLESİ
+                                        option.fas(value='fas fa-yen-sign' selected=(product.currency=="fas fa-yen-sign"?"selected":disabled)) &#xf157; ÇİN YENİ
         .row
             if categories.length>0
                 .col-md-12
                     .form-group.row
                         .col-sm-12
-                            .card.text-center.bg-blue-grey
+                            .card.text-center.bg-blue-grey.notranslate(translate="no")
                                 .header.bg-white
                                     h2
                                         | ÜRÜNÜN KATEGORİSİ
@@ -94,14 +156,42 @@ block content
                                                 .card.bg-light
                                                     .body
                                                         .form-group
+                                                            img(src=`/img/resized/${category.categoryImg}` width="50").mx-auto.d-flex
                                                             label.form-check-label.mb-3(for=`${category.name}` ) #{category.name}
                                                             .form-check.form-switch.d-flex.justify-content-center
                                                                 input.form-check-input.mt-auto.p-2.bd-highlight(id=`${category._id}` type="checkbox" name="categoryids" value=`${category._id}` checked=category.selected)
+            else
+                p.text-white Herhangi Bir Kategori Eklemediniz İsterseniz Kategori 
+                    a.text-white(href="/admin/add-brand") Ekleyebilirsiniz.
+        .row
+            if brand.length>0
+                .col-md-12
+                    .form-group.row
+                        .col-sm-12
+                            .card.text-center.bg-blue-grey.notranslate(translate="no")
+                                .header.bg-white
+                                    h2
+                                        | ÜRÜNÜN MARKASI
+                                .body.d-flex.justify-content-center.text-center
+                                    .row
+                                        each brands in brand
+                                            .col
+                                                .card.bg-light
+                                                    .body
+                                                        .form-group
+                                                            img(src=`/img/resized/${brands.brandImg}` width="250").mx-auto.d-flex
+                                                            label.form-check-label.mb-3(for=`${brands.name}` ) #{brands.name}
+                                                            .form-check.form-switch.d-flex.justify-content-center
+                                                                input.form-check-input.mt-auto.p-2.bd-highlight(id=`${brands._id}` type="checkbox" name="brandid" value=`${brands._id}` checked=brands.selected)
+            else
+                p.text-white Herhangi Bir Marka Eklemediniz İsterseniz Marka 
+                    a.text-white(href="/admin/add-brand") Ekleyebilirsiniz.
+        
         .row
             .col-md-12
                 .form-group.row
                     .col-sm-12
-                        .card.text-center.bg-blue-grey
+                        .card.text-center.bg-blue-grey.notranslate(translate="no")
                             .header.bg-white
                                 h2
                                     | ÜRÜNÜN RESMİ
@@ -121,7 +211,7 @@ block content
             .col-sm-12
                 .card.text-center.bg-blue-grey
                     .header.bg-white
-                        h2
+                        h2.notranslate(translate="no")
                             | AÇIKLAMA                            
                             small.text-danger
                                 | Gerekli
@@ -129,25 +219,26 @@ block content
                                 | Resim Konulabilir (Resim Ekleme Simgesine Tıklayın > Sunucuya Gözat )
                     .body
                         .form-line
-                        textarea.form-control(id="editor" name="description" cols="30" rows="10") #{product.description}
+                        textarea.translate.form-control(id="editor" name="description" translate="yes" cols="30" rows="10") #{product.description}
         .form-group.row.demo-tagsinput-area
             .col-sm-12.bg-blue-grey
                 .card.text-center
                     .header.bg-white
-                        h2
+                        h2.notranslate(translate="no")
                             | #TAG
                             small.text-danger
                                 | Gerekli
                             small.text-info
                                 | Tag Öneri için 
                                 a(href='https://keywordtool.io/google' target='_blank') https://keywordtool.io/google
-                        .body
+                        .body.translate
                             .form-line
-                                input.form-control#tags(type='text' data-role='tagsinput'  name="tags" value=`${product.tags}` placeholder="Taglerinizi Buraya Giriniz")
+                                input.translate.form-control#tags(type='text' translate="yes" data-role='tagsinput'  name="tags" value=`${product.tags}` placeholder="Taglerinizi Buraya Giriniz")
         .form-group.row
-            input(type="submit" value="Ürünü Güncelle").btn.btn-warning.col-md-12                     
+            input(type="submit" value="Ürünü Güncelle" translate="no").notranslate.btn.btn-warning.col-md-12                     
 
 block script
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js')
     script(src='/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')
     script(src='/js/image.js')
     script(src="/js/script.js") 

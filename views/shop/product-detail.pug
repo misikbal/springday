@@ -126,3 +126,12 @@ block script
     script.
         requireScript('productdetail', '1.1.0', '/js/product-details.min.js');
         requireScript('otherproduct', '1.0.2', '/js/otherproduct.js');
+    script.
+        $(document).ready(function() {
+            $('table').addClass("table table-responsive-md table-hover table-striped mx-auto")
+            $('td[rowspan]').addClass("bg-dark text-white")
+            $('tbody').css("background-color", "white");
+            $('thead').addClass("bg-dark text-white")
+            $('tfoot').addClass("bg-dark text-white")
+
+        });
