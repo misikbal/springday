@@ -105,6 +105,7 @@ const storage=multer.diskStorage({
     filename : function(req, file, callback) {
         callback(null, file.fieldname+"-"+ Date.now()+path.extname(file.originalname.toString().split(".")[0]+".webp"))
     }
+    
 })
 
 app.use(multer({storage:storage,fileFilter: multerFilter}).fields([
